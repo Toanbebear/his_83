@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_web_dashboard,web.dashboard,model_web_dashboard,base.group_user,1,0,0,0
+access_web_dashboard_block,web.dashboard.block,model_web_dashboard_block,base.group_user,1,0,0,0
+access_web_dashboard_manager,web.dashboard,model_web_dashboard,web_dynamic_dashboard.group_ddashboard_manager,1,1,1,1
+access_web_dashboard_block_manager,web.dashboard.block,model_web_dashboard_block,web_dynamic_dashboard.group_ddashboard_manager,1,1,1,1
+access_action_group_field,action.group.field,model_action_group_field,base.group_user,1,0,0,0
+access_action_group_field_manager,action.group.field.manager,model_action_group_field,web_dynamic_dashboard.group_ddashboard_manager,1,1,1,1
+
+access_analysis_sale,analysis.sale,model_analysis_sale,base.group_user,1,0,0,0
+access_analysis_account_move_line,analysis.account.move.line,model_analysis_account_move_line,base.group_user,1,0,0,0
+access_analysis_stock_quant,analysis.stock.quant,model_analysis_stock_quant,base.group_user,1,0,0,0
+access_analysis_stock_move,analysis.stock.move,model_analysis_stock_move,base.group_user,1,0,0,0

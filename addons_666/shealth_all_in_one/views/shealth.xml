@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="assets_backend" name="shealth_all_in_one assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/shealth_all_in_one/static/src/css/shealth.css"/>
+                <link rel="stylesheet" href="/shealth_all_in_one/static/src/css/shealth_walkin_backend.scss"/>
+                <script type="text/javascript" src="/shealth_all_in_one/static/src/js/shealth.js"></script>
+                <script type="text/javascript" src="/shealth_all_in_one/static/src/js/tag_widget.js"></script>
+                <script type="text/javascript" src="/shealth_all_in_one/static/src/js/base_view.js"></script>
+                <script type="text/javascript" src="/shealth_all_in_one/static/src/js/basic_controller.js"></script>
+            </xpath>
+        </template>
+    </data>
+</odoo>

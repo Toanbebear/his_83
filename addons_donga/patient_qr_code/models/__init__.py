@@ -1,0 +1,1 @@
+from . import sh_medical_patient_inherit

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="dashboard_my" model="web.dashboard">
+            <field name="name">My Dashboard</field>
+            <field name="dashboard_source">odoo</field>
+        </record>
+
+        <!-- 1/4 -->
+        <record id="dashboard_block_total_sales" model="web.dashboard.block">
+            <field name="name">Monthly Sales</field>
+            <field name="sequence">1</field>
+            <field name="data_source">query</field>
+            <field name="operation">sum</field>
+            <field name="model_id" eval="ref('sale.model_sale_order')"/>
+            <field name="field_id" eval="ref('sale.field_sale_order__amount_total')"/>
+            <field name="domain_date">this_month</field>
+            <field name="domain_date_field_id" eval="ref('sale.field_sale_order__date_order')"/>
+            <field name="block_type">tile</field>
+            <field name="block_size">4col</field>
+            <field name="tile_icon">fas fa-thumbs-up</field>
+            <field name="active">True</field>
+            <field name="dashboard_id" eval="ref('web_dynamic_dashboard.dashboard_my')"/>
+        </record>
+        <record id="dashboard_block_profit_loss" model="web.dashboard.block">
+            <field name="name">Monthly Profit</field>
+            <field name="sequence">2</field>
+            <field name="data_source">query</field>
+            <field name="operation">sum</field>
+            <field name="model_id" eval="ref('web_dynamic_dashboard.model_analysis_account_move_line')"/>
+            <field name="field_id" eval="ref('web_dynamic_dashboard.field_analysis_account_move_line__reversed_balance')"/>
+            <field name="domain_date_field_id" eval="ref('web_dynamic_dashboard.field_analysis_account_move_line__move_date')"/>
+            <field name="domain_date">this_month</field>
+            <field name="domain_values_field_id" eval="ref('web_dynamic_dashboard.field_analysis_account_move_line__account_type_name')"/>
+            <field name="domain_values_string">'Income','Expenses'</field>
+            <!-- <field name="subdomain_values_field_id" eval="ref('web_dynamic_dashboard.field_analysis_account_move_line__')"/> -->
+            <!-- <field name="subdomain_values_string"></field> -->
+            <field name="block_type">tile</field>
+            <field name="block_size">4col</field>
+            <field name="tile_icon">fas fa-thumbs-up</field>
+            <field name="active">True</field>
+            <field name="dashboard_id" eval="ref('web_dynamic_dashboard.dashboard_my')"/>
+        </record>
+        <record id="dashboard_block_overdue_receivable_config" model="web.dashboard.block">
+            <field name="name">Overdue Receivable</field>
+            <field name="sequence">3</field>
+            <field name="data_source">query</field>
+            <field name="operation">sum</field>
+            <field name="model_id" eval="ref('account.model_account_move_line')"/>
+            <field name="field_id" eval="ref('account.field_account_move_line__balance')"/>
+            <field name="domain">[('account_id.user_type_id.name', 'ilike', 'Receivable')]</field>
+            <field name="domain_date">before_and_today</field>
+            <field name="domain_date_field_id" eval="ref('account.field_account_move_line__date')"/>
+            <field name="block_type">tile</field>
+            <field name="block_size">4col</field>
+            <field name="tile_icon">fas fa-arrow-left</field>
+            <field name="active">True</field>
+            <field name="dashboard_id" eval="ref('web_dynamic_dashboard.dashboard_my')"/>
+        </record>
+        <record id="dashboard_block_overdue_payable_config" model="web.dashboard.block">
+            <field name="name">Overdue Payable</field>
+            <field name="sequence">4</field>
+            <field name="data_source">query</field>
+            <field name="operation">sum</field>
+            <field name="model_id" eval="ref('account.model_account_move_line')"/>
+            <field name="field_id" eval="ref('account.field_account_move_line__balance')"/>
+            <field name="domain">[('account_id.user_type_id.name', 'ilike', 'Payable')]</field>
+            <field name="domain_date">before_and_today</field>
+            <field name="domain_date_field_id" eval="ref('account.field_account_move_line__date')"/>
+            <field name="block_type">tile</field>
+            <field name="block_size">4col</field>
+            <field name="tile_icon">fas fa-arrow-right</field>
+            <field name="active">True</field>
+            <field name="dashboard_id" eval="ref('web_dynamic_dashboard.dashboard_my')"/>
+        </record>
+
+        <!-- 1/3 -->
+        <record id="dashboard_block_top_selling_product" model="web.dashboard.block">
+            <field name="name">Top Selling Product</field>
+            <field name="sequence">5</field>
+            <field name="data_source">query</field>
+            <field name="operation">sum</field>
+            <field name="model_id" eval="ref('sale.model_sale_order_line')"/>
+            <field name="field_id" eval="ref('sale.field_sale_order_line__price_total')"/>
+            <field name="domain_date">this_year</field>
+            <field name="domain_date_field_id" eval="ref('sale.field_sale_order_line__create_date')"/>
+            <field name="group_field_id" eval="ref('sale.field_sale_order_line__product_id')"/>
+            <field name="block_type">donut</field>
+            <field name="block_size">3col</field>
+            <field name="active">True</field>
+            <field name="dashboard_id" eval="ref('web_dynamic_dashboard.dashboard_my')"/>
+        </record>
+        <record id="dashboard_block_sales_by_region" model="web.dashboard.block">
+            <field name="name">Sales By Region</field>
+            <field name="sequence">6</field>
+            <field name="data_source">query</field>
+            <field name="operation">sum</field>
+            <field name="model_id" eval="ref('web_dynamic_dashboard.model_analysis_sale')"/>
+            <field name="field_id" eval="ref('web_dynamic_dashboard.field_analysis_sale__sale_total')"/>
+            <!-- <field name="domain_date_field_id" eval="ref('web_dynamic_dashboard.field_analysis_sale__')"/> -->
+            <!-- <field name="domain_date">this_month</field> -->
+            <!-- <field name="domain_values_field_id" eval="ref('web_dynamic_dashboard.field_analysis_sale__')"/> -->
+            <!-- <field name="domain_values_string"></field> -->
+            <!-- <field name="subdomain_values_field_id" eval="ref('web_dynamic_dashboard.field_analysis_sale__')"/> -->
+            <!-- <field name="subdomain_values_string"></field> -->
+            <field name="group_field_id" eval="ref('web_dynamic_dashboard.field_analysis_sale__state_name')"/>
+            <field name="block_type">bar</field>
+            <field name="block_size">3col</field>
+            <field name="active">True</field>
+            <field name="dashboard_id" eval="ref('web_dynamic_dashboard.dashboard_my')"/>
+        </record>
+        <record id="dashboard_block_stock_aging" model="web.dashboard.block">
+            <field name="name">Stock Aging in Warehouse</field>
+            <field name="sequence">7</field>
+            <field name="data_source">query</field>
+            <field name="operation">sum</field>
+            <field name="model_id" eval="ref('web_dynamic_dashboard.model_analysis_stock_quant')"/>
+            <field name="field_id" eval="ref('web_dynamic_dashboard.field_analysis_stock_quant__stock_value')"/>
+            <!-- <field name="domain_date_field_id" eval="ref('web_dynamic_dashboard.field_analysis_stock_quant__')"/> -->
+            <!-- <field name="domain_date">this_month</field> -->
+            <field name="domain_values_field_id" eval="ref('web_dynamic_dashboard.field_analysis_stock_quant__location_name')"/>
+            <field name="domain_values_string">'Stock'</field>
+            <!-- <field name="subdomain_values_field_id" eval="ref('web_dynamic_dashboard.field_analysis_stock_quant__')"/> -->
+            <!-- <field name="subdomain_values_string"></field> -->
+            <field name="group_field_id" eval="ref('web_dynamic_dashboard.field_analysis_stock_quant__storage_duration_category')"/>
+            <field name="block_type">pie</field>
+            <field name="block_size">3col</field>
+            <field name="active">True</field>
+            <field name="dashboard_id" eval="ref('web_dynamic_dashboard.dashboard_my')"/>
+        </record>
+
+        <!-- 1/2 -->
+        <record id="dashboard_block_daily_product_sales" model="web.dashboard.block">
+            <field name="name">Daily Product Sales</field>
+            <field name="sequence">8</field>
+            <field name="data_source">query</field>
+            <field name="operation">sum</field>
+            <field name="model_id" eval="ref('sale.model_sale_order_line')"/>
+            <field name="field_id" eval="ref('sale.field_sale_order_line__price_total')"/>
+            <field name="domain_date">last_30</field>
+            <field name="domain_date_field_id" eval="ref('sale.field_sale_order_line__create_date')"/>
+            <field name="group_field_id" eval="ref('sale.field_sale_order_line__create_date')"/>
+            <field name="group_date_format">day</field>
+            <field name="subgroup_field_id" eval="ref('sale.field_sale_order_line__product_id')"/>
+            <field name="block_type">line</field>
+            <field name="block_size">2col</field>
+            <field name="active">True</field>
+            <field name="dashboard_id" eval="ref('web_dynamic_dashboard.dashboard_my')"/>
+        </record>
+        <record id="dashboard_block_purchase_by_vendor" model="web.dashboard.block">
+            <field name="name">Purchase By Vendor</field>
+            <field name="sequence">9</field>
+            <field name="data_source">query</field>
+            <field name="operation">sum</field>
+            <field name="model_id" eval="ref('purchase.model_purchase_order_line')"/>
+            <field name="field_id" eval="ref('purchase.field_purchase_order_line__price_total')"/>
+            <field name="domain_date">last_30</field>
+            <field name="domain_date_field_id" eval="ref('purchase.field_purchase_order_line__create_date')"/>
+            <field name="group_field_id" eval="ref('purchase.field_purchase_order_line__partner_id')"/>
+            <field name="block_type">bar</field>
+            <field name="block_size">2col</field>
+            <field name="active">True</field>
+            <field name="dashboard_id" eval="ref('web_dynamic_dashboard.dashboard_my')"/>
+        </record>
+        <record id="dashboard_block_move_wh" model="web.dashboard.block">
+            <field name="name">Stock Move Value (Cumulative)</field>
+            <field name="sequence">10</field>
+            <field name="data_source">query</field>
+            <field name="operation">sum</field>
+            <field name="model_id" eval="ref('web_dynamic_dashboard.model_analysis_stock_move')"/>
+            <field name="field_id" eval="ref('web_dynamic_dashboard.field_analysis_stock_move__signed_value_current_cost')"/>
+            <!-- <field name="domain_date_field_id" eval="ref('web_dynamic_dashboard.field_analysis_stock_quant__')"/> -->
+            <!-- <field name="domain_date">this_month</field> -->
+            <field name="domain_values_field_id" eval="ref('web_dynamic_dashboard.field_analysis_stock_move__location_name')"/>
+            <field name="domain_values_string"></field>
+            <!-- <field name="subdomain_values_field_id" eval="ref('web_dynamic_dashboard.field_analysis_stock_quant__')"/> -->
+            <!-- <field name="subdomain_values_string"></field> -->
+            <field name="group_field_id" eval="ref('web_dynamic_dashboard.field_analysis_stock_move__date')"/>
+            <field name="subgroup_field_id" eval="ref('web_dynamic_dashboard.field_analysis_stock_move__location_other_name')"/>
+            <field name="time_calculation_method">cumulative</field>
+            <field name="block_type">line</field>
+            <field name="block_size">2col</field>
+            <field name="active">True</field>
+            <field name="dashboard_id" eval="ref('web_dynamic_dashboard.dashboard_my')"/>
+        </record>
+        <record id="dashboard_block_bank_balance" model="web.dashboard.block">
+            <field name="name">Bank/Cash Balance (Cumulative)</field>
+            <field name="sequence">11</field>
+            <field name="data_source">query</field>
+            <field name="operation">sum</field>
+            <field name="model_id" eval="ref('web_dynamic_dashboard.model_analysis_account_move_line')"/>
+            <field name="field_id" eval="ref('web_dynamic_dashboard.field_analysis_account_move_line__balance')"/>
+            <!-- <field name="domain_date_field_id" eval="ref('web_dynamic_dashboard.field_analysis_stock_quant__')"/> -->
+            <!-- <field name="domain_date">this_month</field> -->
+            <field name="domain_values_field_id" eval="ref('web_dynamic_dashboard.field_analysis_account_move_line__account_type_name')"/>
+            <field name="domain_values_string">'Bank and Cash'</field>
+            <!-- <field name="subdomain_values_field_id" eval="ref('web_dynamic_dashboard.field_analysis_stock_quant__')"/> -->
+            <!-- <field name="subdomain_values_string"></field> -->
+            <field name="group_field_id" eval="ref('web_dynamic_dashboard.field_analysis_account_move_line__move_date')"/>
+            <field name="subgroup_field_id" eval="ref('web_dynamic_dashboard.field_analysis_account_move_line__account_name')"/>
+            <field name="time_calculation_method">cumulative</field>
+            <field name="block_type">line</field>
+            <field name="block_size">2col</field>
+            <field name="active">True</field>
+            <field name="dashboard_id" eval="ref('web_dynamic_dashboard.dashboard_my')"/>
+        </record>
+    </data>
+</odoo>

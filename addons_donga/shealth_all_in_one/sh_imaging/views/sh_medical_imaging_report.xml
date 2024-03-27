@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            string="Imaging Test Report"
+            id="action_report_patient_imaging"
+            model="sh.medical.imaging"
+            report_type="qweb-pdf"
+            name="shealth_all_in_one.report_sh_medical_patient_imaging"
+            file="shealth_all_in_one.report_sh_medical_patient_imaging"
+            paperformat="shealth_all_in_one.sh_paperformat_test_result"
+            menu="False"
+        />
+
+    </data>
+</odoo>

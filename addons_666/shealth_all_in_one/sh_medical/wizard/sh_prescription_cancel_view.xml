@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="sh_medical_prescription_cancel_form_view" model="ir.ui.view">
+            <field name="name">sh.prescription.cancel</field>
+            <field name="model">sh.prescription.cancel</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="cancel" force_save="True" />
+                    </group>
+                    <footer class="text-center">
+                        <button name="set_cancel" string="Hủy" type="object" class="btn-danger"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

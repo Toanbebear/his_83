@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="duoc_report_form">
+            <field name="name">duoc.report.form</field>
+            <field name="model">duoc.report</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo Dược">
+                    <group>
+                        <field name="start_date" string="Ngày bắt đầu"/>
+                        <field name="end_date" string="Ngày kết thúc"/>
+                    </group>
+                    <footer>
+                        <button name="duoc_report" type="object" string="Báo cáo" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="pathology_report_act">
+            <field name="name">Báo cáo Dược</field>
+            <field name="res_model">duoc.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="duoc_report_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="duoc_report"
+                  name="Báo cáo Dược"
+                  parent="shealth_all_in_one.sh_medical_report_menu"
+                  action="pathology_report_act"
+                  sequence="5" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_physician_subclinical,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_accountant,shealth_all_in_one.group_sh_medical_stock_manager"/>
+
+    </data>
+</odoo>

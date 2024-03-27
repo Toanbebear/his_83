@@ -1,0 +1,123 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+
+        <!-- Reception Management -->
+
+        <record id="view_sh_reception_filter" model="ir.ui.view">
+            <field name="name">Đón tiếp</field>
+            <field name="model">sh.reception</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Đón tiếp">
+                    <separator orientation="vertical"/>
+                    <field name="patient"/>
+                    <field name="phone" widget="phone"/>
+                    <filter string="Ngày đón tiếp" name="reception_date" date="reception_date"/>
+                    <filter string="Số điện thoại" name="phone"/>
+                    <newline/>
+                    <group expand="0" string="Group By..." colspan="11" col="11">
+                        <filter name="group_reception_date" string="Ngày đón tiếp" context="{'group_by':'reception_date'}"/>
+                        <filter name="group_phone" string="Số điện thoại" context="{'group_by':'phone'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sh_reception_tree">
+            <field name="name">Danh sách Đón tiếp</field>
+            <field name="model">sh.reception</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string='Danh sách Đón tiếp' duplicate="false" default_order="reception_date desc">
+                    <field name="reception_date"/>
+                    <field name="patient" class="text-uppercase"/>
+                    <field name="sex"/>
+                    <field name="dob"/>
+                    <field name="phone"  widget="phone"/>
+                    <field name="street"/>
+                    <field name="reason"/>
+                    <field name="service_room"/>
+                    <field name="user"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sh_reception_form">
+            <field name="name">Form đón tiếp</field>
+            <field name="model">sh.reception</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Đón tiếp" duplicate="false">
+                    <sheet>
+                        <group string="Thông tin Đón tiếp">
+                            <group>
+                                <field name="patient" class="text-uppercase" attrs="{'readonly':[('close','=',True)]}" options="{'no_create':True,'no_quick_create':True}" required="1"/>
+                                <field name="dob" readonly="1" force_save="1"/>
+                                <field name="sex" readonly="1" force_save="1"/>
+                                <field name="id_card" readonly="1" force_save="1"/>
+                                <field name="phone"  widget="phone" readonly="1" force_save="1"/>
+                                <label for="street" string="Địa chỉ"/>
+                                <div class="o_address_format">
+                                    <field name="street" placeholder="Địa chỉ" class="o_address_street"
+                                           readonly="1" force_save="1"/>
+                                    <field name="state_id" class="o_address_state" placeholder="Thành phố"
+                                           options="{&quot;no_open&quot;: True}" string="Thành phố"
+                                           readonly="1" force_save="1"/>
+                                    <field name="country_id" placeholder="Đất nước" class="o_address_country"
+                                           options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"
+                                           string="Quốc gia" readonly="1" force_save="1"/>
+                                </div>
+                            </group>
+                            <group>
+                                <field name="user" attrs="{'readonly':[('close','=',True)]}"
+                                       options="{'no_create': True, 'no_create_edit':True,'no_open': True,}" required="1"/>
+                                <field name="reception_date" required="1"/>
+                                <field name="advisory"  attrs="{'readonly':[('close','=',True)]}" required="1"
+                                           options="{'no_create': True, 'no_create_edit':True,'no_open': True,}"/>
+                                <field name="reason" invisible="1" attrs="{'readonly':[('close','=',True)]}"/>
+                                <field name="service_room"
+                                       options="{'no_create': True, 'no_create_edit':True,'no_open': True,}"
+                                       required="1" attrs="{'readonly':[('close','=',True)]}"/>
+                                <field name="reason_id" required="True" attrs="{'readonly':[('close','=',True)]}" options="{'no_create': True, 'no_create_edit':True,'no_open': True,}"/>
+                                <field name="close" invisible="1"/>
+                                <field name="walkin_id" widget="many2many_tags" attrs="{'invisible':[('close','=',False)]}" readonly="1" force_save="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="sh_reception_action_view" model="ir.actions.act_window">
+            <field name="name">Đón tiếp</field>
+            <field name="res_model">sh.reception</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_id" eval="False"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Thông tin đón tiếp
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="sh_reception_action_view" id="sh_menu_reception" parent="sh_medical_menu"/>
+
+        <record id="sh_medical_patient_reception_view" model="ir.ui.view">
+                <field name="name">Patient</field>
+                <field name="model">sh.medical.patient</field>
+                <field name="inherit_id" ref="shealth_all_in_one.sh_medical_patient_view"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//sheet//div[hasclass('oe_button_box')]//button[last()]" position="before">
+                        <button groups="shealth_all_in_one.group_sh_medical_receptionist" type="action" class="oe_stat_button" name="%(sh_reception_action_view)d" context="{'search_default_patient': active_id,'default_patient': active_id}" icon="fa-list">
+                            <field string="Đón tiếp" name="reception_count" widget="statinfo"/>
+                        </button>
+                    </xpath>
+                </field>
+            </record>
+
+    </data>
+</openerp>

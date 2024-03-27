@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sh_medical_patient_view_form_inherit" model="ir.ui.view">
+            <field name="name">Patient</field>
+            <field name="model">sh.medical.patient</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_patient_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='general_info']" position="after">
+                    <group >
+                        <field name="weight" />
+                        <field name="height" />
+                        <field name="bmi" />
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

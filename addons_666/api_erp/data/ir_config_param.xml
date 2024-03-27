@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="access_token_expires" model="ir.config_parameter">
+			<field name="key">access_token_expires</field>
+			<field name="value">31536000</field>
+		</record>
+		
+		<record id="access_database_name" model="ir.config_parameter">
+			<field name="key">access_database_name</field>
+			<field name="value">his_83_kn666</field>
+		</record>
+	</data>
+</odoo>

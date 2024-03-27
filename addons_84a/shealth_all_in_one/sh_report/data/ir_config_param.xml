@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+		<record id="da_lieu" model="ir.config_parameter">
+			<field name="key">da_lieu</field>
+			<field name="value">4</field>
+		</record>
+		<record id="gmhs" model="ir.config_parameter">
+			<field name="key">gmhs</field>
+			<field name="value">3</field>
+		</record>
+		<record id="pttm" model="ir.config_parameter">
+			<field name="key">pttm</field>
+			<field name="value">6</field>
+		</record>
+        <record id="rhm" model="ir.config_parameter">
+			<field name="key">rhm</field>
+			<field name="value">5</field>
+		</record>
+	</data>
+</odoo>

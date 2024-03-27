@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+        <record model="sh.medical.degrees" id="deg1">
+            <field name="full_name">Giáo sư, Phó Giáo sư</field>
+            <field name="name">Gs,PGs</field>
+            <field name="education_level">saudaihoc</field>
+            <field name="keyword">GIAO_SU</field>
+        </record>
+        <record model="sh.medical.degrees" id="deg2">
+            <field name="full_name">Tiến sĩ, Phó tiến sĩ</field>
+            <field name="name">Ts,PTs</field>
+            <field name="education_level">saudaihoc</field>
+            <field name="keyword">TIEN_SI</field>
+        </record>
+        <record model="sh.medical.degrees" id="deg3">
+            <field name="full_name">Thạc sĩ</field>
+            <field name="name">Thạc sĩ</field>
+            <field name="education_level">saudaihoc</field>
+            <field name="keyword">THAC_SI</field>
+        </record>
+        <record model="sh.medical.degrees" id="deg4">
+            <field name="full_name">Chuyên Khoa II</field>
+            <field name="name">CKII</field>
+            <field name="education_level">saudaihoc</field>
+            <field name="keyword">CKII</field>
+        </record>
+        <record model="sh.medical.degrees" id="deg5">
+            <field name="full_name">Chuyên Khoa I</field>
+            <field name="name">CKI</field>
+            <field name="education_level">saudaihoc</field>
+            <field name="keyword">CKI</field>
+        </record>
+        <record model="sh.medical.degrees" id="deg6">
+            <field name="full_name">Bác sĩ</field>
+            <field name="name">Bác sĩ</field>
+            <field name="education_level">daihoc</field>
+            <field name="keyword">BAC_SI</field>
+        </record>
+        <record model="sh.medical.degrees" id="deg7">
+            <field name="full_name">Dược sĩ</field>
+            <field name="name">Dược sĩ</field>
+            <field name="education_level">daihoc</field>
+            <field name="keyword">DH_DUOCSI</field>
+        </record>
+        <record model="sh.medical.degrees" id="deg8">
+            <field name="full_name">Y tá Điều Dưỡng</field>
+            <field name="name">Y tá ĐD</field>
+            <field name="education_level">daihoc</field>
+            <field name="keyword">DH_YTA</field>
+        </record>
+        <record model="sh.medical.degrees" id="deg9">
+            <field name="full_name">Y sĩ</field>
+            <field name="name">Y sĩ</field>
+            <field name="education_level">trungcap</field>
+            <field name="keyword">TH_YSI</field>
+        </record>
+        <record model="sh.medical.degrees" id="deg10">
+            <field name="full_name">Kỹ thuật viên</field>
+            <field name="name">KT viên</field>
+            <field name="education_level">trungcap</field>
+            <field name="keyword">TH_KTV</field>
+        </record>
+        <record model="sh.medical.degrees" id="deg11">
+            <field name="full_name">Dược sĩ</field>
+            <field name="name">Dược sĩ</field>
+            <field name="education_level">trungcap</field>
+            <field name="keyword">TH_DUOCSI</field>
+        </record>
+        <record model="sh.medical.degrees" id="deg12">
+            <field name="full_name">Y tá Điều Dưỡng</field>
+            <field name="name">Y tá ĐD</field>
+            <field name="education_level">trungcap</field>
+            <field name="keyword">TH_YTA</field>
+        </record>
+        <record model="sh.medical.degrees" id="deg13">
+            <field name="full_name">Nữ hộ sinh</field>
+            <field name="name">Nữ HS</field>
+            <field name="education_level">trungcap</field>
+            <field name="keyword">TH_NHS</field>
+        </record>
+        <record model="sh.medical.degrees" id="deg15">
+            <field name="full_name">Y tá Điều Dưỡng</field>
+            <field name="name">Y tá ĐD</field>
+            <field name="education_level">socap</field>
+            <field name="keyword">SH_YTA</field>
+        </record>
+        <record model="sh.medical.degrees" id="deg16">
+            <field name="full_name">Nữ hộ sinh</field>
+            <field name="name">Nữ HS</field>
+            <field name="education_level">socap</field>
+            <field name="keyword">SH_NHS</field>
+        </record>
+        <record model="sh.medical.degrees" id="deg14">
+            <field name="full_name">Dược tá</field>
+            <field name="name">Dược tá</field>
+            <field name="education_level">socap</field>
+            <field name="keyword">SH_DUOCTA</field>
+        </record>
+    </data>
+</openerp>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="timekeeping_report_form_2">
+            <field name="name">timekeeping.report</field>
+            <field name="model">timekeeping.report</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo ">
+                    <group>
+                        <field name="department_id" required="1" options="{'no_create': True, 'no_open': True}"/>
+                        <field name="start_year" required="1"/>
+                        <field name="start_month" required="1" />
+                        <field name="end_year" required="1"  invisible="True"/>
+                        <field name="end_month" required="1" invisible="True"/>
+                    </group>
+                    <footer>
+                        <button name="create_report" type="object" string="Báo cáo" class="oe_highlight"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_timekeeping_report_act">
+            <field name="name">Báo cáo chấm công</field>
+            <field name="res_model">timekeeping.report</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="timekeeping_report_form_2"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem   id="menu_report_timekeeping_report"
+                    name="Báo cáo chấm công"
+                    action="action_timekeeping_report_act"
+                    sequence="3"
+                    parent="em_calendar.menu_report"
+        />
+
+        <record id="bao_cao_cham_cong_attachment" model="ir.attachment">
+            <field name="name">BÁO CÁO CHẤM CÔNG</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="em_calendar/static/xls/bao_cao_cham_cong.xlsx"/>
+            <field name="store_fname">bao_cao_cham_cong.xls</field>
+        </record>
+
+    </data>
+</odoo>

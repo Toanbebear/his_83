@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2016, 2019 Openworx.
+    @author Mario Gielissen <mario@openworx.nl>
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+
+<odoo>
+    <data>
+        <template id="assets_backend" name="Call center OMI" inherit_id="web.assets_backend">
+            <xpath expr=".">
+                <link rel="stylesheet" href="/phone_encryption/static/src/scss/style.scss"/>
+                <script type="text/javascript" src="/phone_encryption/static/src/js/phone_field.js"></script>
+            </xpath>
+        </template>
+    </data>
+</odoo>

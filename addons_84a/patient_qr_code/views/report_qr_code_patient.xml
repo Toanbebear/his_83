@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--    Phiếu Thủ thuật   -->
+        <template id="report_sh_medical_surgery_qrcode_document">
+            <t t-call="web.external_layout">
+                <t t-set="doc" t-value="o.with_context({'lang':o.patient.partner_id.lang})"/>
+                <div class="page" style="font-family:Times New Roman;font-size: 17px;">
+                    <div class="oe_structure"/>
+                    <div style="text-align: center; font-size:17px;">
+                        <div>
+                            <t t-if="doc.qr_code_id">
+                                <img t-att-src="'data:image/png;base64,' + doc.qr_code_id.decode('utf-8')" style="width:170px;height:170"/>
+                            </t>
+                        </div>
+                        <div style="text-align: center; font-size: 16x;">
+                            <t t-if="doc.name">
+                                <t t-esc="doc.name"/>
+                            </t>
+                        </div>
+                        <div style="text-align: center; font-size: 16px;">
+                            <t t-if="doc.patient">
+                                <t t-esc="doc.patient.name"/> - <t t-esc="doc.patient.dob.strftime('%Y')"/>
+                            </t>
+                        </div>
+                        <div style="text-align: center; font-size: 16px;">
+                            <t t-if="doc.patient">
+                                Giới tính:
+                                <t t-if="doc.patient.sex == 'Female'">
+                                    Nữ
+                                </t>
+                                <t t-if="doc.patient.sex == 'Male'">
+                                    Nam
+                                </t>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+        <template id="report_sh_medical_surgery_qrcode">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="patient_qr_code.report_sh_medical_surgery_qrcode_document"
+                       t-lang="o.patient.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+        <!--     Phiếu Khám bệnh   -->
+        <template id="report_sh_medical_walkin_qrcode_document">
+            <t t-call="web.external_layout">
+                <t t-set="doc" t-value="o.with_context({'lang':o.patient.partner_id.lang})"/>
+                <div class="page" style="font-family:Times New Roman;font-size: 17px;">
+                    <div class="oe_structure"/>
+                    <div style="text-align: center; font-size:17px;">
+                        <div>
+                            <t t-if="doc.qr_code_id">
+                                <img t-att-src="'data:image/png;base64,' + doc.qr_code_id.decode('utf-8')" style="width:170px;height:170px"/>
+                            </t>
+                        </div>
+                        <div style="text-align: center; font-size: 26px;">
+                            <t t-if="doc.name">
+                                <t t-esc="doc.name"/>
+                            </t>
+                        </div>
+                        <div style="text-align: center; font-size: 16px;">
+                            <t t-if="doc.patient">
+                                <t t-esc="doc.patient.name"/> - <t t-esc="doc.patient.dob.strftime('%Y')"/>
+                            </t>
+                        </div>
+                        <div style="text-align: center; font-size: 16px;">
+                            <t t-if="doc.sex">
+                                Giới tính:
+                                <t t-if="doc.sex == 'Female'">
+                                    Nữ
+                                </t>
+                                <t t-if="doc.sex == 'Male'">
+                                    Nam
+                                </t>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+        <template id="report_sh_medical_walkin_qrcode">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="patient_qr_code.report_sh_medical_walkin_qrcode_document"
+                       t-lang="o.patient.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+        <!--     Bệnh Nhân    -->
+        <template id="report_sh_medical_patient_qrcode_document">
+            <t t-call="web.external_layout">
+                <t t-set="doc" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+                <div class="page" style="font-family:Times New Roman;font-size: 23px;">
+                    <div class="oe_structure"/>
+                    <div class="oe center">
+                        <div style="text-align: center">
+                            <t t-if="doc.qr_code_id">
+                                <img t-att-src="'data:image/png;base64,' + doc.qr_code_id.decode('utf-8')" style="width:170px;height:170px"/>
+                            </t>
+                        </div>
+                        <div style="text-align: center; font-size: 16px;">
+                            <t t-if="doc.name">
+                                <t t-esc="doc.name"/>
+                            </t>
+                        </div>
+                        <div style="text-align: center; font-size: 16px;">
+                            <t t-if="doc.dob">
+                                Ngày sinh:
+                                <t t-esc="doc.dob.strftime('%d/%m/%Y')"/>
+                            </t>
+                        </div>
+                        <div style="text-align: center; font-size: 16px;">
+                            <t t-if="doc.sex">
+                                Giới tính:
+                                <t t-if="doc.sex == 'Female'">
+                                    Nữ
+                                </t>
+                                <t t-if="doc.sex == 'Male'">
+                                    Nam
+                                </t>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+        <template id="report_sh_medical_patient_qrcode">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="patient_qr_code.report_sh_medical_patient_qrcode_document"
+                       t-lang="o.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

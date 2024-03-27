@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_assets_common_custom_fonts" name="Custom QWeb fonts" inherit_id="web.report_assets_common">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/shealth_all_in_one/static/src/css/shealth_report.css"/>
+        </xpath>
+    </template>
+<!--    PHIEU CHI DINH CDHA - TAT CA 1 PHIEU-->
+<template id="report_sh_medical_assign_patient_imaging_document">
+    <t t-call="web.external_layout">
+        <t t-set="o" t-value="docs[0].with_context({'lang':docs[0].patient.partner_id.lang})"/>
+        <div class="page" style="font-family:Times New Roman;font-size:20px;">
+            <div class="oe_structure"/>
+            <div class="row mt32 mb32">
+                <div class="col-5" style="font-size:17px;">
+                    <div class="m-0" style="text-transform: uppercase;font-weight:bold;">Sở Y tế</div>
+                    <div class="m-0" t-field="o.institution.name" style="text-transform: uppercase;font-weight:bold;"/>
+                    <div><span class="m-0" t-field="o.institution.street"/>,
+                        <span class="m-0" t-field="o.institution.street2"/>,
+                        <span class="m-0" t-field="o.institution.city"/>
+                    </div>
+                    <div class="m-0" t-if="o.institution.phone">Hotline: <span t-field="o.institution.phone"/></div>
+                </div>
+                <div class="col-4 text-center">
+                    <div style="font-size: 29px;"><b>PHIẾU CHỈ ĐỊNH CĐHA</b></div>
+                    <div>Số phiếu: <strong t-field="o.name"/></div>
+                </div>
+                <div class="col-3 text-center">
+                    <strong style="font-size:16px;margin-left:35px;">Mã BN: <span t-field="o.patient.identification_code"/></strong>
+                    <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.patient.identification_code, 230, 30)"/>
+                </div>
+            </div>
+
+
+                <t t-if="o.patient">
+                  <div class="col-12">
+                    <span>Mã bệnh nhân:</span>
+                    <span class="" t-field="o.patient.identification_code"/>
+                  </div>
+                  <div class="col-12">
+                    <div style="width:68%;display:inline-block">
+                        <span>Họ tên người bệnh:</span>
+                        <b style="text-transform: uppercase;" class="mr-5" t-field="o.patient.name"/>
+                    </div>
+                    <div style="width:28%;display:inline-block">
+                        <span>Tuổi:</span>
+                        <span class="mr-5" t-field="o.patient.age"/>
+                        <span t-field="o.patient.sex"/>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                      <span>Địa chỉ:</span>
+                      <span t-field="o.patient.street"/>,
+                      <span t-field="o.patient.state_id.name"/>,
+                      <span t-field="o.patient.country_id.name"/>
+                  </div>
+                </t>
+
+                <div t-if="o.service_room" class="col-12">
+                    <span>- Phòng khám:</span>
+                    <span t-field="o.service_room"/>
+                </div>
+                <div t-if="o.pathology" class="col-12">
+                    <span>- Chuẩn đoán:</span>
+                    <span t-field="o.pathology.code"/> - <span class="" t-field="o.pathology.name"/>
+                </div>
+
+
+            <table class="table table-condensed">
+                <thead>
+                    <th class="text-center border border-dark" width="60%"><b>Tên dịch vụ</b></th>
+                    <th class="text-center border border-dark" width="10%"><b>Số lượng</b></th>
+                    <th class="text-center border border-dark" width="15%"><b>Đơn giá</b></th>
+                    <th class="text-center border border-dark" width="20%"><b>Ghi chú</b></th>
+                </thead>
+                <tbody>
+                    <t t-set="img_test_list" t-value="o.imaging_ids.sorted(key=lambda a:(a.group_type))"/>
+                    <t t-set="flag" t-value="0"/>
+                    <t t-foreach="img_test_list" t-as="img_test">
+<!--                        nhóm xét nghiệm-->
+                        <t t-if="flag != img_test.group_type.id">
+                            <t t-set="i" t-value="0"/>
+                            <tr class="text-left" t-if="img_test.group_type.name">
+                                <td colspan="4" class="border border-dark py-0 px-3">
+                                    <b class="m-0" t-field="img_test.group_type.name"/>
+                                </td>
+                            </tr>
+                            <tr class="text-left">
+                                <t t-set="i" t-value="i + 1"/>
+                                <td class="border border-dark py-0 px-3">
+                                    <t t-esc="i"/>. <span class="m-0" t-field="img_test.test_type.name"/>
+                                </td>
+                                <td class="text-center border border-dark py-0 px-3">1</td>
+                                <td class="text-center border border-dark py-0 px-3">
+                                    <span class="m-0" t-field="img_test.test_type.list_price"/>
+                                </td>
+                                <td class="text-center border border-dark py-0 px-3"/>
+                            </tr>
+                            <t t-set="flag" t-value="img_test.group_type.id"/>
+                        </t>
+                        <t t-else="">
+                            <tr class="text-left">
+                                <t t-set="i" t-value="i + 1"/>
+                                <td class="border border-dark py-0 px-3">
+                                    <t t-esc="i"/>. <span class="m-0" t-field="img_test.test_type.name"/>
+                                </td>
+                                <td class="text-center border border-dark py-0 px-3">1</td>
+                                <td class="text-center border border-dark py-0 px-3">
+                                    <span class="m-0" t-field="img_test.test_type.list_price"/>
+                                </td>
+                                <td class="text-center border border-dark py-0 px-3"/>
+                            </tr>
+                            <t t-set="flag" t-value="img_test.group_type.id"/>
+                        </t>
+                    </t>
+                  <tr class="text-center">
+                    <td class="border border-dark py-0 px-3">
+                      <strong>Tổng</strong>
+                    </td>
+                    <td class="border border-dark py-0 px-3">
+                      <strong><t t-esc="len(o.imaging_ids)"/></strong>
+                    </td>
+                    <td class="border border-dark py-0 px-3">
+                      <strong><t t-esc="sum(o.imaging_ids.filtered(lambda price: price.test_type.list_price))"/></strong>
+                    </td>
+                    <td class="border border-dark py-0 px-3"></td>
+                  </tr>
+                </tbody>
+            </table>
+
+            <div class="row">
+                <div class="col-7"/>
+                <div class="col-5 text-center">
+                    <div style="font-size:18px;"><i t-esc="context_timestamp(o.imaging_ids[0].date_requested).strftime('%H:%M Ngày %d tháng %m năm %Y')"/></div>
+                    <strong style="font-size: 22px;">BÁC SĨ CHỈ ĐỊNH</strong>
+                    <div style="height:80px;"/>
+                    <span>Họ tên: </span><span class="m-0" style="font-size: 21px;" t-field="o.doctor.name"/>
+                </div>
+            </div>
+
+            <div class="oe_structure"/>
+        </div>
+   </t>
+</template>
+
+    <!--    PHIEU CHI DINH CDHA - TUNG PHIEU THEO PHONG -->
+<template id="report_sh_medical_assign_patient_imaging_document_multi">
+    <t t-call="web.external_layout">
+<!--        xu ly data truoc khi in phieu-->
+        <t t-set="wk" t-value="docs.with_context({'lang':docs.patient.partner_id.lang})"/>
+        <t t-set="list_img" t-value="wk.imaging_ids"/>
+
+        <t t-foreach="list_img.read_group([('id', 'in', list_img.ids)],['perform_room'],['perform_room'])" t-as="o">
+            <t t-set="room" t-value="list_img.env['sh.medical.health.center.ot'].browse(o['perform_room'][0])"/>
+            <t t-set="lines" t-value="list_img.search([('perform_room', '=', room.id), ('id', 'in', list_img.ids)])"/>
+            <div class="page" style="font-family:Times New Roman;font-size:26px;">
+                <div class="oe_structure"/>
+<!--                <div class="row">-->
+<!--                    <div class="col-3">-->
+<!--                        <img t-if="wk.institution.image" t-att-src="image_data_uri(wk.institution.image)" width="225" border="1"/>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 text-center">-->
+<!--                        <div t-field="wk.institution.name" style="text-transform: uppercase;font-weight: bold;font-size: 21px;"/>-->
+<!--                        <div><span t-field="wk.institution.street"/>,<span class="m-0" t-field="wk.institution.street2"/>,<span class="m-0" t-field="wk.institution.city"/></div>-->
+<!--                    </div>-->
+<!--                    <div class="col-3">-->
+<!--                        <strong style="font-size:16px;margin-left:40px;">Mã BN: <span t-field="wk.patient.identification_code"/></strong>-->
+<!--                        <img class="m-0 p-0" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', wk.patient.identification_code, 230, 30)"/>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                -->
+                <div class="row mt32 mb32">
+                    <div class="col-5" style="font-size: 24px;">
+                        <div class="m-0" style="text-transform: uppercase;font-weight:bold;">Sở y tế</div>
+                        <div class="m-0" t-field="wk.institution.name" style="text-transform: uppercase;font-weight:bold;"/>
+                        <div><span class="m-0" t-field="wk.institution.street"/>
+                        </div>
+                        <div class="m-0" t-if="wk.institution.phone">Hotline: <span t-field="wk.institution.phone"/></div>
+                    </div>
+                    <div class="col-4 text-center">
+                        <div style="font-size: 36px;text-transform: uppercase;font-weight: bold;"><span class="m-0" t-field="room.name"/></div>
+                        <div><b>Phiếu khám:</b> <span class="m-0" t-field="wk.name"/></div>
+                    </div>
+                    <div class="col-3 text-center">
+                        <strong style="font-size:22px;margin-left:30px;">Mã BN: <span t-field="wk.patient.identification_code"/></strong>
+                        <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', wk.patient.identification_code, 320, 40)"/>
+                    </div>
+                </div>
+
+                <t t-if="wk.patient">
+<!--                  <div class="col-12">-->
+<!--                    <span>- Mã bệnh nhân:</span>-->
+<!--                    <strong class="" t-field="wk.patient.identification_code"/>-->
+<!--                  </div>-->
+                  <div class="col-12">
+                        <div style="width:68%;display:inline-block">
+                            <span>- Họ tên người bệnh:</span>
+                            <b style="text-transform: uppercase;" class="mr-5" t-field="wk.patient.name"/>
+                        </div>
+                        <div style="width:28%;display:inline-block">
+                            <span>Tuổi:</span>
+                            <span class="mr-5" t-field="wk.patient.age"/>
+                            <span t-field="wk.patient.sex"/>
+                        </div>
+                  </div>
+                  <div class="col-12">
+                      <div style="display:inline-block;width:68%">
+                          <span>- Địa chỉ:</span>
+                          <span t-field="wk.patient.street"/>,
+                          <span t-field="wk.patient.state_id.name"/>,
+                          <span t-field="wk.patient.country_id.name"/>
+                      </div>
+                      <div style="display:inline-block;width:28%">
+                          <span>- Đối tượng: Dịch vụ</span>
+                      </div>
+                  </div>
+                </t>
+
+                <div t-if="wk.service_room" class="col-12">
+                    <span>- Phòng khám:</span>
+                    <span t-field="wk.service_room"/>
+                </div>
+                <div t-if="wk.pathology" class="col-12">
+                    <span>- Chuẩn đoán:</span>
+                    <span t-field="wk.pathology.code"/> - <span class="" t-field="wk.pathology.name"/>
+                </div>
+
+                <table class="table border border-dark">
+                    <thead>
+                        <th class="text-center border border-dark" width="60%"><b>YÊU CẦU</b></th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="border border-dark">
+                                <div style="min-height:200px;">
+                                    <t t-set="i" t-value="0"/>
+                                    <t t-foreach="lines" t-as="line">
+                                        <t t-set="i" t-value="i + 1"/>
+                                        <div><t t-esc="i"/>. <span t-field="line.test_type.name"/></div>
+                                    </t>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="row">
+                    <div class="col-7">
+                        <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', wk.patient.identification_code, 150, 150)"/>
+                    </div>
+                    <div class="col-5 text-center">
+                        <div style="font-size:24px;"><i t-esc="context_timestamp(lines[0].date_requested).strftime('%H:%M Ngày %d tháng %m năm %Y')"/></div>
+                        <strong style="font-size: 26px;">BÁC SĨ CHỈ ĐỊNH</strong>
+                        <div style="height:100px;"/>
+                        <span>Họ tên: </span><span class="m-0" style="font-size: 26px;" t-field="wk.doctor.name"/>
+                    </div>
+                </div>
+
+                <div class="oe_structure"/>
+            </div>
+            <p style="page-break-before:always;"> </p>
+        </t>
+   </t>
+</template>
+
+<!--    PHIEU CHI DINH CDHA - TAT CA 1 PHIEU-->
+<template id="report_sh_medical_assign_patient_imaging">
+    <t t-call="web.html_container">
+        <t t-if="docs">
+            <t t-call="shealth_all_in_one.report_sh_medical_assign_patient_imaging_document" t-lang="docs[0].patient.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+
+<!--    PHIEU CHI DINH CDHA - TUNG PHIEU -->
+<template id="report_sh_medical_assign_patient_imaging_multi">
+    <t t-call="web.html_container">
+        <t t-if="docs">
+            <t t-call="shealth_all_in_one.report_sh_medical_assign_patient_imaging_document_multi" t-lang="docs[0].patient.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+
+<!--    PHIEU KET QUA CDHA-->
+<template id="report_sh_medical_result_patient_imaging_multi">
+    <t t-call="web.html_container">
+        <t t-set="wk" t-value="docs.with_context({'lang':docs.patient.partner_id.lang})"/>
+        <t t-set="list_lt" t-value="wk.imaging_ids"/>
+<!--        <t t-foreach="list_lt" t-as="o">-->
+            <t t-call="shealth_all_in_one.report_sh_medical_patient_imaging_document"/>
+<!--        </t>-->
+    </t>
+</template>
+
+</odoo>

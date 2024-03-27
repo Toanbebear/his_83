@@ -1,0 +1,378 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* muk_web_utils
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-04-29 04:38+0000\n"
+"PO-Revision-Date: 2020-04-29 04:38+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/js/fields/color.js:113
+#, python-format
+msgid "'%s' is not a correct color index (0-12)"
+msgstr "'%s' không phải là một mã màu chính xác (0-12)"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/js/fields/color.js:68
+#, python-format
+msgid "'%s' is not a correct color value"
+msgstr "'%s' không phải là một giá trị màu chính xác"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/js/fields/share.js:175
+#, python-format
+msgid "<%= name %> shared a file!"
+msgstr "<%= name %> chia sẻ tập tin!"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/js/fields/share.js:115
+#: code:addons/muk_web_utils/static/src/js/fields/share.js:144
+#, python-format
+msgid "<%= name %> shared a message!"
+msgstr "<%= name %> chia sẻ tin nhắn"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/js/fields/share.js:116
+#: code:addons/muk_web_utils/static/src/js/fields/share.js:145
+#: code:addons/muk_web_utils/static/src/js/fields/share.js:176
+#, python-format
+msgid "<%= value %>"
+msgstr ""
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/js/widgets.js:169
+#, python-format
+msgid "A model have to be set before searching!"
+msgstr ""
+
+#. module: muk_web_utils
+#: model:ir.model,name:muk_web_utils.model_ir_attachment
+msgid "Attachment"
+msgstr "Đính kèm"
+
+#. module: muk_web_utils
+#: model:ir.model.fields,help:muk_web_utils.field_ir_attachment__temporary
+msgid "Attachments will be deleted by Autovacuum."
+msgstr ""
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/js/core/dialog.js:51
+#: code:addons/muk_web_utils/static/src/js/fields/module.js:50
+#, python-format
+msgid "Cancel"
+msgstr ""
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/xml/module.xml:30
+#, python-format
+msgid "Click on the download button to be redirected to the store and download the corresponding module."
+msgstr "Click vào nút tải xuống để được chuyển hướng đến store và tải xuống mô-đun tương ứng"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/xml/color.xml:46
+#, python-format
+msgid "Color 0"
+msgstr "Màu 0"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/xml/color.xml:47
+#, python-format
+msgid "Color 1"
+msgstr "Màu 1"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/xml/color.xml:56
+#, python-format
+msgid "Color 10"
+msgstr "Màu 10"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/xml/color.xml:57
+#, python-format
+msgid "Color 11"
+msgstr "Màu 11"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/xml/color.xml:48
+#, python-format
+msgid "Color 2"
+msgstr "Màu 2"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/xml/color.xml:49
+#, python-format
+msgid "Color 3"
+msgstr "Màu 3"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/xml/color.xml:50
+#, python-format
+msgid "Color 4"
+msgstr "Màu 4"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/xml/color.xml:51
+#, python-format
+msgid "Color 5"
+msgstr "Màu 5"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/xml/color.xml:52
+#, python-format
+msgid "Color 6"
+msgstr "Màu 6"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/xml/color.xml:53
+#, python-format
+msgid "Color 7"
+msgstr "Màu 7"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/xml/color.xml:54
+#, python-format
+msgid "Color 8"
+msgstr "Màu 8"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/xml/color.xml:55
+#, python-format
+msgid "Color 9"
+msgstr "Màu 9"
+
+#. module: muk_web_utils
+#: model:ir.model,name:muk_web_utils.model_res_config_settings
+msgid "Config Settings"
+msgstr "Cấu hình thiết lập"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/js/fields/module.js:45
+#: code:addons/muk_web_utils/static/src/xml/share.xml:97
+#, python-format
+msgid "Download"
+msgstr ""
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/js/core/dropzone.js:108
+#, python-format
+msgid "Drop files here to upload!"
+msgstr "Kéo tập tin vào đây để tải lên!"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/xml/share.xml:45
+#, python-format
+msgid "External"
+msgstr "Bên ngoài"
+
+#. module: muk_web_utils
+#: model:ir.model.fields,field_description:muk_web_utils.field_res_config_settings__binary_max_size
+msgid "File Size Limit"
+msgstr "Giới hạn kích thước tệp"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/xml/share.xml:35
+#, python-format
+msgid "Internal"
+msgstr "Nội bộ/Bên trong"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/js/fields/copy.js:107
+#, python-format
+msgid "Link Copied!"
+msgstr "Liên kết đã được sao chép"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/xml/share.xml:48
+#, python-format
+msgid "Mail"
+msgstr ""
+
+#. module: muk_web_utils
+#: model_terms:ir.ui.view,arch_db:muk_web_utils.res_config_settings_view_form
+msgid "Maximum allowed file size in MB"
+msgstr "Kích thước tệp tối đa cho phép tính bằng MB"
+
+#. module: muk_web_utils
+#: model:ir.model.fields,help:muk_web_utils.field_res_config_settings__binary_max_size
+msgid "Maximum allowed file size in megabytes. Note that this setting only adjusts\n"
+"            the binary widgets accordingly. The maximum file size on your server can probably\n"
+"            be restricted in several places. Note that a large file size limit and therefore\n"
+"            large files in your system can significantly limit performance."
+msgstr "Kích thước tệp tối đa được phép tính bằng megabyte. Lưu ý rằng cài đặt này chỉ điều chỉnh\n"
+"            các widget nhị phân phù hợp. Kích thước tệp tối đa trên máy chủ của bạn có thể \n"
+"            bị hạn chế ở một vài nơi. Lưu ý rằng giới hạn kích thước tệp lớn và do đó\n"
+"            các tệp lớn trong hệ thống của bạn có thể hạn chế đáng kể hiệu suất."
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/xml/share.xml:38
+#, python-format
+msgid "Message"
+msgstr "Tin nhắn"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/js/fields/module.js:59
+#: code:addons/muk_web_utils/static/src/xml/module.xml:26
+#, python-format
+msgid "Missing Module"
+msgstr "Thiếu mô-đun"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/xml/share.xml:42
+#, python-format
+msgid "Note"
+msgstr "Ghi chú"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/xml/share.xml:83
+#, python-format
+msgid "Open"
+msgstr ""
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/js/core/dialog.js:45
+#, python-format
+msgid "Save"
+msgstr ""
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/js/widgets.js:147
+#, python-format
+msgid "Search More..."
+msgstr ""
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/js/widgets.js:180
+#, python-format
+msgid "Search: "
+msgstr ""
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/js/fields/domain.js:52
+#, python-format
+msgid "Selected records"
+msgstr ""
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/xml/share.xml:52
+#, python-format
+msgid "Send"
+msgstr ""
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/xml/share.xml:27
+#, python-format
+msgid "Share"
+msgstr ""
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/js/fields/module.js:74
+#, python-format
+msgid "Store"
+msgstr ""
+
+#. module: muk_web_utils
+#: model:ir.model.fields,field_description:muk_web_utils.field_ir_attachment__temporary
+msgid "Temporary"
+msgstr ""
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/js/fields/copy.js:35
+#, python-format
+msgid "The field '%s' must be a binary field with an set attachment flag for the share widget to work."
+msgstr "Trường '%s' phải là trường nhị phân với cờ đính kèm được đặt để tiện ích chia sẻ hoạt động "
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/xml/module.xml:29
+#, python-format
+msgid "The module could not be found on the server."
+msgstr "Các mô-đun không thể được tìm thấy trên máy chủ."
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/js/widgets.js:54
+#, python-format
+msgid "The type of the field '%s' must be a integer field with a model attribute."
+msgstr ""
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/js/core/async.js:46
+#, python-format
+msgid "Upload"
+msgstr "Tải lên"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/js/core/async.js:47
+#, python-format
+msgid "Uploading..."
+msgstr ""
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/xml/share.xml:95
+#, python-format
+msgid "shared a file with you!"
+msgstr "chia sẻ tập tin này với bạn!"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/xml/share.xml:81
+#, python-format
+msgid "shared a link with you!"
+msgstr "chia sẻ liên kết này với bạn!"
+
+#. module: muk_web_utils
+#. openerp-web
+#: code:addons/muk_web_utils/static/src/xml/share.xml:87
+#, python-format
+msgid "shared a message with you!"
+msgstr "chia sẻ tin nhắn này với bạn!"

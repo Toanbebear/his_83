@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+<!--<t t-name="UserMenu.Actions">-->
+<!--    <div role="separator" class="dropdown-divider"/>-->
+<!--    <a role="menuitem" href="#" data-menu="settings" class="dropdown-item">Preferences</a>-->
+<!--    <a role="menuitem" href="#" data-menu="logout" class="dropdown-item">Log out</a>-->
+<!--</t>-->
+
+<t t-name="Menu.link">
+    <t t-set="depth" t-value="(depth || 0) + 1"/>
+
+    <t t-if="!menu.children.length">
+        <t t-set="_link">
+            <a role="menuitem" t-attf-href="#menu_id=#{menu.id}&amp;action=#{menu.action ? menu.action.split(',')[1] : ''}"
+                t-att-data-menu="menu.id"
+                t-att-data-action-model="menu.action ? menu.action.split(',')[0] : ''"
+                t-att-data-action-id="menu.action ? menu.action.split(',')[1] : ''"
+                t-att-data-menu-xmlid="menu.xmlid"
+                t-attf-class="#{inNavbar ? '' : 'dropdown-item '}o_menu_entry_lvl_#{depth}"
+                data-toggle="collapse" data-target="#o_navbar_collapse.in">
+                <span><i t-if="menu.web_icon_class" t-attf-class="fa #{menu.web_icon_class}"></i> <t t-esc="menu.name"/></span>
+            </a>
+        </t>
+        <li t-if="inNavbar">
+            <t t-raw="_link"/>
+        </li>
+        <t t-else="">
+            <t t-raw="_link"/>
+        </t>
+    </t>
+    <t t-else="">
+        <div t-attf-class="dropdown-header o_menu_header_lvl_#{depth}">
+            <span><i t-if="menu.web_icon_class" t-attf-class="fa #{menu.web_icon_class}"></i> <t t-esc="menu.name"/></span>
+        </div>
+        <t t-foreach="menu.children" t-as="menu">
+            <t t-call="Menu.link"/>
+        </t>
+    </t>
+</t>
+
+<t t-name="Menu.sections" t-extend="Menu.sections">
+    <t t-jquery=".o_menu_header_lvl_1" t-operation="replace">
+        <a href="#" class="dropdown-toggle o-no-caret o_menu_header_lvl_1" t-att-data-menu-xmlid="second_level_menu.xmlid" data-toggle="dropdown" data-display="static" role="button" aria-expanded="false">
+            <i t-if="second_level_menu.web_icon_class" t-attf-class="#{second_level_menu.web_icon_class}"></i> <t t-esc="second_level_menu.name"/>
+        </a>
+    </t>
+</t>
+
+
+</templates>

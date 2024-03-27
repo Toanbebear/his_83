@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="quick_add_stock_scrap_form">
+            <field name="name">quick.add.stock.scrap.form</field>
+            <field name="model">quick.add.stock.scrap</field>
+            <field name="arch" type="xml">
+                <form string="Thêm xuất nhanh sử dụng phòng/Tiêu hủy">
+                    <group>
+                        <field name="type" invisible="1" required="1" groups="shealth_all_in_one.group_sh_medical_stock_manager"/>
+                        <field name="date_done" required="1"/>
+                        <field name="room" options="{'no_create':True,'no_open':True}" force_save="1" required="1"/>
+                        <field name="scrap_location"  invisible="1"/>
+                        <field name="location_id"  invisible="1"/>
+                        <field name="note" invisible="1"/>
+                    </group>
+                     <notebook>
+                        <page string="Chi tiết">
+                            <field name="scrap_product_line"  nolabel="1" widget="one2many" context="{'view_only_name':True, 'default_sci_date_done': date_done, 'default_location_id': location_id, 'default_note': note,'default_room_use': room,'default_scrap_location_id': scrap_location,'type_stock_scrap': type}">
+                                <tree editable="bottom" decoration-warning="state == 'draft'" delete="1">
+                                    <field name="name" invisible="1"/>
+                                    <field name="sci_date_done" readonly="1" force_save="1" invisible="1"/>
+                                    <field name="product_id" options="{'no_create':True,'no_open':True}" width="500" required="1"/>
+                                    <field name="scrap_qty" width="100"/>
+                                    <field name="product_uom_id" readonly="1" force_save="1" width="100"/>
+                                    <field name="location_id" force_save="1" required="1" string="Tủ Xuất" context="{'view_only_name':True}" options="{'no_create':True,'no_open':True}"/>
+                                    <field name="room_use" invisible="1" readonly="1" force_save="1" />
+                                    <field name="note" invisible="1" readonly="1" force_save="1"/>
+                                    <field name="lot_id" options="{'no_create':True,'no_open':True}" string="Lô hàng" attrs="{'invisible': ['|',('product_id', '=', False),('tracking', '=', 'none')], 'required': [('tracking', '!=', 'none')]}" />
+                                    <field name="tracking" invisible="1"/>
+                                     <field name="qty_in_loc" readonly="1" force_save="1" width="100"/>
+                                    <field name="scrap_location_id" width="100" force_save="1" readonly="1" invisible="1" context="{'view_only_name':True}" options="{'no_create':True,'no_open':True}"/>
+                                    <field name="state" readonly="1" force_save="1" invisible="1" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button name="quick_add" type="object" string="Lưu" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="quick_add_room_use_act">
+            <field name="name">Thêm nhanh Xuất sử dụng phòng</field>
+            <field name="res_model">quick.add.stock.scrap</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="quick_add_stock_scrap_form"/>
+            <field name="context">{'view_for':'picking_scrap_room_use','type_stock_scrap': 'room_use','default_type': 'room_use'}</field>
+            <field name="target">new</field>
+        </record>
+        <menuitem id="quick_add_room_use_menu"
+                    name="Thêm nhanh Xuất SDP"
+                    parent="shealth_all_in_one.sci_menu_stock_operations"
+                    action="quick_add_room_use_act"
+                    sequence="3"/>
+         <record id="quick_add_room_use_menu" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-plus</field>
+        </record>
+    </data>
+</odoo>

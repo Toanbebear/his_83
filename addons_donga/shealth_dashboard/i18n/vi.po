@@ -1,0 +1,57 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* shealth_dashboard
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-04-29 03:31+0000\n"
+"PO-Revision-Date: 2020-04-29 03:31+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shealth_dashboard
+#: model:ir.model.fields,field_description:shealth_dashboard.field_analysis_shealth_services_walkin__patient
+msgid "Bệnh nhân"
+msgstr ""
+
+#. module: shealth_dashboard
+#: model:ir.model.fields,field_description:shealth_dashboard.field_analysis_shealth_services_walkin__display_name
+msgid "Display Name"
+msgstr "Tên hiển thị"
+
+#. module: shealth_dashboard
+#: model:ir.model.fields,field_description:shealth_dashboard.field_analysis_shealth_services_walkin__id
+msgid "ID"
+msgstr ""
+
+#. module: shealth_dashboard
+#: model:ir.model.fields,field_description:shealth_dashboard.field_analysis_shealth_services_walkin____last_update
+msgid "Last Modified on"
+msgstr "Sửa lần cuối vào"
+
+#. module: shealth_dashboard
+#: model:ir.model.fields,field_description:shealth_dashboard.field_analysis_shealth_services_walkin__walkin_date
+msgid "Ngày khám"
+msgstr ""
+
+#. module: shealth_dashboard
+#: model:ir.model,name:shealth_dashboard.model_analysis_shealth_services_walkin
+msgid "Phân tích: Dịch vụ theo phiếu khám bệnh"
+msgstr ""
+
+#. module: shealth_dashboard
+#: model:ir.model.fields,field_description:shealth_dashboard.field_analysis_shealth_services_walkin__room_name
+msgid "Phòng khám"
+msgstr ""
+
+#. module: shealth_dashboard
+#: model:ir.model.fields,field_description:shealth_dashboard.field_analysis_shealth_services_walkin__product_name
+msgid "Sản phẩm"
+msgstr ""
+

@@ -1,0 +1,585 @@
+<?xml version="1.0" ?>
+<odoo>
+        <data>
+
+            <!-- Medicines -->
+
+            <record model="ir.ui.view" id="sh_medical_medicines_view">
+                <field name="name">Medicines</field>
+                <field name="model">sh.medical.medicines</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                    <form string="Medicines">
+                        <sheet>
+                            <div class="oe_button_box" name="button_box">
+                                <button class="oe_stat_button" name="action_open_quants" icon="fa-building-o" type="object" attrs="{'invisible':[('type', '!=', 'product')]}">
+                                   <div class="o_field_widget o_stat_info">
+                                        <span class="o_stat_value">
+                                            <field name="qty_available" widget="statinfo" nolabel="1" class="mr4"/>
+                                            <field name="uom_name"/>
+                                        </span>
+                                        <span class="o_stat_text">Thực tế</span>
+                                   </div>
+                                </button>
+<!--                                <button string="Truy vết" type="object" name="action_view_stock_move_lines" attrs="{'invisible':[('type', 'not in', ['product', 'consu'])]}" class="oe_stat_button" icon="fa-arrows-v" groups="stock.group_stock_user"/>-->
+                                <button type="object" name="action_view_orderpoints" attrs="{'invisible':['|',('type', '!=', 'product'),('nbr_reordering_rules', '==', 1)]}" class="oe_stat_button" icon="fa-refresh">
+                                    <field name="nbr_reordering_rules" string="Cơ số theo các Tủ" widget="statinfo"/>
+                                </button>
+                                <button name="action_view_orderpoints" type="object" attrs="{'invisible':['|',('type', 'not in', ['product', 'consu']),('nbr_reordering_rules', '!=', 1)]}" class="oe_stat_button" icon="fa-refresh">
+                                    <div class="o_field_widget o_stat_info mr4">
+                                        <span class="o_stat_text">Tối thiểu:</span>
+                                        <span class="o_stat_text">Tối đa:</span>
+                                    </div>
+                                    <div class="o_field_widget o_stat_info">
+                                        <span class="o_stat_value"><field name="reordering_min_qty"/></span>
+                                        <span class="o_stat_value"><field name="reordering_max_qty"/></span>
+                                    </div>
+                                </button>
+                                <button string="Số Lô/Seri" type="object" name="action_open_product_lot" attrs="{'invisible': [('tracking', '=', 'none')]}" class="oe_stat_button" icon="fa-bars" groups="stock.group_production_lot"/>
+                            </div>
+                            <field name="image_medium" widget="image" class="oe_avatar"/>
+                            <div class="oe_left" style="width: 500px;">
+                                <div class="oe_title" style="width: 390px;">
+                                    <label class="oe_edit_only" for="name" string="Tên theo hóa đơn"/>
+                                    <h1><field name="name" class="oe_inline"/></h1>
+                                </div>
+                            </div>
+                            <group>
+                                <group string="Thông tin chung">
+                                    <field name="name_use" required="1"/>
+                                    <field name="tracking" invisible="1"/>
+                                    <field name="type" invisible="1"/>
+                                    <field name="default_code" required="1"/>
+                                    <field name="medicine_category_id" string="Nhóm"/>
+                                    <field name="categ_id" string="Nhóm sản phẩm kho" readonly="1" force_save="1" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="therapeutic_action" attrs="{'invisible': [('medicament_type','!=','Vaccine')]}"/>
+                                    <field name="pregnancy_warning" attrs="{'invisible': [('medicament_type','!=','Vaccine')]}"/>
+                                    <field name="uom_id" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="uom_po_id" options="{'no_open':True,'no_create':True}" force_save="1"/>
+                                    <field name="medicament_type" required="1" invisible="1" force_save="1"/>
+                                    <field name="qty_available"/>
+                                </group>
+                                <group string="Thông tin thành phần">
+                                    <field name="name_medicine" attrs="{'invisible': [('medicament_type','!=','Medicine')]}"/>
+                                    <field name="atc_code" attrs="{'invisible': [('medicament_type','!=','Medicine')]}"/>
+                                    <field name="composition_index" attrs="{'invisible': [('medicament_type','!=','Medicine')]}"/>
+                                    <field name="index_medicine" attrs="{'invisible': [('medicament_type','!=','Medicine')]}"/>
+                                    <field name="composition"/>
+                                    <field name="concentration"/>
+                                </group>
+                            </group>
+<!--                            <group>-->
+<!--                                <field name="list_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>-->
+<!--                                <field name="currency_id"/>-->
+<!--                                <field name="item_ids" mode="tree,kanban" invisible="1" context="{'default_base':'list_price', 'default_applied_on' :'1_product'}">-->
+<!--                                    <tree string="Pricelist Items" editable="bottom">-->
+<!--                                        <field name="pricelist_id" string="Pricelist" required="1"/>-->
+<!--                                        <field name="currency_id" invisible="1"/>-->
+<!--                                        <field name="fixed_price" string="Price" required="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>-->
+<!--                                        <field name="min_quantity"/>-->
+<!--                                        <field name="date_start"/>-->
+<!--                                        <field name="date_end"/>-->
+<!--                                        <field name="applied_on" invisible="1"/>-->
+<!--                                    </tree>-->
+<!--                                    <kanban string="Pricelist Items" class="o_kanban_mobile">-->
+<!--                                       <field name="pricelist_id"/>-->
+<!--                                       <field name="currency_id"/>-->
+<!--                                       <field name="fixed_price"/>-->
+<!--                                       <field name="min_quantity"/>-->
+<!--                                       <field name="date_start"/>-->
+<!--                                       <field name="date_end"/>-->
+<!--                                       <templates>-->
+<!--                                           <t t-name="kanban-box">-->
+<!--                                               <div t-attf-class="oe_kanban_global_click">-->
+<!--                                                   <div class="row">-->
+<!--                                                       <div class="col-12">-->
+<!--                                                           <strong>-->
+<!--                                                               <field name="pricelist_id"/>: <field name="fixed_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>-->
+<!--                                                           </strong>-->
+<!--                                                       </div>-->
+<!--                                                   </div>-->
+<!--                                                   <div class="row">-->
+<!--                                                       <div class="col-12">-->
+<!--                                                           <span><t t-esc="record.min_quantity.string"/>: <t t-esc="record.min_quantity.value"/></span>-->
+<!--                                                       </div>-->
+<!--                                                   </div>-->
+<!--                                                   <span t-if="record.date_start.value || record.date_end.value">-->
+<!--                                                    <div class="row">-->
+<!--                                                        <div class="col-12">-->
+<!--                                                            Valid <span t-if="record.date_start.value"> from <t t-esc="record.date_start.value"/></span><span t-if="record.date_end.value"> until <t t-esc="record.date_end.value"/></span>-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
+<!--                                                   </span>-->
+<!--                                               </div>-->
+<!--                                           </t>-->
+<!--                                       </templates>-->
+<!--                                   </kanban>-->
+<!--                                   <form string="Pricelist Items">-->
+<!--                                       <h1><field name="name"/></h1>-->
+<!--                                       <group>-->
+<!--                                           <group>-->
+<!--                                               <field name="applied_on" invisible="1"/>-->
+<!--                                               <field name="pricelist_id" string="Pricelist" required="1"/>-->
+<!--                                               <field name="currency_id" invisible="1"/>-->
+<!--                                               <field name="fixed_price" string="Price" required="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>-->
+<!--                                           </group>-->
+<!--                                           <group>-->
+<!--                                               <field name="min_quantity"/>-->
+<!--                                               <field name="date_start"/>-->
+<!--                                               <field name="date_end"/>-->
+<!--                                           </group>-->
+<!--                                       </group>-->
+<!--                                   </form>-->
+<!--                                </field>-->
+<!--                            </group>-->
+                            <group>
+                                <group>
+                                    <field name="overdosage" invisible="1"/>
+                                    <field name="pregnancy" invisible="1"/>
+                                    <field name="adverse_reaction" invisible="1"/>
+                                    <field name="registration_code"/>
+                                    <field name="info"/>
+                                    <field name="code_national"/>
+                                    <field name="national_prescription"/>
+                                </group>
+                                <group>
+                                    <field name="origin"/>
+                                    <field name="production_company"/>
+                                    <field name="indications" string="Đường dùng"/>
+                                    <field name="dosage"/>
+                                    <field name="storage"/>
+                                </group>
+                            </group>
+<!--                            <group attrs="{'invisible': [('medicament_type','=','Medicine')]}">-->
+<!--                                <field name="info"/>-->
+<!--                            </group>-->
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_medicines_tree">
+                <field name="name">Medicines</field>
+                <field name="model">sh.medical.medicines</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string="Medicines">
+                        <field name="medicine_category_id"/>
+                        <field name="default_code"/>
+                        <field name="name"/>
+                        <field name="name_use"/>
+                        <field name="name_medicine"/>
+                        <field name="indications" string="Đường dùng"/>
+                        <field name="composition"/>
+                        <field name="concentration"/>
+                        <field name="origin"/>
+                        <field name="uom_id"/>
+                        <field name="medicament_type" invisible="1"/>
+                        <field name="therapeutic_action" invisible="1"/>
+                        <field name="pregnancy_warning" invisible="1"/>
+                        <field name="lst_price" invisible="1"/>
+                        <field name="qty_available"/>
+                    </tree>
+                </field>
+            </record>
+
+             <record id="view_medical_medicines_filter" model="ir.ui.view">
+                <field name="name">Medicine Search</field>
+                <field name="model">sh.medical.medicines</field>
+                <field name="priority" eval="8" />
+			    <field name="arch" type="xml">
+                    <search string="Medicines">
+                        <field name="default_code"/>
+                        <field name="name"/>
+                        <field name="name_use"/>
+                        <field name="composition"/>
+                        <field name="medicine_category_id"/>
+                        <group expand="0" string="Group By..." colspan="11" col="11">
+                            <filter name="group_medicine_category1" string="Nhóm danh mục" context="{'group_by':'medicine_category_id'}"/>
+                        </group>
+				    </search>
+                </field>
+            </record>
+
+            <record id="sh_medical_medicines_action_tree" model="ir.actions.act_window">
+                    <field name="name">Medicines</field>
+                    <field name="res_model">sh.medical.medicines</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                    <field name="domain">[('medicament_type','=','Medicine')]</field>
+<!--                    <field name="context" eval="{'default_medicament_type':'Medicine','default_categ_id': ref('shealth_all_in_one.sh_medicines')}"/>-->
+                    <field name="context" eval="{'default_medicament_type':'Medicine','search_default_group_medicine_category1': True}"/>
+                    <field name="search_view_id" ref="view_medical_medicines_filter"/>
+                    <field name="view_id" ref="sh_medical_medicines_tree"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to add a new medicine product.
+                      </p>
+                    </field>
+            </record>
+
+            <menuitem action="sh_medical_medicines_action_tree" id="sh_medical_medicines_list" parent="sh_medical_conf_medicaments" sequence="4"/>
+            <record id="sh_medical_medicines_list" model="ir.ui.menu">
+                <field name="web_icon_class">fa fa-medkit</field>
+            </record>
+
+<!--            VACCINES-->
+
+            <record model="ir.ui.view" id="sh_medical_vaccines_tree">
+                <field name="name">Vaccines</field>
+                <field name="model">sh.medical.medicines</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string="Vaccines">
+                        <field name="default_code"/>
+                        <field name="name"/>
+                        <field name="medicament_type"/>
+                        <field name="lst_price"/>
+                        <field name="info"/>
+                    </tree>
+                </field>
+            </record>
+
+             <record id="view_medical_vaccines_filter" model="ir.ui.view">
+                <field name="name">Vaccine Search</field>
+                <field name="model">sh.medical.medicines</field>
+                <field name="priority" eval="8" />
+			    <field name="arch" type="xml">
+                    <search string="Vaccines">
+                        <field name="default_code"/>
+                        <field name="name"/>
+                        <field name="medicament_type"/>
+				    </search>
+                </field>
+            </record>
+
+            <record id="sh_medical_vaccines_action_treeview" model="ir.actions.act_window">
+                    <field name="name">Vaccines</field>
+                    <field name="res_model">sh.medical.medicines</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                    <field name="domain">[('medicament_type','=','Vaccine')]</field>
+                    <field name="context">{"search_default_medicament_type":"Vaccine"}</field>
+                    <field name="search_view_id" ref="view_medical_vaccines_filter"/>
+                    <field name="view_id" ref="sh_medical_vaccines_tree"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to add a new vaccines product.
+                      </p>
+                    </field>
+            </record>
+
+<!--            <menuitem action="sh_medical_vaccines_action_treeview" id="sh_medical_vaccines_listview" parent="sh_medical_conf_medicaments" sequence="2"/>-->
+
+            <!--  SUPPLIES -->
+
+            <record model="ir.ui.view" id="sh_medical_supplies_tree">
+                <field name="name">Supplies</field>
+                <field name="model">sh.medical.medicines</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string="Supplies">
+                        <field name="medicine_category_id"/>
+                        <field name="default_code"/>
+                        <field name="name"/>
+                        <field name="name_use"/>
+                        <field name="origin"/>
+                        <field name="uom_id"/>
+                        <field name="medicament_type" invisible="1"/>
+                        <field name="lst_price" invisible="1"/>
+                        <field name="qty_available"/>
+                    </tree>
+                </field>
+            </record>
+
+             <record id="view_medical_supplies_filter" model="ir.ui.view">
+                <field name="name">Supplies Search</field>
+                <field name="model">sh.medical.medicines</field>
+                <field name="priority" eval="8" />
+			    <field name="arch" type="xml">
+                    <search string="Supplies">
+                        <field name="default_code"/>
+                        <field name="name"/>
+                        <field name="name_use"/>
+                        <field name="medicine_category_id"/>
+                        <group expand="0" string="Group By..." colspan="11" col="11">
+                            <filter name="group_medicine_category" string="Nhóm danh mục" context="{'group_by':'medicine_category_id'}"/>
+                        </group>
+				    </search>
+                </field>
+            </record>
+
+            <record id="sh_medical_supplies_action_treeview" model="ir.actions.act_window">
+                    <field name="name">Supplies</field>
+                    <field name="res_model">sh.medical.medicines</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                    <field name="domain">[('medicament_type','=','Supplies')]</field>
+                    <field name="context" eval="{'default_medicament_type':'Supplies','search_default_group_medicine_category': True}"/>
+<!--                    <field name="context" eval="{'default_medicament_type':'Supplies'}"/>-->
+                    <field name="search_view_id" ref="view_medical_supplies_filter"/>
+                    <field name="view_id" ref="sh_medical_supplies_tree"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to add a new supplies product.
+                      </p>
+                    </field>
+            </record>
+
+            <menuitem action="sh_medical_supplies_action_treeview" id="sh_medical_supplies_listview" parent="sh_medical_conf_medicaments" sequence="2"/>
+            <record id="sh_medical_supplies_listview" model="ir.ui.menu">
+                <field name="web_icon_class">fa fa-cubes</field>
+            </record>
+
+            <!-- Dose Units -->
+
+            <record model="ir.ui.view" id="sh_medical_dose_unit_tree">
+                <field name="name">Dose Units</field>
+                <field name="model">sh.medical.dose.unit</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string='Dose Units' editable="top">
+                        <field name="name"/>
+                        <field name="desc"/>
+                    </tree>
+                </field>
+            </record>
+
+             <record id="view_medical_dose_unit_filter" model="ir.ui.view">
+                <field name="name">Dose Units</field>
+                <field name="model">sh.medical.dose.unit</field>
+                <field name="type">search</field>
+                <field name="arch" type="xml">
+                    <search string="Search Units">
+                        <separator orientation="vertical"/>
+                        <field name="name" select="1"/>
+                        <field name="desc" select="1"/>
+                    </search>
+                </field>
+            </record>
+
+            <record id="sh_medical_dose_unit_action_tree" model="ir.actions.act_window">
+                    <field name="name">Dose Units</field>
+                    <field name="res_model">sh.medical.dose.unit</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                    <field name="domain">[]</field>
+                    <field name="context">{}</field>
+                    <field name="view_id" eval="False"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to add a new dose unit.
+                      </p><p>
+                        With shealth dose unit screen, you can add various units types which will
+                        be used while creating prescriptions.
+                      </p>
+                    </field>
+            </record>
+
+<!--            <menuitem action="sh_medical_dose_unit_action_tree" id="sh_medical_dose_unit_list" parent="sh_medical_conf_medicaments" sequence="3"/>-->
+
+            <!-- Drug Routes -->
+
+            <record model="ir.ui.view" id="sh_medical_drug_route_tree">
+                <field name="name">Drug Routes</field>
+                <field name="model">sh.medical.drug.route</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string='Drug Routes' editable="top">
+                        <field name="name"/>
+                        <field name="code"/>
+                    </tree>
+                </field>
+            </record>
+
+             <record id="view_medical_drug_routes_filter" model="ir.ui.view">
+                <field name="name">Drug Routes</field>
+                <field name="model">sh.medical.drug.route</field>
+                <field name="type">search</field>
+                <field name="arch" type="xml">
+                    <search string="Search Routes">
+                        <separator orientation="vertical"/>
+                        <field name="name" select="1"/>
+                        <field name="code" select="1"/>
+                    </search>
+                </field>
+            </record>
+
+            <record id="sh_medical_drug_routes_action_tree" model="ir.actions.act_window">
+                    <field name="name">Drug Routes</field>
+                    <field name="res_model">sh.medical.drug.route</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                    <field name="domain">[]</field>
+                    <field name="context">{}</field>
+                    <field name="view_id" eval="False"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to add a new drug routes.
+                      </p><p>
+                        With shealth drug routes screen, you can manage routes which will
+                        be used while creating prescriptions.
+                      </p>
+                    </field>
+            </record>
+
+            <menuitem action="sh_medical_drug_routes_action_tree" id="sh_medical_drug_route_list" parent="sh_medical_conf_medicaments" sequence="4"/>
+
+
+            <!-- Drug Forms -->
+
+            <record model="ir.ui.view" id="sh_medical_drug_forms_tree">
+                <field name="name">Drug Forms</field>
+                <field name="model">sh.medical.drug.form</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string='Drug Forms' editable="top">
+                        <field name="name"/>
+                        <field name="code"/>
+                    </tree>
+                </field>
+            </record>
+
+             <record id="view_medical_drug_forms_filter" model="ir.ui.view">
+                <field name="name">Drug Forms</field>
+                <field name="model">sh.medical.drug.form</field>
+                <field name="type">search</field>
+                <field name="arch" type="xml">
+                    <search string="Search Drug Forms">
+                        <separator orientation="vertical"/>
+                        <field name="name" select="1"/>
+                        <field name="code" select="1"/>
+                    </search>
+                </field>
+            </record>
+
+            <record id="sh_medical_drug_forms_action_tree" model="ir.actions.act_window">
+                    <field name="name">Drug Forms</field>
+                    <field name="res_model">sh.medical.drug.form</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                    <field name="domain">[]</field>
+                    <field name="context">{}</field>
+                    <field name="view_id" eval="False"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to add a new drug form.
+                      </p>
+                    </field>
+            </record>
+
+<!--            <menuitem action="sh_medical_drug_forms_action_tree" id="sh_medical_drug_forms_list" parent="sh_medical_conf_medicaments" sequence="5"/>-->
+
+            <!-- Medicines Dosage -->
+
+            <record model="ir.ui.view" id="sh_medical_dosage_tree">
+                <field name="name">Medicines Dosage</field>
+                <field name="model">sh.medical.dosage</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string='Medicines Dosage' editable="top">
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="abbreviation"/>
+                    </tree>
+                </field>
+            </record>
+
+             <record id="view_medical_dosage_filter" model="ir.ui.view">
+                <field name="name">Medicines Dosage</field>
+                <field name="model">sh.medical.dosage</field>
+                <field name="type">search</field>
+                <field name="arch" type="xml">
+                    <search string="Search Dosages">
+                        <separator orientation="vertical"/>
+                        <field name="name" select="1"/>
+                        <field name="code" select="1"/>
+                        <field name="abbreviation" select="1"/>
+                    </search>
+                </field>
+            </record>
+
+            <record id="sh_medical_dosage_action_tree" model="ir.actions.act_window">
+                    <field name="name">Medicines Dosage</field>
+                    <field name="res_model">sh.medical.dosage</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                    <field name="domain">[]</field>
+                    <field name="context">{}</field>
+                    <field name="view_id" eval="False"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to add a new medicine dosage.
+                      </p>
+                    </field>
+            </record>
+
+<!--            <menuitem action="sh_medical_dosage_action_tree" id="sh_medical_dosage_list" parent="sh_medical_conf_medicaments" sequence="6"/>-->
+
+        <!-- Medicines Category -->
+
+            <record model="ir.ui.view" id="sh_medical_medicines_category_tree">
+                <field name="name">Medicines Category</field>
+                <field name="model">sh.medical.medicines.category</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string='Medicines Category' editable="top">
+<!--                        <field name="code"/>-->
+                        <field name="name"/>
+                        <field name="type" required="1"/>
+                    </tree>
+                </field>
+            </record>
+
+             <record id="view_medical_medicines_category_filter" model="ir.ui.view">
+                <field name="name">Medicines Category</field>
+                <field name="model">sh.medical.medicines.category</field>
+                <field name="type">search</field>
+                <field name="arch" type="xml">
+                    <search string="Search Category">
+                        <separator orientation="vertical"/>
+                        <field name="name" select="1"/>
+<!--                        <field name="code" select="1"/>-->
+                        <field name="type" select="1"/>
+                        <group expand="0" string="Nhóm theo..." colspan="11" col="11">
+                            <filter name="group_type" string="Loại nhóm" context="{'group_by':'type'}"/>
+                        </group>
+                    </search>
+                </field>
+            </record>
+
+            <record id="sh_medical_medicines_category_action_tree" model="ir.actions.act_window">
+                    <field name="name">Medicines Category</field>
+                    <field name="res_model">sh.medical.medicines.category</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                    <field name="domain">[]</field>
+                    <field name="context">{}</field>
+                    <field name="view_id" eval="False"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to add a new medicine category.
+                      </p>
+                    </field>
+            </record>
+
+            <menuitem action="sh_medical_medicines_category_action_tree" id="sh_medical_medicines_category_list" parent="sh_medical_conf_medicaments" sequence="8"/>
+            <record id="sh_medical_medicines_category_list" model="ir.ui.menu">
+                <field name="web_icon_class">fa fa-bars</field>
+            </record>
+
+<!--            #quan ly lots/seri trong sp y tế-->
+            <menuitem id="stock.menu_action_production_lot_form" parent="sh_medical_conf_medicaments" sequence="8"/>
+            <record id="stock.menu_action_production_lot_form" model="ir.ui.menu">
+                <field name="web_icon_class">fa fa-sort-numeric-asc</field>
+            </record>
+<!--            <menuitem id="stock.product_uom_menu" name="Units of Measures" parent="shealth_all_in_one.sci_menu_stock_root" sequence="5"/>-->
+<!--            <record id="stock.product_uom_menu" model="ir.ui.menu">-->
+<!--                <field name="web_icon_class">fa fa-cubes</field>-->
+<!--            </record>-->
+            <!-- QUẢN LÝ ĐƠN VỊ DÙNG -->
+<!--            <record model='ir.ui.menu' id='stock.product_uom_menu'>-->
+<!--                <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_stock_manager')])]"/>-->
+<!--            </record>-->
+    </data>
+</odoo>

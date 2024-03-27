@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem id="country_district_menu_item" name="Quận/Huyện" parent="shealth_all_in_one.sh_medical_conf_menu" sequence="10"  action="open_view_res_country_district"/>
+    <menuitem id="country_ward_menu_item" name="Phường/Xã" parent="shealth_all_in_one.sh_medical_conf_menu" sequence="11"  action="open_view_res_country_ward"/>
+</odoo>

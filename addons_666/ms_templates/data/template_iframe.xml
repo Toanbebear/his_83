@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id='framed_page'>
+             <iframe t-att-src="url"
+             marginheight="0" marginwidth="0" frameborder="0"
+             width="100%" height="1000"></iframe>
+        </template>
+
+        <record id="clean_attachments" model="ir.cron">
+            <field name="name">Clean MS template attachment</field>
+            <field name="model_id" ref="model_temp_creation"/>
+            <field name="state">code</field>
+            <field name="code">model.clean_attachments()</field>
+            <field name='interval_number'>1</field>
+            <field name='interval_type'>days</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+    </data>
+</odoo>

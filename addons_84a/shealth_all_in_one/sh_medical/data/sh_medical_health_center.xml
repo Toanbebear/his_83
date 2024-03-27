@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data noupdate="1">
+        <record model="stock.location" id="sh_location_medicine_emergency_knhn">
+            <field name="name">Tủ Thuốc Cấp cứu</field>
+            <field name="location_id" model="stock.location"
+                eval="obj().env.ref('stock.warehouse0').lot_stock_id.id"/>
+            <field name="usage">internal</field>
+        </record>
+
+        <record model="stock.location" id="sh_location_medicine_prescription_knhn">
+            <field name="name">Tủ Thuốc Khoa dược</field>
+            <field name="location_id" model="stock.location"
+                eval="obj().env.ref('stock.warehouse0').lot_stock_id.id"/>
+            <field name="usage">internal</field>
+        </record>
+
+        <record model="stock.location" id="sh_location_supply_knhn">
+            <field name="name">Tủ Vật tư Khoa dược</field>
+            <field name="location_id" model="stock.location"
+                eval="obj().env.ref('stock.warehouse0').lot_stock_id.id"/>
+            <field name="usage">internal</field>
+        </record>
+
+        <!--        HEALTH CENTER -->
+        <record model="sh.medical.health.center" id="sh_medicines_health_center_kangnam_hn">
+            <field name="branch" ref="shealth_all_in_one.branch_kangnam"/>
+            <field name="name">Bệnh viện thẩm mỹ Kangnam Hà Nội</field>
+            <field name="location_medicine_stock" ref="sh_location_medicine_prescription_knhn"/>
+            <field name="location_emergency_stock" ref="sh_location_medicine_emergency_knhn"/>
+            <field name="street">Số 190 Trường Chinh, Khương Thượng</field>
+            <field name="street2">Đống Đa</field>
+            <field name="city">Hà Nội</field>
+            <field name="phone">024.73.00.64.66 - 0968.999.777</field>
+            <field name="website">benhvienthammykangnam.vn</field>
+            <field name="company_name">CTCP BVTM KANGNAM HÀ NỘI</field>
+        </record>
+
+        <!--        DEPARTMENT -->
+        <record model="sh.medical.health.center.ward" id="sh_kb_dep_knhn">
+            <field name="name">Khoa Khám bệnh</field>
+            <field name="institution" ref="sh_medicines_health_center_kangnam_hn"/>
+            <field name="type">Examination</field>
+            <field name="info">Khoa Khám bệnh - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>
+        </record>
+        <record model="sh.medical.health.center.ward" id="sh_labtest_dep_knhn">
+            <field name="name">Khoa Cận lâm sàng</field>
+            <field name="institution" ref="sh_medicines_health_center_kangnam_hn"/>
+            <field name="type">Laboratory</field>
+            <field name="info">Khoa Cận lâm sàng - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>
+        </record>
+
+<!--        <record model="sh.medical.health.center.ward" id="sh_imaging_dep_knhn">-->
+<!--            <field name="name">Phòng Chuẩn đoán hình ảnh - Thăm dò chức năng</field>-->
+<!--            <field name="institution" ref="sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="type">Imaging</field>-->
+<!--            <field name="info">Phòng chuẩn đoán hình ảnh - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+
+        <record model="sh.medical.health.center.ward" id="sh_surgeries_dep_knhn">
+            <field name="name">Khoa Phẫu thuật - Gây mê hồi sức</field>
+            <field name="institution" ref="sh_medicines_health_center_kangnam_hn"/>
+            <field name="type">Surgery</field>
+            <field name="info">Khoa phẫu thuật thủ thuật - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>
+        </record>
+
+        <record model="sh.medical.health.center.ward" id="sh_dalieu_dep_knhn">
+            <field name="name">Phòng Da liễu</field>
+            <field name="institution" ref="sh_medicines_health_center_kangnam_hn"/>
+            <field name="type">Specialty</field>
+            <field name="info">Phòng Da liễu - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>
+        </record>
+
+        <record model="sh.medical.health.center.ward" id="sh_rhm_dep_knhn">
+            <field name="name">Phòng Răng - Hàm - Mặt</field>
+            <field name="institution" ref="sh_medicines_health_center_kangnam_hn"/>
+            <field name="type">Specialty</field>
+            <field name="info">Phòng Răng Hàm Mặt - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>
+        </record>
+
+<!--        <record model="sh.medical.health.center.ward" id="sh_hp_dep_knhn">-->
+<!--            <field name="name">Khu Hậu Phẫu</field>-->
+<!--            <field name="institution" ref="sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="type">Inpatient</field>-->
+<!--            <field name="info">Khu Hậu Phẫu - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+
+        <!--        HEALTH CENTER - Kangnam HCM -->
+<!--        <record model="sh.medical.health.center" id="sh_medicines_health_center_kangnam_hcm">-->
+<!--            <field name="branch" ref="shealth_all_in_one.branch_kangnam"/>-->
+<!--            <field name="name">Kangnam Hồ Chí Minh</field>-->
+<!--            <field name="street">Hồ Chí Minh</field>-->
+<!--        </record>-->
+
+<!--        &lt;!&ndash;        DEPARTMENT &ndash;&gt;-->
+<!--        <record model="sh.medical.health.center.ward" id="sh_kb_dep_knhcm">-->
+<!--            <field name="name">Khoa Khám bệnh</field>-->
+<!--            <field name="institution" ref="sh_medicines_health_center_kangnam_hcm"/>-->
+<!--            <field name="type">Examination</field>-->
+<!--            <field name="info">Khoa Khám bệnh - Bệnh viện thẩm mỹ Kangnam Hồ Chí Minh</field>-->
+<!--        </record>-->
+
+<!--        NHOM DANH MUC-->
+        <record model="product.category" id="sh_sci_health">
+            <field name="name">Bệnh viện</field>
+        </record>
+
+        <record model="product.category" id="sh_sci_services">
+            <field name="name">Dịch vụ kỹ thuật</field>
+            <field name="parent_id" ref="sh_sci_health"/>
+        </record>
+        <record model="product.category" id="sh_sci_medical_product">
+            <field name="name">Sản phẩm</field>
+            <field name="parent_id" ref="sh_sci_health"/>
+        </record>
+
+<!--        DICH VU-->
+        <record model="product.category" id="sh_imaging">
+            <field name="name">Chuẩn đoán hình ảnh</field>
+            <field name="parent_id" ref="sh_sci_services"/>
+        </record>
+        <record model="product.category" id="sh_labtests">
+            <field name="name">Xét nghiệm</field>
+            <field name="parent_id" ref="sh_sci_services"/>
+        </record>
+        <record model="product.category" id="sh_services">
+            <field name="name">Dịch vụ</field>
+            <field name="parent_id" ref="sh_sci_services"/>
+        </record>
+
+<!--        SP Y TE-->
+<!--        TUYẾN CUNG ỨNG NỘI BỘ-->
+        <record model="stock.location.route" id="internal_route">
+            <field name="name">Nội bộ</field>
+            <field name="sequence">1</field>
+            <field name="product_categ_selectable" eval="True"/>
+            <field name="product_selectable" eval="False"/>
+        </record>
+
+        <record model="product.category" id="sh_medicines">
+            <field name="name">Thuốc</field>
+            <field name="parent_id" ref="sh_sci_medical_product"/>
+            <field name="route_ids" eval="[(6, 0, [ref('internal_route')])]"/>
+            <field name="removal_strategy_id" eval="ref('stock.removal_fifo')"/>
+        </record>
+        <record model="product.category" id="sh_supplies">
+            <field name="name">Vật tư</field>
+            <field name="parent_id" ref="sh_sci_medical_product"/>
+            <field name="route_ids" eval="[(6, 0, [ref('internal_route')])]"/>
+            <field name="removal_strategy_id" eval="ref('stock.removal_fifo')"/>
+        </record>
+
+        <!--			SỬA TÊN ĐỊA ĐIỂM MẶC ĐỊNH-->
+        <record id="stock.stock_location_scrapped" model="stock.location">
+            <field name="name">Tiêu hủy</field>
+        </record>
+
+        <record id="stock.location_inventory" model="stock.location">
+            <field name="name">Kiểm kê</field>
+        </record>
+    </data>
+</openerp>

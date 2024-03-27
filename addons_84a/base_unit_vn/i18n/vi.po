@@ -1,0 +1,119 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* base_unit_vn
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0-20200121\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-05-06 08:58+0000\n"
+"PO-Revision-Date: 2020-05-06 16:01+0700\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: vi_VN\n"
+"X-Generator: Poedit 2.3\n"
+
+#. module: base_unit_vn
+#: model:ir.model.fields,field_description:base_unit_vn.field_res_country_district__active
+#: model:ir.model.fields,field_description:base_unit_vn.field_res_country_ward__active
+msgid "Active"
+msgstr "Có hiệu lực"
+
+#. module: base_unit_vn
+#: model:ir.model.fields,field_description:base_unit_vn.field_res_country_district__city_id
+msgid "City"
+msgstr "Tỉnh/ Thành phố"
+
+#. module: base_unit_vn
+#: model:ir.model.fields,field_description:base_unit_vn.field_res_country_district__code
+#: model:ir.model.fields,field_description:base_unit_vn.field_res_country_ward__code
+msgid "Code"
+msgstr "Mã"
+
+#. module: base_unit_vn
+#: sql_constraint:res.country.district:0 sql_constraint:res.country.ward:0
+msgid "Code must be unique!"
+msgstr ""
+
+#. module: base_unit_vn
+#: model:ir.model.fields,field_description:base_unit_vn.field_res_country_district__create_uid
+#: model:ir.model.fields,field_description:base_unit_vn.field_res_country_ward__create_uid
+msgid "Created by"
+msgstr "Được tạo bởi"
+
+#. module: base_unit_vn
+#: model:ir.model.fields,field_description:base_unit_vn.field_res_country_district__create_date
+#: model:ir.model.fields,field_description:base_unit_vn.field_res_country_ward__create_date
+msgid "Created on"
+msgstr "Thời điểm tạo"
+
+#. module: base_unit_vn
+#: model:ir.model.fields,field_description:base_unit_vn.field_res_country_district__display_name
+#: model:ir.model.fields,field_description:base_unit_vn.field_res_country_ward__display_name
+msgid "Display Name"
+msgstr "Tên hiển thị"
+
+#. module: base_unit_vn
+#: model:ir.actions.act_window,name:base_unit_vn.open_view_res_country_district
+#: model:ir.model.fields,field_description:base_unit_vn.field_res_country_ward__district_id
+msgid "District"
+msgstr "Quận/ Huyện"
+
+#. module: base_unit_vn
+#: model:ir.model.fields,field_description:base_unit_vn.field_res_country_district__id
+#: model:ir.model.fields,field_description:base_unit_vn.field_res_country_ward__id
+msgid "ID"
+msgstr ""
+
+#. module: base_unit_vn
+#: model:ir.model.fields,field_description:base_unit_vn.field_res_country_district____last_update
+#: model:ir.model.fields,field_description:base_unit_vn.field_res_country_ward____last_update
+msgid "Last Modified on"
+msgstr "Sửa lần cuối vào"
+
+#. module: base_unit_vn
+#: model:ir.model.fields,field_description:base_unit_vn.field_res_country_district__write_uid
+#: model:ir.model.fields,field_description:base_unit_vn.field_res_country_ward__write_uid
+msgid "Last Updated by"
+msgstr "Cập nhật lần cuối bởi"
+
+#. module: base_unit_vn
+#: model:ir.model.fields,field_description:base_unit_vn.field_res_country_district__write_date
+#: model:ir.model.fields,field_description:base_unit_vn.field_res_country_ward__write_date
+msgid "Last Updated on"
+msgstr "Cập nhật lần cuối vào"
+
+#. module: base_unit_vn
+#: model:ir.model.fields,field_description:base_unit_vn.field_res_country_district__name
+#: model:ir.model.fields,field_description:base_unit_vn.field_res_country_ward__name
+msgid "Name"
+msgstr "Tên"
+
+#. module: base_unit_vn
+#: model_terms:ir.ui.view,arch_db:base_unit_vn.res_country_district_search_view
+msgid "Search District"
+msgstr "Tìm Quận/ Huyện"
+
+#. module: base_unit_vn
+#: model_terms:ir.ui.view,arch_db:base_unit_vn.res_country_ward_search_view
+msgid "Search Ward"
+msgstr "Tìm Phường/ Xã"
+
+#. module: base_unit_vn
+#: model:ir.actions.act_window,name:base_unit_vn.open_view_res_country_ward
+msgid "Ward"
+msgstr "Phường/ Xã"
+
+#. module: base_unit_vn
+#: model:ir.model,name:base_unit_vn.model_res_country_district
+msgid "res.country.district"
+msgstr ""
+
+#. module: base_unit_vn
+#: model:ir.model,name:base_unit_vn.model_res_country_ward
+msgid "res.country.ward"
+msgstr ""

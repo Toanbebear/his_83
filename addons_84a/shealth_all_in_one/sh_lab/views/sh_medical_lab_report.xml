@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+            string="Lab Test Report"
+            id="action_report_patient_labtest"
+            model="sh.medical.lab.test"
+            report_type="qweb-pdf"
+            name="shealth_all_in_one.report_sh_medical_patient_labtest"
+            file="shealth_all_in_one.report_sh_medical_patient_labtest"
+            paperformat="shealth_all_in_one.sh_paperformat_test_result"
+            menu="True"
+        />
+
+    </data>
+</openerp>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <report
+                id="action_report_receptiont_patient"
+                string="Phiếu khám bệnh"
+                model="sh.reception"
+                report_type="qweb-pdf"
+                name="shealth_all_in_one.report_receptiont_patient"
+                file="shealth_all_in_one.report_receptiont_patient"
+                menu="True"
+                paperformat="shealth_all_in_one.sh_paperformat_medical_payment"
+        />
+
+        <template id="report_receptiont_patient">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="lang" t-value="o.patient.partner_id.lang"/>
+                    <t t-call="shealth_all_in_one.report_receptiont_patient_document" t-lang="lang"/>
+                </t>
+            </t>
+        </template>
+
+        <template id="report_receptiont_patient_document">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                <div class="page" style="font-family:Times New Roman;font-size:30px;">
+                    <div class="oe_structure"/>
+                    <div class="row mt32 mb32">
+                        <div class="col-5" style="font-size:24px;">
+                            <div class="m-0" t-field="o.walkin_id.institution.company_name" style="text-transform: uppercase;font-weight:bold;"/>
+                            <div class="m-0" t-field="o.walkin_id.institution.name" style="text-transform: uppercase;font-weight:bold;"/>
+                            <div><span class="m-0" t-field="o.walkin_id.institution.street"/>,
+                                <span class="m-0" t-field="o.walkin_id.institution.street2"/>,
+                                <span class="m-0" t-field="o.walkin_id.institution.city"/>
+                            </div>
+                            <div class="m-0" t-if="o.walkin_id.institution.phone">Hotline: <span t-field="o.walkin_id.institution.phone"/></div>
+                        </div>
+                        <div class="col-4 text-center">
+                            <div style="font-size: 50px;"><b>PHIẾU<br/> KHÁM BỆNH</b></div>
+                            <div>Số phiếu: <strong t-field="o.walkin_id.name"/></div>
+                        </div>
+                        <div class="col-3 text-center">
+                            <strong style="font-size:22px;">Mã BN: <span t-field="o.patient.identification_code"/></strong>
+                            <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.patient.identification_code, 280, 40)"/>
+                        </div>
+                    </div>
+
+                    <div t-if="o.walkin_id.patient" class="row mt-5">
+                        <div class="col-6">
+                            <span>Họ và tên:</span>
+                            <strong t-field="o.walkin_id.patient.name" style="text-transform: uppercase"/>
+                        </div>
+                        <div class="col-6">
+                            <span>Năm sinh:</span>
+                            <i t-field="o.walkin_id.patient.dob"/>
+                            <span class="ml-5">Giới tính:</span>
+                            <i t-field="o.walkin_id.patient.sex"/>
+                        </div>
+                    </div>
+
+                    <div t-if="o.walkin_id.patient">
+                        <span>Địa chỉ:</span>
+                        <i t-field="o.street"/>
+                        <i t-field="o.patient.state_id"/>
+                    </div>
+
+                    <div t-if="o.walkin_id.patient" class="row">
+                        <div class="col-6">
+                            <div>
+                                <span>Nghề nghiệp:</span>
+                                <i t-field="o.walkin_id.patient.function"/>
+                            </div>
+                            <div>
+                                <span>Yêu cầu khám:</span>
+                                <i t-field="o.advisory"/>
+                            </div>
+                            <div>
+                                <span>Nơi khám:</span>
+                                <strong t-field="o.service_room"/>
+                            </div>
+                            <div>STT khám: <strong style="font-size: 50px;" t-field="o.walkin_id.index_by_day"/></div>
+                        </div>
+                        <div class="col-6">
+                            <span>Lý do khám:</span>
+                            <i t-field="o.reason"/>
+                        </div>
+                    </div>
+
+                    <div class="row text-center mt16">
+                        <div class="col-6">
+                            <div t-if="o.reception_date">
+                                <br/>
+                                <div><strong>LỄ TÂN</strong></div>
+                                <div><i>(Ký, ghi rõ họ tên)</i></div>
+                                <div style="height:120px;"></div>
+                                <div t-if="o.user"><strong t-field="o.user.name"/></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div t-if="o.reception_date">
+<!--                                <div><i t-esc="o.reception_date.strftime('Ngày %d tháng %m năm %Y')"/></div>-->
+                                <div><i t-es="o.reception_date"/></div>
+                                <div><strong>NGƯỜI DUYỆT</strong></div>
+                                <div><i>(Ký, ghi rõ họ tên)</i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="oe_structure"/>
+                </div>
+            </t>
+        </template>
+
+        <record id="paperformat_report_receptiont_patient" model="report.paperformat">
+            <field name="name">Leaves Summary</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">30</field>
+            <field name="margin_bottom">23</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">20</field>
+            <field name="dpi">90</field>
+        </record>
+
+    </data>
+</odoo>

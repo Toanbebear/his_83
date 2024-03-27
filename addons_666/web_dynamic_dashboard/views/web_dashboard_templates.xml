@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <template id="assets_backend" name="web_dashboard assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/web_dynamic_dashboard/static/lib/chartist/chartist.css"/>
+                <link rel="stylesheet" href="/web_dynamic_dashboard/static/lib/chartist/chartist-plugin-tooltip.css"/>
+                <link rel="stylesheet" href="/web_dynamic_dashboard/static/src/less/chartist.custom.css"/>
+                <link rel="stylesheet" href="/web_dynamic_dashboard/static/src/less/web_dashboard.css"/>
+                <!-- <link rel="stylesheet" href="/web_dynamic_dashboard/static/src/less/fontawesome-iconpicker.min.css"/> -->
+                <!-- Widget -->
+                <link rel="stylesheet" href="/web_dynamic_dashboard/static/lib/bootstrap-colorpicker/css/bootstrap-colorpicker.css"/>
+                <link rel="stylesheet" href="/web_dynamic_dashboard/static/lib/fa-iconpicker/css/fontawesome-iconpicker.css"/>
+                
+                <script type="text/javascript" src="/web_dynamic_dashboard/static/lib/chartist/chartist.min.js"></script>
+                <script type="text/javascript" src="/web_dynamic_dashboard/static/lib/chartist/chartist-plugin-legend.js"></script>
+                <script type="text/javascript" src="/web_dynamic_dashboard/static/lib/chartist/chartist-plugin-threshold.min.js"></script>
+                <script type="text/javascript" src="/web_dynamic_dashboard/static/lib/chartist/chartist-plugin-tooltip.js"></script>
+                <script type="text/javascript" src="/web_dynamic_dashboard/static/lib/chartist/chartist-plugin-axistitle.js"></script>
+
+                <script type="text/javascript" src="/web_dynamic_dashboard/static/src/js/web_dashboard_model.js"></script>
+                <script type="text/javascript" src="/web_dynamic_dashboard/static/src/js/web_dashboard_controller.js"></script>
+                <script type="text/javascript" src="/web_dynamic_dashboard/static/src/js/web_dashboard_renderer.js"></script>
+                <script type="text/javascript" src="/web_dynamic_dashboard/static/src/js/web_dashboard.js"></script>
+
+                <!-- Widget -->
+                <script type="text/javascript" src="/web_dynamic_dashboard/static/lib/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+                <script type="text/javascript" src="/web_dynamic_dashboard/static/lib/fa-iconpicker/js/fontawesome-iconpicker.js"></script>
+                <script type="text/javascript" src="/web_dynamic_dashboard/static/src/js/widget_dashboard.js"></script>
+            </xpath>
+        </template>
+</odoo>

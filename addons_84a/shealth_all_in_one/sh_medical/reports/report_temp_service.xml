@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_sh_medical_temp_prescription_service_document">
+        <t t-call="web.external_layout">
+            <div class="page" style="font-family:Times New Roman;font-size: 24px;">
+                <div class="oe_structure"/>
+                <div>
+                    <div class="m-0" style="text-transform: uppercase;font-size: 26px;font-weight:bold;">Tên Cơ sở y
+                        tế
+                    </div>
+                    <div class="m-0" style="font-size: 23px;">
+                        <i>Địa chỉ cơ sở</i>
+                        <br/>
+                        <i>Điện thoại: Số điện thoại của cơ sỏ</i>
+                    </div>
+                </div>
+                <h2 class="text-center mt16 mb16">
+                    <div style="">
+                        <b>ĐƠN THUỐC</b>
+                    </div>
+                </h2>
+
+                <div class="bm-2">
+                    <span>Họ tên:</span>
+                    <b style="text-transform: uppercase;" class="m-0 mr-5">Tên bệnh nhân</b>
+                    <span>Tuổi:</span>
+                    <b class="m-0 mr-5">Tuổi bệnh nhân</b>
+                    <b class="m-0">Giới tính bệnh nhân</b>
+                </div>
+                <div class="bm-2">
+                    <span>Địa chỉ:</span>
+                    Địa chỉ bệnh nhân
+                </div>
+                <div class="bm-2" t-if="o.name">
+                    <span>Dịch vụ:</span>
+                    <i>
+                        <strong class="m-0" t-field="o.name"/>
+                    </i>
+                </div>
+
+                <table class="table mt-3">
+                    <tr>
+                        <td colspan="2" class="m-0 p-0" style="font-size:26px;border: none;">
+                            <b>Thuốc điều trị</b>
+                        </td>
+                    </tr>
+                    <t t-set="i" t-value="0"/>
+                    <t t-foreach="o.prescription_ids" t-as="l">
+                        <t t-set="i" t-value="i + 1"/>
+                        <tr>
+                            <td class="m-0 p-0" style="font-weight:bold;width:70%;border: none;"><t t-esc="i"/>.
+                                <span t-field="l.product_id.name"/>
+                            </td>
+                            <td class="m-0 p-0" style="font-weight:bold;border: none;">x
+                                <span t-esc="int(l.qty)"/>
+                                <span t-field="l.dose_unit"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="m-0 p-0" colspan="2" style="border: none;">
+                                <i class="ml-3" t-field="l.note"/>
+                            </td>
+                        </tr>
+                    </t>
+                </table>
+
+                <div class="row my-2">
+                    <div class="col-6 bm-2 text-left">
+                        <div>Người nhận</div>
+                        <div style="height:100px;"></div>
+                    </div>
+                    <div class="col-6 bm-2 text-center">
+                        <div class="m-0">Ngày ... tháng ... năm ...</div>
+                        <div class="m-0">Bác sĩ</div>
+                        <div style="height:100px;"></div>
+                        <span class="m-0">Bác sĩ kê đơn</span>
+                    </div>
+                </div>
+                <div class="my-2">
+                    <b>
+                        <em>Khám lại xin mang theo đơn này</em>
+                    </b>
+                </div>
+                <div class="oe_structure"/>
+            </div>
+        </t>
+    </template>
+    <template id="report_sh_medical_temp_prescription_service">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="shealth_all_in_one.report_sh_medical_temp_prescription_service_document"/>
+            </t>
+        </t>
+    </template>
+
+    <!--    HƯỚNG DẪN SAU DỊCH VỤ-->
+    <template id="report_sh_medical_temp_huongdan_service_document">
+        <t t-call="web.external_layout">
+            <div class="page" style="font-family:Times New Roman;font-size: 24px;">
+                <div class="oe_structure"/>
+                <h2 class="text-center mt16 mb16">
+                    <div style="font-weight:bold;text-transform:uppercase;">HƯỚNG DẪN SAU
+                        <span t-field="o.name"/>
+                    </div>
+                </h2>
+
+                <t t-set="service_date" t-value="context_timestamp(datetime.datetime.now())"/>
+                <table class="table mt-5">
+                    <tr>
+                        <td class="m-0 p-0" style="border: none;">1. Ngày phẫu thuật:
+                            <b t-esc="service_date.strftime('%d/%m/%Y')"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="m-0 p-0" style="border: none;">
+                            <t t-set="i" t-value="1"/>
+                            <t t-foreach="o.days_reexam.filtered(lambda d: d.type not in ['ReCheck'])" t-as="l">
+                                <t t-set="i" t-value="i + 1"/>
+                                <div style="width:45%;display:inline-block;">
+                                    <t t-esc="i"/>.<span t-field="l.name"/>:
+                                    <b>
+                                        <i t-esc="context_timestamp(datetime.datetime.now()+ relativedelta(days=l.after_service_date)).strftime('%d/%m/%Y')"/>
+                                    </b>
+                                </div>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="m-0 p-0" style="border: none;">
+                            <t t-set="i" t-value="i + 1"/>
+                            <t t-esc="i"/>. Tái khám:
+                            <br/>
+                            <t t-set="j" t-value="0"/>
+                            <t t-foreach="o.days_reexam.filtered(lambda d: d.type in ['ReCheck'])" t-as="dr">
+                                <t t-set="j" t-value="j + 1"/>
+                                <t t-set="duration_year" t-value="int(dr.after_service_date/365)"/>
+                                <t t-if="duration_year == 0">
+                                    <t t-set="duration_month" t-value="int(dr.after_service_date/30)"/>
+                                    <t t-if="duration_month == 0">
+                                        <t t-set="duration_day" t-value="dr.after_service_date"/>
+                                        <![CDATA[&emsp;&emsp;]]>Sau
+                                        <span t-esc="str(duration_day) + ' ngày'"/>
+                                        <b>(
+                                            <i t-esc="context_timestamp(datetime.datetime.now()+ relativedelta(days=dr.after_service_date)).strftime('%d/%m/%Y')"/>
+                                            )
+                                        </b>
+                                        đến kiểm tra lại lần
+                                        <t t-esc="j"/>
+                                        <br/>
+                                    </t>
+                                    <t t-else="">
+                                        <![CDATA[&emsp;&emsp;]]>Sau
+                                        <span t-esc="str(duration_month) + ' tháng'"/>
+                                        <b>(
+                                            <i t-esc="context_timestamp(datetime.datetime.now()+ relativedelta(days=dr.after_service_date)).strftime('%d/%m/%Y')"/>
+                                            )
+                                        </b>
+                                        đến kiểm tra lại lần
+                                        <t t-esc="j"/>
+                                        <br/>
+                                    </t>
+                                </t>
+                                <t t-else="">
+                                    <![CDATA[&emsp;&emsp;]]>Sau
+                                    <span t-esc="str(duration_year) + ' năm'"/>
+                                    <b>(
+                                        <i t-esc="context_timestamp(datetime.datetime.now()+ relativedelta(days=dr.after_service_date)).strftime('%d/%m/%Y')"/>
+                                        )
+                                    </b>
+                                    đến kiểm tra lại lần
+                                    <t t-esc="j"/>
+                                    <br/>
+                                </t>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr t-if="o.info">
+                        <td class="m-0 p-0" style="border: none;">
+                            <br/>
+                            <t t-set="i" t-value="i + 1"/>
+                            <t t-esc="i"/>. Chăm sóc:
+                            <br/>
+                            <t t-set="data_infor" t-value="o.info.replace('\n','&lt;br/&gt;')"/>
+                            <div widget="html" t-raw="data_infor"/>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="text-center">
+                    <em>Xin Quý khách vui lòng liên hệ hotline để được hỗ trợ và giải đáp thắc mắc<br/>P.CSKH:
+                        <b>19006466</b>
+                    </em>
+                </div>
+                <div class="oe_structure"/>
+            </div>
+        </t>
+    </template>
+    <template id="report_sh_medical_temp_huongdan_service">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="shealth_all_in_one.report_sh_medical_temp_huongdan_service_document"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

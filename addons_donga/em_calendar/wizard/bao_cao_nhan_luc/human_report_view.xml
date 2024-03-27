@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="human_report_form">
+            <field name="name">human.report</field>
+            <field name="model">human.report</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo ">
+                    <group>
+                        <field name="start_date" required="1"/>
+                        <field name="end_date" invisible="True"/>
+                    </group>
+                    <footer>
+                        <button name="create_report" type="object" string="Báo cáo" class="oe_highlight"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_human_report_act">
+            <field name="name">Báo cáo nhân lực</field>
+            <field name="res_model">human.report</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="human_report_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem   id="menu_report_human_report"
+                    name="Báo cáo nhân lực"
+                    action="action_human_report_act"
+                    sequence="2"
+                    parent="em_calendar.menu_report"
+        />
+
+        <record id="bao_cao_nhan_luc_attachment" model="ir.attachment">
+            <field name="name">BÁO CÁO NHÂN LỰC</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="em_calendar/static/xls/bao_cao_nhan_luc.xlsx"/>
+            <field name="store_fname">bao_cao_nhan_luc.xls</field>
+        </record>
+
+    </data>
+</odoo>

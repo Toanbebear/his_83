@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="monthly_inventory_form">
+            <field name="name">monthly.inventory.form</field>
+            <field name="model">monthly.inventory</field>
+            <field name="arch" type="xml">
+                <form string="Inventory report">
+                    <group>
+                        <field name="location" required="1"/>
+                        <field name="report_type" widget="radio"/>
+                        <field name="product_domain" widget="many2many_tags" invisible="1"/>
+                        <field name="products" attrs="{'required':[('report_type', '=', 'product')], 'invisible': [('report_type', '!=', 'product')]}"
+                                                widget="many2many_tags" domain="[('id', 'in', product_domain)]"/>
+                        <field name="start_date" attrs="{'required':[('report_type', '!=', 'current')], 'invisible': [('report_type', '=', 'current')]}"/>
+                        <field name="end_date" attrs="{'required':[('report_type', '!=', 'current')], 'invisible': [('report_type', '=', 'current')]}"/>
+                    </group>
+                    <footer>
+                        <button name="report_inventory" type="object"
+                                string="Period inventory report" class="oe_highlight"
+                                attrs="{'invisible': [('report_type', '!=', 'period')]}"/>
+                        <button name="report_current_inventory" type="object"
+                                string="Current inventory report" class="oe_highlight"
+                                attrs="{'invisible': [('report_type', '!=', 'current')]}"/>
+                        <button name="report_stock_cards" type="object"
+                                string="Stock cards" class="oe_highlight"
+                                attrs="{'invisible': [('report_type', '!=', 'product')]}"/>
+                        <button string="Cancel" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="monthly_inventory_act">
+            <field name="name">Inventory report</field>
+            <field name="res_model">monthly.inventory</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="monthly_inventory_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="monthly_inventory_report"
+                  name="Inventory report"
+                  parent="openeducat_core.menu_op_report_main"
+                  action="monthly_inventory_act"
+                  sequence="10"/>
+
+    </data>
+</odoo>

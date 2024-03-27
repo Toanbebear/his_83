@@ -1,0 +1,1320 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* web_dynamic_dashboard
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-05-02 06:30+0000\n"
+"PO-Revision-Date: 2020-05-02 06:30+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_dynamic_dashboard
+#: model:ir.model,name:web_dynamic_dashboard.model_analysis_account_move_line
+msgid " Analysis : Account Move Line"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model,name:web_dynamic_dashboard.model_analysis_sale
+msgid " Analysis : Sale"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model,name:web_dynamic_dashboard.model_analysis_stock_move
+msgid " Analysis : Stock Move"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model,name:web_dynamic_dashboard.model_analysis_stock_quant
+msgid " Analysis : Stock Quant"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:analysis.stock.quant,storage_duration_category:0
+msgid "1 Month"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:analysis.stock.quant,storage_duration_category:0
+msgid "1 Week"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:analysis.stock.quant,storage_duration_category:0
+msgid "1 Year"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,block_size:0
+msgid "1/2"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,block_size:0
+msgid "1/3"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,block_size:0
+msgid "1/4 (Suitable for Tile Block)"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,block_size:0
+msgid "1/6 (Suitable for Large Screen)"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,group_limit_selection:0
+#: selection:web.dashboard.block,subgroup_limit_selection:0
+msgid "10"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,group_limit_selection:0
+#: selection:web.dashboard.block,subgroup_limit_selection:0
+msgid "15"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,group_limit_selection:0
+#: selection:web.dashboard.block,subgroup_limit_selection:0
+msgid "20"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:analysis.stock.quant,storage_duration_category:0
+msgid "3 Months"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,group_limit_selection:0
+#: selection:web.dashboard.block,subgroup_limit_selection:0
+msgid "30"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:analysis.stock.quant,storage_duration_category:0
+msgid "6 Months"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_form
+msgid "<span><i>If you activate dashboard iteration, you should define the domain field in the block which is related to the iteration model. \n"
+"                                                If it is not defined, the system will automatically search for the first related field.</i></span><br/>"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_block_form
+msgid "<span><i>If you activate dashboard iteration, you should define the domain field in the block which is related to the iteration model. \n"
+"                                If it is not defined, the system will automatically search for the first related field.</i></span><br/>"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_block_form
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_form
+msgid "<span><i>When you click the charts you can see more details by grouping the data even more. The grouping fields is defined below.</i></span><br/>"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_form
+msgid "<span><i>When you click the floating button, you can set actions to open other dashboard <b>or</b>\n"
+"                                                open odoo menu <b>or</b> open URL. You can also click the table icon to be redirected to related list view (default).</i></span><br/>"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_block_form
+msgid "<span><i>When you click the floating button, you can set actions to open other dashboard <b>or</b>\n"
+"                                open odoo menu <b>or</b> open URL. You can also click the table icon to be redirected to related list view (default).</i></span><br/>"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_block_form
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_form
+msgid "<span><i>You can set user field to restrict access. Or activate record rules (Slow Performance Warning).</i></span><br/>"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_account_move_line__abs_balance
+msgid "Absolute Balance"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_account_move_line__account_name
+msgid "Account"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_account_move_line__account_type_name
+msgid "Account Type"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#. openerp-web
+#: code:addons/web_dynamic_dashboard/static/src/xml/web_dashboard.xml:110
+#, python-format
+msgid "Action"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__action_group_field_ids
+msgid "Action Group Fields"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model,name:web_dynamic_dashboard.model_ir_actions_act_window_view
+msgid "Action Window View"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_block_form
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_form
+msgid "Actions"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard__iteration_activate_record_rules
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__activate_record_rules
+msgid "Activate Record Rules"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__active
+msgid "Active"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+msgid "Activity"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#. openerp-web
+#: code:addons/web_dynamic_dashboard/static/src/xml/web_dashboard.xml:9
+#, python-format
+msgid "Add Block"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard__parent_menu_id
+msgid "Add Dashboard Under Menu"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,domain_date:0
+msgid "After Today"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.actions.act_window,name:web_dynamic_dashboard.web_dashboard_action
+#: model:ir.ui.menu,name:web_dynamic_dashboard.sub_web_dashboard_menu
+msgid "All Dashboards"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:action.group.field,block_type:0
+#: selection:web.dashboard.block,block_type:0
+msgid "Area"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard,iteration_sort:0
+#: selection:web.dashboard.block,sort:0
+msgid "Ascending"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,operation:0
+#: selection:web.dashboard.block,others_operation:0
+msgid "Average"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_account_move_line__balance
+msgid "Balance"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:action.group.field,block_type:0
+#: selection:web.dashboard.block,block_type:0
+msgid "Bar"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__barang_masuk_id
+msgid "Barang Masuk"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,domain_date:0
+msgid "Before Today"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,domain_date:0
+msgid "Before and Today"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_domain_line__block_id
+msgid "Block"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_block_form
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_form
+msgid "Block Action (What to open when you click the floating action button)"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__block_size
+msgid "Block Size"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_action_group_field__block_type
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__block_type
+msgid "Block Type"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard__block_ids
+msgid "Blocks"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__time_calculation_method
+msgid "Calculation Method"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+msgid "Calendar"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_quant__categ_name
+msgid "Category Name"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_block_form
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_form
+msgid "Chart Action (What happen when you click the charts bar / line)"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#. openerp-web
+#: code:addons/web_dynamic_dashboard/static/src/xml/web_dashboard.xml:13
+#, python-format
+msgid "Chart Large 1/2"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#. openerp-web
+#: code:addons/web_dynamic_dashboard/static/src/xml/web_dashboard.xml:12
+#, python-format
+msgid "Chart Medium 1/3"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_account_move_line__accont_code
+msgid "Code"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+msgid "Cohort"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_account_move_line__company_id
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_sale__company_id
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_move__company_id
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_quant__company_id
+msgid "Company"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#. openerp-web
+#: code:addons/web_dynamic_dashboard/static/src/xml/web_dashboard.xml:33
+#: code:addons/web_dynamic_dashboard/static/src/xml/web_dashboard.xml:73
+#, python-format
+msgid "Config"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,data_source:0
+msgid "Configuration (Query)"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,operation:0
+#: selection:web.dashboard.block,others_operation:0
+msgid "Count"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_action_group_field__create_uid
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard__create_uid
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__create_uid
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_domain_line__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_action_group_field__create_date
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard__create_date
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__create_date
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_domain_line__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,time_calculation_method:0
+msgid "Cumulative"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,time_calculation_method:0
+msgid "Cumulative from before"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_move__current_cost
+msgid "Current Cost"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_sale__partner_id
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_sale__partner_name
+msgid "Customer"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_sale__state_name
+msgid "Customer Address (State)"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#. openerp-web
+#: code:addons/web_dynamic_dashboard/static/src/js/web_dashboard.js:19
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+#, python-format
+msgid "DDashboard"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:ir.actions.act_window.view,view_mode:0
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__dashboard_id
+#: selection:ir.ui.view,type:0
+msgid "Dashboard"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_action_group_field__block_id
+msgid "Dashboard Block"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.actions.act_window,name:web_dynamic_dashboard.web_dashboard_block_action
+#: model:ir.ui.menu,name:web_dynamic_dashboard.sub_web_dashboard_block
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_form
+msgid "Dashboard Blocks"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.ui.menu,name:web_dynamic_dashboard.web_dashboard_menu
+msgid "Dashboard Management"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:res.groups,name:web_dynamic_dashboard.group_ddashboard_manager
+msgid "Dashboard Manager"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard__dashboard_source
+msgid "Dashboard Source"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_dashboard
+msgid "Dashboard Views"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__data_source
+msgid "Data Source"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_account_move_line__move_date
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_move__date
+msgid "Date"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__domain_date_field_id
+msgid "Date Field"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__domain_date
+msgid "Date Filter"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__group_date_format
+msgid "Date Format"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_sale__date_order
+msgid "Date Order"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,group_date_format:0
+#: selection:web.dashboard.block,subgroup_date_format:0
+msgid "Day"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_sale__delivered_qty
+msgid "Delivered Qty"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard,iteration_sort:0
+#: selection:web.dashboard.block,sort:0
+msgid "Descending"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:ir.ui.view,type:0
+msgid "Diagram"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_sale__sale_discount
+msgid "Discount Amount"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_action_group_field__display_name
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_account_move_line__display_name
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_sale__display_name
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_move__display_name
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_quant__display_name
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard__display_name
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__display_name
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_domain_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__dashboard_iteration_domain_field_id
+msgid "Domain Field"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__domain_line_ids
+msgid "Domains"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:action.group.field,block_type:0
+#: selection:web.dashboard.block,block_type:0
+msgid "Donut"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#. openerp-web
+#: code:addons/web_dynamic_dashboard/static/src/xml/web_dashboard.xml:76
+#, python-format
+msgid "Expand"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_move__date_expected
+msgid "Expected Date"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_action_group_field__field_id
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_domain_line__field_id
+msgid "Field"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__group_field_ttype
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__subgroup_field_ttype
+msgid "Field Type"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__domain_values_field_id
+msgid "Filter By"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__domain_values_string
+msgid "Filter Values"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_block_form
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_form
+msgid "Filters"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__domain
+msgid "Flexible Filter (Slow Performance)"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,help:web_dynamic_dashboard.field_web_dashboard_block__group_field_id_model_name
+#: model:ir.model.fields,help:web_dynamic_dashboard.field_web_dashboard_block__subgroup_field_id_model_name
+msgid "For relationship fields, the technical name of the target model"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+msgid "Form"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,block_size:0
+msgid "Full Screen"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__data_function
+msgid "Function Name"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+msgid "Gantt"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard__menu_id
+msgid "Generated Menu"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+msgid "Graph"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_sale__sale_gross
+msgid "Gross Sales"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__group_field_id
+msgid "Group By"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__group_field_id_model_name
+msgid "Group By Model"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__group_limit_selection
+msgid "Group Limit Selection"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__action_group_list_view
+msgid "Group List View"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_block_form
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_form
+msgid "Groups / Dimensions"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#. openerp-web
+#: code:addons/web_dynamic_dashboard/static/src/xml/web_dashboard.xml:22
+#, python-format
+msgid "Happy dashboarding!"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:action.group.field,block_type:0
+#: selection:web.dashboard.block,block_type:0
+msgid "Horizontal Bar"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_action_group_field__id
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_account_move_line__id
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_sale__id
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_move__id
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_quant__id
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard__id
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__id
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_domain_line__id
+msgid "ID"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_quant__incoming_date
+msgid "Incoming Date"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_sale__invoice_status
+msgid "Invoice Status"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_sale__invoiced_qty
+msgid "Invoiced Qty"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__block_iteration
+msgid "Iterate Block"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_block_form
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_form
+msgid "Iteration"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard__iteration_domain
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__block_iteration_domain
+msgid "Iteration Filter"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard__iteration_model_id
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__dashboard_iteration_model
+msgid "Iteration Model"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+msgid "Kanban"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,domain_date:0
+msgid "Last 10 Days"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,domain_date:0
+msgid "Last 2 Months"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,domain_date:0
+msgid "Last 3 Months"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,domain_date:0
+msgid "Last 30 Days"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,domain_date:0
+msgid "Last 60 Days"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_action_group_field____last_update
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_account_move_line____last_update
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_sale____last_update
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_move____last_update
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_quant____last_update
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard____last_update
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block____last_update
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_domain_line____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,domain_date:0
+msgid "Last Month"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_action_group_field__write_uid
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard__write_uid
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__write_uid
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_domain_line__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_action_group_field__write_date
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard__write_date
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__write_date
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_domain_line__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard__iteration_limit
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__group_limit
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__limit
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__subgroup_limit
+msgid "Limit"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:action.group.field,block_type:0
+#: selection:web.dashboard.block,block_type:0
+msgid "Line"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#. openerp-web
+#: code:addons/web_dynamic_dashboard/static/src/xml/web_dashboard.xml:77
+#, python-format
+msgid "List"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_move__location_name
+msgid "Location"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_move__location_other_name
+msgid "Location From/To"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_move__location_other_usage
+msgid "Location From/To Category"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_quant__location_name
+msgid "Location Name"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__field_id
+msgid "Measured Field"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_action_group_field__model_id
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard__iteration_model
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__model
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__model_id
+msgid "Model"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,group_date_format:0
+#: selection:web.dashboard.block,subgroup_date_format:0
+msgid "Month"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_move__move_type
+msgid "Move Type (In/Out)"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard__name
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__name
+msgid "Name"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,time_calculation_method:0
+msgid "Normal"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard,dashboard_source:0
+msgid "Odoo Dynamic Dashboard"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__action_dashboard_id
+msgid "Open Dashboard"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#. openerp-web
+#: code:addons/web_dynamic_dashboard/static/src/xml/web_dashboard.xml:34
+#: code:addons/web_dynamic_dashboard/static/src/xml/web_dashboard.xml:74
+#, python-format
+msgid "Open Detail Configuration"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__menu_id
+msgid "Open Menu"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__link
+msgid "Open URL"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__operation
+msgid "Operation"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_domain_line__operator
+msgid "Operator"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__others_operation
+msgid "Others Operation"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:analysis.stock.quant,storage_duration_category:0
+msgid "Over a Year"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_account_move_line__partner_id
+msgid "Partner"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model,name:web_dynamic_dashboard.model_analysis_shealth_services_walkin
+msgid "Phân tích: Dịch vụ theo phiếu khám bệnh"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model,name:web_dynamic_dashboard.model_analysis_shealth_walkin
+msgid "Phân tích: Phiếu khám bệnh"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:action.group.field,block_type:0
+#: selection:web.dashboard.block,block_type:0
+msgid "Pie"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+msgid "Pivot"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_sale__product_name
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_move__product_name
+msgid "Product"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_sale__product_category_name
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_move__categ_name
+msgid "Product Category"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_quant__product_name
+msgid "Product Name"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_sale__product_uom_qty
+msgid "Product Qty"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:ir.ui.view,type:0
+msgid "QWeb"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_move__product_qty
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_quant__stock_qty
+msgid "Qty"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#. openerp-web
+#: code:addons/web_dynamic_dashboard/static/src/xml/web_dashboard.xml:75
+#, python-format
+msgid "Reset"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_account_move_line__reversed_balance
+msgid "Reversed Balance"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_sale__sale_state
+msgid "Sale Order Status"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_sale__saleperson_id
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_sale__saleperson_name
+msgid "Saleperson"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_sale__saleteam_name
+msgid "Salesteam"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#. openerp-web
+#: code:addons/web_dynamic_dashboard/static/src/xml/web_dashboard.xml:52
+#: code:addons/web_dynamic_dashboard/static/src/xml/web_dashboard.xml:103
+#, python-format
+msgid "Save"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:ir.ui.view,type:0
+msgid "Search"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_block_form
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_form
+msgid "Security"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_action_group_field__sequence
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__show_group
+msgid "Show Group If Empty"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__show_metadata
+msgid "Show Metadata"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__show_group_others
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__show_subgroup_others
+msgid "Show Others"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__show_subgroup
+msgid "Show Sub Group If Empty"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_move__product_signed_qty
+msgid "Signed Qty"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_move__signed_value_current_cost
+msgid "Signed Value (Current Cost)"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard__iteration_sort
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__sort
+msgid "Sort"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard__iteration_sort_by
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__sort_by
+msgid "Sort By"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:action.group.field,block_type:0
+#: selection:web.dashboard.block,block_type:0
+msgid "Stack Bar"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_quant__stock_duration
+msgid "Stock Duration (Days)"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_quant__storage_duration_category
+msgid "Stock Status"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__subdomain_values_field_id
+msgid "Sub Filter By"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__subdomain_values_string
+msgid "Sub Filter Values"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__subgroup_field_id
+msgid "Sub Group By"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__subgroup_field_id_model_name
+msgid "Sub Group By Model"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__subgroup_date_format
+msgid "Sub Group Date Format"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__subgroup_limit_selection
+msgid "Subgroup Limit Selection"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,operation:0
+#: selection:web.dashboard.block,others_operation:0
+msgid "Sum"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard,dashboard_source:0
+msgid "Tableau"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard__tableau_url
+msgid "Tableau URL"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_sale__sale_tax
+msgid "Tax Amount"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#. openerp-web
+#: code:addons/web_dynamic_dashboard/static/src/js/web_dashboard_renderer.js:1085
+#: code:addons/web_dynamic_dashboard/static/src/js/web_dashboard_renderer.js:1251
+#: code:addons/web_dynamic_dashboard/static/src/js/web_dashboard_renderer.js:1480
+#, python-format
+msgid "Theo "
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,domain_date:0
+msgid "This Month"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,domain_date:0
+msgid "This Week"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,domain_date:0
+msgid "This Year"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#. openerp-web
+#: selection:action.group.field,block_type:0
+#: code:addons/web_dynamic_dashboard/static/src/xml/web_dashboard.xml:11
+#: selection:web.dashboard.block,block_type:0
+#, python-format
+msgid "Tile"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__tile_color
+msgid "Tile Color"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__tile_icon
+msgid "Tile Icon"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,domain_date:0
+msgid "Today"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,domain_date:0
+msgid "Today and After"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_sale__sale_cost
+msgid "Total Cost"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_sale__sale_margin
+msgid "Total Margin"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_sale__sale_total
+msgid "Total Net Sales"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+msgid "Tree"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_block_form
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_form
+msgid "Type"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard__iteration_user_field_id
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_dashboard_block__user_field_id
+msgid "User Field"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_quant__stock_value
+msgid "Valuation"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_web_domain_line__value
+msgid "Value"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_analysis_stock_move__value_current_cost
+msgid "Value (Current Cost)"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model,name:web_dynamic_dashboard.model_ir_ui_view
+msgid "View"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_ir_actions_act_window_view__view_mode
+#: model:ir.model.fields,field_description:web_dynamic_dashboard.field_ir_ui_view__type
+msgid "View Type"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_block_form
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_form
+msgid "Visual"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_block_form
+#: model_terms:ir.ui.view,arch_db:web_dynamic_dashboard.web_dashboard_form
+msgid "Visual Settings"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,group_date_format:0
+#: selection:web.dashboard.block,subgroup_date_format:0
+msgid "Week"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.dashboard.block,group_date_format:0
+#: selection:web.dashboard.block,subgroup_date_format:0
+msgid "Year"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#. openerp-web
+#: code:addons/web_dynamic_dashboard/static/src/xml/web_dashboard.xml:22
+#, python-format
+msgid "You can make one by create a new object in the list view (top-right)."
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#. openerp-web
+#: code:addons/web_dynamic_dashboard/static/src/xml/web_dashboard.xml:22
+#, python-format
+msgid "Your dashboard is empty."
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model,name:web_dynamic_dashboard.model_action_group_field
+msgid "action.group.field"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.domain.line,operator:0
+msgid "ilike"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.domain.line,operator:0
+msgid "in"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.domain.line,operator:0
+msgid "like"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: selection:web.domain.line,operator:0
+msgid "not in"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model,name:web_dynamic_dashboard.model_web_dashboard
+msgid "web.dashboard"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model,name:web_dynamic_dashboard.model_web_dashboard_block
+msgid "web.dashboard.block"
+msgstr ""
+
+#. module: web_dynamic_dashboard
+#: model:ir.model,name:web_dynamic_dashboard.model_web_domain_line
+msgid "web.domain.line"
+msgstr ""
+

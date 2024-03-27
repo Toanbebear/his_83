@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Main Menu -->
+        <menuitem name="SCI Health" id="sh_medical_menu" sequence="0"
+                  web_icon="shealth_all_in_one,static/description/icon.png"/>
+        <record id="sh_medical_menu" model="ir.ui.menu">
+            <field name="web_icon_class">kn-logo</field>
+        </record>
+
+        <!-- Patient -->
+        <menuitem name="Patient Management" id="sh_medical_patients_menu" parent="sh_medical_menu" sequence="1"/>
+        <record id="sh_medical_patients_menu" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-user</field>
+        </record>
+
+        <!-- ĐÓN TIẾP -->
+        <menuitem name="Đón tiếp" id="sh_menu_reception" parent="sh_medical_menu" sequence="2"/>
+        <record id="sh_menu_reception" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-user</field>
+        </record>
+
+        <!-- Walkin Management -->
+        <menuitem name="Register for Walkins" id="sh_medical_walkin_menu" parent="sh_medical_menu" sequence="3"/>
+        <record id="sh_medical_walkin_menu" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-stethoscope</field>
+        </record>
+
+        <!--  MENU ROOT VIEN PHI-->
+        <menuitem id="sh_medical_root_payment_menu" name="Viện phí" parent="sh_medical_menu" sequence="4"/>
+        <record id="sh_medical_root_payment_menu" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-money</field>
+        </record>
+
+        <!--  Imaging AND Laboratory Management-->
+        <menuitem id="sh_medical_lab_and_img_menu" name="Laboratory and Imaging" parent="sh_medical_menu" sequence="5"/>
+        <record id="sh_medical_lab_and_img_menu" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-flask</field>
+        </record>
+
+        <!-- Laboratory Management-->
+        <!--			<menuitem id="sh_medical_laboratory_menu" parent="sh_medical_lab_and_img_menu" sequence="1"/>-->
+
+        <!-- Imaging Management -->
+        <!--            <menuitem id="sh_medical_imaging_menu" parent="sh_medical_lab_and_img_menu" sequence="2"/>-->
+
+        <!--  MENU ROOT CHUYEN KHOA-->
+        <menuitem id="sh_medical_root_specialty_menu" name="Specialty" parent="sh_medical_menu" sequence="6"/>
+        <record id="sh_medical_root_specialty_menu" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-user-md</field>
+        </record>
+
+        <!-- Surgery Management -->
+        <!--		    <menuitem id="sh_medical_surgery_menu" parent="sh_medical_root_specialty_menu" sequence="1"/>-->
+
+        <!-- Specialty SPA LASER Management -->
+        <!--		    <menuitem id="sh_medical_specialty_menu" parent="sh_medical_root_specialty_menu" sequence="2"/>-->
+
+        <!-- Specialty RHM Management -->
+        <!--		    <menuitem name="Odontology" id="sh_medical_rhm_specialty_menu" parent="sh_medical_root_specialty_menu" sequence="3"/>-->
+
+        <!-- Physicians -->
+        <!--			<menuitem name="Physicians" id="sh_medical_appointment_menu" parent="sh_medical_menu" sequence="7"/>-->
+        <!--			<record id="sh_medical_appointment_menu" model="ir.ui.menu">-->
+        <!--				<field name="web_icon_class">fa fa-user-md</field>-->
+        <!--			</record>-->
+
+        <!--  MENU ROOT HIS KHO-->
+        <menuitem name="Inventory" id="sci_menu_stock_root" parent="sh_medical_menu" sequence="9" string="Kho"/>
+
+        <record id="sci_menu_stock_root" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-cubes</field>
+        </record>
+<!--        ĐƠN MUA HÀNG NHÀ CUNG CẤP-->
+        <menuitem id="purchase.menu_purchase_form_action" name="Hóa đơn nhà cung cấp" parent="sci_menu_stock_root"
+                  sequence="2" groups="shealth_all_in_one.group_sh_medical_stock_manager"/>
+        <record id="purchase.menu_purchase_form_action" model="ir.ui.menu">
+				<field name="web_icon_class">fa fa-file-text-o</field>
+        </record>
+<!--        CÁC HOẠT ĐỘNG KHO-->
+        <menuitem id="sci_menu_stock_operations" name="Hoạt động kho" parent="sci_menu_stock_root" sequence="3"
+          groups="shealth_all_in_one.group_sh_medical_physician_subclinical,shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_stock_manager"/>
+<!--        CHẠY CƠ SỐ TỦ TRỰC-->
+        <menuitem id="stock.menu_reordering_rules_config" name="Cơ số tủ trực" parent="sci_menu_stock_operations" sequence="7" groups="shealth_all_in_one.group_sh_medical_stock_manager"/>
+        <record id="stock.menu_reordering_rules_config" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-list-ul</field>
+        </record>
+        <menuitem id="stock.menu_procurement_compute" name="Chạy cơ số tủ trực" parent="sci_menu_stock_root" sequence="6" groups="shealth_all_in_one.group_sh_medical_stock_manager"/>
+        <record id="stock.menu_procurement_compute" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-check-circle</field>
+        </record>
+
+<!--        KIỂM KHO -->
+        <menuitem id="stock.menu_action_inventory_form" name="Kiểm kho" parent="sci_menu_stock_operations" sequence="8"/>
+        <record id="stock.menu_action_inventory_form" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-check-square-o</field>
+        </record>
+
+        <!-- Config Menu -->
+        <menuitem name="Configuration" id="sh_medical_conf_menu" parent="sh_medical_menu" sequence="10"/>
+        <record id="sh_medical_conf_menu" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-cogs</field>
+        </record>
+
+        <menuitem name="Health Center Management" id="sh_medical_hospital_menu" parent="sh_medical_conf_menu"
+                  sequence="1" groups="group_sh_medical_manager"/><!-- Health Centers -->
+        <!--			<menuitem name="Patient" id="sh_medical_conf_patient" parent="sh_medical_conf_menu" sequence="2"/>-->
+        <menuitem name="Physician" id="sh_medical_conf_physician" parent="sh_medical_conf_menu" sequence="3"/>
+        <menuitem name="Laboratory" id="sh_medical_conf_laboratory" parent="sh_medical_conf_menu" sequence="4"/>
+        <menuitem name="Imaging" id="sh_medical_imaging_conf_menu" parent="sh_medical_conf_menu" sequence="5"/>
+        <menuitem name="Pathology" id="sh_medical_conf_pathology" parent="sh_medical_conf_menu" sequence="6"/>
+        <menuitem name="Health Products" id="sh_medical_conf_medicaments" parent="shealth_all_in_one.sci_menu_stock_root" sequence="4" groups="shealth_all_in_one.group_sh_medical_stock_manager"/>
+
+
+        <!--			<menuitem name="Operational Areas" id="sh_medical_conf_operational_areas" parent="sh_medical_conf_menu" sequence="9"/>-->
+        <!--			<menuitem name="Insurances" id="sh_medical_conf_insurances" parent="sh_medical_conf_menu" sequence="8"/>-->
+
+        <!-- Pediatrics Management -->
+        <!--		    <menuitem name="Pediatrics" id="sh_medical_pediatrics_menu" parent="sh_medical_menu" sequence="6"/>-->
+
+        <!-- Procedures Codes Conf Menu -->
+        <menuitem name="Medical Procedures" id="sh_medical_procedures_conf_menu" parent="sh_medical_conf_menu"
+                  sequence="4"/>
+
+        <!-- Ophthalmology Management -->
+        <!--            <menuitem name="Ophthalmology" id="sh_medical_ophthalmology_menu" parent="sh_medical_menu" sequence="5"/>-->
+
+        <!-- Nursing Management -->
+        <!--            <menuitem name="Nursing" id="sh_medical_nursing_menu" parent="sh_medical_menu" sequence="7"/>-->
+
+        <!-- Report Menu -->
+        <menuitem name="Report" id="sh_medical_report_menu" parent="sh_medical_menu" sequence="10"/>
+        <record id="sh_medical_report_menu" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-file-text-o</field>
+        </record>
+
+    </data>
+</odoo>

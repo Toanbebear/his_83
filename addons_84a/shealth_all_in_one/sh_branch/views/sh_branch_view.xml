@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+    <openerp>
+        <data>
+
+            <!-- Branch Management -->
+
+            <record id="view_sh_branch_filter" model="ir.ui.view">
+                <field name="name">Branch</field>
+                <field name="model">sh.branch</field>
+                <field name="type">search</field>
+                <field name="arch" type="xml">
+                    <search string="Branchs">
+                        <separator orientation="vertical"/>
+                            <field name="name"/>
+                            <field name="code"/>
+                    </search>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_branch_tree">
+                <field name="name">Branchs</field>
+                <field name="model">sh.branch</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string='Branchs' editable="bottom">
+                        <field name="name"/>
+                        <field name="code"/>
+                    </tree>
+                </field>
+            </record>
+
+            <record id="sh_branch_action_tree" model="ir.actions.act_window">
+                    <field name="name">Branchs</field>
+                    <field name="res_model">sh.branch</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                    <field name="domain">[]</field>
+                    <field name="context">{}</field>
+                    <field name="view_id" eval="False"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to add a new branch.
+                      </p>
+                    </field>
+            </record>
+
+            <menuitem action="sh_branch_action_tree" id="sh_branch_list" groups="base.group_system"  parent="sh_medical_conf_menu" sequence="0"/>
+
+        </data>
+    </openerp>

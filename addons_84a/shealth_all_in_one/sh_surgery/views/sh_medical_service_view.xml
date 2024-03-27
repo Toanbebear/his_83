@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+    <openerp>
+        <data>
+            <!-- Services Management -->
+<!--            <record id="view_sh_medical_service_ot_filter" model="ir.ui.view">-->
+<!--                <field name="name">Services</field>-->
+<!--                <field name="model">sh.medical.health.center.service</field>-->
+<!--                <field name="inherit_id" ref="shealth_all_in_one.view_sh_medical_service_filter"/>-->
+<!--                <field name="type">search</field>-->
+<!--                <field name="arch" type="xml">-->
+<!--                    <xpath expr="//field[@name='service_department']" position="after">-->
+<!--                        <field name="service_room" widget="my_many2many_tags"/>-->
+<!--                        <field name="exam_room" widget="my_many2many_tags"/>-->
+<!--                    </xpath>-->
+<!--                </field>-->
+<!--            </record>-->
+
+<!--            <record model="ir.ui.view" id="sh_medical_service_ot_tree">-->
+<!--                <field name="name">Services</field>-->
+<!--                <field name="model">sh.medical.health.center.service</field>-->
+<!--                <field name="type">tree</field>-->
+<!--                <field name="inherit_id" ref="shealth_all_in_one.sh_medical_service_tree"/>-->
+<!--                <field name="arch" type="xml">-->
+<!--                    <xpath expr="//field[@name='service_department']" position="after">-->
+<!--                        <field name="service_room" widget="my_many2many_tags"/>-->
+<!--                        <field name="exam_room" widget="my_many2many_tags"/>-->
+<!--                    </xpath>-->
+<!--                </field>-->
+<!--            </record>-->
+
+            <record model="ir.ui.view" id="sh_medical_service_ot_form">
+                <field name="name">Services</field>
+                <field name="model">sh.medical.health.center.service</field>
+                <field name="type">form</field>
+                <field name="inherit_id" ref="shealth_all_in_one.sh_medical_service_form"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//field[@name='service_department']" position="after">
+                        <field name="service_room" widget="my_many2many_tags"/>
+                        <field name="exam_room" widget="my_many2many_tags"/>
+                    </xpath>
+                </field>
+            </record>
+        </data>
+    </openerp>

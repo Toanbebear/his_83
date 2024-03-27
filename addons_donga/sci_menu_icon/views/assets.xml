@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2016, 2019 Openworx.
+    @author Mario Gielissen <mario@openworx.nl>
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+
+<odoo>
+    <data>
+		<template id="assets_backend" name="SCI MENU ICON" inherit_id="web.assets_backend">
+		<xpath expr=".">
+				<link rel="stylesheet" href="/sci_menu_icon/static/src/css/style.css"/>
+				<script type="application/javascript" src="/sci_menu_icon/static/src/js/menu.js"/>
+			</xpath>
+		</template>
+    </data>
+</odoo>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="inherit_sh_medical_surgery_add_button_get_data_erp" model="ir.ui.view">
+        <field name="model">sh.medical.surgery</field>
+        <field name="inherit_id" ref="shealth_all_in_one.sh_medical_surgery_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="open_form_get_surgery_erp" type="object" string="Lấy dữ liệu erp" attrs="{'invisible':[('state','not in', ('In Progress', 'Confirmed'))]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_sh_medical_surgery_erp_tree">
+        <field name="name">view_sh_medical_surgery_erp</field>
+        <field name="model">sh.medical.surgery.erp</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="surgery_83"/>
+                <field name="walkin_name"/>
+                <field name="name_patient_erp"/>
+                <field name="surgery_name"/>
+                <field name="surgery_date"/>
+                <field name="service_patient_erp"/>
+                <field name="sync"/>
+                <button name="sync_erp" string="Lấy dữ liệu" type="object" class="btn-primary" attrs="{'invisible': [('sync', '=', True)]}"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="sh_medical_surgery_erp_action" model="ir.actions.act_window">
+        <field name="name">Danh sách phiếu thủ thuật ERP</field>
+        <field name="res_model">sh.medical.surgery.erp</field>
+        <field name="view_mode">tree</field>
+        <field name="view_type">tree</field>
+    </record>
+</odoo>

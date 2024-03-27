@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="crm_debt_review_inherit_walkin" model="ir.ui.view">
+            <field name="name">debt_review_inherit_walkin</field>
+            <field name="model">sh.medical.appointment.register.walkin</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_register_for_walkin_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='create_draft_payment']" position="after">
+                    <button name="request_debt_review" attrs="{'invisible': ['|',('service','=',[]),('state','!=','Scheduled')]}" type="object" string="Yêu cầu duyệt nợ" class="btn-danger"/>
+                </xpath>
+                <xpath expr="//button[@name='view_walkin_material']" position="after">
+                    <button name="request_debt_payment" attrs="{'invisible': ['|', '|', ('state','!=', 'InProgress'),('paid','!=', False),('payment_debt', '=', False)]}" type="object" string="Thanh toán duyệt nợ" class="btn-danger"/>
+                </xpath>
+                <xpath expr="//field[@name='date']" position="after">
+                    <field name="payment_debt" attrs="{'invisible': [('payment_debt', '=', False)]}"/>
+                    <field name="paid" invisible="True"/>
+                </xpath>
+                <xpath expr="//field[@name='service']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state','in',['WaitPayment','Payment','Completed','InProgress'])]}</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

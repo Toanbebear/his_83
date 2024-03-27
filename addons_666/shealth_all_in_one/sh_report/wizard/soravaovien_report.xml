@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="so_ra_vao_vien_report_form">
+            <field name="name">so ra vao vien report form</field>
+            <field name="model">soravaovien.report</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo sổ ra vào viện">
+                    <group>
+                        <field name="start_date" string="Ngày bắt đầu" required="1"/>
+                        <field name="end_date" string="Ngày kết thúc" required="1"/>
+                        <field name="department" string="Khoa" required="1" options="{'no_open':True,'no_create':True}"/>
+                    </group>
+                    <footer>
+                        <button name="soravaovien_report" type="object" string="Báo cáo" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="so_ra_vao_vien_report_act">
+            <field name="name">Báo Cáo Sổ Ra Vào Viện</field>
+            <field name="res_model">soravaovien.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="so_ra_vao_vien_report_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="so_ra_vao_vien_report"
+                  name="Báo cáo sổ ra vào viện"
+                  parent="shealth_all_in_one.sh_medical_report_menu"
+                  action="so_ra_vao_vien_report_act"
+                  sequence="9"
+                  groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_physician_subclinical,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_accountant,shealth_all_in_one.group_sh_medical_stock_manager"/>
+
+        <record id="bao_cao_so_ra_vao_vien_attachment" model="ir.attachment">
+            <field name="name">BÁO CÁO SỔ RA VÀO VIỆN</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="shealth_all_in_one/static/xls/bao_cao_so_ra_vao_vien.xlsx"/>
+            <field name="datas_fname">bao_cao_so_ra_vao_vien.xlsx</field>
+        </record>
+
+
+<!--        thêm trường vào phiếu khám-->
+        <record model="ir.ui.view" id="sh_walkin_number_view">
+            <field name="name">sh_medical_register_for_walkin_view</field>
+            <field name="model">sh.medical.appointment.register.walkin</field>
+            <field name="inherit_id" ref="sh_medical_register_for_walkin_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='institution']" position="before">
+                        <field name="hospital_number" class="oe_inline" attrs="{'readonly': [('state','in',['WaitPayment','Payment','Completed','Cancelled'])]}"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

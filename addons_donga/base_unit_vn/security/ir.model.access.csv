@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+manager_access_country_district,name_manager_access_district,model_res_country_district,base.group_user,1,1,1,1
+manager_user_access_country_ward,name_manager_access_ward,model_res_country_ward,base.group_user,1,1,1,1

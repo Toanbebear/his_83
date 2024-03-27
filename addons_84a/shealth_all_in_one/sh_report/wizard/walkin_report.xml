@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="walkin_report_form">
+            <field name="name">walkin.report.form</field>
+            <field name="model">walkin.report</field>
+            <field name="arch" type="xml">
+                <form string="Inventory report">
+                    <group>
+                        <field name="institution" required="1" options="{'no_create': True}"/>
+                        <field name="report_type" required="1" string="Loại báo cáo"/>
+                        <field name="start_date" attrs="{'invisible': [('report_type', '=', 'surgery')]}"/>
+                        <field name="end_date" attrs="{'invisible': [('report_type', '=', 'surgery')]}"/>
+                        <field name="month" attrs="{'invisible': [('report_type', '!=', 'surgery')]}" string="Tháng"/>
+                    </group>
+                    <footer>
+                        <button name="report_walkin" type="object" string="Báo cáo" class="oe_highlight"
+                        attrs="{'invisible': [('report_type', '!=', 'walkin_by_room')]}"/>
+                        <button name="report_walkin_patient" type="object" string="Báo cáo" class="oe_highlight"
+                        attrs="{'invisible': [('report_type', '!=', 'walkin_by_patient')]}"/>
+                        <button name="report_surgery" type="object" string="Báo cáo" class="oe_highlight"
+                        attrs="{'invisible': [('report_type', '!=', 'surgery')]}"/>
+                        <button name="report_lab_imaging" type="object" string="Báo cáo" class="oe_highlight"
+                        attrs="{'invisible': [('report_type', '!=', 'lab_image')]}"/>
+<!--                        SonDC-->
+                        <button name="report_walkin_exam_dep_specialty" type="object" string="Báo cáo" class="oe_highlight"
+                        attrs="{'invisible': [('report_type', '!=', 'walkin_by_exam_dep_specialty')]}"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="walkin_report_act">
+            <field name="name">Hoạt động khám bệnh</field>
+            <field name="res_model">walkin.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="walkin_report_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="walkin_report"
+                  name="Hoạt động khám bệnh"
+                  parent="shealth_all_in_one.sh_medical_report_menu"
+                  action="walkin_report_act"
+                  sequence="2" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_physician_subclinical,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_accountant,shealth_all_in_one.group_sh_medical_stock_manager"/>
+
+    </data>
+</odoo>

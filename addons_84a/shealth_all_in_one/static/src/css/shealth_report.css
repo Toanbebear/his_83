@@ -1,0 +1,5 @@
+@font-face {
+    font-family: 'Times New Roman';
+    src: local('Times New Roman'), local('Times New Roman'), url(/shealth_all_in_one/static/src/font/times.ttf) format('opentype');
+}
+.table.table-no-border th, .table.table-no-border td{border:none!important;}

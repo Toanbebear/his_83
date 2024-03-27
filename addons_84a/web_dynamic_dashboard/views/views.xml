@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="web_dashboard_dashboard" model="ir.ui.view">
+            <field name="name">web.dashboard.dashboard</field>
+            <field name="model">web.dashboard</field>
+            <field name="type">ddashboard</field>
+            <field name="arch" type="xml">
+                <ddashboard string="Dashboard Views">
+                </ddashboard>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="web_dashboard_action">
+            <field name="name">All Dashboards</field>
+            <field name="res_model">web.dashboard</field>
+            <field name="view_mode">ddashboard,tree,form</field>
+            <field name="context">{'dashboard_id': 0, 'active_test': False}</field>
+        </record>
+
+        <menuitem id="web_dashboard_menu" name="Dashboard Management" sequence="0" web_icon="web_dynamic_dashboard,static/icon/proyek.png"/>
+        <menuitem id="sub_web_dashboard_menu" parent="web_dashboard_menu" name="All Dashboards" sequence="50" action="web_dashboard_action" />
+        
+        <!-- Groups -->
+        <record id="group_ddashboard_manager" model="res.groups">
+            <field name="name">Dashboard Manager</field>
+            <field name="implied_ids" eval="[
+                (4,ref('base.group_user'))
+                ]"/>
+            <field name="users" eval="[
+                (4,ref('base.user_admin'))
+                ]"/>
+        </record>
+        
+        <!-- Tree view for the menuitem -->
+        <record id="web_dashboard_tree" model="ir.ui.view">
+            <field name="name">web.dashboard.tree</field>
+            <field name="model">web.dashboard</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="menu_id"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Form view for the menuitem -->
+        <record id="web_dashboard_form" model="ir.ui.view">
+            <field name="name">web.dashboard.form</field>
+            <field name="model">web.dashboard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <!-- <header>
+                        </header> -->
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="dashboard_source"/>
+                                <field name="tableau_url"
+                                    attrs="{
+                                        'required':[('dashboard_source', '=', 'tableau')],
+                                        'invisible':[('dashboard_source', '!=', 'tableau')]
+                                    }"/>
+                            </group>
+                            <group>
+                                <field name="parent_menu_id" domain="[('child_id', '!=', False)]"/>
+                                <field name="menu_id" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Dashboard Blocks">
+                                <field name="block_ids">
+                                    <tree>
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name"/>
+                                        <field name="block_size"/>
+                                        <field name="block_type"/>
+                                        <field name="active"/>
+                                    </tree>
+                                    <form string="Dashboard Blocks">
+                                        <div class="oe_title">
+                                            <h1>
+                                                <field name="name"/>
+                                            </h1>
+                                        </div>
+                                        <group>
+                                            <field name="data_source"/>
+                                            <field name="data_function" 
+                                                attrs="{
+                                                    'required':[('data_source', '=', 'function')],
+                                                    'invisible':[('data_source', '!=', 'function')]
+                                                }"/>
+                                            <field name="operation"
+                                                attrs="{
+                                                    'required':[('data_source', '=', 'query')],
+                                                    'invisible':[('data_source', '!=', 'query')]
+                                                }"/>
+                                            <field name="model_id" 
+                                                attrs="{
+                                                    'required':[('data_source', '=', 'query')],
+                                                    'invisible':[('data_source', '!=', 'query')]
+                                                }"/>
+                                            <field name="model" invisible="1"
+                                                attrs="{
+                                                    'required':[('data_source', '=', 'query')],
+                                                    'invisible':[('data_source', '!=', 'query')]
+                                                }"/>
+                                            <field name="field_id"
+                                                attrs="{
+                                                    'required':[('data_source', '=', 'query')],
+                                                    'invisible':[('data_source', '!=', 'query')]
+                                                }"/>
+                                            <field name="sort"/>
+                                        </group>
+                                        <group string="Filters">
+                                            <field name="domain_date"
+                                                attrs="{
+                                                    'invisible':[('data_source', '!=', 'query')]
+                                                }"/>
+                                            <field name="domain_date_field_id"
+                                                attrs="{
+                                                    'required':[('domain_date', '!=', False)],
+                                                    'invisible':['|', ('domain_date', '=', False), ('data_source', '!=', 'query')]
+                                                }"/>
+                                            <field name="domain_values_field_id"
+                                                attrs="{
+                                                    'invisible':[('data_source', '!=', 'query')]
+                                                }"/>
+                                            <field name="domain_values_string"
+                                                attrs="{
+                                                    'required':[('domain_values_field_id', '!=', False)],
+                                                    'invisible':['|', ('domain_values_field_id', '=', False), ('data_source', '!=', 'query')]
+                                                }"/>
+                                            <field name="subdomain_values_field_id"
+                                                attrs="{
+                                                    'invisible':[('data_source', '!=', 'query')]
+                                                }"/>
+                                            <field name="subdomain_values_string"
+                                                attrs="{
+                                                    'required':[('subdomain_values_field_id', '!=', False)],
+                                                    'invisible':['|', ('subdomain_values_field_id', '=', False), ('data_source', '!=', 'query')]
+                                                }"/>
+                                            <field name="domain" widget="domain"  options="{'model': 'model', 'in_dialog': True}"
+                                                attrs="{
+                                                    'invisible':[('data_source', '!=', 'query')]
+                                                }"/>
+                                            <field name="limit" invisible="1"/>
+                                            <field name="others_operation" invisible="1"/>
+                                        </group>
+                                        <group string="Groups / Dimensions"
+                                            attrs="{
+                                                'invisible':['|', ('block_type', '=', False), ('block_type', '=', 'tile')]
+                                            }">
+                                            <group>
+                                                <field name="group_field_id"/>
+                                                <!-- TODO: Nanti -->
+                                                <!-- <field name="group_field_id_model_name" invisible="1"/>
+                                                <field name="group_relation_field_id"
+                                                    attrs="{
+                                                        'invisible':[('group_field_id_model_name', '=', False)]
+                                                    }"/> -->
+                                                <field name="group_field_ttype" invisible="1"/>
+                                                <field name="group_date_format"
+                                                    attrs="{
+                                                        'required':[('group_field_ttype', 'in', ['date', 'datetime'])],
+                                                        'invisible':[('group_field_ttype', 'not in', ['date', 'datetime'])]
+                                                    }"/>
+                                                <field name="show_group" invisible="1"/>
+                                                <field name="group_limit"/>
+                                                <field name="show_group_others"/>
+                                            </group>
+                                            <group
+                                                attrs="{
+                                                    'invisible':[('block_type', 'not in', ['line', 'area', 
+                                                        'bar', 'hbar', 'stackbar'])]
+                                                }">
+                                                <field name="subgroup_field_id"/>
+                                                <!-- TODO: Nanti -->
+                                                <!-- <field name="subgroup_field_id_model_name" invisible="1"/>
+                                                <field name="subgroup_relation_field_id"
+                                                    attrs="{
+                                                        'invisible':[('subgroup_field_id_model_name', '=', False)]
+                                                    }"/> -->
+                                                <field name="subgroup_field_ttype" invisible="1"/>
+                                                <field name="subgroup_date_format"
+                                                    attrs="{
+                                                        'required':[('subgroup_field_ttype', 'in', ['date', 'datetime'])],
+                                                        'invisible':[('subgroup_field_ttype', 'not in', ['date', 'datetime'])]
+                                                    }"/>
+                                                <field name="show_subgroup" invisible="1"/>
+                                                <field name="subgroup_limit"/>
+                                                <field name="show_subgroup_others"/>
+                                            </group>
+                                        </group>
+                                        <notebook>
+                                            <page string="Visual">
+                                                <group string="Visual Settings">
+                                                    <group>
+                                                        <field name="block_type" string="Type"/>
+                                                        <field name="block_size"/>
+                                                        <!-- TODO: Nanti -->
+                                                        <field name="tile_color" widget="colorpicker"
+                                                            attrs="{
+                                                                'invisible':[('block_type', '!=', 'tile')]
+                                                            }"/>
+                                                        <field class="icon_picker" name="tile_icon" widget="iconpicker"
+                                                            attrs="{
+                                                                'invisible':[('block_type', '!=', 'tile')]
+                                                            }"/>
+                                                    </group>
+                                                    <group>
+                                                        <field name="show_metadata" invisible="1"/>
+                                                        <field name="sequence"/>
+                                                        <field name="active"/>
+                                                    </group>
+                                                </group>
+                                            </page>
+                                            <page string="Actions">
+                                                <h5>Block Action (What to open when you click the floating action button)</h5>
+                                                <span><i>When you click the floating button, you can set actions to open other dashboard <b>or</b>
+                                                open odoo menu <b>or</b> open URL. You can also click the table icon to be redirected to related list view (default).</i></span><br/>
+                                                <group>
+                                                    <field name="action_dashboard_id"/>
+                                                    <field name="menu_id"/>
+                                                    <field name="link"/>
+                                                    <field name="action_group_list_view"/>
+                                                </group>
+                                                <br/><br/><br/>
+                                                <h5>Chart Action (What happen when you click the charts bar / line)</h5>
+                                                <span><i>When you click the charts you can see more details by grouping the data even more. The grouping fields is defined below.</i></span><br/>
+                                                <group>
+                                                    <field name="action_group_field_ids">
+                                                        <tree editable="bottom">
+                                                            <field name="sequence" widget="handle"/>
+                                                            <field name="block_id" invisible="1"/>
+                                                            <field name="model_id" invisible="1"/>
+                                                            <field name="field_id"/>
+                                                            <field name="block_type"/>
+                                                        </tree>
+                                                    </field>
+                                                </group>
+                                            </page>
+                                            <page string="Iteration">
+                                                <span><i>If you activate dashboard iteration, you should define the domain field in the block which is related to the iteration model. 
+                                                If it is not defined, the system will automatically search for the first related field.</i></span><br/>
+                                                <group>
+                                                    <field name="dashboard_iteration_model" invisible="1"/>
+                                                    <field name="dashboard_iteration_domain_field_id"/>
+                                                </group>
+                                            </page>
+                                            <page string="Security">
+                                                <span><i>You can set user field to restrict access. Or activate record rules (Slow Performance Warning).</i></span><br/>
+                                                <group>
+                                                    <field name="user_field_id"/>
+                                                    <field name="activate_record_rules"/>
+                                                </group>
+                                            </page>
+                                        </notebook>
+                                    </form>
+                                </field>
+                            </page>
+                            <page string="Iteration">
+                                <group>
+                                    <field name="iteration_model_id"/>
+                                    <field name="iteration_model" invisible="1"/>
+                                    <field name="iteration_domain" widget="domain" options="{'model': 'iteration_model', 'in_dialog': True}"/>
+                                    <field name="iteration_limit"/>
+                                    <field name="iteration_sort_by"/>
+                                    <field name="iteration_sort"/>
+                                    <field name="iteration_user_field_id"/>
+                                    <field name="iteration_activate_record_rules"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Dashboard Blocks -->
+        <record model="ir.actions.act_window" id="web_dashboard_block_action">
+            <field name="name">Dashboard Blocks</field>
+            <field name="res_model">web.dashboard.block</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!-- Tree view for the menuitem -->
+        <record id="web_dashboard_block_tree" model="ir.ui.view">
+            <field name="name">web.dashboard.block.tree</field>
+            <field name="model">web.dashboard.block</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="dashboard_id"/>
+                    <field name="model"/>
+                    <field name="field_id"/>
+                    <field name="operation"/>
+                    <field name="block_type"/>
+                    <field name="block_size"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Form view for the menuitem -->
+        <record id="web_dashboard_block_form" model="ir.ui.view">
+            <field name="name">web.dashboard.block.form</field>
+            <field name="model">web.dashboard.block</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="dashboard_id"/>
+                            <field name="data_source"/>
+                            <field name="data_function" 
+                                attrs="{
+                                    'required':[('data_source', '=', 'function')],
+                                    'invisible':[('data_source', '!=', 'function')]
+                                }"/>
+                            <field name="operation"
+                                attrs="{
+                                    'required':[('data_source', '=', 'query')],
+                                    'invisible':[('data_source', '!=', 'query')]
+                                }"/>
+                            <field name="model_id" 
+                                attrs="{
+                                    'required':[('data_source', '=', 'query')],
+                                    'invisible':[('data_source', '!=', 'query')]
+                                }"/>
+                            <field name="model" invisible="1"
+                                attrs="{
+                                    'required':[('data_source', '=', 'query')],
+                                    'invisible':[('data_source', '!=', 'query')]
+                                }"/>
+                            <field name="field_id"
+                                attrs="{
+                                    'required':[('data_source', '=', 'query')],
+                                    'invisible':[('data_source', '!=', 'query')]
+                                }"/>
+                            <field name="sort"/>
+                        </group>
+                        <group string="Filters">
+                            <field name="domain_date"
+                                attrs="{
+                                    'invisible':[('data_source', '!=', 'query')]
+                                }"/>
+                            <field name="domain_date_field_id"
+                                attrs="{
+                                    'required':[('domain_date', '!=', False)],
+                                    'invisible':['|', ('domain_date', '=', False), ('data_source', '!=', 'query')]
+                                }"/>
+                            <field name="domain_values_field_id"
+                                attrs="{
+                                    'invisible':[('data_source', '!=', 'query')]
+                                }"/>
+                            <field name="domain_values_string"
+                                attrs="{
+                                    'required':[('domain_values_field_id', '!=', False)],
+                                    'invisible':['|', ('domain_values_field_id', '=', False), ('data_source', '!=', 'query')]
+                                }"/>
+                            <field name="subdomain_values_field_id"
+                                attrs="{
+                                    'invisible':[('data_source', '!=', 'query')]
+                                }"/>
+                            <field name="subdomain_values_string"
+                                attrs="{
+                                    'required':[('subdomain_values_field_id', '!=', False)],
+                                    'invisible':['|', ('subdomain_values_field_id', '=', False), ('data_source', '!=', 'query')]
+                                }"/>
+                            <field name="domain" widget="domain"  options="{'model': 'model', 'in_dialog': True}"
+                                attrs="{
+                                    'invisible':[('data_source', '!=', 'query')]
+                                }"/>
+                            <field name="limit" invisible="1"/>
+                            <field name="others_operation" invisible="1"/>
+                        </group>
+                        <group string="Groups / Dimensions"
+                            attrs="{
+                                'invisible':['|', ('block_type', '=', False), ('block_type', '=', 'tile')]
+                            }">
+                            <group>
+                                <field name="group_field_id"/>
+                                <!-- TODO: Nanti -->
+                                <!-- <field name="group_field_id_model_name" invisible="1"/>
+                                <field name="group_relation_field_id"
+                                    attrs="{
+                                        'invisible':[('group_field_id_model_name', '=', False)]
+                                    }"/> -->
+                                <field name="group_field_ttype" invisible="1"/>
+                                <field name="group_date_format"
+                                    attrs="{
+                                        'required':[('group_field_ttype', 'in', ['date', 'datetime'])],
+                                        'invisible':[('group_field_ttype', 'not in', ['date', 'datetime'])]
+                                    }"/>
+                                <field name="show_group" invisible="1"/>
+                                <field name="group_limit"/>
+                                <field name="show_group_others"/>
+                            </group>
+                            <group
+                                attrs="{
+                                    'invisible':[('block_type', 'not in', ['line', 'area', 
+                                        'bar', 'hbar', 'stackbar'])]
+                                }">
+                                <field name="subgroup_field_id"/>
+                                <!-- TODO: Nanti -->
+                                <!-- <field name="subgroup_field_id_model_name" invisible="1"/>
+                                <field name="subgroup_relation_field_id"
+                                    attrs="{
+                                        'invisible':[('subgroup_field_id_model_name', '=', False)]
+                                    }"/> -->
+                                <field name="subgroup_field_ttype" invisible="1"/>
+                                <field name="subgroup_date_format"
+                                    attrs="{
+                                        'required':[('subgroup_field_ttype', 'in', ['date', 'datetime'])],
+                                        'invisible':[('subgroup_field_ttype', 'not in', ['date', 'datetime'])]
+                                    }"/>
+                                <field name="show_subgroup" invisible="1"/>
+                                <field name="subgroup_limit"/>
+                                <field name="show_subgroup_others"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Visual">
+                                <group string="Visual Settings">
+                                    <group>
+                                        <field name="block_type" string="Type"/>
+                                        <field name="block_size"/>
+                                        <!-- TODO: Nanti -->
+                                        <field name="tile_color" widget="colorpicker"
+                                            attrs="{
+                                                'invisible':[('block_type', '!=', 'tile')]
+                                            }"/>
+                                        <field class="icon_picker" name="tile_icon" widget="iconpicker"
+                                            attrs="{
+                                                'invisible':[('block_type', '!=', 'tile')]
+                                            }"/>
+                                    </group>
+                                    <group>
+                                        <field name="show_metadata" invisible="1"/>
+                                        <field name="sequence"/>
+                                        <field name="active"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Actions">
+                                <h5>Block Action (What to open when you click the floating action button)</h5>
+                                <span><i>When you click the floating button, you can set actions to open other dashboard <b>or</b>
+                                open odoo menu <b>or</b> open URL. You can also click the table icon to be redirected to related list view (default).</i></span><br/>
+                                <group>
+                                    <field name="action_dashboard_id"/>
+                                    <field name="menu_id"/>
+                                    <field name="link"/>
+                                    <field name="action_group_list_view"/>
+                                </group>
+                                <br/><br/><br/>
+                                <h5>Chart Action (What happen when you click the charts bar / line)</h5>
+                                <span><i>When you click the charts you can see more details by grouping the data even more. The grouping fields is defined below.</i></span><br/>
+                                <group>
+                                    <field name="action_group_field_ids">
+                                        <tree editable="bottom">
+                                            <field name="sequence" widget="handle"/>
+                                            <field name="block_id" invisible="1"/>
+                                            <field name="model_id" invisible="1"/>
+                                            <field name="field_id"/>
+                                            <field name="block_type"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+                            <page string="Iteration">
+                                <span><i>If you activate dashboard iteration, you should define the domain field in the block which is related to the iteration model. 
+                                If it is not defined, the system will automatically search for the first related field.</i></span><br/>
+                                <group>
+                                    <field name="dashboard_iteration_model" invisible="1"/>
+                                    <field name="dashboard_iteration_domain_field_id"/>
+                                </group>
+                            </page>
+                            <page string="Security">
+                                <span><i>You can set user field to restrict access. Or activate record rules (Slow Performance Warning).</i></span><br/>
+                                <group>
+                                    <field name="user_field_id"/>
+                                    <field name="activate_record_rules"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <menuitem id="sub_web_dashboard_block" parent="web_dashboard_menu" name="Dashboard Blocks" sequence="60" action="web_dashboard_block_action" />
+    
+        <!-- Analysis -->
+        <record id="analysis_sale" model="ir.ui.view">
+            <field name="name">analysis.sale.tree</field>
+            <field name="model">analysis.sale</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="product_name"/>
+                    <field name="product_category_name"/>
+                    <field name="partner_name"/>
+                    <field name="saleperson_name"/>
+                    <field name="sale_total"/>
+                    <field name="sale_discount"/>
+                    <field name="product_uom_qty"/>
+                    <field name="sale_margin"/>
+                    <field name="sale_gross"/>
+                    <field name="sale_tax"/>
+                    <field name="delivered_qty"/>
+                    <field name="invoiced_qty"/>
+                    <field name="sale_cost"/>
+                    <field name="date_order"/>
+                    <field name="sale_state"/>
+                    <field name="state_name"/>
+                    <field name="invoice_status"/>
+                    <field name="saleteam_name"/>
+                    <field name="company_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="analysis_account_move_line" model="ir.ui.view">
+            <field name="name">analysis.account.move.line.tree</field>
+            <field name="model">analysis.account.move.line</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="accont_code"/>
+                    <field name="account_name"/>
+                    <field name="account_type_name"/>
+                    <field name="balance"/>
+                    <field name="abs_balance"/>
+                    <field name="reversed_balance"/>
+                    <field name="move_date"/>
+                    <field name="company_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="analysis_stock_quant" model="ir.ui.view">
+            <field name="name">analysis.stock.quant.tree</field>
+            <field name="model">analysis.stock.quant</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="product_name"/>
+                    <field name="location_name"/>
+                    <field name="categ_name"/>
+                    <field name="stock_qty"/>
+                    <field name="stock_value"/>
+                    <field name="incoming_date"/>
+                    <field name="stock_duration"/>
+                    <field name="storage_duration_category"/>
+                    <field name="company_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="analysis_stock_move" model="ir.ui.view">
+            <field name="name">analysis.stock.move.tree</field>
+            <field name="model">analysis.stock.move</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="product_name"/>
+                    <field name="categ_name"/>
+                    <field name="location_name"/>
+                    <field name="move_type"/>
+                    <field name="location_other_name"/>
+                    <field name="location_other_usage"/>
+                    <field name="product_qty"/>
+                    <field name="product_signed_qty"/>
+                    <field name="value_current_cost"/>
+                    <field name="signed_value_current_cost"/>
+                    <field name="current_cost"/>
+                    <field name="date"/>
+                    <field name="date_expected"/>
+                    <field name="company_id"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>
+

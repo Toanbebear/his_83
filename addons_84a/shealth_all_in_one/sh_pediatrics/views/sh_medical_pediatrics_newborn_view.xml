@@ -1,0 +1,262 @@
+<?xml version="1.0" ?>
+    <odoo>
+        <data>
+
+            <!-- Newborn Baby Management -->
+
+            <record id="view_sh_medical_newborn_filter" model="ir.ui.view">
+                <field name="name">Newborn Search</field>
+                <field name="model">sh.medical.pediatrics.newborn</field>
+                <field name="type">search</field>
+                <field name="arch" type="xml">
+                    <search string="Search Newborns">
+                        <separator orientation="vertical"/>
+                            <field name="name" select="1"/>
+                            <field name="mother" string="Mother" select="1"/>
+                            <field name="doctor" string="Physician" select="1"/>
+                            <field name="institution" string="Health Center" select="1"/>
+                        <newline/>
+                        <group expand="0" string="Group By..." colspan="11" col="11">
+                            <filter name="group_mother" string="Mother" context="{'group_by':'mother'}"/>
+                            <filter name="group_doctor" string="Doctor" context="{'group_by':'doctor'}"/>
+                            <filter name="group_health_center" string="Health Center" context="{'group_by':'institution'}"/>
+                            <filter name="group_status" string="Status" context="{'group_by':'state'}"/>
+                        </group>
+                    </search>
+                </field>
+            </record>
+
+
+            <record model="ir.ui.view" id="sh_medical_newborn_view">
+                <field name="name">Newborns</field>
+                <field name="model">sh.medical.pediatrics.newborn</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                <form string="Newborn">
+                    <header>
+                        <button confirm="Are you sure you want to end newborn document by signing the process?" name="sign_newborn" states="Draft" string="Sign the process" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_manager"/>
+                        <field name="state" widget="statusbar" statusbar_visible="Draft,Signed" statusbar_colors='{"Signed":"grey"}'/>
+                    </header>
+                    <sheet>
+                        <div>
+                            <field name="image" widget='image' class="oe_left oe_avatar" options='{"preview_image": "image_medium", "size": [90, 90]}'/>
+                            <div class="oe_title">
+                               <label for="name" string="Baby Name" class="oe_edit_only"/>
+                                <h1>
+                                    <field name="name" required="1"/>
+                                </h1>
+                                <field name="newborn_code"/>
+                            </div>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="mother" context="{'default_sex': 'Female'}"/>
+                                <field name="birth_date"/>
+                                <field name="institution" options="{'no_create': True}"/>
+                                <field name="signed_by" attrs="{'invisible':[('state','=','Draft')]}"/>
+                            </group>
+                            <group>
+                                <field name="sex"/>
+                                <field name="dismissed"/>
+                                <field name="doctor" options="{'no_create': True}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="length"/>
+                                <field name="cephalic_perimeter"/>
+                            </group>
+                            <group>
+                                <field name="weight"/>
+                                <field name="congenital_diseases"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="APGAR Scores">
+                                <field name="apgar_scores" nolabel="1">
+                                    <form string="APGAR Scores">
+                                        <sheet>
+                                            <group>
+                                                <group>
+                                                    <field name="apgar_minute"/>
+                                                </group>
+                                                <group>
+                                                    <field name="apgar_score"/>
+                                                </group>
+                                            </group>
+                                            <group>
+                                                <group>
+                                                    <field name="apgar_appearance" on_change="on_change_with_apgar_score(apgar_appearance, apgar_pulse, apgar_grimace, apgar_activity, apgar_respiration)"/>
+                                                    <field name="apgar_grimace" on_change="on_change_with_apgar_score(apgar_appearance, apgar_pulse, apgar_grimace, apgar_activity, apgar_respiration)"/>
+                                                    <field name="apgar_respiration" on_change="on_change_with_apgar_score(apgar_appearance, apgar_pulse, apgar_grimace, apgar_activity, apgar_respiration)"/>
+                                                </group>
+                                                <group>
+                                                    <field name="apgar_pulse" on_change="on_change_with_apgar_score(apgar_appearance, apgar_pulse, apgar_grimace, apgar_activity, apgar_respiration)"/>
+                                                    <field name="apgar_activity" on_change="on_change_with_apgar_score(apgar_appearance, apgar_pulse, apgar_grimace, apgar_activity, apgar_respiration)"/>
+                                                </group>
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                    <tree string="APGAR Scores">
+                                        <field name="apgar_minute"/>
+                                        <field name="apgar_score"/>
+                                        <field name="apgar_appearance"/>
+                                        <field name="apgar_pulse"/>
+                                        <field name="apgar_grimace"/>
+                                        <field name="apgar_activity"/>
+                                        <field name="apgar_respiration"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Findings and Tests">
+                                <group string="Neonatal Signs and Symptoms">
+                                    <group>
+                                        <field name="meconium"/>
+                                        <field name="neonatal_barlow"/>
+                                        <field name="neonatal_ambiguous_genitalia"/>
+                                        <field name="neonatal_hematoma"/>
+                                        <field name="neonatal_palmar_crease"/>
+                                        <field name="neonatal_syndactyly"/>
+                                    </group>
+                                    <group>
+                                        <field name="neonatal_ortolani"/>
+                                        <field name="neonatal_hernia"/>
+                                        <field name="neonatal_erbs_palsy"/>
+                                        <field name="neonatal_talipes_equinovarus"/>
+                                        <field name="neonatal_polydactyly"/>
+                                    </group>
+                                </group>
+                                <group string="Neonatal Reflex Check">
+                                    <group>
+                                        <field name="neonatal_moro_reflex"/>
+                                        <field name="neonatal_stepping_reflex"/>
+                                        <field name="neonatal_blink_reflex"/>
+                                        <field name="neonatal_swimming_reflex"/>
+                                    </group>
+                                    <group>
+                                        <field name="neonatal_grasp_reflex"/>
+                                        <field name="neonatal_babinski_reflex"/>
+                                        <field name="neonatal_sucking_reflex"/>
+                                        <field name="neonatal_tonic_neck_reflex"/>
+                                    </group>
+                                </group>
+                                <group string="Tests">
+                                    <group>
+                                        <field name="test_vdrl"/>
+                                        <field name="test_chagas"/>
+                                        <field name="test_audition"/>
+                                    </group>
+                                    <group>
+                                        <field name="test_toxo"/>
+                                        <field name="test_billirubin"/>
+                                        <field name="test_metabolic"/>
+                                    </group>
+                                </group>
+
+                            </page>
+                            <page string="Deceased">
+                                <group>
+                                    <group>
+                                        <field name="bd"/>
+                                        <field name="died_at_the_hospital"/>
+                                    </group>
+                                    <group>
+                                        <field name="died_at_delivery"/>
+                                        <field name="died_being_transferred"/>
+                                    </group>
+                                </group>
+                                <group>
+                                    <group>
+                                        <field name="time_of_death"/>
+                                    </group>
+                                    <group>
+                                        <field name="cause_of_death"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Notes">
+                                <group>
+                                    <group>
+                                        <field name="notes" nolabel="1"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    </form>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_newborn_kanban_view">
+                <field name="name">Newborn Kanban</field>
+                <field name="model">sh.medical.pediatrics.newborn</field>
+                <field name="arch" type="xml">
+                    <kanban class="o_kanban_mobile">
+                        <field name="id"/>
+                        <field name="name"/>
+                        <field name="newborn_code"/>
+                        <field name="mother"/>
+                        <field name="birth_date"/>
+                        <field name="sex"/>
+                        <templates>
+                            <t t-name="kanban-box">
+                                <div class="sh_medical_vignette">
+                                    <div class="sh_medical_image">
+                                        <a type="open"><img alt="" t-att-src="kanban_image('sh.medical.pediatrics.newborn', 'image_medium', record.id.raw_value)" class="sh_medical_picture"/></a>
+                                    </div>
+                                    <div class="sh_medical_details">
+                                        <h4>
+                                            <a type="open"><field name="name"/></a>
+                                        </h4>
+                                        <ul>
+                                            <li t-if="record.newborn_code.raw_value"><field name="newborn_code"/></li>
+                                            <li t-if="record.mother.raw_value"><field name="mother"/></li>
+                                            <li t-if="record.birth_date.raw_value"><field name="birth_date"/></li>
+                                            <li t-if="record.sex.raw_value"><field name="sex"/></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </t>
+                        </templates>
+                    </kanban>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_newborn_tree">
+                <field name="name">Newborn List</field>
+                <field name="model">sh.medical.pediatrics.newborn</field>
+                <field name="type">tree</field>
+                    <field name="arch" type="xml">
+                        <tree string='Newborn Information' decoration-muted="state=='Signed'">
+                            <field name="newborn_code"/>
+                            <field name="name"/>
+                            <field name="sex"/>
+                            <field name="birth_date"/>
+                            <field name="mother"/>
+                            <field name="doctor"/>
+                            <field name="institution"/>
+                            <field name="state"/>
+                        </tree>
+                    </field>
+            </record>
+
+
+            <record id="sh_medical_newborn_action_tree" model="ir.actions.act_window">
+                    <field name="name">Newborns</field>
+                    <field name="res_model">sh.medical.pediatrics.newborn</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">kanban,tree,form</field>
+                    <field name="domain">[]</field>
+                    <field name="context">{}</field>
+                    <field name="view_id" eval="False"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to register a new newborn baby.
+                      </p>
+                    </field>
+            </record>
+
+            <menuitem action="sh_medical_newborn_action_tree" parent="sh_medical_pediatrics_menu"  id="sh_medical_newborn_list" sequence="5"/>
+
+        </data>
+    </odoo>

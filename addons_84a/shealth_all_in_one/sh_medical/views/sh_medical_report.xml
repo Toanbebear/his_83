@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+                string="Patient Card"
+                id="action_report_patient_label"
+                model="sh.medical.patient"
+                report_type="qweb-pdf"
+                name="shealth_all_in_one.report_patient_label"
+                file="shealth_all_in_one.report_patient_label"
+        />
+
+        <report
+                string="Patient Medicines Report"
+                id="report_patient_medicine"
+                model="sh.medical.patient"
+                report_type="qweb-pdf"
+                name="shealth_all_in_one.report_patientmedicine"
+                file="shealth_all_in_one.report_patientmedicine"
+                groups="shealth_all_in_one.group_sh_medical_manager"
+        />
+
+        <report
+                id="action_report_appointment_receipt"
+                string="Appointment Receipt"
+                model="sh.medical.appointment"
+                report_type="qweb-pdf"
+                name="shealth_all_in_one.report_appointment_receipt"
+                file="shealth_all_in_one.report_appointment_receipt"
+                paperformat="shealth_all_in_one.sh_paperformat_appointmentreceipt"
+
+        />
+
+        <report
+                string="Prescription Report"
+                id="action_sh_medical_report_patient_prescriptions"
+                model="sh.medical.prescription"
+                report_type="qweb-pdf"
+                name="shealth_all_in_one.report_sh_medical_patient_prescription"
+                file="shealth_all_in_one.report_sh_medical_patient_prescription"
+                paperformat="shealth_all_in_one.sh_paperformat_prescription"
+        />
+
+        <report
+                string="Hướng dẫn sau dịch vụ"
+                id="action_sh_medical_report_patient_prescriptions_huongdan"
+                model="sh.medical.prescription"
+                report_type="qweb-pdf"
+                name="shealth_all_in_one.report_sh_medical_patient_prescription_huongdan"
+                file="shealth_all_in_one.report_sh_medical_patient_prescription_huongdan"
+                paperformat="shealth_all_in_one.sh_paperformat_prescription"
+        />
+
+        <report
+                string="Đơn thuốc theo dịch vụ"
+                id="action_report_temp_prescription_service"
+                model="sh.medical.health.center.service"
+                report_type="qweb-pdf"
+                name="shealth_all_in_one.report_sh_medical_temp_prescription_service"
+                file="shealth_all_in_one.report_sh_medical_temp_prescription_service"
+                paperformat="shealth_all_in_one.sh_paperformat_prescription"
+        />
+
+        <report
+                string="Hướng dẫn theo dịch vụ"
+                id="action_report_temp_huongdan_service"
+                model="sh.medical.health.center.service"
+                report_type="qweb-pdf"
+                name="shealth_all_in_one.report_sh_medical_temp_huongdan_service"
+                file="shealth_all_in_one.report_sh_medical_temp_huongdan_service"
+                paperformat="shealth_all_in_one.sh_paperformat_prescription"
+        />
+
+        <!--        SonDC-->
+        <report
+                string="Phiếu xuất thuốc"
+                id="action_report_temp_drug_release_note"
+                model="sh.medical.prescription"
+                report_type="qweb-pdf"
+                name="shealth_all_in_one.report_sh_medical_temp_drug_release_note"
+                file="shealth_all_in_one.report_sh_medical_temp_drug_release_note"
+                paperformat="shealth_all_in_one.sh_paperformat_test_result"
+        />
+    </data>
+</odoo>

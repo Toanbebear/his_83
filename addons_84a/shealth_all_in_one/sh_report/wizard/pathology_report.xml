@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="death_situation_report_form">
+            <field name="name">pathology.report.form</field>
+            <field name="model">pathology.report</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo tình hình bệnh tật">
+                    <group>
+                        <field name="start_date" string="Ngày bắt đầu"/>
+                        <field name="end_date" string="Ngày kết thúc"/>
+                    </group>
+                    <footer>
+                        <button name="death_situation_report" type="object" string="Báo cáo" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="death_situation_report_act">
+            <field name="name">Tình hình bệnh tật và tử vong theo mã icd10</field>
+            <field name="res_model">pathology.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="death_situation_report_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="death_situation_report"
+                  name="Tình hình bệnh tật và tử vong theo mã icd10"
+                  parent="shealth_all_in_one.sh_medical_report_menu"
+                  action="death_situation_report_act"
+                  sequence="5" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_physician_subclinical,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_accountant,shealth_all_in_one.group_sh_medical_stock_manager"/>
+
+    </data>
+</odoo>

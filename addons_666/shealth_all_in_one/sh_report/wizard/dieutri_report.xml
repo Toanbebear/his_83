@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="dieutri_report_form">
+            <field name="name">dieutri.report.form</field>
+            <field name="model">dieutri.report</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo hoạt động điều trị">
+                    <group>
+                        <field name="start_date" string="Ngày bắt đầu"/>
+                        <field name="end_date" string="Ngày kết thúc"/>
+                    </group>
+                    <footer>
+                        <button name="report_dieutri" type="object" string="Báo cáo" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="dieutri_report_act">
+            <field name="name">Hoạt động điều trị</field>
+            <field name="res_model">dieutri.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="dieutri_report_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="dieutri_report"
+                  name="Hoạt động điều trị"
+                  parent="shealth_all_in_one.sh_medical_report_menu"
+                  action="dieutri_report_act"
+                  sequence="3" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_physician_subclinical,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_accountant,shealth_all_in_one.group_sh_medical_stock_manager"/>
+
+        <record id="bao_cao_hoat_dong_dieu_tri_attachment" model="ir.attachment">
+            <field name="name">Báo cáo hoạt động điều trị</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="shealth_all_in_one/static/xls/BAO_CAO_HOAT_DONG_DIEU_TRI.xlsx"/>
+            <field name="store_fname">BAO_CAO_HOAT_DONG_DIEU_TRI.xls</field>
+        </record>
+    </data>
+</odoo>

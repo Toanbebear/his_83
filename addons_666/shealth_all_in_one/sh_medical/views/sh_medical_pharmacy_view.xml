@@ -1,0 +1,203 @@
+<?xml version="1.0" ?>
+<odoo>
+        <data>
+
+            <!-- Pharmacy -->
+
+            <record model="ir.ui.view" id="sh_medical_healthcenters_pharmacy_view">
+                <field name="name">Pharmacy</field>
+                <field name="model">sh.medical.health.center.pharmacy</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                    <form string="Pharmacies">
+                        <sheet>
+                            <div class="oe_left" style="width: 500px;">
+                                <field name="image" widget='image' class="oe_avatar" options='{"preview_image": "image_medium"}'/>
+                                <div class="oe_title">
+                                    <label for="name" string="Pharmacy Name" class="oe_edit_only"/>
+                                    <h1>
+                                        <field name="name" required="1"/>
+                                    </h1>
+<!--                                    <field name="pharmacist_name" placeholder="Pharmacist Name" context="{'default_is_pharmacist':True}"/>-->
+                                    <field name="institution" placeholder="Health Centers" options="{'no_create': True}"/>
+                                    <field name="location_id" groups="base.group_no_one"/>
+                                </div>
+                            </div>
+                            <group>
+                                <group>
+                                    <label for="street" string="Address"/>
+                                    <div>
+                                        <field name="street" placeholder="Street..."/>
+                                        <field name="street2"/>
+                                        <div class="address_format">
+                                            <field name="city" placeholder="City" style="width: 40%"/>
+                                            <field name="state_id" class="oe_no_button" placeholder="Thành phố" style="width: 37%" options='{"no_open": True}'/>
+                                            <field name="zip" placeholder="ZIP" style="width: 20%"/>
+                                        </div>
+                                        <field name="country_id" placeholder="Country" class="oe_no_button" options='{"no_open": True, "no_create": True}'/>
+                                    </div>
+                                    <field name="website" widget="url" placeholder="e.g. www.odoo.com"/>
+                                </group>
+                                <group>
+                                    <field name="phone" placeholder="e.g. +32.81.81.37.00"/>
+                                    <field name="mobile"/>
+                                    <field name="email" widget="email"/>
+                                </group>
+                            </group>
+                            <notebook>
+                                <page string="Prescriptions" invisible="1">
+                                    <field name="pharmacy_lines" nolabel="1" invisible="1">
+                                        <form string="Prescriptions" nolabel="1">
+                                            <header>
+                                                <button confirm="Are you sure you want to create the invoice?" name="action_prescription_invoice_create" states="Draft" string="Create Invoice" type="object" class="oe_highlight"/>
+                                                <field name="state" widget="statusbar" statusbar_visible="Draft,Invoiced" statusbar_colors='{"Draft":"blue","Invoiced":"grey"}'/>
+                                            </header>
+                                            <sheet>
+                                                <group>
+                                                    <group>
+                                                        <field name="name" options="{'no_create': True}"/>
+                                                        <field name="doctor" options="{'no_create': True}"/>
+                                                    </group>
+                                                    <group>
+                                                        <field name="patient" class="text-uppercase"/>
+                                                        <field name="amount_total" sum="Prescription Total"/>
+                                                    </group>
+                                                </group>
+                                                <notebook>
+                                                    <page string="Prescription Lines">
+                                                        <field name="prescription_lines" nolabel="1">
+                                                            <tree string="Prescription Lines" nolabel="1" editable="bottom">
+                                                                <field name="name"/>
+                                                                <field name="indication"/>
+                                                                <field name="qty" readonly="1"/>
+                                                                <field name="actual_qty"/>
+                                                                <field name="price_unit"/>
+                                                                <field name="price_subtotal"/>
+                                                            </tree>
+                                                        </field>
+                                                    </page>
+                                                </notebook>
+                                            </sheet>
+                                        </form>
+                                        <tree string="Prescriptions" nolabel="1" decoration-muted="state=='Invoiced'" decoration-info="state=='Draft'">
+                                            <field name="name"/>
+                                            <field name="patient" class="text-uppercase"/>
+                                            <field name="doctor"/>
+                                            <field name="amount_total" sum="Prescription Total"/>
+                                            <field name="state"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                                <page string="Phamacists">
+                                    <field name="pharmacist_ids" nolabel="1">
+                                        <tree editable="bottom">
+                                            <field name="pharmacist_id"/>
+                                            <field name="institution"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                                <page string="Extra Information">
+                                    <field name="info" nolabel="1"/>
+                                </page>
+                            </notebook>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_healthcenters_pharmacy_tree">
+                <field name="name">Pharmacies</field>
+                <field name="model">sh.medical.health.center.pharmacy</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string='Pharmacies'>
+                        <field name="name"/>
+<!--                        <field name="pharmacist_name"/>-->
+                        <field name="institution"/>
+                        <field name="street"/>
+                        <field name="city" invisible="1"/>
+                        <field name="state_id" string="Thành phố"/>
+                        <field name="country_id"/>
+                        <field name="website"/>
+                    </tree>
+                </field>
+            </record>
+
+             <record id="view_medical_healthcenters_pharmacy_filter" model="ir.ui.view">
+                <field name="name">Pharmacies Search</field>
+                <field name="model">sh.medical.health.center.pharmacy</field>
+                <field name="priority" eval="8" />
+			    <field name="arch" type="xml">
+                    <search string="Pharmacies">
+                        <field name="name" />
+<!--                        <field name="pharmacist_name" />-->
+                        <field name="institution"/>
+                        <newline />
+                        <group expand="0" string="Group By...">
+                            <filter string="Pharmacies" name="group_pharmacies" domain="[]" context="{'group_by':'name'}" />
+<!--                            <filter string="Pharmacist Name" name="group_pharmacist_name" domain="[]" context="{'group_by':'pharmacist_name'}" />-->
+                            <filter string="Health Centers" name="group_health_centers" domain="[]" context="{'group_by':'institution'}" />
+                        </group>
+				    </search>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_healthcenters_pharmacy_kanban_view">
+                <field name="name">Pharmacies</field>
+                <field name="model">sh.medical.health.center.pharmacy</field>
+                <field name="arch" type="xml">
+                    <kanban class="o_kanban_mobile">
+                        <field name="id"/>
+                        <field name="name"/>
+<!--                        <field name="pharmacist_name"/>-->
+                        <field name="institution"/>
+                        <field name="city"/>
+                        <field name="country_id"/>
+                        <field name="email"/>
+                        <templates>
+                            <t t-name="kanban-box">
+                                <div class="sh_medical_vignette oe_semantic_html_override">
+                                    <div class="sh_medical_image">
+                                        <a type="open">
+                                            <img alt="" t-att-src="kanban_image('sh.medical.health.center.pharmacy', 'image_small', record.id.raw_value)" class="sh_medical_picture"/>
+                                        </a>
+                                    </div>
+                                    <div class="sh_medical_details">
+                                        <h4>
+                                            <a type="open"><field name="name"/></a>
+                                        </h4>
+                                        <ul>
+<!--                                            <li t-if="record.pharmacist_name.raw_value"><field name="pharmacist_name"/></li>-->
+                                            <li t-if="record.institution.raw_value"><field name="institution"/></li>
+                                            <li t-if="record.city.raw_value and record.country_id.raw_value"><field name="city"/>, <field name="country_id"/></li>
+                                            <li t-if="record.email.raw_value"><a t-attf-href="mailto:#{record.email.raw_value}"><field name="email"/></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </t>
+                        </templates>
+                    </kanban>
+                </field>
+            </record>
+
+            <record id="sh_medical_healthcenters_pharmacy_action_tree" model="ir.actions.act_window">
+                    <field name="name">Pharmacies</field>
+                    <field name="res_model">sh.medical.health.center.pharmacy</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">kanban,tree,form</field>
+                    <field name="domain">[]</field>
+                    <field name="context">{}</field>
+                    <field name="view_id" eval="False"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to add a new pharmacies.
+                      </p><p>
+                        With shealth pharmacies screen, you can configure pharmacy screen and manage all the medicines
+                      </p>
+                    </field>
+            </record>
+
+<!--            <menuitem action="sh_medical_healthcenters_pharmacy_action_tree" id="sh_medical_healthcenters_pharmacy_list" parent="sh_medical_hospital_menu" sequence="5"/>-->
+
+    </data>
+</odoo>

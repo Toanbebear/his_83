@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="report_revenue_view">
+            <field name="name">sh.report.revenue</field>
+            <field name="model">sh.report.revenue</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo doanh thu">
+                    <group>
+                        <field name="report_type" required="1"/>
+                        <field name="start_date" string="Từ ngày"/>
+                        <field name="end_date" string="Đến ngày"/>
+                    </group>
+                    <footer>
+                        <button name="report_revenue" type="object" string="Báo cáo" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="report_revenue_action">
+            <field name="name">Báo cáo doanh thu bệnh nhân</field>
+            <field name="res_model">sh.report.revenue</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="report_revenue_view"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="report_revenue_menu"
+                  name="Báo cáo doanh thu"
+                  parent="shealth_all_in_one.sh_medical_report_menu"
+                  action="report_revenue_action"
+                  sequence="11" groups="shealth_all_in_one.group_sh_medical_accountant"/>
+    </data>
+</odoo>

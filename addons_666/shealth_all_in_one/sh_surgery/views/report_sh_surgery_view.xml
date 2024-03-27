@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="shealth_report_surgery_document">
+        <t t-call="web.external_layout">
+            <t t-set="doc" t-value="o.with_context({'lang':o.patient.partner_id.lang})"/>
+            <div class="page" style="font-family:Times New Roman;font-size:14px;">
+                <div class="oe_structure"/>
+<!--                <div class="row mt32 mb32">-->
+                <div class="col-12">
+                    <div style="font-family:Times New Roman;font-size:14px;">
+                        <b>BỆNH VIỆN THẨM MỸ KANGNAM SÀI GÒN</b>
+                    </div>
+                    <div>
+                        <t t-if="doc.institution">
+                            <span>666 Cách Mạng Tháng 8, Phường 5, Tân Bình, TP.HCM</span>
+                        </t>
+                    </div>
+                    <div class="text-center" style="font-family:Times New Roman;font-size:20px;">
+                        <b>BẢNG KÊ XUẤT VẬT TƯ / THUỐC THEO BỆNH NHÂN</b>
+                    </div>
+                    <div style="font-size: 14px">
+                        <b>Khách hàng:
+                            <t t-esc="doc.patient.name"/>
+                        </b>
+                    </div>
+                    <div style="font-size: 14px">
+                        <b>Dịch vụ:
+                            <t t-foreach="doc.services" t-as="service">
+                                <t t-esc="service.name"/>
+                                <span>;</span>
+                            </t>
+                        </b>
+                    </div>
+                </div>
+<!--                </div>-->
+                <style>
+                    .table{
+                    position: relative;
+                    top:40;
+                    padding:1px;
+                    }
+                </style>
+
+                <t t-if="doc.supplies">
+                    <table class="table" >
+                        <thead>
+                            <tr>
+                                <th rowspan="2" class="text-center border border-dark">
+                                    <strong>STT</strong>
+                                </th>
+                                <th rowspan="2" class="text-center border border-dark">
+                                    <strong>Mã vật tư</strong>
+                                </th>
+                                <th rowspan="2" class="text-center border border-dark">
+                                    <strong>Tên vật tư</strong>
+                                </th>
+                                <th rowspan="2" class="text-center border border-dark">
+                                    <strong>Đơn vị tính</strong>
+                                </th>
+                                <th rowspan="2" class="text-center border border-dark">
+                                    <strong>Số lượng</strong>
+                                </th>
+                                <th rowspan="2" class="text-center border border-dark">
+                                    <strong>Ghi chú</strong>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="lines" t-value="doc.supplies"/>
+                            <t t-set="i" t-value="0"/>
+                            <t t-set="total" t-value="0"/>
+                            <tr t-foreach="lines" t-as="move" style="padding:2px;">
+                                <t t-set="i" t-value="i + 1"/>
+                                <td class="text-center border border-dark" style="padding:2px;">
+                                    <span t-esc="i"/>
+                                </td>
+                                <td class="text-left border border-dark" style="padding:2px;">
+                                    <span t-field="move.supply.default_code"/>
+                                </td>
+                                <td class="text-left border border-dark" style="padding:2px;">
+                                    <span t-field="move.supply.name"/>
+                                </td>
+                                <td class="text-center border border-dark" style="padding:2px;">
+                                    <span t-field="move.supply.uom_id"/>
+                                </td>
+                                <td class="text-center border border-dark" style="padding:2px;">
+                                    <span t-field="move.qty_used"/>
+                                </td>
+                                <td class="text-center border border-dark"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+                <t t-else="">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th rowspan="2" class="text-center border border-dark">
+                                    <strong>STT</strong>
+                                </th>
+                                <th rowspan="2" class="text-center border border-dark">
+                                    <strong>Mã vật tư</strong>
+                                </th>
+                                <th rowspan="2" class="text-center border border-dark">
+                                    <strong>Tên vật tư</strong>
+                                </th>
+                                <th rowspan="2" class="text-center border border-dark">
+                                    <strong>Đơn vị tính</strong>
+                                </th>
+                                <th rowspan="2" class="text-center border border-dark">
+                                    <strong>Số lượng</strong>
+                                </th>
+                                <th rowspan="2" class="text-center border border-dark">
+                                    <strong>Ghi chú</strong>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="lines" t-value="doc.supplies"/>
+                            <t t-set="i" t-value="0"/>
+                            <t t-set="total" t-value="0"/>
+                            <tr t-foreach="lines" t-as="move">
+                                <t t-set="i" t-value="i + 1"/>
+                                <td class="text-center border border-dark">
+                                    <span t-esc="i"/>
+                                </td>
+                                <td class="text-center border border-dark">
+                                    <span t-field="move.supply.default_code"/>
+                                </td>
+                                <td class="text-center border border-dark">
+                                    <span t-field="move.supply.name"/>
+                                </td>
+                                <td class="text-center border border-dark">
+                                    <span t-field="move.supply.uom_id"/>
+                                </td>
+                                <td class="text-center border border-dark">
+                                    <span t-field="move.qty_used"/>
+                                </td>
+                                <td class="text-center border border-dark"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+                <div class="col-12 text-right">
+                    <i t-esc="doc.surgery_date.strftime('Ngay %d thang %m nam %Y')"/>
+                </div>
+
+                <table class="table table-no-border">
+                    <tbody>
+                        <tr>
+                            <td class="text-center">
+                                <p>
+                                    <b>Người bệnh/Người nhà</b><br></br>
+                                    <b>(Ký tên)</b><br></br><br></br><br></br>
+                                    <b><t t-esc="doc.patient.name"/></b>
+                                </p>
+                            </td>
+                            <td class="text-center">
+                                <p>
+                                    <b>Người lập phiếu</b><br></br>
+                                    <b>(Ký tên)</b><br></br><br></br><br></br>
+                                    <b>Nguyễn Thị Hồng Quyên</b>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="shealth_report_surgery_document1">
+        <t t-call="web.external_layout">
+            <t t-set="doc" t-value="o.with_context({'lang':o.patient.partner_id.lang})"/>
+            <div class="page" style="font-family:Times New Roman;font-size:14px;">
+                <div class="oe_structure"/>
+<!--                <div class="row mt32 mb32">-->
+                <div class="col-12">
+                    <div style="font-family:Times New Roman;font-size:14px;">
+                        <b>BỆNH VIỆN THẨM MỸ KANGNAM SÀI GÒN</b>
+                    </div>
+                    <div>
+                        <t t-if="doc.institution">
+                            <span>666 Cách Mạng Tháng 8, Phường 5, Tân Bình, TP.HCM</span>
+                        </t>
+                    </div>
+                    <div class="text-center" style="font-family:Times New Roman;font-size:20px;">
+                        <b>BẢNG KÊ XUẤT VẬT TƯ / THUỐC THEO BỆNH NHÂN</b>
+                    </div>
+                    <div style="font-size: 14px">
+                        <b>Khách hàng:
+                            <t t-esc="doc.patient.name"/>
+                        </b>
+                    </div>
+                    <div style="font-size: 14px">
+                        <b>Dịch vụ:
+                            <t t-foreach="doc.services" t-as="services">
+                                <t t-esc="services.name"/>
+                                <span>;</span>
+                            </t>
+                        </b>
+                    </div>
+                </div>
+<!--                </div>-->
+                <style>
+                    .table{
+                    position: relative;
+                    top:40;
+                    padding:1px;
+                    }
+                </style>
+
+                <t t-if="doc.supplies">
+                    <table class="table" >
+                        <thead>
+                            <tr>
+                                <th rowspan="2" class="text-center border border-dark">
+                                    <strong>STT</strong>
+                                </th>
+                                <th rowspan="2" class="text-center border border-dark">
+                                    <strong>Mã vật tư</strong>
+                                </th>
+                                <th rowspan="2" class="text-center border border-dark">
+                                    <strong>Tên vật tư</strong>
+                                </th>
+                                <th rowspan="2" class="text-center border border-dark">
+                                    <strong>Đơn vị tính</strong>
+                                </th>
+                                <th rowspan="2" class="text-center border border-dark">
+                                    <strong>Số lượng</strong>
+                                </th>
+                                <th rowspan="2" class="text-center border border-dark">
+                                    <strong>Ghi chú</strong>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="lines" t-value="doc.supplies"/>
+                            <t t-set="i" t-value="0"/>
+                            <t t-set="total" t-value="0"/>
+                            <tr t-foreach="lines" t-as="move" style="padding:2px;">
+                                <t t-set="i" t-value="i + 1"/>
+                                <td class="text-center border border-dark" style="padding:2px;">
+                                    <span t-esc="i"/>
+                                </td>
+                                <td class="text-left border border-dark" style="padding:2px;">
+                                    <span t-field="move.supply.default_code"/>
+                                </td>
+                                <td class="text-left border border-dark" style="padding:2px;">
+                                    <span t-field="move.supply.name"/>
+                                </td>
+                                <td class="text-center border border-dark" style="padding:2px;">
+                                    <span t-field="move.supply.uom_id"/>
+                                </td>
+                                <td class="text-center border border-dark" style="padding:2px;">
+                                    <span t-field="move.qty_used"/>
+                                </td>
+                                <td class="text-center border border-dark"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+                <t t-else="">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th rowspan="2" class="text-center border border-dark">
+                                    <strong>STT</strong>
+                                </th>
+                                <th rowspan="2" class="text-center border border-dark">
+                                    <strong>Mã vật tư</strong>
+                                </th>
+                                <th rowspan="2" class="text-center border border-dark">
+                                    <strong>Tên vật tư</strong>
+                                </th>
+                                <th rowspan="2" class="text-center border border-dark">
+                                    <strong>Đơn vị tính</strong>
+                                </th>
+                                <th rowspan="2" class="text-center border border-dark">
+                                    <strong>Số lượng</strong>
+                                </th>
+                                <th rowspan="2" class="text-center border border-dark">
+                                    <strong>Ghi chú</strong>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="lines" t-value="doc.supplies"/>
+                            <t t-set="i" t-value="0"/>
+                            <t t-set="total" t-value="0"/>
+                            <tr t-foreach="lines" t-as="move">
+                                <t t-set="i" t-value="i + 1"/>
+                                <td class="text-center border border-dark">
+                                    <span t-esc="i"/>
+                                </td>
+                                <td class="text-center border border-dark">
+                                    <span t-field="move.supply.default_code"/>
+                                </td>
+                                <td class="text-center border border-dark">
+                                    <span t-field="move.supply.name"/>
+                                </td>
+                                <td class="text-center border border-dark">
+                                    <span t-field="move.supply.uom_id"/>
+                                </td>
+                                <td class="text-center border border-dark">
+                                    <span t-field="move.qty_used"/>
+                                </td>
+                                <td class="text-center border border-dark"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+                <div class="col-12 text-right">
+                    <i t-esc="doc.services_date.strftime('Ngay %d thang %m nam %Y')"/>
+                </div>
+
+                <table class="table table-no-border">
+                    <tbody>
+                        <tr>
+                            <td class="text-center">
+                                <p>
+                                    <b>Người bệnh/Người nhà</b><br></br>
+                                    <b>(Ký tên)</b><br></br><br></br><br></br>
+                                    <b><t t-esc="doc.patient.name"/></b>
+                                </p>
+                            </td>
+                            <td class="text-center">
+                                <p>
+                                    <b>Người lập phiếu</b><br></br>
+                                    <b>(Ký tên)</b><br></br><br></br><br></br>
+                                    <b>Nguyễn Thị Hồng Quyên</b>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="shealth_report_vtth_surgery">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="shealth_all_in_one.shealth_report_surgery_document"
+                   t-lang="o.patient.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+
+     <template id="shealth_report_vtth_specialty">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="shealth_all_in_one.shealth_report_surgery_document1"
+                   t-lang="o.patient.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+
+    <report
+            string="VTTH theo từng bệnh nhân"
+            id="action_report_vtth_surgery"
+            model="sh.medical.surgery"
+            report_type="qweb-pdf"
+            name="shealth_all_in_one.shealth_report_vtth_surgery"
+            file="shealth_all_in_one.shealth_report_vtth_surgery"
+            print_report_name="'Phiếu VTTH - %s - %s' % (object.patient.name or '', object.name)"
+            paperformat="shealth_all_in_one.sh_paperformat_test_result"
+        />
+    <report
+            string="VTTH theo từng bệnh nhân"
+            id="action_report_vtth_specialty"
+            model="sh.medical.specialty"
+            report_type="qweb-pdf"
+            name="shealth_all_in_one.shealth_report_vtth_specialty"
+            file="shealth_all_in_one.shealth_report_vtth_specialty"
+            print_report_name="'Phiếu VTTH - %s - %s' % (object.patient.name or '', object.name)"
+            paperformat="shealth_all_in_one.sh_paperformat_test_result"
+        />
+</odoo>

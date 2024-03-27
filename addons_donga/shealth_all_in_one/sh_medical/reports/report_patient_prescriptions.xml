@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--    ĐƠN THUỐC-->
+    <template id="report_sh_medical_patient_prescription_document">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="o.with_context({'lang':o.patient.partner_id.lang})"/>
+            <div class="page" style="font-family:Times New Roman;font-size: 24px;">
+                <div class="oe_structure"/>
+                <div>
+<!--                    <div class="m-0" t-field="o.name" style="text-transform: uppercase;font-size: 20px;font-weight:bold"/>-->
+                    <div class="m-0" style="text-transform: uppercase; border: 1px solid #000; width: 190px; text-align: center; height: 35px;padding: 1px;">
+                        <span lass="m-0" t-field="o.name" style="font-size: 20px;font-weight:bold"/>
+                    </div>
+                    <div class="m-0" t-field="o.walkin.institution.name"
+                         style="text-transform: uppercase;font-size: 26px;font-weight:bold;margin-top: 5px;"/>
+                    <div class="m-0" style="font-size: 23px;">
+                        <i><span t-field="o.walkin.institution.street"/>, <span t-field="o.walkin.institution.street2"/>, <span t-field="o.walkin.institution.city"/></i>
+                        <br/>
+                        <i>SĐT P.CSKH:
+                            <span t-field="o.walkin.institution.phone"/>
+                        </i>
+                    </div>
+<!--                    <div class="m-0" style="font-size:23px;">-->
+<!--                        <t>-->
+<!--                            Khoa:-->
+<!--                            <b>PTTM</b>-->
+<!--                        </t>-->
+<!--                    </div>-->
+                </div>
+                <h2>
+                    <div style="margin-left: 300px;">
+                        <b>ĐƠN THUỐC</b>
+                    </div>
+                </h2>
+
+                <div t-if="o.patient" class="bm-2">
+                    <span>Họ tên:</span>
+                    <b style="text-transform: uppercase;" class="m-0 mr-5" t-field="o.patient.name"/>
+<!--                    <span>Tuổi:</span>-->
+<!--                    <b class="m-0 mr-5" t-field="o.patient.age"/>-->
+<!--                    <b class="m-0" t-field="o.patient.sex"/>-->
+                </div>
+                <div t-if="o.patient" class="bm-2">
+                    <span>Ngày sinh:</span>
+                    <span t-field="o.walkin.dob"/>
+                    <span style="margin-left: 50px;">Cân nặng:</span>
+                    <span t-field="o.walkin.weight"/> kg
+                    <span style="margin-left: 50px;">Giới tính:</span>
+                    <b class="m-0" t-field="o.patient.sex"/>
+                </div>
+                <div t-if="o.patient" class="bm-2">
+                    <span>Địa chỉ:</span>
+                    <span class="m-0" t-field="o.patient.street"/>,
+                    <span class="m-0" t-field="o.patient.state_id.name"/>
+                </div>
+<!--                <div class="bm-2">-->
+<!--                    <span>Số thẻ bảo hiểm y tế (Nếu có): ........................................</span>-->
+<!--                </div>-->
+                <!--                <div t-if="o.services" class="bm-2">-->
+                <!--                    <span>Dịch vụ:</span>-->
+                <!--                    <i><strong class="m-0" t-esc="'; '.join(map(str, o.services.mapped('name')))"/></i>-->
+                <!--                </div>-->
+                <div t-if="o.services" class="bm-2">
+                    <span>Chuẩn đoán:</span>
+                    <i>
+<!--                        <strong t-field="o.services.name"/>-->
+<!--                        <strong t-field="o.walkin.pathology.name"/>-->
+                        <strong t-esc="'; '.join(o.services.mapped('diagnose'))"/>
+                    </i>
+                </div>
+
+                <table class="table mt-3">
+                    <tr>
+                        <td colspan="3" class="m-0 p-0" style="font-size:26px;border: none;">
+                            <b>Thuốc điều trị</b>
+                        </td>
+                    </tr>
+                    <t t-set="i" t-value="0"/>
+                    <t t-foreach="o.prescription_line" t-as="l">
+                        <t t-set="i" t-value="i + 1"/>
+                        <tr>
+                            <!--                       <td class="m-0 p-0" style="font-weight:bold;width:70%;border: none;"><t t-esc="i"/>. <span t-field="l.name.name"/></td>-->
+                            <td class="m-0 p-0" style="font-weight:bold;width:70%;border: none;"><t t-esc="i"/>.
+<!--                                <span t-field="l.name.composition"/>-->
+<!--                                <t t-if="l.name.name_medicine">-->
+<!--                                    (<span t-field="l.name.name_medicine"/>)-->
+<!--                                </t>-->
+<!--                                <span t-field="l.name.concentration"/>-->
+                                <t t-if="l.name.name_medicine">
+                                    <span t-field="l.name.name_medicine"/>
+                                </t>
+                                (<span t-field="l.name.composition"/>)
+                                <span t-field="l.name.concentration"/>
+                            </td>
+                            <td></td>
+                            <td class="m-0 p-0" style="font-weight:bold;border: none;">x
+                                <span t-esc="int(l.qty)"/>
+                                <span t-field="l.dose_unit_related"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="m-0 p-0" colspan="3" style="border: none;">
+<!--                                <i class="ml-3" t-field="l.name.indications.name"/>:-->
+                                <i class="ml-3" t-field="l.info"/>
+                            </td>
+                        </tr>
+                    </t>
+                </table>
+
+                <div class="row my-2 text-left">
+                    <span>Lời dặn:</span>
+                    <t t-if="o.walkin.comments">
+                        <span t-field="o.walkin.comments"/>
+                    </t>
+                </div>
+                <div style="overflow: hidden;margin-top: 1px;">
+                    <div style="width: 50%; float: right;text-align: center;">
+                        <div style="text-align:center"  t-esc="context_timestamp(o.date_out).strftime('NGAY %d THANG %m NAM %Y').replace('NGAY', 'Ngày').replace('THANG', 'tháng').replace('NAM', 'năm')"/>
+                        <div style="text-align:center">Bác sĩ/Y sĩ khám bệnh</div>
+                        <div  style="font-style: italic;text-align:center">(Ký, ghi rõ họ tên)</div>
+                        <div style="height:90px;"></div>
+                        <div style="font-style: italic;text-align:center"  t-field="o.doctor.name"/>
+                    </div>
+                </div>
+                <div class="my-2">
+                    <b>
+                        <span>Khám lại xin mang theo đơn này.</span>
+                    </b>
+                </div>
+<!--                <div class="my-2">-->
+<!--                    <span>Số điện thoại liên hệ: </span>-->
+<!--                    <t t-if="o.patient.phone">-->
+<!--                        <b t-field="o.patient.phone"/>-->
+<!--                    </t>-->
+<!--                </div>-->
+<!--                <div class="my-2">-->
+<!--                    <span>Tên bố hoặc mẹ của trẻ hoặc người đưa trẻ đến khám bệnh, chữa bệnh: .......................</span>-->
+<!--                </div>-->
+                <div class="oe_structure"/>
+
+                <!--            <t t-if="o.info">-->
+                <!--                <p style="page-break-before:always;"> </p>-->
+                <!--                <div>-->
+                <!--                    <div t-raw="o.info"/>-->
+                <!--                </div>-->
+                <!--            </t>-->
+            </div>
+        </t>
+    </template>
+    <template id="report_sh_medical_patient_prescription">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="shealth_all_in_one.report_sh_medical_patient_prescription_document"
+                   t-lang="o.patient.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+
+    <!--    HƯỚNG DẪN CHĂM SÓC -->
+    <template id="report_sh_medical_patient_prescription_huongdan_document">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="o.with_context({'lang':o.patient.partner_id.lang})"/>
+            <div class="page" style="font-family:Times New Roman;font-size: 24px;">
+                <div class="oe_structure"/>
+                <h2 class="text-center mt16 mb16">
+                    <div style="font-weight:bold;text-transform:uppercase;">HƯỚNG DẪN SAU
+                        <span t-esc="';'.join(map(str, o.services.mapped('name')))"/>
+                    </div>
+                </h2>
+
+                <t t-set="service_date" t-value="o.date"/>
+                <table class="table mt-5">
+                    <tr>
+                        <td class="m-0 p-0" style="border: none;">1. Ngày phẫu thuật:
+                            <b t-esc="service_date.strftime('%d/%m/%Y')"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="m-0 p-0" style="border: none;">
+                            <t t-set="i" t-value="1"/>
+                            <t t-foreach="o.days_reexam.filtered(lambda d: d.type not in ['ReCheck'])" t-as="l">
+                                <t t-set="i" t-value="i + 1"/>
+                                <div style="width:45%;display:inline-block;">
+                                    <t t-esc="i"/>.<span t-field="l.name"/>:
+                                    <b>
+                                        <i t-field="l.date_recheck"/>
+                                    </b>
+                                </div>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="m-0 p-0" style="border: none;">
+                            <t t-set="i" t-value="i + 1"/>
+                            <t t-esc="i"/>. Tái khám:
+                            <br/>
+                            <t t-set="j" t-value="0"/>
+                            <t t-foreach="o.days_reexam.filtered(lambda d: d.type in ['ReCheck'])" t-as="dr">
+                                <t t-set="j" t-value="j + 1"/>
+                                <t t-set="duration_year" t-value="int(dr.after_service_date/365)"/>
+                                <t t-if="duration_year == 0">
+                                    <t t-set="duration_month" t-value="int(dr.after_service_date/30)"/>
+                                    <t t-if="duration_month == 0">
+                                        <t t-set="duration_day" t-value="dr.after_service_date"/>
+                                        <![CDATA[&emsp;&emsp;]]>Sau
+                                        <span t-esc="str(duration_day) + ' ngày'"/>
+                                        <b>(<i t-field="dr.date_recheck"/>)
+                                        </b>
+                                        đến kiểm tra lại lần
+                                        <t t-esc="j"/>
+                                        <br/>
+                                    </t>
+                                    <t t-else="">
+                                        <![CDATA[&emsp;&emsp;]]>Sau
+                                        <span t-esc="str(duration_month) + ' tháng'"/>
+                                        <b>(<i t-field="dr.date_recheck"/>)
+                                        </b>
+                                        đến kiểm tra lại lần
+                                        <t t-esc="j"/>
+                                        <br/>
+                                    </t>
+                                </t>
+                                <t t-else="">
+                                    <![CDATA[&emsp;&emsp;]]>Sau
+                                    <span t-esc="str(duration_year) + ' năm'"/>
+                                    <b>(<i t-field="dr.date_recheck"/>)
+                                    </b>
+                                    đến kiểm tra lại lần
+                                    <t t-esc="j"/>
+                                    <br/>
+                                </t>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr t-if="o.info">
+                        <td class="m-0 p-0" style="border: none;">
+                            <br/>
+                            <t t-set="i" t-value="i + 1"/>
+                            <t t-esc="i"/>. Chăm sóc:
+                            <br/>
+                            <t t-set="data_infor" t-value="o.info.replace('\n','&lt;br/&gt;')"/>
+                            <div widget="html" t-raw="data_infor"/>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="text-center">
+                    <em>Xin Quý khách vui lòng liên hệ hotline để được hỗ trợ và giải đáp thắc mắc<br/>P.CSKH:
+                        <b>19006466</b>
+                    </em>
+                </div>
+                <div class="oe_structure"/>
+            </div>
+        </t>
+    </template>
+    <template id="report_sh_medical_patient_prescription_huongdan">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="shealth_all_in_one.report_sh_medical_patient_prescription_huongdan_document"
+                   t-lang="o.patient.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+
+    <!--    SonDC-->
+    <!--    PHIẾU XUẤT THUỐC-->
+    <template id="report_sh_medical_temp_drug_release_note_document">
+        <t t-call="web.external_layout">
+            <div class="page" style="font-family:Times New Roman;font-size: 18px;">
+                <div class="oe_structure"/>
+                <div>
+                    <div class="m-0" t-field="o.walkin.institution.name"
+                         style="text-transform: uppercase;font-size: 26px;font-weight:bold;"/>
+                    <div class="m-0" style="font-size: 23px;">
+                        <!--                    <i><span t-field="o.walkin.institution.street"/>, <span t-field="o.walkin.institution.street2"/>, <span t-field="o.walkin.institution.city"/></i>-->
+                        <!--                    <br/>-->
+                    </div>
+                </div>
+                <h2 class="text-center mt16 mb16">
+                    <div style="">
+                        <b>PHIẾU XUẤT THUỐC</b>
+                        <br/>
+                        <span>Kho Dược</span>
+                    </div>
+                </h2>
+                <div t-if="o.patient" class="bm-2">
+                    <span>Họ tên:</span>
+                    <b style="text-transform: uppercase;" class="m-0 mr-5" t-field="o.patient.name"/>
+                    <span>Tuổi:</span>
+                    <b class="m-0 mr-5" t-field="o.patient.age"/>
+                    <span>Giới tính:</span>
+                    <b class="m-0" t-field="o.patient.sex"/>
+                </div>
+                <div t-if="o.patient" class="bm-2">
+                    <span>Địa chỉ:</span>
+                    <span class="m-0" t-field="o.patient.street"/>,
+                    <span class="m-0" t-field="o.patient.state_id.name"/>
+                </div>
+                <div class="bm-2">
+                    <span>Đối tượng: Yêu cầu</span>
+                </div>
+                <div t-if="o.services" class="bm-2">
+                    <span>Chuẩn đoán:</span>
+                    <i>
+                        <strong t-field="o.walkin.pathology.code"/>
+                        -
+                        <strong t-field="o.walkin.pathology.name"/>
+                    </i>
+                </div>
+                <table class="table mt-6">
+                    <tr>
+                        <th class="text-center border border-dark">STT</th>
+                        <th class="text-center border border-dark">Tên, nhãn hiệu, qui cách, phẩm chất</th>
+                        <th class="text-center border border-dark">Đơn vị tính</th>
+                        <th class="text-center border border-dark">Số lượng</th>
+                        <th class="text-center border border-dark">Đơn giá</th>
+                        <th class="text-center border border-dark">Thành tiền</th>
+                    </tr>
+                    <t t-set="i" t-value="0"/>
+                    <t t-foreach="o.prescription_line" t-as="l">
+                        <t t-set="i" t-value="i + 1"/>
+                        <tr>
+                            <td class="text-center border border-dark">
+                                <t t-esc="i"/>
+                            </td>
+                            <td class="border border-dark">
+                                <span t-field="l.name.composition"/>
+                                (<span t-field="l.name.name"/>)
+                                <span t-field="l.name.concentration"/>
+                            </td>
+                            <td class="border border-dark">
+                                <t t-esc="l.dose_unit_related.name"/>
+                            </td>
+                            <td class="border border-dark">
+                                <t t-esc="l.qty"/>
+                            </td>
+                            <td class="border border-dark">
+                                <span>0</span>
+                            </td>
+                            <td class="border border-dark">
+                                <span>0</span>
+                            </td>
+                        </tr>
+                    </t>
+                    <tr>
+                        <td colspan="4" class="center text-center border border-dark">
+                            <span>
+                                <strong>Tổng tiền thanh toán</strong>
+                            </span>
+                        </td>
+                        <td colspan="2" class="center text-center border border-dark">
+                            <span>0</span>
+                        </td>
+                    </tr>
+                </table>
+                <div>
+                    <span>- Thành tiền: 0 đồng</span>
+                    <br/>
+                    <span>- Bằng chữ: Không đồng</span>
+                </div>
+                <div class="row my-2">
+                    <div class="col-4 bm-2 text-center">
+                        <br/>
+                        <strong>BN/NG.NHÀ KÝ</strong>
+                        <br/>
+                        <i>(Ký, họ tên)</i>
+                    </div>
+                    <div class="col-8 bm-2 text-center">
+                        <span t-esc="context_timestamp(o.date_out).strftime('%H giờ %M phút, Ngày %d tháng %m năm %Y')"/>
+                        <br/>
+                        <strong>NGƯỜI XUẤT THUỐC</strong>
+                        <br/>
+                        <i>(Ký, họ tên)</i>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    <template id="report_sh_medical_temp_drug_release_note">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="shealth_all_in_one.report_sh_medical_temp_drug_release_note_document"/>
+            </t>
+        </t>
+    </template>
+    <!--    SonDc-->
+</odoo>

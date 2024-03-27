@@ -1,0 +1,8 @@
+/* Copyright 2016, 2019 Openworx.
+ * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
+
+
+@font-face {font-family: Roboto;src: url(/sci_menu_icon/static/src/font/Roboto-Regular.ttf)}
+body {font-size: 1.3rem;font-family: "Roboto";}
+.kn-logo{background-image: url(/sci_menu_icon/static/description/kn-logo.png);background-repeat: no-repeat;height: 43px;width: 140px;display: inline-block;background-size: contain;vertical-align: middle;}
+.da-logo{background-image: url(/sci_menu_icon/static/description/da-logo.png);background-repeat: no-repeat;height: 43px;width: 140px;display: inline-block;background-size: contain;vertical-align: middle;}

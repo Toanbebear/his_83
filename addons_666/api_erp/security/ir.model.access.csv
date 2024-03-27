@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+id_sh_medical_surgery_erp,name_sh_medical_surgery_erp,model_sh_medical_surgery_erp,,1,1,1,0
+id_sh_medical_lab_test_erp,name_sh_medical_lab_test_erp,model_sh_medical_lab_test_erp,,1,1,1,0
+id_sh_medical_prescription_erp,name_sh_medical_prescription_erp,model_sh_medical_prescription_erp,,1,1,1,1
+id_sh_medical_patient_rounding_test_erp,name_sh_medical_patient_rounding_test_erp,model_sh_medical_patient_rounding_test_erp,,1,1,1,1

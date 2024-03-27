@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_patient_evaluation_history_document">
+    <t t-call="web.external_layout">
+        <t t-set="o" t-value="o.with_context({'lang':o.patient.partner_id.lang})"/>
+        <t t-set="address">
+            <div t-field="o.patient.partner_id"
+            t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+        </t>
+        <div class="page">
+            <div class="oe_structure"/>
+
+            <h2>Patient Evaluation History</h2>
+            <p style="font-size:12px;">Evaluation at <span t-field="o.evaluation_start_date"/></p>
+
+            <div class="row mt32 mb32">
+                <div t-if="o.patient" class="col-3 bm-2">
+                    <strong>Patient Name:</strong>
+                    <p class="m-0" t-field="o.patient.name"/>
+                </div>
+                <div t-if="o.patient.marital_status" class="col-3 bm-2">
+                    <strong>Marital Status:</strong>
+                    <p class="m-0" t-field="o.patient.marital_status"/>
+                </div>
+                <div t-if="o.patient.ethnic_group" class="col-3 bm-2">
+                    <strong>Ethnicity:</strong>
+                    <p class="m-0" t-field="o.patient.ethnic_group.name"/>
+                </div>
+                <div t-if="o.patient.identification_code" class="col-3 bm-2">
+                    <strong>Patient ID:</strong>
+                    <p class="m-0" t-field="o.patient.identification_code"/>
+                </div>
+            </div>
+            <div class="row mt32 mb32">
+                <div t-if="o.patient.occupation" class="col-3 bm-2">
+                    <strong>Occupation:</strong>
+                    <p class="m-0" t-field="o.patient.occupation.name"/>
+                </div>
+                <div t-if="o.patient.sex" class="col-3 bm-2">
+                    <strong>Sex:</strong>
+                    <p class="m-0" t-field="o.patient.sex"/>
+                </div>
+                <div t-if="o.patient.dob" class="col-3 bm-2">
+                    <strong>DOB:</strong>
+                    <p class="m-0" t-field="o.patient.dob"/>
+                </div>
+            </div>
+            <div class="row mt32 mb32">
+                <div class="col-xs-12">
+                    <div t-if="o.chief_complaint">
+                        <br/><br/>
+                        <p style="font-size:24px;text-align:left;font-weight:bold;">Chief Complaint:</p>
+                        <p t-field="o.chief_complaint"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt32 mb32">
+                <div class="col-xs-12">
+                    <div t-if="o.indication">
+                        <br/><br/>
+                        <p style="font-size:24px;text-align:left;font-weight:bold;">History of Present Illness:</p>
+                        <p t-field="o.indication.name"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt32 mb32">
+                <div class="col-xs-12">
+                    <div t-if="o.notes_complaint">
+                        <br/><br/>
+                        <p style="font-size:24px;text-align:left;font-weight:bold;">Clinical and Physical examination:</p>
+                        <p t-field="o.notes_complaint"/>
+                    </div>
+                </div>
+            </div>
+            <br/><br/>
+            <p style="font-size:24px;text-align:left;font-weight:bold;">Vital Signs:</p>
+            <div class="row mt32 mb32">
+                <div t-if="o.temperature" class="col-3 bm-2">
+                    <strong>Temperature:</strong>
+                    <p class="m-0" t-field="o.temperature"/>
+                </div>
+                <div t-if="o.bpm" class="col-3 bm-2">
+                    <strong>Heart rate:</strong>
+                    <p class="m-0" t-field="o.bpm"/>
+                </div>
+                <div t-if="o.systolic" class="col-3 bm-2">
+                    <strong>Systolic Blood Pressure:</strong>
+                    <p class="m-0" t-field="o.systolic"/>
+                </div>
+                <div t-if="o.diastolic" class="col-3 bm-2">
+                    <strong>Diastolic Blood Pressure:</strong>
+                    <p class="m-0" t-field="o.diastolic"/>
+                </div>
+            </div>
+            <div class="row mt32 mb32">
+                <div t-if="o.respiratory_rate" class="col-3 bm-2">
+                    <strong>Respiratory Rate:</strong>
+                    <p class="m-0" t-field="o.respiratory_rate"/>
+                </div>
+                <div t-if="o.osat" class="col-3 bm-2">
+                    <strong>Oxygen Saturation:</strong>
+                    <p class="m-0" t-field="o.osat"/>
+                </div>
+            </div>
+            <br/><br/>
+            <p style="font-size:24px;text-align:left;font-weight:bold;">Level of Conciousness / Glasgow Scale:</p>
+            <div class="row mt32 mb32">
+                <div t-if="o.loc_eyes" class="col-3 bm-2">
+                    <strong>Eyes (out of 4):</strong>
+                    <p class="m-0" t-field="o.loc_eyes"/>
+                </div>
+                <div t-if="o.loc_verbal" class="col-3 bm-2">
+                    <strong>Verbal (out of 5):</strong>
+                    <p class="m-0" t-field="o.loc_verbal"/>
+                </div>
+                <div t-if="o.loc_motor" class="col-3 bm-2">
+                    <strong>Motor (out of 6):</strong>
+                    <p class="m-0" t-field="o.loc_motor"/>
+                </div>
+                <div t-if="o.loc" class="col-3 bm-2">
+                    <strong>Total Glasgow (out of 15):</strong>
+                    <p class="m-0" t-field="o.loc"/>
+                </div>
+            </div>
+            <div class="row mt32 mb32">
+                <div class="col-xs-12">
+                    <div t-if="o.info_diagnosis">
+                        <br/><br/>
+                        <p style="font-size:24px;text-align:left;font-weight:bold;">Presumptive Diagnosis:</p>
+                        <p t-field="o.info_diagnosis"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt32 mb32">
+                <div class="col-xs-12">
+                    <div t-if="o.directions">
+                        <br/><br/>
+                        <p style="font-size:24px;text-align:left;font-weight:bold;">Treatment Plan:</p>
+                        <p t-field="o.directions"/>
+                    </div>
+                </div>
+            </div>
+            <br/><br/>
+            <p style="font-size:24px;text-align:left;font-weight:bold;">Medication History:</p>
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Medicament</th>
+                        <th>Prescription #</th>
+                        <th>Indication</th>
+                        <th>Start</th>
+                        <th>End</th>
+                    </tr>
+               </thead>
+               <tbody class="sale_tbody">
+                    <t t-foreach="o.patient.prescription_line" t-as="l">
+                        <tr t-if="l.name">
+                            <td>
+                               <span t-field="l.name"/>
+                            </td>
+                            <td>
+                               <span t-field="l.prescription_id.name"/>
+                            </td>
+                            <td>
+                                <span t-field="l.indication.name"/>
+                            </td>
+                            <td>
+                                <span t-field="l.start_treatment"/>
+                            </td>
+                            <td>
+                                <span t-field="l.end_treatment"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+            <div class="row mt32 mb32">
+                <div class="col-xs-12">
+                    <div t-if="o.patient.critical_info">
+                        <br/><br/>
+                        <p style="font-size:24px;text-align:left;font-weight:bold;">Personal History:</p>
+                        <p t-field="o.patient.critical_info"/>
+                    </div>
+                </div>
+            </div>
+            <br/><br/>
+            <p style="font-size:24px;text-align:left;font-weight:bold;">Surgeries:</p>
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Surgery #</th>
+                        <th>Start date &amp; time</th>
+                        <th>Condition</th>
+                        <th>Surgeon</th>
+                        <th>Status</th>
+                    </tr>
+               </thead>
+               <tbody class="sale_tbody">
+                    <t t-foreach="o.patient.pediatrics_surgery_ids" t-as="l1">
+                        <tr t-if="l1.name">
+                            <td>
+                               <span t-field="l1.name"/>
+                            </td>
+                            <td>
+                               <span t-field="l1.surgery_date"/>
+                            </td>
+                            <td>
+                                <span t-field="l1.pathology.name"/>
+                            </td>
+                            <td>
+                                <span t-field="l1.surgeon.name"/>
+                            </td>
+                            <td>
+                                <span t-field="l1.state"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+            <br/><br/>
+            <p style="font-size:24px;text-align:left;font-weight:bold;">Family Information:</p>
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Relation</th>
+                        <th>Age</th>
+                    </tr>
+               </thead>
+               <tbody class="sale_tbody">
+                    <t t-foreach="o.patient.family" t-as="l2">
+                        <tr t-if="l2.name">
+                            <td>
+                               <span t-field="l2.name"/>
+                            </td>
+                            <td>
+                               <span t-field="l2.relation"/>
+                            </td>
+                            <td>
+                                <span t-field="l2.age"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+            <br/><br/>
+            <p style="font-size:24px;text-align:left;font-weight:bold;">Patient Genetic Abnormalities / “Disease Genes”:</p>
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Full Name</th>
+                    </tr>
+               </thead>
+               <tbody class="sale_tbody">
+                    <t t-foreach="o.patient.genetic_risks" t-as="l3">
+                        <tr t-if="l3.name">
+                            <td>
+                               <span t-field="l3.name"/>
+                            </td>
+                            <td>
+                               <span t-field="l3.long_name"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+            <div class="row mt32 mb32">
+                <div class="col-xs-12">
+                    <div t-if="o.patient.info">
+                        <br/><br/>
+                        <p style="font-size:24px;text-align:left;font-weight:bold;">Socioeconomics:</p>
+                        <p t-field="o.patient.info"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt32 mb32">
+                <div t-if="o.patient.socioeconomics" class="col-3 bm-2">
+                    <strong>Social Status:</strong>
+                    <p class="m-0" t-field="o.patient.socioeconomics"/>
+                </div>
+                <div t-if="o.patient.housing_condition" class="col-3 bm-2">
+                    <strong>Housing Condition:</strong>
+                    <p class="m-0" t-field="o.patient.housing_condition"/>
+                </div>
+                <div t-if="o.patient.education_level" class="col-3 bm-2">
+                    <strong>Education Level:</strong>
+                    <p class="m-0" t-field="o.patient.education_level"/>
+                </div>
+                <div t-if="o.patient.income" class="col-3 bm-2">
+                    <strong>Monthly Income:</strong>
+                    <p class="m-0" t-field="o.patient.income"/>
+                </div>
+            </div>
+            <div class="row mt32 mb32">
+                <div class="col-xs-12">
+                    <div t-if="o.patient.lifestyle_info">
+                        <br/><br/>
+                        <p style="font-size:24px;text-align:left;font-weight:bold;">Lifestyle:</p>
+                        <p t-field="o.patient.lifestyle_info"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt32 mb32">
+                <div t-if="o.patient.exercise" class="col-3 bm-2">
+                    <strong>Exercise:</strong>
+                    <p class="m-0" t-field="o.patient.exercise"/>
+                </div>
+                <div t-if="o.patient.sleep_during_daytime" class="col-3 bm-2">
+                    <strong>Sleep at Daytime:</strong>
+                    <p class="m-0" t-field="o.patient.sleep_during_daytime"/>
+                </div>
+                <div t-if="o.patient.sexual_preferences" class="col-3 bm-2">
+                    <strong>Sexuality:</strong>
+                    <p class="m-0" t-field="o.patient.sexual_preferences"/>
+                </div>
+                <div t-if="o.patient.sexual_partners" class="col-3 bm-2">
+                    <strong>Sexual Partners:</strong>
+                    <p class="m-0" t-field="o.patient.sexual_partners"/>
+                </div>
+            </div>
+            <div class="row mt32 mb32">
+                <div t-if="o.patient.sex_oral" class="col-3 bm-2">
+                    <strong>Oral Sex:</strong>
+                    <p class="m-0" t-field="o.patient.sex_oral"/>
+                </div>
+                <div t-if="o.patient.prostitute" class="col-3 bm-2">
+                    <strong>Working as Prostitute?:</strong>
+                    <p class="m-0" t-field="o.patient.prostitute"/>
+                </div>
+                <div t-if="o.patient.number_of_meals" class="col-3 bm-2">
+                    <strong>Meals / Day:</strong>
+                    <p class="m-0" t-field="o.patient.number_of_meals"/>
+                </div>
+                <div t-if="o.patient.sleep_hours" class="col-3 bm-2">
+                    <strong>Hours of Sleep:</strong>
+                    <p class="m-0" t-field="o.patient.sleep_hours"/>
+                </div>
+            </div>
+            <div class="row mt32 mb32">
+                <div t-if="o.patient.sexual_practices" class="col-3 bm-2">
+                    <strong>Sexual Practices:</strong>
+                    <p class="m-0" t-field="o.patient.sexual_practices"/>
+                </div>
+                <div t-if="o.patient.anticonceptive" class="col-3 bm-2">
+                    <strong>Anticonceptive Method:</strong>
+                    <p class="m-0" t-field="o.patient.anticonceptive"/>
+                </div>
+                <div t-if="o.patient.sex_anal" class="col-3 bm-2">
+                    <strong>Anal Sex:</strong>
+                    <p class="m-0" t-field="o.patient.sex_anal"/>
+                </div>
+                <div t-if="o.patient.sex_with_prostitutes" class="col-3 bm-2">
+                    <strong>Sex with Prostitutes:</strong>
+                    <p class="m-0" t-field="o.patient.sex_with_prostitutes"/>
+                </div>
+            </div>
+
+            <br/><br/><br/><br/>
+            <p class="text-right"><strong>Authorized signature</strong><br/><br/><br/>______________________</p>
+
+            <div class="oe_structure"/>
+        </div>
+    </t>
+</template>
+<template id="report_patient_evaluation_history">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="shealth_all_in_one.report_patient_evaluation_history_document" t-lang="o.patient.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+</odoo>

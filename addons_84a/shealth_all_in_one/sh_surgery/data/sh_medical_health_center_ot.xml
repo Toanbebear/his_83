@@ -1,0 +1,683 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data noupdate="1">
+
+        <record model="stock.location" id="sh_request_accounting_location">
+            <field name="name">Kế toán</field>
+            <field name="location_id" ref="stock.stock_location_locations_virtual"/>
+            <field name="usage">transit</field>
+        </record>
+        <!--  WH stock buy rule-->
+<!--        <record model="stock.rule" id="wh_stock_buy_rule">-->
+<!--            <field name="name">Kho Tổng - Mua hàng</field>-->
+<!--            <field name="action">buy</field>-->
+<!--            <field name="picking_type_id" ref="stock.picking_type_in"/>-->
+<!--            <field name="location_id" ref="stock.stock_location_stock"/>-->
+<!--            <field name="procure_method">make_to_order</field>-->
+<!--            <field name="route_id" ref="internal_route"/>-->
+<!--        </record>-->
+
+        <record model="stock.rule" id="sh_location_supply_khoduoc_knhn_rule">
+            <field name="name">Tủ Vật tư Kho Dược - Kho tổng</field>
+            <field name="action">pull</field>
+            <field name="picking_type_id" ref="stock.picking_type_internal"/>
+            <field name="location_src_id" ref="stock.stock_location_stock"/>
+            <field name="location_id" ref="shealth_all_in_one.sh_location_supply_knhn"/>
+            <field name="procure_method">make_to_order</field>
+            <field name="route_id" ref="internal_route"/>
+        </record>
+
+        <record model="stock.rule" id="sh_location_medicine_khoduoc_knhn_rule">
+            <field name="name">Tủ Thuốc Kho Dược - Kho tổng</field>
+            <field name="action">pull</field>
+            <field name="picking_type_id" ref="stock.picking_type_internal"/>
+            <field name="location_src_id" ref="stock.stock_location_stock"/>
+            <field name="location_id" ref="shealth_all_in_one.sh_location_medicine_prescription_knhn"/>
+            <field name="procure_method">make_to_order</field>
+            <field name="route_id" ref="internal_route"/>
+        </record>
+
+        <record model="stock.rule" id="wh_stock_buy_rule">
+            <field name="name">Kho Tổng - Kế toán</field>
+            <field name="action">pull</field>
+            <field name="picking_type_id" ref="stock.picking_type_internal"/>
+            <field name="location_src_id" ref="sh_request_accounting_location"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="procure_method">make_to_stock</field>
+            <field name="route_id" ref="internal_route"/>
+        </record>
+
+        <!--  XÉT NGHIỆM -->
+        <record model="stock.location" id="sh_location_supply_labtest_knhn">
+            <field name="name">Tủ VT Cận lâm sàng</field>
+            <field name="location_id" model="sh.medical.health.center.ward"
+                eval="obj().env.ref('shealth_all_in_one.sh_labtest_dep_knhn').location_id.id"/>
+            <field name="usage">internal</field>
+        </record>
+
+        <record model="stock.rule" id="sh_location_supply_labtest_knhn_rule">
+            <field name="name">Tủ VT Cận lâm sàng --> Kho Tổng</field>
+            <field name="action">pull</field>
+            <field name="picking_type_id" ref="stock.picking_type_internal"/>
+            <field name="location_src_id" ref="shealth_all_in_one.sh_location_supply_knhn"/>
+            <field name="location_id" ref="sh_location_supply_labtest_knhn"/>
+            <field name="procure_method">make_to_order</field>
+            <field name="route_id" ref="internal_route"/>
+        </record>
+
+        <record model="sh.medical.health.center.ot" id="sh_labtest_room_knhn">
+            <field name="name">Phòng xét nghiệm</field>
+            <field name="code">XN_KNHN</field>
+            <field name="room_number">P203</field>
+            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>
+            <field name="department" ref="shealth_all_in_one.sh_labtest_dep_knhn"/>
+            <field name="location_supply_stock" ref="shealth_all_in_one.sh_location_supply_labtest_knhn"/>
+            <field name="is_operating_theater">False</field>
+            <field name="info">Phòng xét nghiệm - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>
+        </record>
+
+        <!--   CHUẨN ĐOÁN HÌNH ẢNH-->
+<!--        <record model="stock.location" id="sh_location_supply_imaging_knhn">-->
+<!--            <field name="name">Tủ VT CDHA - TDCN</field>-->
+<!--            <field name="location_id" model="sh.medical.health.center.ward"-->
+<!--                eval="obj().env.ref('shealth_all_in_one.sh_imaging_dep_knhn').location_id.id"/>-->
+<!--            <field name="usage">internal</field>-->
+<!--        </record>-->
+
+<!--        <record model="stock.rule" id="sh_location_supply_imaging_knhn_rule">-->
+<!--            <field name="name">Tủ VT CDHA TDCN &ndash;&gt; Kho Tổng</field>-->
+<!--            <field name="action">pull</field>-->
+<!--            <field name="picking_type_id" ref="stock.picking_type_internal"/>-->
+<!--            <field name="location_src_id" ref="stock.stock_location_stock"/>-->
+<!--            <field name="location_id" ref="sh_location_supply_imaging_knhn"/>-->
+<!--            <field name="procure_method">make_to_stock</field>-->
+<!--            <field name="route_id" ref="internal_route"/>-->
+<!--        </record>-->
+
+        <record model="sh.medical.health.center.ot" id="sh_xray_room_knhn">
+            <field name="name">Phòng chụp X-Quang</field>
+            <field name="code">XRAY_KNHN</field>
+            <field name="room_number">P204</field>
+            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>
+            <field name="department" ref="shealth_all_in_one.sh_labtest_dep_knhn"/>
+            <field name="location_supply_stock" ref="shealth_all_in_one.sh_location_supply_labtest_knhn"/>
+            <field name="is_operating_theater">False</field>
+            <field name="info">Phòng chụp X-Quang - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>
+        </record>
+
+        <!--   SIÊU ÂM-->
+        <record model="sh.medical.health.center.ot" id="sh_supersonic_room_knhn">
+            <field name="name">Phòng siêu âm</field>
+            <field name="code">SA_KNHN</field>
+            <field name="room_number">P205</field>
+            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>
+            <field name="department" ref="shealth_all_in_one.sh_labtest_dep_knhn"/>
+            <field name="location_supply_stock" ref="shealth_all_in_one.sh_location_supply_labtest_knhn"/>
+            <field name="is_operating_theater">False</field>
+            <field name="info">Phòng siêu âm - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>
+        </record>
+
+        <!--   TIỂU PHẪU -->
+<!--        <record model="stock.location" id="sh_location_medicine_surgery_small_knhn">-->
+<!--            <field name="name">Tủ Thuốc PT Tiểu phẫu</field>-->
+<!--            <field name="location_id" model="sh.medical.health.center.ward"-->
+<!--                eval="obj().env.ref('shealth_all_in_one.sh_surgeries_dep_knhn').location_id.id"/>-->
+<!--            <field name="usage">internal</field>-->
+<!--        </record>-->
+<!--        <record model="stock.location" id="sh_location_supply_surgery_small_knhn">-->
+<!--            <field name="name">Tủ VT PT Tiểu phẫu</field>-->
+<!--            <field name="location_id" model="sh.medical.health.center.ward"-->
+<!--                eval="obj().env.ref('shealth_all_in_one.sh_surgeries_dep_knhn').location_id.id"/>-->
+<!--            <field name="usage">internal</field>-->
+<!--        </record>-->
+
+<!--        <record model="stock.rule" id="sh_location_medicine_surgery_small_knhn_rule">-->
+<!--            <field name="name">Tủ Thuốc PT Tiểu phẫu &ndash;&gt; Kho Tổng</field>-->
+<!--            <field name="action">pull</field>-->
+<!--            <field name="picking_type_id" ref="stock.picking_type_internal"/>-->
+<!--            <field name="location_src_id" ref="stock.stock_location_stock"/>-->
+<!--            <field name="location_id" ref="sh_location_medicine_surgery_small_knhn"/>-->
+<!--            <field name="procure_method">make_to_stock</field>-->
+<!--            <field name="route_id" ref="internal_route"/>-->
+<!--        </record>-->
+
+<!--        <record model="stock.rule" id="sh_location_supply_surgery_small_knhn_rule">-->
+<!--            <field name="name">Tủ VT PT Tiểu phẫu &ndash;&gt; Kho Tổng</field>-->
+<!--            <field name="action">pull</field>-->
+<!--            <field name="picking_type_id" ref="stock.picking_type_internal"/>-->
+<!--            <field name="location_src_id" ref="stock.stock_location_stock"/>-->
+<!--            <field name="location_id" ref="sh_location_supply_surgery_small_knhn"/>-->
+<!--            <field name="procure_method">make_to_stock</field>-->
+<!--            <field name="route_id" ref="internal_route"/>-->
+<!--        </record>-->
+
+        <!--   ĐẠI PHẪU-->
+        <record model="stock.location" id="sh_location_medicine_surgery_big_knhn">
+            <field name="name">Tủ Thuốc Phòng Phẫu thuật</field>
+            <field name="location_id" model="sh.medical.health.center.ward"
+                eval="obj().env.ref('shealth_all_in_one.sh_surgeries_dep_knhn').location_id.id"/>
+            <field name="usage">internal</field>
+        </record>
+        <record model="stock.location" id="sh_location_supply_surgery_big_knhn">
+            <field name="name">Tủ VT Phòng Phẫu thuật</field>
+            <field name="location_id" model="sh.medical.health.center.ward"
+                eval="obj().env.ref('shealth_all_in_one.sh_surgeries_dep_knhn').location_id.id"/>
+            <field name="usage">internal</field>
+        </record>
+
+        <record model="stock.rule" id="sh_location_medicine_surgery_big_knhn_rule">
+            <field name="name">Tủ Thuốc Phòng Phẫu thuật --> Kho Tổng</field>
+            <field name="action">pull</field>
+            <field name="picking_type_id" ref="stock.picking_type_internal"/>
+            <field name="location_src_id" ref="shealth_all_in_one.sh_location_medicine_prescription_knhn"/>
+            <field name="location_id" ref="sh_location_medicine_surgery_big_knhn"/>
+            <field name="procure_method">make_to_order</field>
+            <field name="route_id" ref="internal_route"/>
+        </record>
+
+        <record model="stock.rule" id="sh_location_supply_surgery_big_knhn_rule">
+            <field name="name">Tủ VT Phòng Phẫu thuật --> Kho Tổng</field>
+            <field name="action">pull</field>
+            <field name="picking_type_id" ref="stock.picking_type_internal"/>
+            <field name="location_src_id" ref="shealth_all_in_one.sh_location_supply_knhn"/>
+            <field name="location_id" ref="sh_location_supply_surgery_big_knhn"/>
+            <field name="procure_method">make_to_order</field>
+            <field name="route_id" ref="internal_route"/>
+        </record>
+
+        <record model="sh.medical.health.center.ot" id="sh_supersonic_daiphau_room_knhn">
+            <field name="name">Phòng phẫu thuật Đại phẫu</field>
+            <field name="code">PT_DP_KNHN</field>
+            <field name="room_number">P501</field>
+            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>
+            <field name="location_medicine_stock" ref="shealth_all_in_one.sh_location_medicine_surgery_big_knhn"/>
+            <field name="location_supply_stock" ref="shealth_all_in_one.sh_location_supply_surgery_big_knhn"/>
+            <field name="department" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>
+            <field name="is_operating_theater">True</field>
+            <field name="info">Phòng phẫu thuật Đại phẫu - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>
+        </record>
+
+        <!--   TIỂU PHẪU - dùng chung tủ vs đại phẫu -->
+        <record model="sh.medical.health.center.ot" id="sh_supersonic_tieuphau_room_knhn">
+            <field name="name">Phòng phẫu thuật Tiểu phẫu</field>
+            <field name="code">PT_TP_KNHN</field>
+            <field name="room_number">P401</field>
+            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>
+            <field name="location_medicine_stock" ref="shealth_all_in_one.sh_location_medicine_surgery_big_knhn"/>
+            <field name="location_supply_stock" ref="shealth_all_in_one.sh_location_supply_surgery_big_knhn"/>
+            <field name="department" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>
+            <field name="is_operating_theater">True</field>
+            <field name="info">Phòng phẫu thuật Tiểu phẫu - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>
+        </record>
+
+        <!--        HẬU PHẪU-->
+<!--        <record model="stock.location" id="sh_location_medicine_hauphau_knhn">-->
+<!--            <field name="name">Tủ Thuốc Hậu phẫu</field>-->
+<!--            <field name="location_id" model="sh.medical.health.center.ward"-->
+<!--                eval="obj().env.ref('shealth_all_in_one.sh_hp_dep_knhn').location_id.id"/>-->
+<!--            <field name="usage">internal</field>-->
+<!--        </record>-->
+
+<!--        <record model="stock.location" id="sh_location_supply_hauphau_knhn">-->
+<!--            <field name="name">Tủ VT Hậu phẫu</field>-->
+<!--            <field name="location_id" model="sh.medical.health.center.ward"-->
+<!--                eval="obj().env.ref('shealth_all_in_one.sh_hp_dep_knhn').location_id.id"/>-->
+<!--            <field name="usage">internal</field>-->
+<!--        </record>-->
+
+<!--        <record model="stock.rule" id="sh_location_supply_hauphau_knhn_rule">-->
+<!--            <field name="name">Tủ VT Hậu phẫu &ndash;&gt; Kho Tổng</field>-->
+<!--            <field name="action">pull</field>-->
+<!--            <field name="picking_type_id" ref="stock.picking_type_internal"/>-->
+<!--            <field name="location_src_id" ref="stock.stock_location_stock"/>-->
+<!--            <field name="location_id" ref="sh_location_supply_hauphau_knhn"/>-->
+<!--            <field name="procure_method">make_to_stock</field>-->
+<!--            <field name="route_id" ref="internal_route"/>-->
+<!--        </record>-->
+
+<!--        <record model="stock.rule" id="sh_location_medicine_hauphau_knhn_rule">-->
+<!--            <field name="name">Tủ Thuốc Hậu phẫu &ndash;&gt; Kho Tổng</field>-->
+<!--            <field name="action">pull</field>-->
+<!--            <field name="picking_type_id" ref="stock.picking_type_internal"/>-->
+<!--            <field name="location_src_id" ref="stock.stock_location_stock"/>-->
+<!--            <field name="location_id" ref="sh_location_medicine_hauphau_knhn"/>-->
+<!--            <field name="procure_method">make_to_stock</field>-->
+<!--            <field name="route_id" ref="internal_route"/>-->
+<!--        </record>-->
+
+<!--        <record model="sh.medical.health.center.ot" id="sh_hp601_room_knhn">-->
+<!--            <field name="name">Phòng 601</field>-->
+<!--            <field name="code">HP_601_KNHN</field>-->
+<!--            <field name="room_number">P601</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="department" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="location_medicine_stock" ref="shealth_all_in_one.sh_location_medicine_surgery_big_knhn"/>-->
+<!--            <field name="location_supply_stock" ref="shealth_all_in_one.sh_location_supply_surgery_big_knhn"/>-->
+<!--            <field name="is_operating_theater">False</field>-->
+<!--            <field name="info">Phòng hậu phẫu 601 - Tầng 6 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+
+<!--        <record model="sh.medical.health.center.ot" id="sh_hp602_room_knhn">-->
+<!--            <field name="name">Phòng 602</field>-->
+<!--            <field name="code">HP_602_KNHN</field>-->
+<!--            <field name="room_number">P602</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="department" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="location_medicine_stock" ref="shealth_all_in_one.sh_location_medicine_surgery_big_knhn"/>-->
+<!--            <field name="location_supply_stock" ref="shealth_all_in_one.sh_location_supply_surgery_big_knhn"/>-->
+<!--            <field name="is_operating_theater">False</field>-->
+<!--            <field name="info">Phòng hậu phẫu 602 - Tầng 6 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+
+<!--        <record model="sh.medical.health.center.ot" id="sh_hp603_room_knhn">-->
+<!--            <field name="name">Phòng 603</field>-->
+<!--            <field name="code">HP_603_KNHN</field>-->
+<!--            <field name="room_number">P603</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="department" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="location_medicine_stock" ref="shealth_all_in_one.sh_location_medicine_surgery_big_knhn"/>-->
+<!--            <field name="location_supply_stock" ref="shealth_all_in_one.sh_location_supply_surgery_big_knhn"/>-->
+<!--            <field name="is_operating_theater">False</field>-->
+<!--            <field name="info">Phòng hậu phẫu 603 - Tầng 6 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+
+<!--        <record model="sh.medical.health.center.ot" id="sh_hp604_room_knhn">-->
+<!--            <field name="name">Phòng 604</field>-->
+<!--            <field name="code">HP_604_KNHN</field>-->
+<!--            <field name="room_number">P604</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="department" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="location_medicine_stock" ref="shealth_all_in_one.sh_location_medicine_surgery_big_knhn"/>-->
+<!--            <field name="location_supply_stock" ref="shealth_all_in_one.sh_location_supply_surgery_big_knhn"/>-->
+<!--            <field name="is_operating_theater">False</field>-->
+<!--            <field name="info">Phòng hậu phẫu 604 - Tầng 6 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+
+<!--        <record model="sh.medical.health.center.ot" id="sh_hp605_room_knhn">-->
+<!--            <field name="name">Phòng 605</field>-->
+<!--            <field name="code">HP_605_KNHN</field>-->
+<!--            <field name="room_number">P605</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="department" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="location_medicine_stock" ref="shealth_all_in_one.sh_location_medicine_surgery_big_knhn"/>-->
+<!--            <field name="location_supply_stock" ref="shealth_all_in_one.sh_location_supply_surgery_big_knhn"/>-->
+<!--            <field name="is_operating_theater">False</field>-->
+<!--            <field name="info">Phòng hậu phẫu 605 - Tầng 6 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+
+<!--        <record model="sh.medical.health.center.ot" id="sh_hp701_room_knhn">-->
+<!--            <field name="name">Phòng 701</field>-->
+<!--            <field name="code">HP_701_KNHN</field>-->
+<!--            <field name="room_number">P701</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="department" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="location_medicine_stock" ref="shealth_all_in_one.sh_location_medicine_surgery_big_knhn"/>-->
+<!--            <field name="location_supply_stock" ref="shealth_all_in_one.sh_location_supply_surgery_big_knhn"/>-->
+<!--            <field name="is_operating_theater">False</field>-->
+<!--            <field name="info">Phòng hậu phẫu 701 - Tầng 7 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+
+<!--        <record model="sh.medical.health.center.ot" id="sh_hp702_room_knhn">-->
+<!--            <field name="name">Phòng 702</field>-->
+<!--            <field name="code">HP_702_KNHN</field>-->
+<!--            <field name="room_number">P702</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="department" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="location_medicine_stock" ref="shealth_all_in_one.sh_location_medicine_surgery_big_knhn"/>-->
+<!--            <field name="location_supply_stock" ref="shealth_all_in_one.sh_location_supply_surgery_big_knhn"/>-->
+<!--            <field name="is_operating_theater">False</field>-->
+<!--            <field name="info">Phòng hậu phẫu 702 - Tầng 7 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+
+<!--        <record model="sh.medical.health.center.ot" id="sh_hp703_room_knhn">-->
+<!--            <field name="name">Phòng 703</field>-->
+<!--            <field name="code">HP_703_KNHN</field>-->
+<!--            <field name="room_number">P703</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="department" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="location_medicine_stock" ref="shealth_all_in_one.sh_location_medicine_surgery_big_knhn"/>-->
+<!--            <field name="location_supply_stock" ref="shealth_all_in_one.sh_location_supply_surgery_big_knhn"/>-->
+<!--            <field name="is_operating_theater">False</field>-->
+<!--            <field name="info">Phòng hậu phẫu 703 - Tầng 7 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+
+<!--        <record model="sh.medical.health.center.ot" id="sh_hp704_room_knhn">-->
+<!--            <field name="name">Phòng 704</field>-->
+<!--            <field name="code">HP_704_KNHN</field>-->
+<!--            <field name="room_number">P704</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="department" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="location_medicine_stock" ref="shealth_all_in_one.sh_location_medicine_surgery_big_knhn"/>-->
+<!--            <field name="location_supply_stock" ref="shealth_all_in_one.sh_location_supply_surgery_big_knhn"/>-->
+<!--            <field name="is_operating_theater">False</field>-->
+<!--            <field name="info">Phòng hậu phẫu 704 - Tầng 7 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+
+<!--        <record model="sh.medical.health.center.ot" id="sh_hp705_room_knhn">-->
+<!--            <field name="name">Phòng 705</field>-->
+<!--            <field name="code">HP_705_KNHN</field>-->
+<!--            <field name="room_number">P705</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="department" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="location_medicine_stock" ref="shealth_all_in_one.sh_location_medicine_surgery_big_knhn"/>-->
+<!--            <field name="location_supply_stock" ref="shealth_all_in_one.sh_location_supply_surgery_big_knhn"/>-->
+<!--            <field name="is_operating_theater">False</field>-->
+<!--            <field name="info">Phòng hậu phẫu 705 - Tầng 7 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+
+<!--&lt;!&ndash;        GIƯỜNG BỆNH THEO PHÒNG&ndash;&gt;-->
+<!--        <record model="sh.medical.health.center.beds" id="sh_bed01_hp601_knhn">-->
+<!--            <field name="name">Giường 01 - 601</field>-->
+<!--            <field name="code">G01_601_KNHN</field>-->
+<!--            <field name="list_price">0.0</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="ward" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="room" ref="shealth_all_in_one.sh_hp601_room_knhn"/>-->
+<!--            <field name="info">Giường hậu phẫu 01 - Phòng 601 - Tầng 6 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+<!--        <record model="sh.medical.health.center.beds" id="sh_bed02_hp601_knhn">-->
+<!--            <field name="name">Giường 02 - 601</field>-->
+<!--            <field name="code">G02_601_KNHN</field>-->
+<!--            <field name="list_price">0.0</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="ward" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="room" ref="shealth_all_in_one.sh_hp601_room_knhn"/>-->
+<!--            <field name="info">Giường hậu phẫu 02 - Phòng 601 - Tầng 6 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+
+<!--        <record model="sh.medical.health.center.beds" id="sh_bed01_hp602_knhn">-->
+<!--            <field name="name">Giường 01 - 602</field>-->
+<!--            <field name="code">G01_602_KNHN</field>-->
+<!--            <field name="list_price">0.0</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="ward" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="room" ref="shealth_all_in_one.sh_hp602_room_knhn"/>-->
+<!--            <field name="info">Giường hậu phẫu 01 - Phòng 602 - Tầng 6 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+<!--        <record model="sh.medical.health.center.beds" id="sh_bed02_hp602_knhn">-->
+<!--            <field name="name">Giường 02 - 602</field>-->
+<!--            <field name="code">G02_602_KNHN</field>-->
+<!--            <field name="list_price">0.0</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="ward" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="room" ref="shealth_all_in_one.sh_hp602_room_knhn"/>-->
+<!--            <field name="info">Giường hậu phẫu 02 - Phòng 602 - Tầng 6 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+
+<!--        <record model="sh.medical.health.center.beds" id="sh_bed01_hp603_knhn">-->
+<!--            <field name="name">Giường 01 - 603</field>-->
+<!--            <field name="code">G01_603_KNHN</field>-->
+<!--            <field name="list_price">0.0</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="ward" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="room" ref="shealth_all_in_one.sh_hp603_room_knhn"/>-->
+<!--            <field name="info">Giường hậu phẫu 01 - Phòng 603 - Tầng 6 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+<!--        <record model="sh.medical.health.center.beds" id="sh_bed02_hp603_knhn">-->
+<!--            <field name="name">Giường 02 - 603</field>-->
+<!--            <field name="code">G02_603_KNHN</field>-->
+<!--            <field name="list_price">0.0</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="ward" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="room" ref="shealth_all_in_one.sh_hp603_room_knhn"/>-->
+<!--            <field name="info">Giường hậu phẫu 02 - Phòng 603 - Tầng 6 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+
+<!--        <record model="sh.medical.health.center.beds" id="sh_bed01_hp604_knhn">-->
+<!--            <field name="name">Giường 01 - 604</field>-->
+<!--            <field name="code">G01_604_KNHN</field>-->
+<!--            <field name="list_price">0.0</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="ward" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="room" ref="shealth_all_in_one.sh_hp604_room_knhn"/>-->
+<!--            <field name="info">Giường hậu phẫu 01 - Phòng 604 - Tầng 6 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+<!--        <record model="sh.medical.health.center.beds" id="sh_bed02_hp604_knhn">-->
+<!--            <field name="name">Giường 02 - 604</field>-->
+<!--            <field name="code">G02_604_KNHN</field>-->
+<!--            <field name="list_price">0.0</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="ward" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="room" ref="shealth_all_in_one.sh_hp604_room_knhn"/>-->
+<!--            <field name="info">Giường hậu phẫu 02 - Phòng 604 - Tầng 6 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+
+<!--        <record model="sh.medical.health.center.beds" id="sh_bed01_hp605_knhn">-->
+<!--            <field name="name">Giường 01 - 605</field>-->
+<!--            <field name="code">G01_605_KNHN</field>-->
+<!--            <field name="list_price">0.0</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="ward" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="room" ref="shealth_all_in_one.sh_hp605_room_knhn"/>-->
+<!--            <field name="info">Giường hậu phẫu 01 - Phòng 605 - Tầng 6 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+<!--        <record model="sh.medical.health.center.beds" id="sh_bed02_hp605_knhn">-->
+<!--            <field name="name">Giường 02 - 605</field>-->
+<!--            <field name="code">G02_605_KNHN</field>-->
+<!--            <field name="list_price">0.0</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="ward" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="room" ref="shealth_all_in_one.sh_hp605_room_knhn"/>-->
+<!--            <field name="info">Giường hậu phẫu 02 - Phòng 605 - Tầng 6 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+<!--&lt;!&ndash;        TẦNG 7&ndash;&gt;-->
+<!--        <record model="sh.medical.health.center.beds" id="sh_bed01_hp701_knhn">-->
+<!--            <field name="name">Giường 01 - 701</field>-->
+<!--            <field name="code">G01_701_KNHN</field>-->
+<!--            <field name="list_price">0.0</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="ward" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="room" ref="shealth_all_in_one.sh_hp701_room_knhn"/>-->
+<!--            <field name="info">Giường hậu phẫu 01 - Phòng 701 - Tầng 7 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+<!--        <record model="sh.medical.health.center.beds" id="sh_bed02_hp701_knhn">-->
+<!--            <field name="name">Giường 02 - 701</field>-->
+<!--            <field name="code">G02_701_KNHN</field>-->
+<!--            <field name="list_price">0.0</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="ward" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="room" ref="shealth_all_in_one.sh_hp701_room_knhn"/>-->
+<!--            <field name="info">Giường hậu phẫu 02 - Phòng 701 - Tầng 7 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+
+<!--        <record model="sh.medical.health.center.beds" id="sh_bed01_hp702_knhn">-->
+<!--            <field name="name">Giường 01 - 702</field>-->
+<!--            <field name="code">G01_702_KNHN</field>-->
+<!--            <field name="list_price">0.0</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="ward" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="room" ref="shealth_all_in_one.sh_hp702_room_knhn"/>-->
+<!--            <field name="info">Giường hậu phẫu 01 - Phòng 702 - Tầng 7 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+<!--        <record model="sh.medical.health.center.beds" id="sh_bed02_hp702_knhn">-->
+<!--            <field name="name">Giường 02 - 702</field>-->
+<!--            <field name="code">G02_702_KNHN</field>-->
+<!--            <field name="list_price">0.0</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="ward" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="room" ref="shealth_all_in_one.sh_hp702_room_knhn"/>-->
+<!--            <field name="info">Giường hậu phẫu 02 - Phòng 702 - Tầng 7 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+
+<!--        <record model="sh.medical.health.center.beds" id="sh_bed01_hp703_knhn">-->
+<!--            <field name="name">Giường 01 - 703</field>-->
+<!--            <field name="code">G01_703_KNHN</field>-->
+<!--            <field name="list_price">0.0</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="ward" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="room" ref="shealth_all_in_one.sh_hp703_room_knhn"/>-->
+<!--            <field name="info">Giường hậu phẫu 01 - Phòng 703 - Tầng 7 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+<!--        <record model="sh.medical.health.center.beds" id="sh_bed02_hp703_knhn">-->
+<!--            <field name="name">Giường 02 - 703</field>-->
+<!--            <field name="code">G02_703_KNHN</field>-->
+<!--            <field name="list_price">0.0</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="ward" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="room" ref="shealth_all_in_one.sh_hp703_room_knhn"/>-->
+<!--            <field name="info">Giường hậu phẫu 02 - Phòng 703 - Tầng 7 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+
+<!--        <record model="sh.medical.health.center.beds" id="sh_bed01_hp704_knhn">-->
+<!--            <field name="name">Giường 01 - 704</field>-->
+<!--            <field name="code">G01_704_KNHN</field>-->
+<!--            <field name="list_price">0.0</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="ward" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="room" ref="shealth_all_in_one.sh_hp704_room_knhn"/>-->
+<!--            <field name="info">Giường hậu phẫu 01 - Phòng 704 - Tầng 7 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+<!--        <record model="sh.medical.health.center.beds" id="sh_bed02_hp704_knhn">-->
+<!--            <field name="name">Giường 02 - 704</field>-->
+<!--            <field name="code">G02_704_KNHN</field>-->
+<!--            <field name="list_price">0.0</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="ward" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="room" ref="shealth_all_in_one.sh_hp704_room_knhn"/>-->
+<!--            <field name="info">Giường hậu phẫu 02 - Phòng 704 - Tầng 7 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+
+<!--        <record model="sh.medical.health.center.beds" id="sh_bed01_hp705_knhn">-->
+<!--            <field name="name">Giường 01 - 705</field>-->
+<!--            <field name="code">G01_705_KNHN</field>-->
+<!--            <field name="list_price">0.0</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="ward" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="room" ref="shealth_all_in_one.sh_hp705_room_knhn"/>-->
+<!--            <field name="info">Giường hậu phẫu 01 - Phòng 705 - Tầng 7 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+<!--        <record model="sh.medical.health.center.beds" id="sh_bed02_hp705_knhn">-->
+<!--            <field name="name">Giường 02 - 705</field>-->
+<!--            <field name="code">G02_705_KNHN</field>-->
+<!--            <field name="list_price">0.0</field>-->
+<!--            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>-->
+<!--            <field name="ward" ref="shealth_all_in_one.sh_surgeries_dep_knhn"/>-->
+<!--            <field name="room" ref="shealth_all_in_one.sh_hp705_room_knhn"/>-->
+<!--            <field name="info">Giường hậu phẫu 02 - Phòng 705 - Tầng 7 - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>-->
+<!--        </record>-->
+
+        <!--        DA LIỄU-->
+        <record model="stock.location" id="sh_location_medicine_dalieu_knhn">
+            <field name="name">Tủ Thuốc Da liễu</field>
+            <field name="location_id" model="sh.medical.health.center.ward"
+                eval="obj().env.ref('shealth_all_in_one.sh_dalieu_dep_knhn').location_id.id"/>
+            <field name="usage">internal</field>
+        </record>
+        <record model="stock.location" id="sh_location_supply_dalieu_knhn">
+            <field name="name">Tủ VT Da liễu</field>
+            <field name="location_id" model="sh.medical.health.center.ward"
+                eval="obj().env.ref('shealth_all_in_one.sh_dalieu_dep_knhn').location_id.id"/>
+            <field name="usage">internal</field>
+        </record>
+
+        <record model="stock.rule" id="sh_location_supply_dalieu_knhn_rule">
+            <field name="name">Tủ VT Da liễu --> Kho Tổng</field>
+            <field name="action">pull</field>
+            <field name="picking_type_id" ref="stock.picking_type_internal"/>
+            <field name="location_src_id" ref="shealth_all_in_one.sh_location_supply_knhn"/>
+            <field name="location_id" ref="sh_location_supply_dalieu_knhn"/>
+            <field name="procure_method">make_to_order</field>
+            <field name="route_id" ref="internal_route"/>
+        </record>
+
+        <record model="stock.rule" id="sh_location_medicine_dalieu_knhn_rule">
+            <field name="name">Tủ Thuốc Da liễu --> Kho Tổng</field>
+            <field name="action">pull</field>
+            <field name="picking_type_id" ref="stock.picking_type_internal"/>
+            <field name="location_src_id" ref="shealth_all_in_one.sh_location_medicine_prescription_knhn"/>
+            <field name="location_id" ref="sh_location_medicine_dalieu_knhn"/>
+            <field name="procure_method">make_to_order</field>
+            <field name="route_id" ref="internal_route"/>
+        </record>
+
+        <record model="sh.medical.health.center.ot" id="sh_dalieu_room_knhn">
+            <field name="name">Phòng SPA - LASER</field>
+            <field name="code">DL_KNHN</field>
+            <field name="room_number">P301+P302+P303</field>
+            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>
+            <field name="department" ref="shealth_all_in_one.sh_dalieu_dep_knhn"/>
+            <field name="location_medicine_stock" ref="shealth_all_in_one.sh_location_medicine_dalieu_knhn"/>
+            <field name="location_supply_stock" ref="shealth_all_in_one.sh_location_supply_dalieu_knhn"/>
+            <field name="is_operating_theater">False</field>
+            <field name="info">Phòng điều trị da - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>
+        </record>
+
+<!--        RĂNG HÀM NẶT-->
+        <record model="stock.location" id="sh_location_medicine_rhm_knhn">
+            <field name="name">Tủ Thuốc RHM</field>
+            <field name="location_id" model="sh.medical.health.center.ward"
+                eval="obj().env.ref('shealth_all_in_one.sh_rhm_dep_knhn').location_id.id"/>
+            <field name="usage">internal</field>
+        </record>
+        <record model="stock.location" id="sh_location_supply_rhm_knhn">
+            <field name="name">Tủ VT RHM</field>
+            <field name="location_id" model="sh.medical.health.center.ward"
+                eval="obj().env.ref('shealth_all_in_one.sh_rhm_dep_knhn').location_id.id"/>
+            <field name="usage">internal</field>
+        </record>
+
+        <record model="stock.rule" id="sh_location_medicine_rhm_knhn_rule">
+            <field name="name">Tủ Thuốc RHM --> Kho Tổng</field>
+            <field name="action">pull</field>
+            <field name="picking_type_id" ref="stock.picking_type_internal"/>
+            <field name="location_src_id" ref="shealth_all_in_one.sh_location_medicine_prescription_knhn"/>
+            <field name="location_id" ref="sh_location_medicine_rhm_knhn"/>
+            <field name="procure_method">make_to_order</field>
+            <field name="route_id" ref="internal_route"/>
+        </record>
+
+        <record model="stock.rule" id="sh_location_supply_rhm_knhn_rule">
+            <field name="name">Tủ VT RHM --> Kho Tổng</field>
+            <field name="action">pull</field>
+            <field name="picking_type_id" ref="stock.picking_type_internal"/>
+            <field name="location_src_id" ref="shealth_all_in_one.sh_location_supply_knhn"/>
+            <field name="location_id" ref="sh_location_supply_rhm_knhn"/>
+            <field name="procure_method">make_to_order</field>
+            <field name="route_id" ref="internal_route"/>
+        </record>
+
+        <record model="sh.medical.health.center.ot" id="sh_rhm_room_knhn">
+            <field name="name">Phòng điều trị RHM</field>
+            <field name="code">RHM_KNHN</field>
+            <field name="room_number">P205</field>
+            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>
+            <field name="department" ref="shealth_all_in_one.sh_rhm_dep_knhn"/>
+            <field name="location_medicine_stock" ref="shealth_all_in_one.sh_location_medicine_rhm_knhn"/>
+            <field name="location_supply_stock" ref="shealth_all_in_one.sh_location_supply_rhm_knhn"/>
+            <field name="is_operating_theater">False</field>
+            <field name="info">Phòng điều trị RHM - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>
+        </record>
+
+        <!--    PHÒNG KHÁM-->
+        <record model="sh.medical.health.center.ot" id="sh_kb_dalieu_room_knhn">
+            <field name="name">Phòng Khám Da liễu</field>
+            <field name="code">KB_DL_KNHN</field>
+            <field name="room_number">P301</field>
+            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>
+            <field name="department" ref="shealth_all_in_one.sh_kb_dep_knhn"/>
+            <field name="is_operating_theater">False</field>
+            <field name="info">Phòng Khám Da liễu - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>
+        </record>
+
+        <record model="sh.medical.health.center.ot" id="sh_kb_pttt_room_knhn">
+            <field name="name">Phòng Khám Phẫu thuật thẩm mỹ</field>
+            <field name="code">KB_PTTT_KNHN</field>
+            <field name="room_number">P202</field>
+            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>
+            <field name="department" ref="shealth_all_in_one.sh_kb_dep_knhn"/>
+            <field name="is_operating_theater">False</field>
+            <field name="info">Phòng Khám Phẫu thuật thẩm mỹ - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>
+        </record>
+
+        <record model="sh.medical.health.center.ot" id="sh_kb_rhm_room_knhn">
+            <field name="name">Phòng Khám Răng Hàm Mặt</field>
+            <field name="code">KB_RHM_KNHN</field>
+            <field name="room_number">P205</field>
+            <field name="institution" ref="shealth_all_in_one.sh_medicines_health_center_kangnam_hn"/>
+            <field name="department" ref="shealth_all_in_one.sh_kb_dep_knhn"/>
+            <field name="is_operating_theater">False</field>
+            <field name="info">Phòng Khám Răng Hàm Mặt - Bệnh viện thẩm mỹ Kangnam Hà Nội</field>
+        </record>
+
+    </data>
+</openerp>

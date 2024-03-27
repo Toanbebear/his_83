@@ -1,0 +1,1147 @@
+<?xml version="1.0" ?>
+    <openerp>
+        <data>
+			<!--		VIEW PHIẾU LĨNH THUỐC VẬT TƯ-->
+			<report
+				string="Phiếu xuất kho"
+				id="action_report_delivery_shealth"
+				model="stock.picking"
+				report_type="qweb-pdf"
+				name="shealth_all_in_one.shealth_report_deliveryslip"
+				file="shealth_all_in_one.shealth_report_deliveryslip"
+				print_report_name="'Phiếu xuất kho - %s - %s' % (object.partner_id.name or '', object.name)"
+				paperformat="shealth_all_in_one.sh_paperformat_test_result"
+			/>
+
+			<report
+				string="Phiếu xuất kho thuốc gây nghiện, hướng thần"
+				id="action_report_delivery_addictive_shealth"
+				model="stock.picking"
+				report_type="qweb-pdf"
+				name="shealth_all_in_one.shealth_report_deliveryslip_addictive"
+				file="shealth_all_in_one.shealth_report_deliveryslip_addictive"
+				print_report_name="'Phiếu xuất kho thuốc gây nghiện, hướng thần - %s - %s' % (object.partner_id.name or '', object.name)"
+				paperformat="shealth_all_in_one.sh_paperformat_test_result"
+			/>
+
+			<!-- Created new Form View for wizard-->
+			<record id="form_view_select_multi_product_wizard_purchase" model="ir.ui.view">
+				<field name="name">wizard.multi.product.purchase</field>
+				<field name="model">wizard.multi.product.purchase</field>
+				<field name="arch" type="xml">
+					<form string="Chọn nhiều sản phẩm">
+						<group>
+							<field name="product_ids" options="{'no_create':True,'no_open':True}" domain="[('type','=','product')]">
+								<tree class="tree_no_open">
+									<field name="default_code"/>
+									<field name="name"/>
+									<field name="uom_id" readonly="1" force_save="1"/>
+								</tree>
+							</field>
+							<field name="date_order" required="1"/>
+						</group>
+						<footer>
+							<button class="btn-primary" name="add_product" type="object" string="Áp dụng"/>
+							<button string="Hủy" class="btn-secondary" special="cancel"/>
+						</footer>
+					</form>
+				</field>
+			</record>
+			<!-- Created new action for wizard-->
+			<record id="action_select_multi_product_wizard_rfq" model="ir.actions.act_window">
+				<field name="name">Chọn nhiều sản phẩm</field>
+				<field name="type">ir.actions.act_window</field>
+				<field name="res_model">wizard.multi.product.purchase</field>
+				<field name="view_mode">form</field>
+				<field name="target">new</field>
+			</record>
+
+			<record model="ir.ui.view" id="shealth_view_location_form">
+                <field name="name">Địa điểm</field>
+                <field name="model">stock.location</field>
+                <field name="inherit_id" ref="stock.view_location_form"/>
+                <field name="arch" type="xml">
+					<xpath expr="//field[@name='return_location']" position="after">
+						<field name="location_institution_type"/>
+					</xpath>
+                </field>
+            </record>
+
+			<record model="ir.ui.view" id="sci_purchase_order_view_form_inherit">
+                <field name="name">Đơn mua hàng nhà cung cấp</field>
+                <field name="model">purchase.order</field>
+                <field name="type">form</field>
+                <field name="inherit_id" ref="purchase_stock.purchase_order_view_form_inherit"/>
+                <field name="arch" type="xml">
+<!--					CHỈNH SỬA CÁC STATE HIỂN THỊ-->
+					<xpath expr="//header/field[@name='state']" position="replace">
+						<field name="state" widget="statusbar" statusbar_visible="draft,purchase,cancel" readonly="1"/>
+					</xpath>
+					<xpath expr="//field[@name='date_order']" position="after">
+						<field name="date_year" invisible="True"/>
+					</xpath>
+<!--					THÊM CONTEXT ĐỂ KHI XÁC NHẬN PHIẾU KO CHECK SỐ LƯỢNG; THÊM CLASS ĐỂ NÚT PRIMARY STATE-->
+					<xpath expr="//header/button[@name='button_confirm'][2]" position="replace">
+						<button name="button_confirm" context="{'no_check_quant':True}" class="oe_highlight" type="object" states="draft" string="Xác nhận" id="draft_confirm"/>
+					</xpath>
+<!--					HIỂN THỊ NÚT HỦY -->
+					<xpath expr="//header/button[@name='button_cancel']" position="replace">
+						<button name="button_cancel" states="draft,to approve,sent" string="Hủy" type="object"/>
+					</xpath>
+<!--					ẨN TAB THÔNG TIN KHÁC-->
+					<xpath expr="//form/sheet/notebook/page[@name='purchase_delivery_invoice']" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+<!--					ẨN CÁC NÚT KO CẦN THIẾT-->
+					<xpath expr="//header/button[@name='action_rfq_send'][1]" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+					<xpath expr="//header/button[@name='action_rfq_send'][2]" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+					<xpath expr="//header/button[@name='action_rfq_send'][3]" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+					<xpath expr="//header/button[@name='print_quotation'][1]" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+					<xpath expr="//header/button[@name='print_quotation'][2]" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+					<xpath expr="//header/button[@name='action_view_invoice'][1]" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+					<xpath expr="//header/button[@name='action_view_invoice'][2]" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+					<xpath expr="//header/button[@name='button_done']" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+					<xpath expr="//div[hasclass('oe_button_box')]/button[@name='action_view_picking']/field[@name='picking_count']" position="attributes">
+						<attribute name="string">Phiếu nhập kho</attribute>
+					</xpath>
+					<xpath expr="//field[@name='invoice_status']" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+					<xpath expr="//field[@name='incoterm_id']" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+					<xpath expr="//field[@name='payment_term_id']" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+					<xpath expr="//field[@name='fiscal_position_id']" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+					<xpath expr="//field[@name='date_approve']" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+					<xpath expr="//field[@name='order_line']/tree/field[@name='date_planned']" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+					<xpath expr="//field[@name='order_line']/tree/field[@name='qty_invoiced']" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+<!--					THÊM NÚT ĐỂ CHỌN DC NHIỀU SP CÙNG LÚC -->
+					<xpath expr="//field[@name='order_line']" position="before">
+						<button name="%(action_select_multi_product_wizard_rfq)d" type="action" class="btn-info oe_edit_only" context="{'no_check_quant':True}"
+                        attrs="{'invisible': [('state', '!=', 'draft')]}" string="Chọn nhiều sản phẩm"/>
+					</xpath>
+<!--					DOMAIN TRƯỜNG SP Ở ORDER LINE CHỈ CHỌN DC SP STOREABLE; KO MỞ, KO TẠO ĐSẢN PHẨM-->
+					<xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
+						<attribute name="domain">[('type','=','product')]</attribute>
+						<attribute name="options">{'no_create': True,'no_open':True}</attribute>
+					</xpath>
+<!--					KO MỞ, KO TẠO ĐƠN VỊ, CHO CHỌN ĐƠN VỊ MUA -->
+					<xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="attributes">
+						<attribute name="options">{'no_create': True,'no_open':True}</attribute>
+<!--						<attribute name="readonly">True</attribute>-->
+						<attribute name="force_save">1</attribute>
+					</xpath>
+<!--					ẨN LOG-->
+					<xpath expr="//form/div[@class='oe_chatter']" position="replace">
+						<div class="oe_chatter" style="display:none;">
+							<field name="message_follower_ids" widget="mail_followers"/>
+							<field name="activity_ids" widget="mail_activity"/>
+							<field name="message_ids" widget="mail_thread"/>
+						</div>
+					</xpath>
+<!--					CHỈNH TITLE PHIẾU-->
+					<xpath expr="//form/sheet/div[@class='oe_title']" position="replace">
+						<div class="oe_title">
+							<span class="o_form_label" attrs="{'invisible': [('state','not in',('draft','sent'))]}">Mã hóa đơn</span>
+							<span class="o_form_label" attrs="{'invisible': [('state','in',('draft','sent'))]}">Mã hóa đơn</span>
+							<h1>
+								<field name="name" attrs="{'readonly': [('state','!=','draft')]}"/>
+							</h1>
+						</div>
+					</xpath>
+<!--					HIỂN THỊ EDIT VÀ XÓA KHI PHIẾU KO Ở TRẠNG THÁI 'purchase','cancel'-->
+					<xpath expr="//form" position="attributes">
+						<attribute name="edit_expr">state not in ['purchase','cancel']</attribute>
+						<attribute name="delete_expr">state not in ['purchase','cancel']</attribute>
+					</xpath>
+                </field>
+            </record>
+
+<!--			XÓA DOMAIN purchase_form_action ĐỂ HIỆN CẢ ĐƠN DẠNG NHÁP-->
+            <record model="ir.actions.act_window" id="purchase.purchase_form_action">
+				<field name="view_mode">tree,form</field>
+				<field name="domain">['!',('name','ilike','False')]</field>
+				<field name="context">{'search_default_order_date':True}</field>
+            </record>
+
+<!--			VIEW SEARCH SẢN PHẨM-->
+			<record model="ir.ui.view" id="sci_view_stock_product_tree">
+                <field name="name">Tìm kiếm sản phẩm</field>
+                <field name="model">product.product</field>
+                <field name="type">tree</field>
+                <field name="inherit_id" ref="stock.view_stock_product_tree"/>
+                <field name="arch" type="xml">
+					<xpath expr="//field[@name='lst_price']" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+					<xpath expr="//field[@name='standard_price']" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+					<!--<xpath expr="//field[@name='qty_available']" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>-->
+					<xpath expr="//field[@name='virtual_available']" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+					<xpath expr="//field[@name='barcode']" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sci_purchase_order_view_tree_inherit">
+                <field name="name">Đơn mua hàng nhà cung cấp</field>
+                <field name="model">purchase.order</field>
+                <field name="type">tree</field>
+                <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+                <field name="arch" type="xml">
+					<xpath expr="//field[@name='date_planned']" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+					<xpath expr="//field[@name='name']" position="replace">
+						<field name="name" string="Mã hóa đơn"/>
+					</xpath>
+                </field>
+            </record>
+
+			<record model="ir.ui.view" id="sci_view_purchase_order_filter">
+                <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+				<field name="name">Tìm kiếm đơn mua hàng nhà cung cấp</field>
+				<field name="model">purchase.order</field>
+                <field name="arch" type="xml">
+					<xpath expr="//field[@name='name']" position="replace">
+						<field name="name" string="Mã hóa đơn"/>
+					</xpath>
+                </field>
+            </record>
+
+<!--			VIEW DỰ TRỮ HIỆN TẠI-->
+			<record model="ir.ui.view" id="sci_current_stock_quant_tree">
+                <field name="name">Dự trữ hiện tại</field>
+                <field name="model">stock.quant</field>
+                <field name="type">tree</field>
+                <field name="inherit_id" ref="stock.view_stock_quant_tree"/>
+                <field name="arch" type="xml">
+					<xpath expr="//field[@name='lot_id']" position="after">
+						<field name="removal_date" groups="stock.group_production_lot"/>
+					</xpath>
+                </field>
+            </record>
+
+			<!--            TAO MENU XEM TON KHO HIEN TAI THEO DIA DIEM-->
+            <record id="current_stock_action" model="ir.actions.server">
+                <field name="name">Dự trữ hiện tại</field>
+                <field name="model_id" ref="shealth_all_in_one.model_stock_picking"/>
+                <field name="state">code</field>
+                <field name="code">
+                    action = model.view_current_stock()
+                </field>
+            </record>
+
+            <menuitem id="sci_menu_stock_medicament" parent="shealth_all_in_one.sci_menu_stock_root" string="Dự trữ hiện tại" sequence="1" action="current_stock_action"/>
+			<record id="sci_menu_stock_medicament" model="ir.ui.menu">
+				<field name="web_icon_class">fa fa-cube</field>
+			</record>
+
+<!--			SEARCH PHIEU KHO -->
+            <record model="ir.ui.view" id="sci_view_picking_internal_search">
+                <field name="name">Tìm kiếm phiếu kho</field>
+                <field name="model">stock.picking</field>
+                <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+                <field name="arch" type="xml">
+					<xpath expr="//filter[@name='activities_upcoming_all']" position="after">
+						<filter string="Ngày hoàn thành" name="date_done" date="date_done"/>
+						<filter string="Tủ xuất" name="location_id"/>
+						<filter string="Bệnh nhân" name="patient_id"/>
+					</xpath>
+					<xpath expr="//group/filter[@name='picking_type']" position="after">
+						<filter string="Kho xuất" name="group_location_id" domain="[]" context="{'group_by':'location_id'}"/>
+						<filter string="Kho nhập" name="group_location_dest_id" domain="[]" context="{'group_by':'location_dest_id'}"/>
+						<filter string="Bệnh nhân" name="group_patient_id" domain="[]" context="{'group_by':'patient_id'}"/>
+					</xpath>
+                </field>
+            </record>
+
+<!--		NHAP HANG NHA CUNG CAP-->
+			<record model="ir.ui.view" id="sci_picking_in_tree">
+                <field name="name">Phiếu kho SCI dạng tree</field>
+                <field name="model">stock.picking</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree decoration-info="state=='draft'" decoration-success="state=='done'" decoration-danger="state in ('confirmed','assigned')" default_order="date_done desc">
+                        <field name="name" string="Mã phiếu"/>
+<!--						<field name="create_date" string="Ngày tạo"/>-->
+						<field name="scheduled_date" string="Ngày tạo" invisible="1"/>
+                        <field name="date_done" string="Ngày hoàn thành"/>
+						<field name="partner_id" string="Nhà cung cấp"/>
+						<field name="patient_id" invisible="1"/>
+                        <field name="location_id" string="Kho xuất"/>
+                        <field name="location_dest_id" string="Kho nhập"/>
+						<field name="origin" string="Tài liệu nguồn"/>
+                        <field name="state" string="Trạng thái"/>
+                        <field name="returned_ids" invisible="1"/>
+                    </tree>
+                </field>
+            </record>
+
+            <record id="sci_action_picking_in_tree" model="ir.actions.act_window">
+				<field name="name">Phiếu nhập hàng</field>
+				<field name="res_model">stock.picking</field>
+				<field name="type">ir.actions.act_window</field>
+				<field name="view_type">form</field>
+				<field name="view_mode">tree,kanban,form,calendar</field>
+				<field name="domain" model="stock.location" eval="[('name','ilike','/IN/'),('location_dest_id','=',obj().env.ref('stock.warehouse0').lot_stock_id.id),('returned_ids', '=', False)]"/>
+				<field name="context" model="stock.warehouse" eval="{
+					'contact_display': 'partner_address',
+					'view_for': 'picking_in',
+					'view_only_name': True,
+					'default_picking_type_id': obj().env.ref('stock.warehouse0').in_type_id.id
+				}"/>
+				<field name="search_view_id" ref="stock.view_picking_internal_search"/>
+				<field name="help" type="html">
+				  <p class="o_view_nocontent_smiling_face">
+					Phiếu nhập hàng nhà cung cấp
+				  </p>
+				</field>
+			</record>
+
+        	<menuitem id="sci_picking_in" name="Phiếu nhập hàng" parent="sci_menu_stock_operations" sequence="1" action="sci_action_picking_in_tree" groups="shealth_all_in_one.group_sh_medical_stock_manager"/>
+			<record id="sci_picking_in" model="ir.ui.menu">
+				<field name="web_icon_class">fa fa-sort-amount-desc</field>
+			</record>
+
+<!--			CHUYEN THUOC VAT TU VE CAC TU TRUC-->
+			<record id="sci_action_picking_int_tree" model="ir.actions.act_window">
+				<field name="name">Phiếu Chuyển Thuốc</field>
+				<field name="res_model">stock.picking</field>
+				<field name="type">ir.actions.act_window</field>
+				<field name="view_type">form</field>
+				<field name="view_mode">tree,kanban,form,calendar</field>
+				<field name="domain" model="stock.picking" eval="[('name','ilike','/INT/'),('location_dest_id.location_institution_type','=','medicine'),('location_id','=',obj().env.ref('shealth_all_in_one.sh_location_medicine_prescription_knhn').id),('returned_ids', '=', False),('backorder_id', '=', False),('state', '!=', 'cancel')]"/>
+				<field name="context" model="stock.warehouse" eval="{
+					'contact_display': 'partner_address',
+					'view_for': 'picking_int',
+					'view_only_name': True,
+					'search_default_group_location_dest_id': True,
+					'default_picking_type_id': obj().env.ref('stock.warehouse0').int_type_id.id
+				}"/>
+				<field name="search_view_id" ref="stock.view_picking_internal_search"/>
+				<field name="help" type="html">
+				  <p class="o_view_nocontent_smiling_face">
+					Define a new transfer in stock
+				  </p>
+				</field>
+			</record>
+
+			<record id="sci_action_picking_int_vt_tree" model="ir.actions.act_window">
+				<field name="name">Phiếu Chuyển Vật tư</field>
+				<field name="res_model">stock.picking</field>
+				<field name="type">ir.actions.act_window</field>
+				<field name="view_type">form</field>
+				<field name="view_mode">tree,kanban,form,calendar</field>
+				<field name="domain" model="stock.location" eval="[('name','ilike','/INT/'),('location_dest_id.location_institution_type','=','supply'),('location_id','=',obj().env.ref('shealth_all_in_one.sh_location_supply_knhn').id),('returned_ids', '=', False),('backorder_id', '=', False),('state', '!=', 'cancel')]"/>
+				<field name="context" model="stock.warehouse" eval="{
+					'contact_display': 'partner_address',
+					'view_for': 'picking_int_vt',
+					'view_only_name': True,
+					'search_default_group_location_dest_id': True,
+					'default_picking_type_id': obj().env.ref('stock.warehouse0').int_type_id.id
+				}"/>
+				<field name="search_view_id" ref="stock.view_picking_internal_search"/>
+				<field name="help" type="html">
+				  <p class="o_view_nocontent_smiling_face">
+					Define a new transfer in stock
+				  </p>
+				</field>
+			</record>
+
+        	<menuitem id="sci_picking_int" name="Phiếu Chuyển Thuốc" parent="sci_menu_stock_operations" sequence="2" action="sci_action_picking_int_tree" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_stock_manager"/>
+			<record id="sci_picking_int" model="ir.ui.menu">
+				<field name="web_icon_class">fa fa-share-square-o</field>
+			</record>
+			<menuitem id="sci_picking_int_vt" name="Phiếu Chuyển Vật tư" parent="sci_menu_stock_operations" sequence="3" action="sci_action_picking_int_vt_tree" groups="shealth_all_in_one.group_sh_medical_physician_subclinical,shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_stock_manager"/>
+			<record id="sci_picking_int_vt" model="ir.ui.menu">
+				<field name="web_icon_class">fa fa-share-square-o</field>
+			</record>
+
+<!--			XUAT BENH NHANH-->
+			<record id="sci_action_picking_out_bn_tree" model="ir.actions.act_window">
+				<field name="name">Xuất bệnh nhân</field>
+				<field name="res_model">stock.picking</field>
+				<field name="type">ir.actions.act_window</field>
+				<field name="view_type">form</field>
+				<field name="view_mode">tree,kanban,form,calendar</field>
+				<field name="domain">[('patient_id','!=',False),('name','ilike','/OUT/'),'!',('name','ilike','-FP')]</field>
+				<field name="context" model="stock.warehouse" eval="{
+					'contact_display': 'partner_address',
+					'view_for': 'picking_out_bn',
+					'view_only_name': True,
+					'search_default_group_location_id': True,
+					'default_picking_type_id': obj().env.ref('stock.warehouse0').out_type_id.id
+				}"/>
+				<field name="search_view_id" ref="stock.view_picking_internal_search"/>
+				<field name="help" type="html">
+				  <p class="o_view_nocontent_smiling_face">
+					Define a new transfer in stock
+				  </p>
+				</field>
+			</record>
+
+        	<menuitem id="sci_picking_out_bn" name="Xuất bệnh nhân" parent="sci_menu_stock_operations" sequence="4" action="sci_action_picking_out_bn_tree" groups="shealth_all_in_one.group_sh_medical_physician_subclinical,shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_stock_manager"/>
+			<record id="sci_picking_out_bn" model="ir.ui.menu">
+				<field name="web_icon_class">fa fa-share</field>
+			</record>
+
+<!--			FORM PHIEU KHO-->
+			<record model="ir.ui.view" id="sci_picking_int_return_form">
+                <field name="name">Phiếu kho SCI</field>
+                <field name="model">stock.picking</field>
+                <field name="type">form</field>
+                <field name="inherit_id" ref="stock.view_picking_form"/>
+                <field name="arch" type="xml">
+					<!-- PHÂN QUYỀN CÁC NÚT HIỂN THỊ DUY NHẤT CHO QUYỀN KHO-->
+					<xpath expr="//header/button[@name='do_print_picking']" position="replace">
+						<button name="do_print_picking" string="In phiếu" groups="stock.group_stock_user" type="object" invisible="1"/>
+					</xpath>
+					<xpath expr="//header/button[@name='do_unreserve']" position="replace">
+						<button name="do_unreserve" string="Bỏ giữ trước" groups="shealth_all_in_one.group_sh_medical_stock_manager" type="object" attrs="{'invisible': ['|', '|', '|', ('picking_type_code', '=', 'incoming'), ('is_locked', '=', False), '&amp;', ('state', 'not in', ('assigned', 'partially_available')), ('move_type', '!=', 'one'), '&amp;', ('state', 'not in', ('assigned', 'partially_available', 'confirmed')), ('move_type', '=', 'one')]}"/>
+					</xpath>
+					<xpath expr="//header/button[@name='button_validate'][1]" position="replace">
+						<button name="button_validate" attrs="{'invisible': ['|', ('state', 'in', ('waiting','confirmed')), ('show_validate', '=', False)]}" string="Xác nhận" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_stock_manager"/>
+					</xpath>
+					<xpath expr="//header/button[@name='button_validate'][2]" position="replace">
+						<button name="button_validate" invisible="True" string="Ẩn di" type="object" groups="shealth_all_in_one.group_sh_medical_stock_manager" class="o_btn_validate"/>
+					</xpath>
+					<xpath expr="//header/button[@name='action_confirm']" position="replace">
+						<button name="action_confirm" attrs="{'invisible': [('show_mark_as_todo', '=', False)]}" string="Gửi phiếu" type="object" class="oe_highlight" groups="stock.group_stock_user"/>
+					</xpath>
+					<xpath expr="//header/button[@name='action_assign']" position="replace">
+						<button name="action_assign" context="{'exact_location': True}" attrs="{'invisible': [('show_check_availability', '=', False)]}" string="Kiểm tra khả dụng" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_stock_manager"/>
+					</xpath>
+					<xpath expr="//header/button[@name='%(stock.act_stock_return_picking)d']" position="replace">
+						<button name="%(stock.act_stock_return_picking)d" string="Return" attrs="{'invisible': ['|', ('state', '!=', 'done'), ('is_locked', '=', False)]}" type="action" groups="base.group_system"/>
+					</xpath>
+					<xpath expr="//header/button[@name='%(stock.action_report_delivery)d']" position="replace">
+						<button name="%(shealth_all_in_one.action_report_delivery_shealth)d" string="In phiếu" class="btn-info" attrs="{'invisible': ['|', ('state', '==', 'draft'), ('is_locked', '=', False)]}" type="action" groups="stock.group_stock_user"/>
+					</xpath>
+					<xpath expr="//form/sheet/notebook" position="before">
+						<group groups="shealth_all_in_one.group_sh_medical_stock_manager">
+						  <div>
+							<h3 class="oe_grey">Lưu ý</h3>
+							  <ul class="oe_grey">
+								<li>Sau khi <b>Kiểm tra khả dụng</b> thì dòng sản phẩm nào được <i class="text-warning">đánh dấu màu vàng</i> là sản phẩm đó đang không có số lượng khả dụng trong kho.</li>
+							  </ul>
+						  </div>
+						</group>
+					</xpath>
+<!--					ẨN NÚT TIÊU HỦY-->
+					<xpath expr="//button[@name='button_scrap']" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+<!--					ẨN NÚT KHÓA/MỞ KHÓA PHIẾU-->
+					<xpath expr="//button[@name='action_toggle_is_locked']" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+<!--					XÓA HẾT CÁC NÚT TRONG BUTTON BOX Ở PHIẾU-->
+					<xpath expr="//div[@name='button_box']" position="replace">
+						<div class="oe_button_box" name="button_box"></div>
+					</xpath>
+<!--					READONLY TRƯỜNG ĐƠN VỊ -->
+					<xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='product_uom']" position="attributes">
+						<attribute name="readonly">True</attribute>
+						<attribute name="force_save">1</attribute>
+						<attribute name="options">{'no_create':True,'no_open':True}</attribute>
+					</xpath>
+<!--					KO CHO TẠO SP KHI CHỌN SẢN PHẨM-->
+					<xpath expr="//field[@name='move_line_ids_without_package']/tree/field[@name='product_id']" position="attributes">
+						<attribute name="options">{'no_create':True}</attribute>
+					</xpath>
+					<xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='product_id']" position="attributes">
+						<attribute name="options">{'no_create':True,'no_open':True}</attribute>
+					</xpath>
+<!--					ẨN NÚT XEM CHI TIẾT HOẠT ĐỘNG Ở TAB HOẠT ĐỘNG-->
+					<!--<xpath expr="//field[@name='move_ids_without_package']/tree/button[@name='action_show_details']" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>-->
+<!--					ẨN TRƯỜNG GIỮ TRƯỚC Ở HOẠT ĐỘNG CHI TIẾT-->
+					<xpath expr="//field[@name='move_line_ids_without_package']/tree/field[@name='product_uom_qty']" position="attributes">
+						<attribute name="invisible">True</attribute>
+						<attribute name="options">{'no_create':True,'no_open':True}</attribute>
+					</xpath>
+<!--					KO CHO MỞ CHI TIẾT KHI CLICK VÀO TỪNG LINE BẢNG HOẠT ĐỘNG VÀ HOẠT ĐỘNG CHI TIẾT-->
+					<xpath expr="//field[@name='move_ids_without_package']/tree" position="attributes">
+						<attribute name="class">tree_no_open</attribute>
+						<attribute name="decoration-bf">state in ['confirmed','partially_available','waiting'] and product_uom_qty &gt; reserved_availability</attribute>
+						<attribute name="decoration-warning">state in ['confirmed','partially_available','waiting'] and reserved_availability == 0</attribute>
+					</xpath>
+					<xpath expr="//field[@name='move_line_ids_without_package']/tree" position="attributes">
+						<attribute name="class">tree_no_open</attribute>
+					</xpath>
+					<!-- CHỈ ADMIN MỚI DC XEM ĐỊA ĐIỂM NHẬP XUẤT Ở MOVE LINE-->
+					<xpath expr="//field[@name='move_line_ids_without_package']/tree/field[@name='location_id']" position="attributes">
+						<attribute name="groups">shealth_all_in_one.group_sh_medical_manager</attribute>
+					</xpath>
+					<xpath expr="//field[@name='move_line_ids_without_package']/tree/field[@name='location_dest_id']" position="attributes">
+						<attribute name="groups">shealth_all_in_one.group_sh_medical_manager</attribute>
+					</xpath>
+					<!-- ẨN TAB HOẠT ĐỘNG KHI PHIẾU DONE -->
+					<xpath expr="//form/sheet/notebook/page[1]" position="attributes">
+						<attribute name="attrs">{'invisible': [('state', 'not in', ['done'])]}</attribute>
+					</xpath>
+					<!-- HIỆN TAB HOẠT ĐỘNG CHI TIẾT KHI PHIẾU DONE -->
+					<xpath expr="//form/sheet/notebook/page[2]" position="attributes">
+						<attribute name="attrs">{'invisible': [('state', 'in', ['done'])]}</attribute>
+					</xpath>
+					<!-- ẨN TAB THÔNG TIN CHI TIẾT -->
+					<xpath expr="//form/sheet/notebook/page[3]" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+
+					<!-- KẾ THỪA GROUP DẦU TIÊN CỦA FORM -->
+					<xpath expr="//form/sheet/group[1]" position="replace">
+						<group>
+							<group>
+								<field name="picking_type_id" attrs="{'readonly': [('state', '!=', 'draft')]}" options="{'no_create': True}" invisible="1"/>
+								<field name="backorder_id" readonly="1" attrs="{'invisible': [('backorder_id','=',False)]}"/>
+
+								<field name="partner_id" attrs="{'invisible': [('hide_partner', '=', True)]}"/>
+								<field name="patient_id" options="{'no_create': True}" invisible="1" readonly="1" force_save="1"/>
+								<field name="hide_partner" invisible="1"/>
+								<field name="location_id" options="{'no_create': True,'no_open': True}" context="{'view_only_name':True}" string="Kho xuất" groups="stock.group_stock_multi_locations" attrs="{'invisible': [('picking_type_code', '=', 'incoming')]}"/>
+								<field name="location_dest_id" options="{'no_create': True,'no_open': True}" context="{'view_only_name':True}" string="Kho nhập" groups="stock.group_stock_multi_locations" attrs="{'invisible': [('picking_type_code', '=', 'outgoing')]}"/>
+<!--                                <field name="location_id" string="Kho xuất" groups="stock.group_stock_multi_locations" attrs="{'invisible': [('picking_type_code', '=', 'incoming')]}" domain="['|', ('company_id', '=', company_id), ('company_id', '=', False)]"/>-->
+<!--								<field name="location_dest_id"  string="Kho nhập" groups="stock.group_stock_multi_locations" attrs="{'invisible': [('picking_type_code', '=', 'outgoing')]}" domain="['|', ('company_id', '=', company_id), ('company_id', '=', False)]"/>-->
+							</group>
+							<group>
+<!--								<field name="scheduled_date" string="Ngày tạo" attrs="{'readonly': ['|', ('id', '=', False), ('state', 'in', ('done', 'cancel'))], 'required': [('id', '!=', False)]}"/>-->
+<!--								hiển thị liên kết đơn mua hàng ncc-->
+								<field name="purchase_id" string="Đơn mua hàng" invisible="1"/>
+								<field name="scheduled_date" invisible="1" string="Ngày tạo" attrs="{'readonly': [('state', 'in', ('done', 'cancel'))]}" required="1"/>
+<!--								trường ghi nhận ngày hoàn thành tùy chỉnh-->
+								<field name="sci_date_done" required="1" string="Ngày hoàn thành" force_save="1" attrs="{'readonly': [('state', '=', 'done')]}"/>
+								<field name="date_done" string="Ngày hoàn thành" force_save="1" invisible="1" attrs="{'invisible': [('state', '!=', 'done')]}"/>
+								<field name="origin" placeholder="e.g. PO0032"/>
+								<field name="owner_id" groups="stock.group_tracking_owner"/>
+								<div groups="stock.group_tracking_owner" colspan="2" col="2" >
+									<button name="action_assign_owner" string="Assign Owner" type="object" attrs="{'invisible': ['|',('move_line_exist', '=', False),('state', 'not in', ('draft','assigned','confirmed'))]}" class="oe_link"/>
+								</div>
+							</group>
+                        </group>
+					</xpath>
+<!--					ẨN LOG-->
+					<xpath expr="//form/div[@class='oe_chatter']" position="replace">
+						<div class="oe_chatter" style="display:none;">
+							<field name="message_follower_ids" widget="mail_followers"/>
+							<field name="activity_ids" widget="mail_activity"/>
+							<field name="message_ids" widget="mail_thread"/>
+						</div>
+					</xpath>
+<!--					CHỈ HIỆN NÚT EDIT VÀ DELETE KHI PHIẾU Ở TRẠNG THÁI NHÁP-->
+					<xpath expr="//form" position="attributes">
+<!--						<attribute name="edit_expr">state == 'draft'</attribute>-->
+						<attribute name="delete_expr">state == 'draft'</attribute>
+					</xpath>
+                </field>
+            </record>
+
+<!--			<record model="ir.actions.act_window" id="act_nhu_cau_nhap_hang">-->
+<!--				<field name="name">Nhu cầu nhập hàng</field>-->
+<!--				<field name="type">ir.actions.act_window</field>-->
+<!--				<field name="res_model">temp.wizard</field>-->
+<!--				<field name="view_mode">tree,form</field>-->
+<!--				<field name="view_type">form</field>-->
+<!--				<field name="target">inline</field>-->
+<!--				<field name="view_id" ref="ms_templates.report_wizard"/>-->
+<!--	&lt;!&ndash;            <field name="binding_model_id" model="ir.model" search="[('model', '=', 'stock.picking')]"/>&ndash;&gt;-->
+<!--				<field name="context" eval="{'default_template_id': ref('nhu_cau_nhap_hang')}"/>-->
+<!--			</record>-->
+
+			<record id="view_request_accounting_picking_form" model="ir.ui.view">
+				<field name="name">stock.request.accounting.picking.form</field>
+				<field name="model">stock.picking</field>
+				<field name="arch" type="xml">
+					<form create="false" delete="false" edit_expr="state not in ['confirmed','cancel']">
+					<header>
+						<field name="id" invisible="1"/>
+						<field name="is_locked" invisible="1"/>
+						<field name="show_mark_as_todo" invisible="1"/>
+						<field name="show_check_availability" invisible="1"/>
+						<field name="show_validate" invisible="1"/>
+						<field name="show_lots_text" invisible="1"/>
+						<field name="picking_type_code" invisible="1"/>
+						<field name="state" invisible="1"/>
+						<button name="download_excel" string="Tải excel" type="object" class="oe_highlight"/>
+<!--						<button name="action_cancel" string="Xác nhận" attrs="{'invisible': ['|', ('state', 'not in', ('assigned', 'confirmed', 'partially_available', 'draft', 'waiting')), ('is_locked', '=', False)]}" groups="base.group_user" type="object"/>-->
+						<field name="show_operations" invisible="1" readonly="1"/>
+						<field name="move_line_exist" invisible="1"/>
+						<field name="has_packages" invisible="1"/>
+						<field name="picking_type_entire_packs" invisible="1"/>
+					</header>
+					<sheet>
+						<div class="oe_title" id='title' attrs="{'invisible': [('state', '!=', 'cancel')]}">
+							<h1>Đã xử lý</h1>
+						</div>
+						<group>
+							<group>
+								<field name="location_id" options="{'no_open':True}"/>
+								<field name="location_dest_id" options="{'no_open':True}"/>
+								<field name="partner_id" invisible="1"/>
+								<field name="picking_type_id" invisible="1"/>
+							</group>
+							<group>
+								<field name="scheduled_date" string="Ngày yêu cầu"/>
+								<field name="date_done" string="Effective Date" attrs="{'invisible': [('state', '!=', 'done')]}"/>
+							</group>
+						</group>
+						<notebook>
+							<page string="Hoạt động">
+								<field name="id" invisible="1"/>
+								<field name="immediate_transfer" invisible="1"/>
+								<field name="move_ids_without_package" context="{'picking_type_code': picking_type_code, 'default_picking_id': id, 'form_view_ref':'stock.view_move_picking_form', 'address_in_id': partner_id, 'default_picking_type_id': picking_type_id, 'default_location_id': location_id, 'default_location_dest_id': location_dest_id}">
+									<tree decoration-danger="not parent.immediate_transfer and state != 'done' and quantity_done > reserved_availability and show_reserved_availability" decoration-muted="scrapped == True or state == 'cancel' or (state == 'done' and is_locked == True)" string="Stock Moves" editable="bottom" limit="300">
+										<field name="name" invisible="1"/>
+										<field name="date_expected" invisible="1"/>
+										<field name="state" invisible="1" readonly="0"/>
+										<field name="picking_type_id" invisible="1"/>
+										<field name="location_id" invisible="1"/>
+										<field name="location_dest_id" invisible="1"/>
+										<field name="scrapped" invisible="1"/>
+										<field name="picking_code" invisible="1"/>
+										<field name="product_type" invisible="1"/>
+										<field name="show_details_visible" invisible="1"/>
+										<field name="show_reserved_availability" invisible="1"/>
+										<field name="show_operations" invisible="1" readonly="1"/>
+										<field name="additional" invisible="1"/>
+										<field name="has_move_lines" invisible="1"/>
+										<field name="is_locked" invisible="1"/>
+										<field name="product_id" required="1" attrs="{'readonly': ['|', '&amp;', ('state', '!=', 'draft'), ('additional', '=', False), ('has_move_lines', '=', True)]}"/>
+										<field name="is_initial_demand_editable" invisible="1"/>
+										<field name="is_quantity_done_editable" invisible="1"/>
+										<field name="product_uom_qty" string="Yêu cầu ban đầu" attrs="{'column_invisible': ['&amp;',('parent.immediate_transfer', '=', True), ('parent.is_locked', '=', True)], 'readonly': [('is_initial_demand_editable', '=', False)]}"/>
+										<field name="reserved_availability" string="Giữ trước" attrs="{'column_invisible': (['|','|', ('parent.state','=', 'done'), ('parent.picking_type_code', '=', 'incoming'),'&amp;',('parent.immediate_transfer', '=', True), ('parent.is_locked', '=', True)])}"/>
+										<field name="quantity_done" string="Hoàn thành" attrs="{'readonly': [('is_quantity_done_editable', '=', False)]}"/>
+										<field name="product_uom" attrs="{'readonly': [('state', '!=', 'draft'), ('additional', '=', False)]}" options="{'no_open': True, 'no_create': True}" string="Đơn vị tính" groups="uom.group_uom"/>
+										<button name="action_show_details" invisible="1" string="Register lots, packs, location" type="object" icon="fa-list" attrs="{'invisible': [('show_details_visible', '=', False)]}" options='{"warn": true}'/>
+									</tree>
+								</field>
+							</page>
+						</notebook>
+					</sheet>
+					</form>
+				</field>
+			</record>
+
+			<record id="view_request_accounting_picking_tree" model="ir.ui.view">
+				<field name="name">stock.request.accounting.picking.tree</field>
+				<field name="model">stock.picking</field>
+				<field name="arch" type="xml">
+					<tree decoration-muted="state == 'cancel'" default_order="scheduled_date desc" create="false">
+						<field name="name"/>
+						<field name="scheduled_date"/>
+						<field name="location_id"/>
+						<field name="location_dest_id"/>
+						<field name="state" invisible="1"/>
+					</tree>
+				</field>
+			</record>
+
+			<record id="sci_action_request_accounting_picking" model="ir.actions.act_window">
+				<field name="name">Yêu cầu kế toán</field>
+				<field name="res_model">stock.picking</field>
+				<field name="type">ir.actions.act_window</field>
+				<field name="view_type">form</field>
+				<field name="view_mode">tree,form</field>
+				<field name="domain" eval="[('location_id', '=', ref('shealth_all_in_one.sh_request_accounting_location'))]"/>
+			</record>
+
+			<record model="ir.actions.act_window.view" id="sci_action_request_accounting_picking_tree">
+				<field name="act_window_id" ref="sci_action_request_accounting_picking"/>
+				<field name="sequence" eval="5"/>
+				<field name="view_mode">tree</field>
+				<field name="view_id" ref="view_request_accounting_picking_tree"/>
+			</record>
+
+			<record model="ir.actions.act_window.view" id="sci_action_request_accounting_picking_form">
+				<field name="act_window_id" ref="sci_action_request_accounting_picking"/>
+				<field name="sequence" eval="10"/>
+				<field name="view_mode">form</field>
+				<field name="view_id" ref="view_request_accounting_picking_form"/>
+			</record>
+
+			<menuitem id="sci_request_accounting_picking" name="Yêu cầu kế toán" parent="shealth_all_in_one.sci_menu_stock_operations" sequence="0" action="sci_action_request_accounting_picking" groups="shealth_all_in_one.group_sh_medical_stock_manager"/>
+			<record id="sci_request_accounting_picking" model="ir.ui.menu">
+				<field name="web_icon_class">fa fa-share-square-o</field>
+			</record>
+
+<!--			HOAN TRA THUOC VAT TU-->
+			<record id="sci_action_picking_int_return_tree" model="ir.actions.act_window">
+				<field name="name">Hoàn trả thuốc, vật tư</field>
+				<field name="res_model">stock.picking</field>
+				<field name="type">ir.actions.act_window</field>
+				<field name="view_type">form</field>
+				<field name="view_mode">tree,kanban,form</field>
+<!--				<field name="domain" model="stock.location" eval="[('name','ilike','/INT/'),('location_dest_id','=',obj().env.ref('stock.warehouse0').lot_stock_id.id)]"/>-->
+				<field name="domain" model="stock.location" eval="[('name','ilike','/INT/'), ('location_id.location_institution_type','in', ('supply','medicine')), ('location_dest_id','in', [obj().env.ref('shealth_all_in_one.sh_location_medicine_prescription_knhn').id, obj().env.ref('shealth_all_in_one.sh_location_supply_knhn').id]), ('returned_ids', '=', False), ('backorder_id', '=', False), ('state', '!=', 'cancel'), ('patient_id', '=', False)]"/>
+				<field name="context" model="stock.warehouse" eval="{
+					'contact_display': 'partner_address',
+					'view_for': 'picking_int_return',
+					'view_only_name': True,
+					'search_default_group_location_id': True,
+					'default_picking_type_id': obj().env.ref('stock.warehouse0').int_type_id.id
+				}"/>
+				<field name="search_view_id" ref="stock.view_picking_internal_search"/>
+				<field name="help" type="html">
+				  <p class="o_view_nocontent_smiling_face">
+					Define a new transfer in stock
+				  </p>
+				</field>
+			</record>
+
+        	<menuitem id="sci_picking_int_return" name="Hoàn trả thuốc, vật tư" parent="sci_menu_stock_operations" sequence="4" action="sci_action_picking_int_return_tree" groups="stock.group_stock_user"/>
+			<record id="sci_picking_int_return" model="ir.ui.menu">
+				<field name="web_icon_class">fa fa-reply-all</field>
+			</record>
+
+<!--			VAT TU THUOC DANG CHO-->
+<!--			<record id="waiting_stock_move_action" model="ir.actions.act_window">-->
+<!--				<field name="name">VT/Thuốc đang chờ</field>-->
+<!--				<field name="res_model">stock.move</field>-->
+<!--				<field name="type">ir.actions.act_window</field>-->
+<!--				<field name="view_type">form</field>-->
+<!--				<field name="view_id" ref="stock.view_move_tree"/>-->
+<!--				<field name="search_view_id" ref="stock.view_move_search"/>-->
+<!--				<field name="context">{'search_default_future': 1, 'search_default_by_product': 1}</field>-->
+<!--				<field name="help" type="html">-->
+<!--				  <p class="o_view_nocontent_smiling_face">-->
+<!--					Create a new stock movement-->
+<!--				  </p><p>-->
+<!--					This menu gives you the full traceability of inventory-->
+<!--					operations on a specific product. You can filter on the product-->
+<!--					to see all the past or future movements for the product.-->
+<!--				  </p>-->
+<!--				</field>-->
+<!--			</record>-->
+
+<!--			<menuitem id="sci_waiting_stock_move" name="VT/Thuốc đang chờ" parent="sci_menu_stock_operations" sequence="5" action="waiting_stock_move_action" groups="shealth_all_in_one.group_sh_medical_stock_manager"/>-->
+<!--			<record id="sci_waiting_stock_move" model="ir.ui.menu">-->
+<!--				<field name="web_icon_class">fa fa-spinner</field>-->
+<!--			</record>-->
+
+<!--			ĐIỀU CHỈNH TỒN KHO-->
+			<record model="ir.ui.view" id="sci_inventory_adjustment_form">
+                <field name="name">Kiểm kê</field>
+                <field name="model">stock.inventory</field>
+                <field name="type">form</field>
+                <field name="inherit_id" ref="stock_account.view_inventory_form_inherit"/>
+                <field name="arch" type="xml">
+					<xpath expr="//form/header" position="inside">
+						<button name="print_stock_inventory" states="done,confirm" class="btn-info" string="In phiếu" type="object"/>
+					</xpath>
+					<xpath expr="//field[@name='accounting_date']" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+					<xpath expr="//field[@name='date']" position="attributes">
+						<attribute name="readonly">False</attribute>
+					</xpath>
+					<xpath expr="//field[@name='location_id']" position="attributes">
+						<attribute name="options">{'no_create': True}</attribute>
+                		<attribute name="domain">[('usage', '=', 'internal')]</attribute>
+                		<attribute name="context">{'view_only_name': True}</attribute>
+					</xpath>
+					<xpath expr="//field[@name='line_ids']/tree/field[@name='product_id']" position="attributes">
+						<attribute name="options">{'no_open':True}</attribute>
+					</xpath>
+					<xpath expr="//field[@name='line_ids']" position="attributes">
+						<attribute name="class">tree_no_open</attribute>
+					</xpath>
+					<xpath expr="//field[@name='product_id']" position="attributes">
+						<attribute name="options">{'no_open':True}</attribute>
+					</xpath>
+					<xpath expr="//field[@name='lot_id']" position="attributes">
+						<attribute name="options">{'no_create':True,'form_view_ref': 'shealth_all_in_one.sci_view_production_lot_form'}</attribute>
+					</xpath>
+				</field>
+			</record>
+
+			<!--			TIEU HUY THUOC HET HAN -->
+			<record model="ir.ui.view" id="sci_stock_scrap_form">
+                <field name="name">Tiêu hủy thuốc, Vật tư</field>
+                <field name="model">stock.scrap</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+					<form string="Scrap" edit_expr="state not in ['done']" delete_expr="state not in ['done']">
+						<header>
+							<button name="action_validate" states="draft" string="Xác nhận" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_stock_manager"/>
+							<button name="action_return_validate" attrs="{'invisible': ['|', ('check_return_stock', '=', True), ('state', '!=', 'done')]}" string="Hoàn trả" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_stock_manager"/>
+							<field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+						</header>
+						<sheet>
+							<div class="oe_title">
+								<h1><field name="name" nolabel="1"/></h1>
+							</div>
+							<group>
+								<group>
+									<field name="product_id" options="{'no_create':True,'no_open':True}"/>
+									<field name="location_id" string="Tủ xuất" groups="stock.group_stock_multi_locations" context="{'view_only_name':True}" options="{'no_create':True,'no_open':True}" />
+
+									<label for="scrap_qty"/>
+									<div class="o_row">
+										<field name="scrap_qty"/>
+										<field name="product_uom_id" groups="uom.group_uom" options="{'no_create':True,'no_open':True}" required="0"  readonly="1" force_save="1"/>
+									</div>
+									<field name="note" required="1"/>
+								</group>
+								<group>
+									<field name="lot_id" options="{'no_create':True,'no_open':True}" string="Lô hàng" attrs="{'invisible': [('tracking', '=', 'none')], 'required': [('tracking', '!=', 'none')]}" groups="stock.group_production_lot"/>
+									<field name="tracking" invisible="True"/>
+									<field name="check_return_stock" attrs="{'invisible': [('check_return_stock', '=', False)]}"/>
+									<field name="owner_id" groups="stock.group_tracking_owner"/>
+									<field name="scrap_location_id" groups="stock.group_stock_multi_locations" invisible="1" force_save="1"/>
+									<field name="origin"/>
+									<field name="date_expected" invisible="1"/>
+									<field name="sci_date_done"/>
+									<field name="picking_id" attrs="{'invisible': [('picking_id', '=', False)]}"/>
+								</group>
+							</group>
+						</sheet>
+					</form>
+				</field>
+			</record>
+
+			<record model="ir.ui.view" id="sci_stock_scrap_tree">
+                <field name="name">Tiêu hủy thuốc, Vật tư</field>
+                <field name="model">stock.scrap</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+					<tree decoration-danger="state == 'draft'" decoration-success="state == 'done'">
+						<field name="name"/>
+						<field name="sci_date_done"/>
+						<field name="product_id"/>
+						<field name="scrap_qty"/>
+						<field name="product_uom_id" groups="uom.group_uom"/>
+						<field name="location_id" groups="stock.group_stock_multi_locations" string="Tủ xuất"/>
+						<field name="scrap_location_id" groups="stock.group_stock_multi_locations" string="Loại"/>
+						<field name="state"/>
+					</tree>
+				</field>
+			</record>
+
+			<record id="sci_action_stock_scrap_tree" model="ir.actions.act_window">
+				<field name="name">Tiêu hủy thuốc, Vật tư</field>
+				<field name="res_model">stock.scrap</field>
+				<field name="type">ir.actions.act_window</field>
+				<field name="view_type">form</field>
+				<field name="search_view_id" ref="stock.stock_scrap_search_view"/>
+				<field name="view_ids" eval="[(5, 0, 0),
+					(0, 0, {'view_mode': 'tree', 'view_id': ref('sci_stock_scrap_tree')}),
+					(0, 0, {'view_mode': 'form', 'view_id': ref('sci_stock_scrap_form')})]"/>
+				<field name="context" eval="{
+					'view_only_name': True,
+					'search_default_group_location_id': True
+				}"/>
+				<field name="domain" model="stock.location" eval="[('scrap_location_id','=',obj().env.ref('stock.stock_location_scrapped').id)]"/>
+				<field name="help" type="html">
+				  <p class="o_view_nocontent_smiling_face">
+					Tạo mới 1 phiếu tiêu hủy
+				  </p>
+				</field>
+			</record>
+
+        	<menuitem id="sci_stock_scrap_menu" name="Tiêu hủy Thuốc, Vật tư" parent="sci_menu_stock_operations" sequence="6" action="sci_action_stock_scrap_tree" groups="shealth_all_in_one.group_sh_medical_physician_subclinical,shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_stock_manager"/>
+			<record id="sci_stock_scrap_menu" model="ir.ui.menu">
+				<field name="web_icon_class">fa fa-trash-o</field>
+			</record>
+
+<!--			XUẤT SỬ DỤNG PHÒNG-->
+			<record id="stock_location_scrapped_room_use" model="stock.location">
+				<field name="name">Xuất sử dụng phòng</field>
+				<field name="location_id" ref="stock.stock_location_locations_virtual"/>
+				<field name="scrap_location">True</field>
+				<field name="usage">inventory</field>
+				<field name="company_id"></field>
+			</record>
+
+			<record model="ir.ui.view" id="sci_stock_scrap_room_use_form">
+                <field name="name">Xuất sử dụng cho phòng</field>
+                <field name="model">stock.scrap</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+					<form string="Scrap" edit_expr="state not in ['done']" delete_expr="state not in ['done']">
+						<header>
+							<button name="action_validate" states="draft" string="Xác nhận" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_stock_manager"/>
+							<field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+						</header>
+						<sheet>
+							<div class="oe_title">
+								<h1><field name="name" nolabel="1"/></h1>
+							</div>
+							<group>
+								<group>
+									<field name="product_id" options="{'no_create':True,'no_open':True}"/>
+									<field name="location_id" string="Tủ xuất" groups="stock.group_stock_multi_locations" context="{'view_only_name':True}" options="{'no_create':True,'no_open':True}"/>
+
+									<label for="scrap_qty"/>
+									<div class="o_row">
+										<field name="scrap_qty"/>
+										<field name="product_uom_id" groups="uom.group_uom"  options="{'no_create':True,'no_open':True}" required="0" readonly="1" force_save="1"/>
+									</div>
+									<field name="note" required="1"/>
+									<field name="room_use" required="1" options="{'no_create':True,'no_open':True}"/>
+								</group>
+								<group>
+									<field name="lot_id" options="{'no_create':True,'no_open':True}" string="Lô hàng" attrs="{'invisible': [('tracking', '=', 'none')], 'required': [('tracking', '!=', 'none')]}" groups="stock.group_production_lot"/>
+									<field name="tracking" invisible="1"/>
+									<field name="package_id" groups="stock.group_tracking_lot"/>
+									<field name="owner_id" groups="stock.group_tracking_owner"/>
+									<field name="scrap_location_id" groups="stock.group_stock_multi_locations" invisible="1" force_save="1"/>
+									<field name="origin"/>
+									<field name="date_expected" invisible="1"/>
+									<field name="sci_date_done" required="1"/>
+									<field name="picking_id" attrs="{'invisible': [('picking_id', '=', False)]}"/>
+								</group>
+							</group>
+						</sheet>
+					</form>
+				</field>
+			</record>
+
+			<record model="ir.ui.view" id="sci_stock_scrap_room_use_tree">
+                <field name="name">Xuất sử dụng phòng</field>
+                <field name="model">stock.scrap</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+					<tree decoration-danger="state == 'draft'" decoration-success="state == 'done'">
+						<field name="name"/>
+						<field name="sci_date_done"/>
+						<field name="product_id"/>
+						<field name="scrap_qty"/>
+						<field name="product_uom_id" groups="uom.group_uom"/>
+						<field name="location_id" groups="stock.group_stock_multi_locations" string="Tủ xuất"/>
+						<field name="room_use"/>
+						<field name="scrap_location_id" groups="stock.group_stock_multi_locations" string="Loại"/>
+						<field name="state"/>
+					</tree>
+				</field>
+			</record>
+
+			<record id="sci_action_stock_scrap_room_use_tree" model="ir.actions.act_window">
+				<field name="name">Xuất sử dụng phòng</field>
+				<field name="res_model">stock.scrap</field>
+				<field name="type">ir.actions.act_window</field>
+				<field name="view_type">form</field>
+				<field name="search_view_id" ref="stock.stock_scrap_search_view"/>
+				<field name="view_ids" eval="[(5, 0, 0),
+					(0, 0, {'view_mode': 'tree', 'view_id': ref('sci_stock_scrap_room_use_tree')}),
+					(0, 0, {'view_mode': 'form', 'view_id': ref('sci_stock_scrap_room_use_form')})]"/>
+				<field name="context" eval="{
+					'view_only_name': True,
+					'search_default_group_location_id': True,
+					'default_scrap_location_id': ref('shealth_all_in_one.stock_location_scrapped_room_use')
+				}"/>
+				<field name="domain" model="stock.location" eval="[('scrap_location_id','=',obj().env.ref('shealth_all_in_one.stock_location_scrapped_room_use').id)]"/>
+				<field name="help" type="html">
+				  <p class="o_view_nocontent_smiling_face">
+					Tạo mới 1 phiếu xuất xử dụng phòng
+				  </p>
+				</field>
+			</record>
+
+			<record id="model_stock_scrap_confirm_action_server" model="ir.actions.server">
+                <field name="name">Xác nhận phiếu</field>
+                <field name="model_id" ref="stock.model_stock_scrap"/>
+                <field name="binding_model_id" ref="stock.model_stock_scrap"/>
+                <field name="state">code</field>
+                <field name="code">
+                    for record in records:
+						env['stock.scrap'].browse(record.id).action_validate()
+                </field>
+            </record>
+
+        	<menuitem id="sci_stock_scrap_room_use_menu" name="Xuất sử dụng phòng" parent="sci_menu_stock_operations" sequence="5" action="sci_action_stock_scrap_room_use_tree" groups="shealth_all_in_one.group_sh_medical_physician_subclinical,shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_stock_manager"/>
+			<record id="sci_stock_scrap_room_use_menu" model="ir.ui.menu">
+				<field name="web_icon_class">fa fa-location-arrow</field>
+			</record>
+
+			<!-- VIEW QUAN LY LO/SERI -->
+			<record model="ir.ui.view" id="sci_view_production_lot_tree">
+                <field name="name">Số Lô/Sê-ri</field>
+                <field name="model">stock.production.lot</field>
+                <field name="type">tree</field>
+                <field name="inherit_id" ref="stock.view_production_lot_tree"/>
+                <field name="arch" type="xml">
+					<xpath expr="//field[@name='create_date']" position="replace">
+						<field name="removal_date"/>
+						<field name="product_expiry_alert" invisible="1"/>
+						<field name="reserved_qty" class="text-warning"/>
+						<field name="product_qty"/>
+					</xpath>
+					<xpath expr="//tree" position="attributes">
+						<attribute name='decoration-danger'>product_expiry_alert==True</attribute>
+					</xpath>
+				</field>
+			</record>
+
+			<record model="ir.actions.act_window" id="sci_lot_open_quants">
+				<field name="name">Định vị</field>
+				<field name="context">{'search_default_lot_id': active_id}</field>
+				<field name="domain" model="stock.warehouse" eval="[('location_id','child_of',obj().env.ref('stock.warehouse0').lot_stock_id.id)]"/>
+				<field name="res_model">stock.quant</field>
+			</record>
+
+			<record model="ir.ui.view" id="sci_view_production_lot_form">
+                <field name="name">Số Lô/Sê-ri</field>
+                <field name="model">stock.production.lot</field>
+                <field name="type">form</field>
+                <field name="inherit_id" ref="product_expiry.view_move_form_expiry"/>
+                <field name="arch" type="xml">
+					<xpath expr="//field[@name='use_date']" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+					<xpath expr="//field[@name='life_date']" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+					<xpath expr="//div[hasclass('oe_button_box')]" position="replace">
+						<div class="oe_button_box" name="button_box">
+							<button name="%(sci_lot_open_quants)d" icon="fa-arrows" class="oe_stat_button" string="Định vị" type="action"/>
+							<button name="%(stock.action_stock_report)d" invisible="1" icon="fa-arrow-up" class="oe_stat_button" string="Traceability Report" type="action"/>
+						</div>
+					</xpath>
+					<xpath expr="//div[hasclass('oe_chatter')]" position="attributes">
+						<attribute name="style">display:none;</attribute>
+					</xpath>
+				</field>
+			</record>
+
+<!--			ĐƠN HÀNG DANG DỞ THÊM CONTEXT ĐỂ KO CHECK SỐ LƯỢNG-->
+			<record model="ir.ui.view" id="sci_view_backorder_confirmation">
+                <field name="name">sci_stock_backorder_confirmation</field>
+                <field name="model">stock.backorder.confirmation</field>
+                <field name="type">form</field>
+                <field name="inherit_id" ref="stock.view_backorder_confirmation"/>
+                <field name="arch" type="xml">
+					<xpath expr="//form/group/p[2]" position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath>
+					<xpath expr="//form/footer" position="replace">
+						<footer>
+							<button name="process_cancel_backorder" context="{'no_check_quant': True}" string="Tiếp tục" type="object" class="btn-primary"/>
+							<button string="Chờ hàng về" class="btn-secondary" special="cancel"/>
+						</footer>
+					</xpath>
+				</field>
+			</record>
+
+<!--			DEFAULT ORDER ĐƠN VỊ TÍNH-->
+			<record model="ir.ui.view" id="sci_product_uom_tree_view">
+                <field name="name">Danh sách đơn vị tính</field>
+                <field name="model">uom.uom</field>
+                <field name="type">tree</field>
+                <field name="inherit_id" ref="uom.product_uom_tree_view"/>
+                <field name="arch" type="xml">
+					<xpath expr="//tree" position="attributes">
+						<attribute name='default_order'>uom_type desc</attribute>
+					</xpath>
+				</field>
+			</record>
+<!--			ẨN ACTION IN MẶC ĐỊNH CỦA REPORT KIỂM KHO-->
+			<report
+				string="Inventory"
+				id="stock.action_report_inventory"
+				model="stock.inventory"
+				report_type="qweb-pdf"
+				name="stock.report_inventory"
+				file="stock.report_inventory"
+				print_report_name="'Inventory - %s' % (object.name)"
+				menu="False"
+			/>
+		</data>
+
+	<!--            XUẤT NHIỀU BIÊN BẢN KIỂM KÊ-->
+		<record id="model_stock_inventory_action_report_bbkk" model="ir.actions.server">
+			<field name="name">BIÊN BẢN KIỂM KÊ</field>
+			<field name="model_id" ref="shealth_all_in_one.model_stock_inventory"/>
+			<field name="binding_model_id" ref="shealth_all_in_one.model_stock_inventory"/>
+			<field name="state">code</field>
+			<field name="code">
+				if records:
+					action = records.print_stock_inventory()
+			</field>
+		</record>
+
+<!--		MẪU BIÊN BẢN KIỂM KÊ KHO-->
+		<record id="sci_stock_inventory_report_attachment" model="ir.attachment">
+			<field name="name">PHIẾU KIỂM KÊ KHO</field>
+			<field name="type">binary</field>
+			<field name="datas" type="base64" file="shealth_all_in_one/static/xls/BB_KIEM_KE.xlsx"/>
+			<field name="datas_fname">BB_KIEM_KE.xlsx</field>
+			<field name="public">True</field>
+		</record>
+<!--		<record model="ir.actions.act_window" id="sci_stock_inventory_report_act">-->
+<!--			<field name="name">PHIẾU KIỂM KÊ KHO</field>-->
+<!--			<field name="res_model">temp.wizard</field>-->
+<!--			<field name="view_type">form</field>-->
+<!--			<field name="view_mode">form</field>-->
+<!--			<field name="view_id" ref="ms_templates.report_wizard"/>-->
+<!--			<field name="context" eval="{'attachment_id': ref('shealth_all_in_one.dmkt_report_attachment')}"/>-->
+<!--			<field name="target">inline</field>-->
+<!--		</record>-->
+
+<!--		TRUY VẾT SẢN PHẨM-->
+		<record id="view_move_line_tree_shealth" model="ir.ui.view">
+			<field name="name">stock.move.line.tree.shealth</field>
+			<field name="model">stock.move.line</field>
+			<field name="arch" type="xml">
+				<tree decoration-muted="state == 'cancel'" decoration-danger="(state not in ('cancel','done'))" string="Move Lines" create="0" default_order="date">
+					<field name="date"/>
+					<field name="reference" string="Mã phiếu"/>
+					<field name="product_id"/>
+					<field name="location_id"/>
+					<field name="location_dest_id"/>
+					<field name="qty_done" string="Hoàn thành"/>
+					<field name="product_uom_id" options="{'no_open': True, 'no_create': True}" string="Đơn vị tính" groups="uom.group_uom"/>
+					<field name="state"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_view_move_line_tree_shealth" model="ir.actions.act_window">
+			<field name="name">Truy vết thuốc/vật tư</field>
+			<field name="res_model">stock.move.line</field>
+            <field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_move_line_tree_shealth"/>
+			<field name="domain">[]</field>
+			<field name="context">{'search_default_done': True, 'search_default_groupby_product_id': True, 'view_only_name': True}</field>
+		</record>
+
+		<menuitem id="sci_move_line_menu" name="Truy vết thuốc/vật tư" parent="sci_menu_stock_operations" sequence="8" action="action_view_move_line_tree_shealth" groups="shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_physician_subclinical,shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_stock_manager"/>
+		<record id="sci_move_line_menu" model="ir.ui.menu">
+			<field name="web_icon_class">fa fa-history</field>
+		</record>
+    </openerp>

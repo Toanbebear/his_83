@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="walkin_labtest_result_view_form" model="ir.ui.view">
+            <field name="name">walkin.labtest.result.view.form</field>
+            <field name="model">walkin.labtest.result</field>
+            <field name="arch" type="xml">
+                <form string="Kết quả xét nghiệm">
+                    <group>
+                        <field name="patient"/>
+                        <field name="service" widget="many2many_tags"/>
+                        <field name="requestor" required="1" options="{'no_create': True,'no_open': True}"/>
+                        <field name="pathologist" required="1" options="{'no_create': True,'no_open': True}"/>
+                        <field name="date_exam"/>
+                        <field name="date_requested" readonly="1" force_save="1"/>
+                        <field name="date_analysis" required="1"/>
+                        <field name="date_done" required="1"/>
+                    </group>
+               </form>
+            </field>
+        </record>
+
+        <record id="walkin_labtest_result_action" model="ir.actions.act_window">
+            <field name="name">Kết quả xét nghiệm</field>
+            <field name="res_model">walkin.labtest.result</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="walkin_labtest_result_view_form"/>
+            <field name="target">new</field>
+        </record>
+
+</odoo>

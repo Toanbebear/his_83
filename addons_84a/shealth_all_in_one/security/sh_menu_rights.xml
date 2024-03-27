@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model='ir.ui.menu' id='sh_menu_reception'>
+            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_receptionist'),ref('shealth_all_in_one.group_sh_medical_manager')])]"/>
+        </record>
+<!--        <record model='ir.ui.menu' id='sh_medical_edit_patient'>&ndash;&gt;-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_physician'),ref('shealth_all_in_one.group_sh_medical_manager')])]"/>-->
+<!--        </record>-->
+
+<!--        <record model='ir.ui.menu' id='sh_medical_my_patient_profile'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_patient')])]"/>-->
+<!--        </record>-->
+
+<!--        CHI ADMIN MOI THAY DC TAB CONFIG-->
+        <record model='ir.ui.menu' id='sh_medical_conf_menu'>
+            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_document')])]"/>
+        </record>
+
+<!--        <record model='ir.ui.menu' id='sh_medical_conf_insurances'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_physician'),ref('shealth_all_in_one.group_sh_medical_manager')])]"/>-->
+<!--        </record>-->
+
+<!--        KHO DƯỢC QUẢN LÝ TẤT CẢ CÁC ĐƠN KÊ VỀ CHO BỆNH NHÂN -->
+        <record model='ir.ui.menu' id='sh_medical_prescription_list'>
+            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_stock_manager')])]"/>
+        </record>
+
+<!--        <record model='ir.ui.menu' id='sh_medical_insurance_type_conf_list'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager')])]"/>-->
+<!--        </record>-->
+
+<!--        <record model='ir.ui.menu' id='sh_medical_ethnic_groups_conf_list'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager')])]"/>-->
+<!--        </record>-->
+
+<!--        <record model='ir.ui.menu' id='sh_medical_genetics_conf_list'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_physician')])]"/>-->
+<!--        </record>-->
+
+<!--        ADMIN CO QUYEN CAU HINH BANG CAP-->
+        <record model='ir.ui.menu' id='sh_medical_physician_degrees_list'>
+            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager')])]"/>
+        </record>
+
+<!--        ADMIN VA BAC SI THAY MENU CHUYEN KHOA-->
+        <record model='ir.ui.menu' id='sh_medical_physician_speciality_list'>
+            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_physician')])]"/>
+        </record>
+<!--        ADMIN CO QUYEN CAU HINH BENH VIEN-->
+        <record model='ir.ui.menu' id='sh_medical_healthcenters_list'>
+            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager')])]"/>
+        </record>
+
+<!--        <record model='ir.ui.menu' id='sh_medical_healthcenters_pharmacy_list'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager')])]"/>-->
+<!--        </record>-->
+
+        <!--        ADMIN VA BAC SI, BAC SI CAN LAM SANG THAY MENU THUOC VA VAT TU-->
+        <record model='ir.ui.menu' id='sh_medical_medicines_list'>
+            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_stock_manager')])]"/>
+        </record>
+
+<!--        <record model='ir.ui.menu' id='sh_medical_vaccines_listview'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_physician')])]"/>-->
+<!--        </record>-->
+
+        <!--        ADMIN VA BAC SI THAY DANH SACH DON VI THUOC-->
+<!--        <record model='ir.ui.menu' id='sh_medical_dose_unit_list'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_physician')])]"/>-->
+<!--        </record>-->
+
+<!--        <record model='ir.ui.menu' id='sh_medical_drug_route_list'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_physician')])]"/>-->
+<!--        </record>-->
+
+<!--        <record model='ir.ui.menu' id='sh_medical_drug_forms_list'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_physician')])]"/>-->
+<!--        </record>-->
+
+<!--        <record model='ir.ui.menu' id='sh_medical_dosage_list'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_physician')])]"/>-->
+<!--        </record>-->
+
+<!--        <record model='ir.ui.menu' id='sh_medical_healthcenters_building_list'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager')])]"/>-->
+<!--        </record>-->
+
+<!--        <record model='ir.ui.menu' id='sh_medical_healthcenters_ward_list'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager')])]"/>-->
+<!--        </record>-->
+
+<!--        <record model='ir.ui.menu' id='sh_medical_healthcenters_bed_list'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager')])]"/>-->
+<!--        </record>-->
+
+<!--        <record model='ir.ui.menu' id='sh_medical_inpatient_myadmission_list'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_patient')])]"/>-->
+<!--        </record>-->
+
+<!--        <record model='ir.ui.menu' id='sh_medical_inpatient_list'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_physician')])]"/>-->
+<!--        </record>-->
+
+<!--        <record model='ir.ui.menu' id='sh_medical_my_physician_profile'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_physician')])]"/>-->
+<!--        </record>-->
+
+        <!--        ADMIN VA BENH NHAN THAY DANH SACH BAC SI-->
+        <record model='ir.ui.menu' id='sh_medical_physician_list'>
+            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_patient')])]"/>
+        </record>
+
+<!--        <record model='ir.ui.menu' id='sh_medical_vaccine_list'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_physician'),ref('shealth_all_in_one.group_sh_medical_manager')])]"/>-->
+<!--        </record>-->
+
+<!--        <record model='ir.ui.menu' id='sh_medical_my_patient_vaccine'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_patient')])]"/>-->
+<!--        </record>-->
+
+        <!-- Occupation -->
+<!--        <record model='ir.ui.menu' id='sh_medical_occupation_conf_list'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_physician')])]"/>-->
+<!--        </record>-->
+
+        <!-- Gynacology -->
+<!--        <record model='ir.ui.menu' id='sh_medical_gyneco_mgmt_list'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_physician')])]"/>-->
+<!--        </record>-->
+
+        <!-- Recreational Drugs -->
+<!--        <record model='ir.ui.menu' id='sh_medical_recreational_drug_mgmt_list'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_physician')])]"/>-->
+<!--        </record>-->
+
+        <!-- Laboratory -->
+        <!--        ADMIN VA BAC SI, BAC SI CAN LAM SANG THAY XET NGHIEM-->
+        <record model='ir.ui.menu' id='sh_medical_lab_units_conf_list'>
+            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_physician_subclinical_labtest')])]"/>
+        </record>
+        <record model='ir.ui.menu' id='sh_medical_lab_test_types_conf_list'>
+            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_physician_subclinical_labtest')])]"/>
+        </record>
+        <record model='ir.ui.menu' id='sh_medical_lab_test_conf_list'>
+            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_patient'),ref('shealth_all_in_one.group_sh_medical_physician_subclinical_labtest')])]"/>
+        </record>
+        <record model='ir.ui.menu' id='sh_medical_walkin_result_labtest_menu'>
+            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_patient'),ref('shealth_all_in_one.group_sh_medical_physician_subclinical_labtest')])]"/>
+        </record>
+
+        <!-- Pediatrics Management -->
+<!--        <record model='ir.ui.menu' id='sh_medical_newborn_list'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_physician'),ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_nurse')])]"/>-->
+<!--        </record>-->
+
+<!--        <record model='ir.ui.menu' id='sh_medical_pediatrics_growth_chart_list'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_physician'),ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_nurse')])]"/>-->
+<!--        </record>-->
+
+        <!-- ICD10 Procedures -->
+<!--        <record model='ir.ui.menu' id='sh_medical_procedure_conf_list'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_physician'),ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_nurse')])]"/>-->
+<!--        </record>-->
+
+        <!-- Surgical Management -->
+<!--        ADMIN THAY DANH SACH PHONG-->
+        <record model='ir.ui.menu' id='sh_medical_healthcenters_ot_list'>
+            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager')])]"/>
+        </record>
+
+<!--        <record model='ir.ui.menu' id='sh_medical_surgery_rcri_list'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_physician'),ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_nurse')])]"/>-->
+<!--        </record>-->
+<!--        ADMIN, BAC SI, DIEU DUONG THAY DANH SACH PHIEU PHAU THUAT-->
+        <record model='ir.ui.menu' id='sh_medical_surgery_list'>
+            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_physician_surgery'),ref('shealth_all_in_one.group_sh_medical_nurse')])]"/>
+        </record>
+
+        <!-- Ophthalmology Management -->
+<!--        <record model='ir.ui.menu' id='sh_medical_ophthalmology_list'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_physician'),ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_nurse')])]"/>-->
+<!--        </record>-->
+
+        <!-- Nursing Management -->
+
+        <record model='ir.ui.menu' id='shealth_all_in_one.sh_medical_edit_patient'>
+            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_receptionist'),ref('shealth_all_in_one.group_sh_medical_physician'),ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_nurse')])]"/>
+        </record>
+
+<!--        <record model='ir.ui.menu' id='sh_medical_rounding_list'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_physician'),ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_nurse')])]"/>-->
+<!--        </record>-->
+
+<!--         <record model='ir.ui.menu' id='sh_medical_ambulatory_list'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_physician'),ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_nurse')])]"/>-->
+<!--        </record>-->
+
+        <record model='ir.ui.menu' id='shealth_all_in_one.sh_medical_inpatient_list'>
+            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_physician_surgery'),ref('shealth_all_in_one.group_sh_medical_nurse')])]"/>
+        </record>
+
+        <!-- Imaging Management -->
+<!--        ADMIN VA BAC SI, BAC SI CAN LAM SANG THAY CDHA-->
+        <record model='ir.ui.menu' id='sh_medical_imaging_test_type_conf_list'>
+            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager')])]"/>
+        </record>
+
+        <record model='ir.ui.menu' id='sh_medical_imaging_test_conf_list'>
+            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_physician_subclinical_imaging')])]"/>
+        </record>
+
+<!--        <record model='ir.ui.menu' id='sh_medical_imaging_test_1_conf_list'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_physician_subclinical_imaging')])]"/>-->
+<!--        </record>-->
+
+        <!-- Walkins -->
+        <record model='ir.ui.menu' id='sh_medical_walkin_menu'>
+            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_physician'),ref('shealth_all_in_one.group_sh_medical_nurse')])]"/>
+        </record>
+
+        <!-- CHUYEN KHOA ROOT -->
+        <record model='ir.ui.menu' id='sh_medical_root_specialty_menu'>
+            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_physician'),ref('shealth_all_in_one.group_sh_medical_nurse')])]"/>
+        </record>
+
+        <!-- VIỆN PHÍ ROOT -->
+        <record model='ir.ui.menu' id='sh_medical_root_payment_menu'>
+            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_accountant')])]"/>
+        </record>
+
+        <!-- KHO ROOT -->
+        <record model='ir.ui.menu' id='sci_menu_stock_root'>
+            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_stock_manager'),ref('shealth_all_in_one.group_sh_medical_nurse'),
+            ref('shealth_all_in_one.group_sh_medical_physician_subclinical'),ref('shealth_all_in_one.group_sh_medical_physician_surgery'),
+            ref('shealth_all_in_one.group_sh_medical_physician_odontology'),ref('shealth_all_in_one.group_sh_medical_physician_spa')])]"/>
+        </record>
+
+        <!-- Patient Call Log -->
+<!--        <record model='ir.ui.menu' id='sh_medical_patient_call_log_list'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_physician'),ref('shealth_all_in_one.group_sh_medical_manager'),ref('shealth_all_in_one.group_sh_medical_nurse')])]"/>-->
+<!--        </record>-->
+
+<!--        ĐIỀU CHỈNH TỒN KHO -> CHỈ KHO DƯỢC LÀM -->
+        <record model='ir.ui.menu' id='stock.menu_action_inventory_form'>
+            <field name="groups_id" eval="[(6,0,[ref('shealth_all_in_one.group_sh_medical_stock_manager')])]"/>
+        </record>
+        <!--			HIDDEN ALL APP WITHOUT GROUP SETTING-->
+        <record model='ir.ui.menu' id='stock.menu_stock_root'>
+            <field name="groups_id" eval="[(6,0,[ref('base.group_system')])]"/>
+        </record>
+        <record model='ir.ui.menu' id='mail.menu_root_discuss'>
+            <field name="groups_id" eval="[(6,0,[ref('base.group_system')])]"/>
+        </record>
+<!--        <record model='ir.ui.menu' id='calendar.mail_menu_calendar'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('base.group_system')])]"/>-->
+<!--        </record>-->
+<!--        <record model='ir.ui.menu' id='contacts.menu_contacts'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('base.group_system')])]"/>-->
+<!--        </record>-->
+<!--        <record model='ir.ui.menu' id='sale.sale_menu_root'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('base.group_system')])]"/>-->
+<!--        </record>-->
+        <record model='ir.ui.menu' id='purchase.menu_purchase_root'>
+            <field name="groups_id" eval="[(6,0,[ref('base.group_system')])]"/>
+        </record>
+<!--        <record model='ir.ui.menu' id='utm.menu_link_tracker_root'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('base.group_system')])]"/>-->
+<!--        </record>-->
+        <record model='ir.ui.menu' id='account.menu_finance'>
+            <field name="groups_id" eval="[(6,0,[ref('base.group_system')])]"/>
+        </record>
+        <record model='ir.ui.menu' id='hr.menu_hr_root'>
+            <field name="groups_id" eval="[(6,0,[ref('base.group_system')])]"/>
+        </record>
+        <record model='ir.ui.menu' id='ms_templates.create_temp_menu_root'>
+            <field name="groups_id" eval="[(6,0,[ref('base.group_system')])]"/>
+        </record>
+<!--        <record model='ir.ui.menu' id='website.menu_website_configuration'>-->
+<!--            <field name="groups_id" eval="[(6,0,[ref('base.group_system')])]"/>-->
+<!--        </record>-->
+    </data>
+</odoo>

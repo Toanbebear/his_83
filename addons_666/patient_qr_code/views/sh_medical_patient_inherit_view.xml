@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--        Mã Phiếu bệnh nhân-->
+        <record id="sh_medical_patient_qrcode_view" model="ir.ui.view">
+            <field name="name">QR bệnh nhân</field>
+            <field name="model">sh.medical.patient</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_patient_view"/>
+            <field name="arch" type="xml">
+<!--                <xpath expr="//sheet//div[hasclass('oe_button_box')]//button[last()]" position="before">-->
+                <xpath expr="//field[@name='reception_count']" position="before">
+                    <div class="oe_right oe_avatar"  style="margin-top:22px;">
+<!--                        <field name="qr_code_id" widget="image" style="width:100px; height:100px;"/>-->
+                        <field name="qr_code_id" widget="image" options='{"preview_image": "image_medium", "size": [90, 90]}'/>
+                        <h4 >
+                             <field name="name" class="oe_center" readonly="True"/>
+                            <br></br>
+                             <label for="dob" string="Ngày sinh:"/>
+                             <field name="dob" style="text-align:center"  readonly="True"/>
+                            <br></br>
+                            <label for="sex" string="Giới tính:"/>
+                             <field name="sex" readonly="True"/>
+                        </h4>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+        <report
+            id="action_report_receptiont_patient"
+            string="In mã phiếu"
+            model="sh.medical.patient"
+            report_type="qweb-pdf"
+            name="patient_qr_code.report_sh_medical_patient_qrcode"
+            file="patient_qr_code.report_sh_medical_patient_qrcode"
+                paperformat="patient_qr_code.sh_paperformat_test_result_qr"
+        />
+
+<!--        Mã phiếu khám-->
+        <record id="sh_walkin_qrcode_view" model="ir.ui.view">
+            <field name="name">QR phiếu khám</field>
+            <field name="model">sh.medical.appointment.register.walkin</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_register_for_walkin_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='index_by_day']" position="after">
+                    <div class="oe_right">
+                        <div style="display: flex; flex-direction: column;">
+                            <field name="qr_code_id" class="oe_avatar" widget="image"/>
+                            <h4>
+                                 <field name="name" class="oe_center" readonly="True"/>
+                                <br></br>
+                                 <field name="patient" style="oe_center"  readonly="True"/>
+                                <br></br>
+                                <label for="sex" string="Giới tính:" style="oe_center"/>
+                                 <field name="sex" readonly="True" style="oe_center"/>
+                            </h4>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+        <report
+                id="action_report_receptiont_walkin"
+                string="In mã phiếu"
+                model="sh.medical.appointment.register.walkin"
+                report_type="qweb-pdf"
+                name="patient_qr_code.report_sh_medical_walkin_qrcode"
+                file="patient_qr_code.report_sh_medical_walkin_qrcode"
+                paperformat="patient_qr_code.sh_paperformat_test_result_qr"
+        />
+
+<!--        Mã phiếu thủ thuật-->
+        <record model="ir.ui.view" id="sh_medical_surgery_qrcode_view">
+            <field name="name">sh.medical.surgery</field>
+            <field name="model">sh.medical.surgery</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_surgery_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@class='oe_title']" position="before">
+                    <div class="oe_right">
+                        <field name="qr_code_id" widget="image" options='{"preview_image": "image_medium", "size": [90, 90]}'/>
+                            <h4>
+                                <field name="name" class="oe_center" readonly="True"/>
+                                <br></br>
+                                <field name="patient" class="oe_center" readonly="True"/>
+                            </h4>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+        <report
+                id="action_report_receptiont_surgery"
+                string="In mã phiếu"
+                model="sh.medical.surgery"
+                report_type="qweb-pdf"
+                name="patient_qr_code.report_sh_medical_surgery_qrcode"
+                file="patient_qr_code.report_sh_medical_surgery_qrcode"
+                paperformat="patient_qr_code.sh_paperformat_test_result_qr"
+        />
+    </data>
+</odoo>

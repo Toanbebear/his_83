@@ -1,0 +1,166 @@
+<?xml version="1.0" ?>
+<odoo>
+        <data>
+
+            <!-- Operating Theaters -->
+
+            <record model="ir.ui.view" id="sh_medical_healthcenters_ot_view">
+                <field name="name">Rooms</field>
+                <field name="model">sh.medical.health.center.ot</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                    <form string="Rooms" create="false" write="false">
+                        <header>
+                            <button confirm="Are you sure you want to mark ROOM as Not Available?" name="action_surgery_set_to_not_available" states="Free" string="Mark as Not Available" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_manager"/>
+                            <button confirm="Are you sure you want to mark ROOM as available?" name="action_surgery_set_to_available" states="Not Available" string="Mark as Available" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_manager"/>
+                            <field name="state" widget="statusbar" statusbar_visible="Free,Reserved,Occupied,Not Available" statusbar_colors='{"Occupied":"red","Free":"blue","Reserved":"purple","Not Available":"grey"}'/>
+                        </header>
+                        <sheet>
+                            <div>
+                                <div class="oe_title">
+                                    <label class="oe_edit_only" for="name" string="Room Name"/>
+                                    <h1><field name="name" class="oe_inline"/></h1>
+                                </div>
+                            </div>
+                            <group>
+                                <group>
+<!--                                <field name="building" invisible="1"/>-->
+                                    <field name="is_operating_theater"/>
+                                    <field name="code"/>
+                                    <field name="room_number"/>
+                                </group>
+                                <group>
+                                    <field name="institution"/>
+                                    <field name="department" required="1" domain="[('institution','=',institution)]"/>
+<!--                                    <field name="location_id" readonly="1" groups="base.group_no_one"/>-->
+                                    <field name="location_medicine_stock" groups="shealth_all_in_one.group_sh_medical_stock_manager,shealth_all_in_one.group_sh_medical_manager"/>
+                                    <field name="location_supply_stock" groups="shealth_all_in_one.group_sh_medical_stock_manager,shealth_all_in_one.group_sh_medical_manager"/>
+                                </group>
+                            </group>
+                            <group string="Extra Information">
+                                <field name="info" nolabel="1"/>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_healthcenters_ot_tree">
+                <field name="name">Rooms</field>
+                <field name="model">sh.medical.health.center.ot</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string='Rooms' create="false" decoration-muted="state=='Occupied'" decoration-info="state=='Reserved'" decoration-success="state=='Free'" decoration-danger="state=='Not Available'">
+                        <field name="code"/>
+                        <field name="room_number"/>
+                        <field name="name"/>
+                        <field name="is_operating_theater"/>
+                        <field name="institution"/>
+                        <field name="department"/>
+                        <field name="state" invisible="1"/>
+                    </tree>
+                </field>
+            </record>
+
+             <record id="view_medical_healthcenters_ot_filter" model="ir.ui.view">
+                <field name="name">Rooms Search</field>
+                <field name="model">sh.medical.health.center.ot</field>
+                <field name="priority" eval="8" />
+			    <field name="arch" type="xml">
+                    <search string="Rooms">
+                        <field name="code"/>
+                        <field name="name"/>
+                        <field name="is_operating_theater"/>
+                        <field name="institution"/>
+                        <field name="department"/>
+                        <field name="info"/>
+                        <newline />
+                        <group expand="0" string="Group By...">
+                            <filter name="group_is_operating_theater" string="Operating theater" domain="[]" context="{'group_by':'is_operating_theater'}" />
+                            <filter name="group_institution" string="Institution" domain="[]" context="{'group_by':'institution'}" />
+                            <filter name="group_department" string="Department" domain="[]" context="{'group_by':'department'}" />
+                            <filter name="group_state" string="State" domain="[]" context="{'group_by':'state'}" />
+                        </group>
+				    </search>
+                </field>
+            </record>
+
+            <record id="sh_medical_healthcenters_ot_action_tree" model="ir.actions.act_window">
+                    <field name="name">Rooms</field>
+                    <field name="res_model">sh.medical.health.center.ot</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                    <field name="domain">[]</field>
+                    <field name="context">{}</field>
+                    <field name="view_id" eval="False"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to add a new health center ROOM.
+                      </p><p>
+                        With shealth OT screen, you can configure your rooms to use during the surgeries
+                      </p>
+                    </field>
+            </record>
+
+            <menuitem action="sh_medical_healthcenters_ot_action_tree" id="sh_medical_healthcenters_ot_list" parent="sh_medical_hospital_menu" sequence="4"/>
+
+            <!-- Inheriting Department screen to display Rooms references -->
+
+            <record id="sh_medical_healthcenters_ward_ot_view" model="ir.ui.view">
+                <field name="name">Department</field>
+                <field name="model">sh.medical.health.center.ward</field>
+                <field name="inherit_id" ref="shealth_all_in_one.sh_medical_healthcenters_ward_view"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//sheet//div[hasclass('oe_left')]" position="before">
+                        <div class="oe_right oe_button_box" name="buttons">
+                            <button type="action" class="oe_stat_button" name="%(sh_medical_healthcenters_ot_action_tree)d" context="{'search_default_department': id,'default_department': id}" icon="fa-list">
+                                <field string="Rooms" name="room_count" widget="statinfo"/>
+                            </button>
+                        </div>
+                    </xpath>
+                </field>
+            </record>
+
+            <!-- Inheriting Health center screen to display Rooms references -->
+
+            <record id="sh_medical_healthcenter_ot_view" model="ir.ui.view">
+                <field name="name">Health center</field>
+                <field name="model">sh.medical.health.center</field>
+                <field name="inherit_id" ref="shealth_all_in_one.sh_medical_healthcenters_view"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//sheet//div[hasclass('oe_right')]//button[last()]" position="after">
+                        <button type="action" class="oe_stat_button" name="%(sh_medical_healthcenters_ot_action_tree)d" context="{'search_default_department': active_id,'default_department': active_id}" icon="fa-list">
+                            <field string="Rooms" name="room_count" widget="statinfo"/>
+                        </button>
+                    </xpath>
+                </field>
+            </record>
+            <!-- Inheriting Health center screen to display Rooms references -->
+
+                <record id="sh_medical_healthcenters_room_bed_view" model="ir.ui.view">
+                    <field name="name">Health center Beds</field>
+                    <field name="model">sh.medical.health.center.beds</field>
+                    <field name="inherit_id" ref="shealth_all_in_one.sh_medical_healthcenters_bed_view"/>
+                    <field name="arch" type="xml">
+                        <xpath expr="//field[@name='ward']" position="after">
+                            <field string="Phòng" name="room" options="{'no_create': True}"/>
+                        </xpath>
+                    </field>
+                </record>
+            PHÒNG HẬU PHẪU
+                <record id="sh_medical_inpatinet_room_bed_view" model="ir.ui.view">
+                    <field name="name">Bệnh nhân lưu</field>
+                    <field name="model">sh.medical.inpatient</field>
+                    <field name="inherit_id" ref="shealth_all_in_one.sh_medical_inpatient_view"/>
+                    <field name="arch" type="xml">
+                        <xpath expr="//field[@name='ward']" position="after">
+                            <field string="Phòng" name="room" required="1" options="{'no_create': True,'no_open':True}"/>
+                        </xpath>
+                        <xpath expr="//field[@name='bed']" position="attributes">
+                            <attribute name="domain">[('state','=','Free'),('room','=',room)]</attribute>
+                        </xpath>
+                    </field>
+                </record>
+
+    </data>
+</odoo>

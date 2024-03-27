@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_templates_user,temp.creation user,model_temp_creation,group_excel_templates_user,1,1,1,1
+access_hr_templates_line_user,fields.line.temp user,model_fields_line,group_excel_templates_user,1,1,1,1

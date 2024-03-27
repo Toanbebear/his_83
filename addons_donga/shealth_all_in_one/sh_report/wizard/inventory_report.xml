@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record id="stock_move_report_search_view_inherit" model="ir.ui.view">
+            <field name="name">stock.move.search.inherit</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='groupby_date']" position="after">
+                   <filter string=" Date" name="groupby_date_2" domain="[]" context="{'group_by': 'date:day'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="inventory_report_form">
+            <field name="name">sh.inventory.report.form</field>
+            <field name="model">sh.inventory.report</field>
+            <field name="arch" type="xml">
+                <form string="Inventory report">
+                    <group>
+                        <field name="report_type" required="1"/>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        <field name="start_datetime" invisible="1"/>
+                        <field name="end_datetime" invisible="1"/>
+                    </group>
+                    <footer>
+                        <button name="report" type="object" string="Report" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="inventory_report_act">
+            <field name="name">Báo cáo XNT</field>
+            <field name="res_model">sh.inventory.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="inventory_report_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="inventory_report"
+                  name="Inventory report"
+                  parent="shealth_all_in_one.sh_medical_report_menu"
+                  action="inventory_report_act"
+                  sequence="11" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_physician_subclinical,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_accountant,shealth_all_in_one.group_sh_medical_stock_manager"/>
+
+<!--        BÁO CÁO ĐÁNH GIÁ CHẤT LƯỢNG-->
+        <record model="ir.ui.view" id="quality_evaluation_report_form">
+            <field name="name">sh.inventory.report.quality.evaluation.form</field>
+            <field name="model">sh.inventory.report</field>
+            <field name="arch" type="xml">
+                <form string="Đánh giá chất lượng">
+                    <group>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                    </group>
+                    <footer>
+                        <button name="quality_evaluation_report" type="object" string="Báo cáo" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="inventory_report_quality_evaluation_act">
+            <field name="name">Đánh giá chất lượng dịch vụ</field>
+            <field name="res_model">sh.inventory.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="quality_evaluation_report_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="inventory_report_quality_evaluation"
+                  name="Đánh giá chất lượng dịch vụ"
+                  parent="shealth_all_in_one.sh_medical_report_menu"
+                  action="inventory_report_quality_evaluation_act"
+                  sequence="11" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_physician_subclinical,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_accountant,shealth_all_in_one.group_sh_medical_stock_manager"/>
+
+    </data>
+</odoo>

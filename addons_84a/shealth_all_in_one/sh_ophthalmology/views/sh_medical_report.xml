@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            string="Ophthalmology Report"
+            id="action_report_patient_ophthalmology"
+            model="sh.medical.ophthalmology"
+            report_type="qweb-pdf"
+            name="shealth_all_in_one.report_patient_ophthalmology_evaluation"
+            file="shealth_all_in_one.report_patient_ophthalmology_evaluation"
+        />
+
+    </data>
+</odoo>

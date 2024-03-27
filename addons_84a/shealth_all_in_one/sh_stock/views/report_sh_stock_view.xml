@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--    PHIEU LĨNH THUỐC VẬT TƯ-->
+<template id="shealth_report_delivery_document">
+    <t t-call="web.html_container">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
+            <div class="page" style="font-family:Times New Roman;font-size:18px;">
+                <div class="oe_structure"/>
+                <t t-if="o.location_id.sudo().usage != 'supplier'">
+                    <div class="row mt32 mb32">
+                        <div class="col-4">
+                            <div class="m-0" t-field="o.company_id.name" style="text-transform: uppercase;"/>
+                            <div>
+                                <t t-if="o.purchase_id">
+                                    <div></div>
+                                </t>
+                                <t t-if="o.location_dest_id.location_institution_type in ['medicine','supply']">
+                                    Khoa: <b class="m-0" t-field="o.location_dest_id.location_id.name"/>
+                                </t>
+                                <t t-elif="not o.patient_id">
+                                    Khoa: <b>Khoa Dược</b>
+                                </t>
+                                <t t-else="">
+                                    Khoa: <b class="m-0" t-field="o.location_id.location_id.name"/>
+                                </t>
+                            </div>
+                        </div>
+
+                        <div class="col-5 text-center">
+                            <t t-if="o.patient_id">
+                                <div style="font-size: 26px;"><b>PHIẾU XUẤT BỆNH NHÂN</b></div>
+                            </t>
+                            <t t-elif="o.location_id.sudo().usage == 'supplier'">
+                                <div style="font-size: 26px;"><b>PHIẾU NHẬP HÀNG</b></div>
+                            </t>
+                            <t t-elif="o.state == 'done'">
+                                    <div style="font-size: 21px;">
+                                        <b>PHIẾU XUẤT THUỐC/VẬT TƯ</b>
+                                    </div>
+                            </t>
+                            <t t-else="">
+                                    <div style="font-size: 21px;">
+                                        <b>ĐỀ XUẤT LĨNH THUỐC/VẬT TƯ</b>
+                                    </div>
+                            </t>
+                        </div>
+                        <div class="col-3">
+                            <t t-if="o.state == 'done'">
+                                <div>MS: 01D/BV-01</div>
+                            </t>
+                            <t t-else="">
+                                <div>MS: 03D/BV-01</div>
+                            </t>
+                            <div>Số: <strong t-field="o.name"/></div>
+                        </div>
+                    </div>
+                    <t t-if="o.purchase_id">
+                        <div class="col-12">
+                            <b>Nhà cung cấp:</b> <span class="m-0" t-field="o.partner_id.name" style="text-transform: uppercase;"/>
+                        </div>
+                        <div class="col-12">
+                            <b>Mã đơn hàng:</b> <span class="m-0" t-field="o.purchase_id.name" style="text-transform: uppercase;"/>
+                        </div>
+                    </t>
+                </t>
+                <t t-else="">
+                    <div class="row mt32 mb32">
+                        <div class="col-7">
+                            <div class="m-0" t-field="o.company_id.name" style="text-transform: uppercase;font-weight: bold;font-size: 17px;"/>
+                            Khoa: <b>Khoa Dược</b>
+                        </div>
+                        <div class="col-5">
+                            <div class="text-center" style="font-weight: bold;">Mẫu số 01-VT</div>
+                            <div class="text-center">(Ban hành theo Thông tư số</div>
+                            <div class="text-center">133/2016/TT-BTC ngày 26/8/2016 </div>
+                            <div class="text-center">của Bộ Tài Chính)</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <div class="text-center" style="font-weight: bold; font-size: 29px;"><b>PHIẾU NHẬP KHO</b></div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                        </div>
+                        <div class="col-4">
+                            <div class="text-center"><i t-esc="o.sci_date_done.strftime('Ngày %d tháng %m năm %Y')"/></div>
+<!--                            <div class="text-center"><i>Số: </i><b><i t-esc="o.name"/></b></div>-->
+                        </div>
+                        <div class="col-4">
+                            <div class="text-left">Nợ: ...................</div>
+                            <div class="text-left">Có: ...................</div>
+                        </div>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div style="font-size: 22px">
+                        <div>Họ tên người giao: ........................................................................</div>
+                        <div>Theo:<t t-esc="o.purchase_id.name"/>, <t t-esc="o.sci_date_done.strftime('Ngày %d tháng %m năm %Y')"/> của <t t-esc="o.partner_id.name"/> </div>
+                        <div>Nhập tại Kho dược của BỆNH VIỆN RĂNG HÀM MẶT THẨM MỸ PARIS  </div>
+                    </div>
+                </t>
+                <t t-if="o.location_id.sudo().usage != 'supplier'">
+                    <table class="table table-condensed mt48">
+                    <thead>
+                        <tr>
+                            <th rowspan="2" class="text-center border border-dark"><strong>SỐ TT</strong></th>
+                            <th rowspan="2" class="text-center border border-dark"><strong>Mã</strong></th>
+                            <t t-if="o.location_dest_id.location_institution_type == 'medicine'">
+                                <th rowspan="2" class="text-center border border-dark"><strong>Tên thuốc, nồng độ, hàm lượng, qui cách</strong></th>
+                            </t>
+                            <t t-else="">
+                                <th rowspan="2" class="text-center border border-dark"><strong>Tên vật tư y tế tiêu hao</strong></th>
+                            </t>
+                            <th rowspan="2" class="text-center border border-dark"><strong>Đơn vị</strong></th>
+                            <t t-if="o.state == 'done'">
+                                <th rowspan="2" class="text-center border border-dark"><strong>Số lô</strong></th>
+                                <th rowspan="2" class="text-center border border-dark"><strong>Hạn dùng</strong></th>
+                            </t>
+                            <th colspan="2" class="text-center border border-dark"><strong>Số lượng</strong></th>
+                            <th rowspan="2" class="text-center border border-dark"><strong>Ghi chú</strong></th>
+                        </tr>
+                        <tr>
+                            <th class="text-center border border-dark"><strong>Yêu cầu</strong></th>
+                            <th class="text-center border border-dark"><strong>Thực phát</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-if="o.state == 'done'">
+                            <t t-set="lines" t-value="o.move_line_ids.filtered(lambda x: x.qty_done)"/>
+                        </t>
+                        <t t-else="">
+                            <t t-set="lines" t-value="o.move_lines.filtered(lambda x: x.product_uom_qty)"/>
+                        </t>
+                        <t t-set="i" t-value="0"/>
+                        <tr t-foreach="lines" t-as="move">
+                            <t t-set="i" t-value="i + 1"/>
+                            <td class="text-center border border-dark">
+                                <t t-esc="i"/>
+                            </td>
+                            <td class="text-center border border-dark">
+                                <span t-field="move.product_id.sudo().default_code"/>
+                            </td>
+                            <td class="text-left border border-dark">
+                                <span t-field="move.product_id.name"/>
+    <!--                            <p t-if="o.picking_type_code == 'outgoing'">-->
+    <!--                                <span t-field="move.product_id.sudo().description_pickingout"/>-->
+    <!--                            </p>-->
+    <!--                            <p t-if="o.picking_type_code == 'incoming'">-->
+    <!--                                <span t-field="move.product_id.sudo().description_pickingin"/>-->
+    <!--                            </p>-->
+                            </td>
+                            <td class="text-center border border-dark">
+                                    <t t-if="o.state == 'done'">
+                                        <span t-field="move.product_uom_id"/>
+                                    </t>
+                                    <t t-else="">
+                                        <span t-field="move.product_uom"/>
+                                    </t>
+                            </td>
+                            <t t-if="o.state == 'done'">
+                                    <td class="text-center border border-dark">
+                                        <span t-field="move.lot_id.name"/>
+                                    </td>
+                                    <td class="text-center border border-dark">
+                                        <span t-field="move.lot_id.removal_date"/>
+<!--                                        <i t-esc="context_timestamp(move.lot_id.removal_date).strftime('%d/%m/%Y')"/>-->
+                                    </td>
+                            </t>
+<!--                            <t t-if="o.location_dest_id.location_institution_type == 'medicine'">-->
+<!--                                <td class="text-center border border-dark">-->
+<!--                                    <span t-esc="request.env['sh.medical.medicines'].search([('product_id', '=', move.product_id.id)],limit=1).registration_code"/>-->
+<!--                                </td>-->
+<!--                            </t>-->
+                            <td class="text-center border border-dark">
+                                    <t t-if="o.state == 'done'">
+                                        <span t-field="move.move_id.product_uom_qty"/>
+                                    </t>
+                                    <t t-else="">
+                                        <span t-field="move.product_uom_qty"/>
+                                    </t>
+                                </td>
+                            <td class="text-center border border-dark">
+                                    <t t-if="o.state == 'done'">
+                                        <span t-field="move.qty_done"/>
+                                    </t>
+                                    <t t-else="">
+                                        <span t-field="move.quantity_done"/>
+                                    </t>
+                                </td>
+                            <td class="text-center border border-dark"></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center border border-dark"></td>
+                            <td class="text-center border border-dark"></td>
+                            <td class="text-left border border-dark"><i>Cộng khoản:</i> <b t-esc="i"/></td>
+                            <td class="text-center border border-dark"></td>
+                            <t t-if="o.state == 'done'">
+                                 <td class="text-center border border-dark"></td>
+                                <td class="text-center border border-dark"></td>
+                            </t>
+                            <td class="text-center border border-dark"></td>
+                            <td class="text-center border border-dark"></td>
+                            <td class="text-center border border-dark"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                </t>
+                <t t-else="">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th rowspan="2" class="text-center border border-dark"><strong>SỐ TT</strong></th>
+                                <t t-if="o.location_dest_id.location_institution_type == 'medicine'">
+                                    <th rowspan="2" class="text-center border border-dark"><strong>Tên thuốc, nồng độ, hàm lượng, qui cách</strong></th>
+                                </t>
+                                <t t-else="">
+                                    <th rowspan="2" class="text-center border border-dark"><strong>Tên vật tư y tế tiêu hao</strong></th>
+                                </t>
+                                <th rowspan="2" class="text-center border border-dark"><strong>Mã</strong></th>
+                                <th rowspan="2" class="text-center border border-dark"><strong>Đơn vị</strong></th>
+                                <th colspan="2" class="text-center border border-dark"><strong>Số lượng</strong></th>
+                                <th rowspan="2" class="text-center border border-dark"><strong>Đơn giá</strong></th>
+                                <th rowspan="2" class="text-center border border-dark"><strong>Ghi chú</strong></th>
+                            </tr>
+                            <tr>
+                                <th class="text-center border border-dark"><strong>Yêu cầu</strong></th>
+                                <th class="text-center border border-dark"><strong>Thực phát</strong></th>
+                            </tr>
+                            <tr>
+                                <th rowspan="2" class="text-center border border-dark"><strong>A</strong></th>
+                                <th rowspan="2" class="text-center border border-dark"><strong>B</strong></th>
+                                <th rowspan="2" class="text-center border border-dark"><strong>C</strong></th>
+                                <th rowspan="2" class="text-center border border-dark"><strong>D</strong></th>
+                                <th rowspan="2" class="text-center border border-dark"><strong>E</strong></th>
+                                <th rowspan="2" class="text-center border border-dark"><strong>F</strong></th>
+                                <th rowspan="2" class="text-center border border-dark"><strong>G</strong></th>
+                                <th rowspan="2" class="text-center border border-dark"><strong>H</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <t t-set="lines" t-value="o.move_line_ids.filtered(lambda x: x.qty_done)"/>
+                        <t t-set="i" t-value="0"/>
+                        <t t-set="total" t-value="0"/>
+                        <tr t-foreach="lines" t-as="move">
+                            <t t-set="i" t-value="i + 1"/>
+                            <t t-set="price" t-value="move.move_id.purchase_line_id.price_unit"/>
+                            <t t-set="qty_request" t-value="move.move_id.purchase_line_id.product_qty"/>
+                            <t t-set="qty_done" t-value="move.move_id.purchase_line_id.qty_received"/>
+                            <t t-set="result" t-value="price * qty_done"/>
+                            <t t-set="total" t-value="total + int(result)"/>
+                            <td class="text-center border border-dark">
+                                <span t-esc="i"/>
+                            </td>
+                            <td class="text-center border border-dark">
+                                <span t-field="move.product_id.name"/>
+                            </td>
+                            <td class="text-center border border-dark">
+                                <span t-field="move.product_id.default_code"/>
+                            </td>
+                            <td class="text-center border border-dark">
+                                <span t-field="move.move_id.purchase_line_id.product_uom.name"/>
+                            </td>
+                            <td class="text-center border border-dark">
+                                <span t-esc="qty_request"/>
+                            </td>
+                            <td class="text-center border border-dark">
+                                <span t-esc="qty_done"/>
+                            </td>
+                            <td class="text-center border border-dark">
+                                <span t-field="move.move_id.purchase_line_id.price_unit"/>
+                            </td>
+                            <td class="text-center border border-dark">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center border border-dark"></td>
+                            <td class="text-center border border-dark"></td>
+                            <td class="text-left border border-dark"><i>Cộng khoản:</i> <b t-esc="i"/></td>
+                            <td class="text-center border border-dark"></td>
+                            <t t-if="o.location_dest_id.location_institution_type == 'medicine'">
+                                <td class="text-center border border-dark"></td>
+                            </t>
+                            <td class="text-center border border-dark"></td>
+                            <td class="text-center border border-dark"></td>
+                            <td class="text-center border border-dark"></td>
+                            <td class="text-center border border-dark"></td>
+                        </tr>
+                    </tbody>
+                    </table>
+
+                </t>
+
+                <t t-if="o.location_id.sudo().usage != 'supplier'">
+                    <div class="col-12 text-right">
+                        <t t-if="o.state == 'done'">
+                            <i t-esc="context_timestamp(o.date_done).strftime('Ngay %d thang %m nam %Y')"/>
+                        </t>
+                        <t t-if="o.state != 'done'">
+                            <i t-esc="context_timestamp(o.scheduled_date).strftime('Ngay %d thang %m nam %Y')"/>
+                        </t>
+                    </div>
+                    <table class="table table-no-border">
+                        <tbody>
+                            <tr>
+                                <td class="text-center">
+                                    <p><b>TRƯỞNG KHOA DƯỢC</b> </p>
+                                </td>
+                                <td t-if="not o.patient_id" class="text-center">
+                                    <p><b>NGƯỜI PHÁT</b> </p>
+                                </td>
+                                <td t-if="not o.patient_id" class="text-center">
+                                    <p><b>NGƯỜI LĨNH</b> </p>
+                                </td>
+                                <td class="text-center" t-if="not o.purchase_id">
+                                    <p><b>TRƯỞNG KHOA LÂM SÀNG</b> </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+                <t t-else="">
+                    <div style="font-size: 22px;">
+                        <div>Tổng số tiền (viết bằng chữ): ........................................................................</div>
+                        <div>Số chứng từ gốc kèm theo:  <b><t t-esc="o.purchase_id.name"/></b></div>
+                    </div>
+                    <div class="row"  style="font-size: 18px">
+                        <div class="col-8">
+
+                        </div>
+                        <div class="col-4">
+                            <i t-esc="o.sci_date_done.strftime('Ngày %d tháng %m năm %Y')"/>
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <div class="text-center col-3">
+                            <div>
+                                <span style="font-family:Times New Roman - Bold;font-weight:bolder;font-size: 22px;">Người lập phiếu</span>
+                            </div>
+                            <div>
+                                <i>(Ký, họ tên)</i>
+                            </div>
+                        </div>
+                        <div class="text-center col-3">
+                            <div>
+                                <span style="font-family:Times New Roman - Bold;font-weight:bolder;font-size: 22px;">Người giao hàng</span>
+                            </div>
+                            <div>
+                                <i>(Ký, họ tên)</i>
+                            </div>
+                        </div>
+                        <div class="text-center col-2">
+                            <div>
+                                <span style="font-family:Times New Roman - Bold;font-weight:bolder;font-size: 22px;">Thủ kho</span>
+                            </div>
+                            <div>
+                                <i>(Ký, họ tên)</i>
+                            </div>
+                        </div>
+                        <div class="text-center col-4">
+                            <div>
+                                <span style="font-family:Times New Roman - Bold;font-weight:bolder;font-size: 22px;">Kế toán trưởng</span>
+                            </div>
+                            <div>
+                                <i>(Hoặc bộ phận có nhu cầu nhập)</i>
+                            </div>
+                            <div>
+                                <i>(Ký, họ tên)</i>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </t>
+</template>
+<template id="shealth_report_deliveryslip">
+    <t t-set="addictive_medicine" t-value="docs.env['sh.medical.medicines'].search([('medicine_category_id.name','in',['Thuốc gây nghiện','Thuốc hướng thần'])]).mapped('product_id')"/>
+    <t t-foreach="docs" t-as="o">
+        <t t-call="shealth_all_in_one.shealth_report_delivery_document" t-lang="o.partner_id.lang"/>
+    </t>
+</template>
+
+    <!--    PHIEU LĨNH THUỐC GÂY NGHIỆN HƯỚNG THẦN -->
+<template id="shealth_report_delivery_addictive_document">
+    <t t-call="web.html_container">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
+            <div class="page" style="font-family:Times New Roman;font-size:18px;">
+                <div class="oe_structure"/>
+                <div class="row mt32 mb32">
+                    <div class="col-5">
+                        <div class="m-0" t-field="o.company_id.name" style="text-transform: uppercase;"/>
+                        <div>
+                            <t t-if="o.purchase_id">
+                                <div></div>
+                            </t>
+                            <t t-if="o.location_dest_id.location_institution_type in ['medicine','supply']">
+                                Khoa: <b class="m-0" t-field="o.location_dest_id.location_id.name"/>
+                            </t>
+                            <t t-elif="not o.patient_id">
+                                Khoa: <b>Khoa Dược</b>
+                            </t>
+                            <t t-else="">
+                                Khoa: <b class="m-0" t-field="o.location_id.location_id.name"/>
+                            </t>
+                        </div>
+                    </div>
+
+                    <div class="col-3 text-center">
+
+                    </div>
+                    <div class="col-4">
+                        <t t-if="o.location_dest_id.location_institution_type == 'medicine'">
+                            <div>MS: 01D/BV-01</div>
+                        </t>
+                        <div>Số: <strong t-field="o.name"/></div>
+                    </div>
+                </div>
+
+                <div class="row mt32 mb32">
+                    <div class="col-12 text-center">
+                        <div style="font-size: 24px;"><b>PHIẾU LĨNH THUỐC THÀNH PHẨM GÂY NGHIỆN,THUỐC THÀNH PHẨM HƯỚNG THẦN, THUỐC THÀNH PHẨM TIỀN CHẤT</b></div>
+                    </div>
+                </div>
+
+                <table class="table table-condensed mt48">
+                    <thead>
+                        <tr>
+                            <th rowspan="2" class="text-center border border-dark"><strong>SỐ TT</strong></th>
+                            <th rowspan="2" class="text-center border border-dark"><strong>Mã</strong></th>
+                            <t t-if="o.location_dest_id.location_institution_type == 'medicine'">
+                                <th rowspan="2" class="text-center border border-dark"><strong>Tên thuốc, nồng độ, hàm lượng, qui cách</strong></th>
+                            </t>
+                            <t t-else="">
+                                <th rowspan="2" class="text-center border border-dark"><strong>Tên vật tư y tế tiêu hao</strong></th>
+                            </t>
+                            <th rowspan="2" class="text-center border border-dark"><strong>Đơn vị tính</strong></th>
+<!--                            <t t-if="o.location_dest_id.location_institution_type == 'medicine'">-->
+<!--                                <th rowspan="2" class="text-center border border-dark"><strong>Số đăng ký</strong></th>-->
+<!--                            </t>-->
+                            <th colspan="2" class="text-center border border-dark"><strong>Số lượng</strong></th>
+                            <th rowspan="2" class="text-center border border-dark"><strong>Ghi chú</strong></th>
+                        </tr>
+                        <tr>
+                            <th class="text-center border border-dark"><strong>Yêu cầu</strong></th>
+                            <th class="text-center border border-dark"><strong>Thực phát</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="lines" t-value="o.move_lines.filtered(lambda x: x.product_uom_qty and x.product_id in addictive_medicine)"/>
+                        <t t-set="i" t-value="0"/>
+                        <tr t-foreach="lines" t-as="move">
+                            <t t-set="i" t-value="i + 1"/>
+                            <td class="text-center border border-dark">
+                                <t t-esc="i"/>
+                            </td>
+                            <td class="text-center border border-dark">
+                                <span t-field="move.product_id.sudo().default_code"/>
+                            </td>
+                            <td class="text-left border border-dark">
+                                <span t-field="move.product_id.name"/>
+                            </td>
+                            <td class="text-center border border-dark">
+                                <span t-field="move.product_uom"/>
+                            </td>
+<!--                            <t t-if="o.location_dest_id.location_institution_type == 'medicine'">-->
+<!--                                <td class="text-center border border-dark">-->
+<!--                                    <span t-esc="request.env['sh.medical.medicines'].search([('product_id', '=', move.product_id.id)],limit=1).registration_code"/>-->
+<!--                                </td>-->
+<!--                            </t>-->
+                            <td class="text-center border border-dark">
+                                <span t-esc="o.num2words_vnm(move.product_uom_qty)" />
+<!--                                <span t-field="move.product_uom_qty"/>-->
+                            </td>
+                            <td class="text-center border border-dark">
+                                <span t-esc="o.num2words_vnm(move.quantity_done)" />
+<!--                                <span t-field="move.quantity_done"/>-->
+                            </td>
+                            <td class="text-center border border-dark"></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center border border-dark"></td>
+                            <td class="text-center border border-dark"></td>
+                            <td class="text-left border border-dark"><i>Cộng khoản:</i> <b t-esc="i"/></td>
+                            <td class="text-center border border-dark"></td>
+                            <t t-if="o.location_dest_id.location_institution_type == 'medicine'">
+                                <td class="text-center border border-dark"></td>
+                            </t>
+                            <td class="text-center border border-dark"></td>
+                            <td class="text-center border border-dark"></td>
+<!--                            <td class="text-center border border-dark"></td>-->
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="col-12 text-right">
+                    <t t-if="o.state == 'done'">
+                        <i t-esc="context_timestamp(o.date_done).strftime('Ngày %d tháng %m năm %Y')"/>
+                    </t>
+                    <t t-if="o.state != 'done'">
+                        <i t-esc="context_timestamp(o.scheduled_date).strftime('Ngày %d tháng %m năm %Y')"/>
+                    </t>
+                </div>
+
+                <table class="table table-no-border">
+                    <tbody>
+                        <tr>
+                            <td class="text-center">
+                                <p><b>TRƯỞNG KHOA DƯỢC</b> </p>
+                            </td>
+                            <td t-if="not o.patient_id" class="text-center">
+                                <p><b>NGƯỜI PHÁT</b> </p>
+                            </td>
+                            <td t-if="not o.patient_id" class="text-center">
+                                <p><b>NGƯỜI LĨNH</b> </p>
+                            </td>
+                            <td class="text-center" t-if="not o.purchase_id">
+                                <p><b>TRƯỞNG KHOA LÂM SÀNG</b> </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </t>
+</template>
+<template id="shealth_report_deliveryslip_addictive">
+    <t t-set="addictive_medicine" t-value="docs.env['sh.medical.medicines'].search([('medicine_category_id.name','in',['Thuốc gây nghiện','Thuốc hướng thần'])]).mapped('product_id')"/>
+    <t t-foreach="docs" t-as="o">
+        <t t-call="shealth_all_in_one.shealth_report_delivery_addictive_document" t-lang="o.partner_id.lang"/>
+    </t>
+</template>
+
+</odoo>

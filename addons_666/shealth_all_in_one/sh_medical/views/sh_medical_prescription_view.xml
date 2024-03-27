@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+       <record id="sh_medical_prescription_inherit_view" model="ir.ui.view">
+            <field name="name">sh.medical.prescription</field>
+            <field name="model">sh.medical.prescription</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_prescription_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='set_to_draft']" position="after">
+                        <button string="Hủy" groups="shealth_all_in_one.group_sh_medical_stock_manager" attrs="{'invisible':[('state','not in', ('Draft','prescriptions'))]}" type="object" class="btn-danger" name="set_to_cancel" />
+                </xpath>
+                <xpath expr="//field[@name='date_out']" position="after">
+                        <field name="cancel" attrs="{'invisible':[('state','!=', 'cancel')]}"/>
+                </xpath>
+                <xpath expr="//header/button[@name='action_prescription_out_stock']" position="attributes">
+						<attribute name="attrs">{'invisible': ['|',('name','=','/'),('state','in',('Đã xuất thuốc','cancel','prescriptions'))]}</attribute>
+                </xpath>
+                <xpath expr="//header/button[@name='print_patient_huongdan']" position="attributes">
+						<attribute name="attrs">{'invisible': [('state','in', ('cancel', 'Draft'))]}</attribute>
+                </xpath>
+                <xpath expr="//header/button[@name='set_to_draft']" position="attributes">
+						<attribute name="attrs">{'invisible': ['|', ('state', 'not in', ('Đã xuất thuốc','prescriptions')), ('state_prescription', '!=', 'draft')]}</attribute>
+                </xpath>
+                <xpath expr="//header/button[@name='print_patient_prescription']" position="attributes">
+						<attribute name="attrs">{'invisible': [('state','in', ('cancel', 'Draft'))]}</attribute>
+                </xpath>
+                <xpath expr="//header/button[@name='print_patient_prescription']" position="after">
+                        <button string="Gửi lên cổng TQG" groups="shealth_all_in_one.group_sh_medical_prescription" attrs="{'invisible': ['|', ('state', 'not in', ('Đã xuất thuốc','prescriptions')), ('state_prescription', '!=', 'draft')]}" type="object" class="btn-success" name="action_sync_his_prescription" />
+                </xpath>
+                <xpath expr="//header/button[@name='action_prescription_out_stock']" position="after">
+                        <button confirm="bạn có chắc chắn muốn kê đơn chứ không bán" string="Kê đơn thuốc" groups="shealth_all_in_one.group_sh_medical_prescription_medicine" attrs="{'invisible': [('state', '!=', 'Draft')]}" type="object" class="btn btn-info" name="action_prescription" />
+                </xpath>
+                <xpath expr="//field[@name='prescription_line']" position="before">
+                    <field class="text-danger" name="duplicated_compositions"/>
+                </xpath>
+                <xpath expr="//tree/field[@name='name']" position="after">
+                        <field name="composition" string="Hoạt chất" invisible="True"/>
+                </xpath>
+                <xpath expr="//field[@name='date_out']" position="after">
+                    <field name="state_prescription" readonly="True"/>
+                </xpath>
+                <xpath expr="//field[@name='patient']" position="before">
+                    <field name="type_prescription" required="True"/>
+                </xpath>
+                <xpath expr="//field[@name='patient']" position="before">
+                    <field name="isbuy" invisible="True"/>
+                </xpath>
+            </field>
+       </record>
+    </data>
+</odoo>

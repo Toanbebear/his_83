@@ -1,0 +1,46 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="sh_reason_tree">
+            <field name="name">Danh sách lý do khám</field>
+            <field name="model">sh.reason</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string='Danh sách lý do khám'>
+                    <field name="name" />
+                    <field name="service_room_id" widget="many2many_tags"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sh_reason_form">
+            <field name="name">Form lý do khám</field>
+            <field name="model">sh.reason</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Lý do khám" duplicate="false">
+                    <sheet>
+                        <group string="Lý do khám">
+                            <group>
+                                <field name="name" required="1"/>
+                                <field name="service_room_id" widget="many2many_tags" required="1" options="{'no_create':True,'no_quick_create':True}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="sh_reason_action_view" model="ir.actions.act_window">
+            <field name="name">Lý do khám</field>
+            <field name="res_model">sh.reason</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_id" eval="False"/>
+        </record>
+
+        <menuitem action="sh_reason_action_view" id="sh_menu_reason" parent="sh_medical_hospital_menu" sequence="9"/>
+    </data>
+</odoo>

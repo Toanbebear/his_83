@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="quality_evaluation_report_attachment" model="ir.attachment">
+            <field name="name">BÁO CÁO SP HẾT HẠN</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="shealth_all_in_one/static/xls/DANH_GIA_CHAT_LUONG_DICH_VU.xlsx"/>
+            <field name="datas_fname">DANH_GIA_CHAT_LUONG_DICH_VU.xlsx</field>
+        </record>
+
+        <record id="out_date_report_attachment" model="ir.attachment">
+            <field name="name">BÁO CÁO SP HẾT HẠN</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="shealth_all_in_one/static/xls/BC_SP_HET_HAN.docx"/>
+            <field name="datas_fname">BC_SP_HET_HAN.docx</field>
+        </record>
+
+        <record id="simple_inventory_attachment" model="ir.attachment">
+            <field name="name">BÁO CÁO XNT DƯỢC</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="shealth_all_in_one/static/xls/BC_XNT_DUOC.xlsx"/>
+            <field name="datas_fname">BC_XNT_DUOC.xlsx</field>
+        </record>
+
+        <record id="medicine_out_attachment" model="ir.attachment">
+            <field name="name">BÁO CÁO SỬ DỤNG THUỐC TIÊU HAO</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="shealth_all_in_one/static/xls/BC_THUOC_TIEU_HAO.xlsx"/>
+            <field name="datas_fname">BC_THUOC_TIEU_HAO.xlsx</field>
+        </record>
+
+        <record id="chemical_report_attachment" model="ir.attachment">
+            <field name="name">BÁO CÁO HÓA CHẤT</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="shealth_all_in_one/static/xls/BC_HOA_CHAT.xlsx"/>
+            <field name="datas_fname">BC_HOA_CHAT.xlsx</field>
+        </record>
+
+        <record id="addictive_report_attachment" model="ir.attachment">
+            <field name="name">BÁO CÁO HƯỚNG THẦN</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="shealth_all_in_one/static/xls/BC_HUONG_THAN.docx"/>
+            <field name="datas_fname">BC_HUONG_THAN.docx</field>
+        </record>
+
+        <record id="antibiotic_report_attachment" model="ir.attachment">
+            <field name="name">BÁO CÁO KHÁNG SINH</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="shealth_all_in_one/static/xls/BC_khang_sinh.xlsx"/>
+            <field name="datas_fname">BC_khang_sinh.xlsx</field>
+        </record>
+
+        <record id="walkin_report_attachment" model="ir.attachment">
+            <field name="name">BÁO CÁO HOẠT ĐỘNG KHÁM BỆNH</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="shealth_all_in_one/static/xls/BAO_CAO_HOAT_DONG_KHAM_BENH.xlsx"/>
+            <field name="datas_fname">BAO_CAO_HOAT_DONG_KHAM_BENH.xlsx</field>
+        </record>
+
+        <record id="walkin_report_exam_dep_spec_attachment" model="ir.attachment">
+            <field name="name">BÁO CÁO HOẠT ĐỘNG KHÁM BỆNH CHUYÊN KHOA</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="shealth_all_in_one/static/xls/BAO_CAO_HOATT_DONG_KHAM_BENH_CHUYEN_KHOA.xlsx"/>
+            <field name="datas_fname">BAO_CAO_HOAT_DONG_KHAM_BENH_CHUYEN_KHOA.xlsx</field>
+        </record>
+
+        <record id="inventory_report_attachment" model="ir.attachment">
+            <field name="name">BÁO CÁO XUẤT NHẬP TỒN</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="shealth_all_in_one/static/xls/BCXNT.xlsx"/>
+            <field name="datas_fname">BCXNT.xlsx</field>
+        </record>
+
+        <record id="stock_out_report_attachment" model="ir.attachment">
+            <field name="name">BÁO CÁO XUẤT KHO</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="shealth_all_in_one/static/xls/BCXK.xlsx"/>
+            <field name="datas_fname">BCXK.xlsx</field>
+        </record>
+
+        <record id="lab_imaging_report_attachment" model="ir.attachment">
+            <field name="name">BÁO CÁO CẬN LÂM SÀNG</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="shealth_all_in_one/static/xls/BCCLS.xlsx"/>
+            <field name="datas_fname">BCCLS.xlsx</field>
+        </record>
+
+        <record model="temp.creation" id="bao_cao_kham_benh">
+            <field name="template" type="base64" file="shealth_all_in_one/static/xls/BC_kham_benh.xlsx"/>
+            <field name="name">Báo cáo khám bệnh</field>
+            <field name="max_samples">3</field>
+            <field name="template_name">BC_kham_benh.xlsx</field>
+            <field name="all_in_one" eval="True"/>
+            <field name="max_row">254</field>
+            <field name="main_model" model="ir.model"
+                   search="[('model', '=', 'sh.medical.appointment.register.walkin')]"/>
+        </record>
+        <record model="fields.line" id="bao_cao_kham_benh_fields_line_1">
+            <field name="line" ref="bao_cao_kham_benh"/>
+            <field name="python_code">patient.identification_code</field>
+            <field name="temp_mark">b3</field>
+        </record>
+        <record model="fields.line" id="bao_cao_kham_benh_fields_line_2">
+            <field name="line" ref="bao_cao_kham_benh"/>
+            <field name="python_code">patient.name</field>
+            <field name="temp_mark">c3</field>
+        </record>
+        <record model="fields.line" id="bao_cao_kham_benh_fields_line_3">
+            <field name="line" ref="bao_cao_kham_benh"/>
+            <field name="python_code">sex</field>
+            <field name="temp_mark">t3</field>
+        </record>
+        <record model="fields.line" id="bao_cao_kham_benh_fields_line_4">
+            <field name="line" ref="bao_cao_kham_benh"/>
+            <field name="python_code">patient.dob</field>
+            <field name="replacement_format">{'time_format': '%d-%m-%Y'}</field>
+            <field name="temp_mark">u3</field>
+        </record>
+        <record model="fields.line" id="bao_cao_kham_benh_fields_line_5">
+            <field name="line" ref="bao_cao_kham_benh"/>
+            <field name="python_code">patient.street</field>
+            <field name="temp_mark">v3</field>
+        </record>
+        <record model="fields.line" id="bao_cao_kham_benh_fields_line_6">
+            <field name="line" ref="bao_cao_kham_benh"/>
+            <field name="python_code">patient.state_id.name</field>
+            <field name="temp_mark">w3</field>
+        </record>
+        <record model="fields.line" id="bao_cao_kham_benh_fields_line_7">
+            <field name="line" ref="bao_cao_kham_benh"/>
+            <field name="python_code">patient.country_id.name</field>
+            <field name="temp_mark">x3</field>
+        </record>
+        <record model="fields.line" id="bao_cao_kham_benh_fields_line_8">
+            <field name="line" ref="bao_cao_kham_benh"/>
+            <field name="python_code">doctor.name</field>
+            <field name="temp_mark">z3</field>
+        </record>
+        <record model="fields.line" id="bao_cao_kham_benh_fields_line_9">
+            <field name="line" ref="bao_cao_kham_benh"/>
+            <field name="python_code">service.name</field>
+            <field name="replacement_format">{'all_to_str': True}</field>
+            <field name="temp_mark">i3</field>
+        </record>
+        <record model="fields.line" id="bao_cao_kham_benh_fields_line_10">
+            <field name="line" ref="bao_cao_kham_benh"/>
+            <field name="python_code">reason_check</field>
+            <field name="temp_mark">h3</field>
+        </record>
+        <record model="fields.line" id="bao_cao_kham_benh_fields_line_11">
+            <field name="line" ref="bao_cao_kham_benh"/>
+            <field name="python_code">flag_surgery</field>
+            <field name="temp_mark">y3</field>
+        </record>
+        <record model="fields.line" id="bao_cao_kham_benh_fields_line_12">
+            <field name="line" ref="bao_cao_kham_benh"/>
+            <field name="python_code">specialty_ids.physician.name</field>
+            <field name="temp_mark">aa3</field>
+        </record>
+
+        <record model="temp.creation" id="bao_cao_phau_thuat">
+            <field name="template" type="base64" file="shealth_all_in_one/static/xls/BC_phau_thuat.xlsx"/>
+            <field name="name">Báo cáo phẫu thuật</field>
+            <field name="max_samples">3</field>
+            <field name="template_name">BC_phau_thuat.xlsx</field>
+            <field name="all_in_one" eval="True"/>
+            <field name="main_model" model="ir.model" search="[('model', '=', 'sh.medical.surgery')]"/>
+        </record>
+        <record model="fields.line" id="bao_cao_phau_thuat_fields_line_1">
+            <field name="line" ref="bao_cao_phau_thuat"/>
+            <field name="python_code">patient.name</field>
+            <field name="temp_mark">c6</field>
+        </record>
+        <record model="fields.line" id="bao_cao_phau_thuat_fields_line_2">
+            <field name="line" ref="bao_cao_phau_thuat"/>
+            <field name="python_code">patient.id_card</field>
+            <field name="replacement_format">{'False': ' '}</field>
+            <field name="temp_mark">d6</field>
+        </record>
+        <record model="fields.line" id="bao_cao_phau_thuat_fields_line_3">
+            <field name="line" ref="bao_cao_phau_thuat"/>
+            <field name="python_code">patient.sex</field>
+            <field name="temp_mark">w6</field>
+        </record>
+        <record model="fields.line" id="bao_cao_phau_thuat_fields_line_4">
+            <field name="line" ref="bao_cao_phau_thuat"/>
+            <field name="python_code">patient.dob</field>
+            <field name="replacement_format">{'time_format': '%Y'}</field>
+            <field name="temp_mark">x6</field>
+        </record>
+        <record model="fields.line" id="bao_cao_phau_thuat_fields_line_5">
+            <field name="line" ref="bao_cao_phau_thuat"/>
+            <field name="python_code">patient.street</field>
+            <field name="temp_mark">y6</field>
+        </record>
+        <record model="fields.line" id="bao_cao_phau_thuat_fields_line_6">
+            <field name="line" ref="bao_cao_phau_thuat"/>
+            <field name="python_code">patient.state_id.name</field>
+            <field name="temp_mark">z6</field>
+        </record>
+        <record model="fields.line" id="bao_cao_phau_thuat_fields_line_7">
+            <field name="line" ref="bao_cao_phau_thuat"/>
+            <field name="python_code">patient.country_id.name</field>
+            <field name="temp_mark">aa6</field>
+        </record>
+        <record model="fields.line" id="bao_cao_phau_thuat_fields_line_8">
+            <field name="line" ref="bao_cao_phau_thuat"/>
+            <field name="python_code">patient.function</field>
+            <field name="temp_mark">i6</field>
+        </record>
+        <record model="fields.line" id="bao_cao_phau_thuat_fields_line_9">
+            <field name="line" ref="bao_cao_phau_thuat"/>
+            <field name="python_code">walkin.reason_check</field>
+            <field name="temp_mark">j6</field>
+        </record>
+        <record model="fields.line" id="bao_cao_phau_thuat_fields_line_10">
+            <field name="line" ref="bao_cao_phau_thuat"/>
+            <field name="python_code">walkin.service.name</field>
+            <field name="replacement_format">{'all_to_str': True}</field>
+            <field name="temp_mark">k6</field>
+        </record>
+        <record model="fields.line" id="bao_cao_phau_thuat_fields_line_11">
+            <field name="line" ref="bao_cao_phau_thuat"/>
+            <field name="python_code">walkin.date</field>
+            <field name="replacement_format">{'time_format': '%H:%M'}</field>
+            <field name="temp_mark">n6</field>
+        </record>
+        <record model="fields.line" id="bao_cao_phau_thuat_fields_line_12">
+            <field name="line" ref="bao_cao_phau_thuat"/>
+            <field name="python_code">walkin.date</field>
+            <field name="replacement_format">{'time_format': '%d/%m'}</field>
+            <field name="temp_mark">o6</field>
+        </record>
+        <record model="fields.line" id="bao_cao_phau_thuat_fields_line_13">
+            <field name="line" ref="bao_cao_phau_thuat"/>
+            <field name="python_code">surgery_date</field>
+            <field name="replacement_format">{'time_format': '%H:%M'}</field>
+            <field name="temp_mark">p6</field>
+        </record>
+        <record model="fields.line" id="bao_cao_phau_thuat_fields_line_14">
+            <field name="line" ref="bao_cao_phau_thuat"/>
+            <field name="python_code">surgery_date</field>
+            <field name="replacement_format">{'time_format': '%d/%m'}</field>
+            <field name="temp_mark">q6</field>
+        </record>
+        <record model="fields.line" id="bao_cao_phau_thuat_fields_line_15">
+            <field name="line" ref="bao_cao_phau_thuat"/>
+            <field name="python_code">walkin.date_out</field>
+            <field name="replacement_format">{'time_format': '%H:%M', 'False': ' '}</field>
+            <field name="temp_mark">r6</field>
+        </record>
+        <record model="fields.line" id="bao_cao_phau_thuat_fields_line_16">
+            <field name="line" ref="bao_cao_phau_thuat"/>
+            <field name="python_code">walkin.date_out</field>
+            <field name="replacement_format">{'time_format': '%d/%m', 'False': ' '}</field>
+            <field name="temp_mark">s6</field>
+        </record>
+        <record model="fields.line" id="bao_cao_phau_thuat_fields_line_17">
+            <field name="line" ref="bao_cao_phau_thuat"/>
+            <field name="python_code">surgeon.name</field>
+            <field name="temp_mark">t6</field>
+        </record>
+        <record model="fields.line" id="bao_cao_phau_thuat_fields_line_18">
+            <field name="line" ref="bao_cao_phau_thuat"/>
+            <field name="python_code">surgery_team.doctor_member.name</field>
+            <field name="temp_mark">u6</field>
+        </record>
+        <record model="fields.line" id="bao_cao_phau_thuat_fields_line_19">
+            <field name="line" ref="bao_cao_phau_thuat"/>
+            <field name="python_code">anesthetist</field>
+            <field name="temp_mark">v6</field>
+        </record>
+        <record model="fields.line" id="bao_cao_phau_thuat_fields_line_20">
+            <field name="line" ref="bao_cao_phau_thuat"/>
+            <field name="python_code">anesthetist_type</field>
+            <field name="temp_mark">ab6</field>
+        </record>
+
+        <record model="temp.creation" id="bao_cao_dieu_tri">
+            <field name="template" type="base64" file="shealth_all_in_one/static/xls/BAO_CAO_HOAT_DONG_DIEU_TRI.xlsx"/>
+            <field name="name">Báo cáo hoạt động điều trị</field>
+            <field name="max_samples">3</field>
+            <field name="template_name">BAO_CAO_HOAT_DONG_DIEU_TRI.xlsx</field>
+        </record>
+
+        <record model="temp.creation" id="bao_cao_loai_phau_thuat">
+            <field name="template" type="base64"
+                   file="shealth_all_in_one/static/xls/BC_HOAT_DONG_PHAU_THUAT_THU_THUAT.xlsx"/>
+            <field name="name">Báo cáo phẫu thuật thủ thuật</field>
+            <field name="max_samples">3</field>
+            <field name="template_name">BC_HOAT_DONG_PHAU_THUAT_THU_THUAT.xlsx</field>
+            <field name="all_in_one" eval="True"/>
+            <field name="main_model" model="ir.model" search="[('model', '=', 'sh.medical.surgery')]"/>
+        </record>
+
+        <record id="bao_cao_can_bo" model="ir.attachment">
+            <field name="name">Báo cáo tình hình cán bộ, công chức</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64"
+                   file="shealth_all_in_one/static/xls/BC_tinh_hinh_nhan_vien.xlsx"></field>
+            <field name="datas_fname">BC_tinh_hinh_nhan_vien.xlsx</field>
+        </record>
+
+        <record id="bao_cao_benh_icd10" model="ir.attachment">
+            <field name="name">Báo cáo tình hình bệnh tật và tử vong theo mã ICD10</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64"
+                   file="shealth_all_in_one/static/xls/BAOCAO_TINH_HINH_BENH_TAT_VA_TU_VONG_THEO_ICD10.xlsx"/>
+            <field name="datas_fname">BAOCAO_TINH_HINH_BENH_TAT_VA_TU_VONG_THEO_ICD10.xlsx</field>
+        </record>
+
+        <!--    SonDC-->
+        <record id="report_pharmacy_provider_template" model="ir.attachment">
+            <field name="name">BÁO CÁO THUỐC NHẬP NCC</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64"
+                   file="shealth_all_in_one/static/xls/BC_NCC_thuoc.xlsx"/>
+            <field name="datas_fname">NCC_thuoc.xlsx</field>
+        </record>
+
+        <record id="report_supply_provider_template" model="ir.attachment">
+            <field name="name">BÁO CÁO VẬT TƯ NHẬP NCC</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64"
+                   file="shealth_all_in_one/static/xls/BC_NCC_vattu.xlsx"/>
+            <field name="datas_fname">NCC_vattu.xlsx</field>
+        </record>
+        <record id="report_check_entry_medicine_template" model="ir.attachment">
+            <field name="name">BÁO CÁO KIỂM NHẬP THUỐC</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64"
+                   file="shealth_all_in_one/static/xls/BC_kiem_nhap_thuoc.xlsx"/>
+            <field name="datas_fname">KIEM_NHAP_THUOC.xlsx</field>
+        </record>
+        <record id="bao_cao_duoc" model="ir.attachment">
+            <field name="name">Báo cáo Dược</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64"
+                   file="shealth_all_in_one/static/xls/BAOCAO_DUOC.xlsx"/>
+            <field name="datas_fname">BAOCAO_DUOC.xlsx</field>
+        </record>
+        <!--      SonDC-->
+    </data>
+
+
+</odoo>

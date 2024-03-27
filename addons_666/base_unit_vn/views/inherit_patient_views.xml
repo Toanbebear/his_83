@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="inherit_sh_medical_patient_view" model="ir.ui.view">
+            <field name="name">QUận huyện bệnh nhân</field>
+            <field name="model">sh.medical.patient</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_patient_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page/group/group[1][@name='address']" position="replace">
+                    <group name="address">
+                        <field name="ethnic_group" attrs="{'readonly': [('foreign','!=',False)]}" options="{'no_create': True,'no_open': True}"/>
+                        <field name="foreign" attrs="{'readonly': [('ethnic_group','!=',False)]}" options="{'no_create': True,'no_open': True}"/>
+                        <field name="street2" placeholder="Street 2..." class="o_address_street" invisible="True"/>
+                        <field name="city" placeholder="City" class="o_address_city" invisible="True"/>
+                        <field name="zip" placeholder="ZIP" class="o_address_zip" invisible="1"/>
+                        <field name="country_id"  placeholder="Country..." class="o_address_country" options='{"no_open": True, "no_create": True}' required="1" readonly="True"/>
+                        <field name="state_id" string="Thành/phố" class="o_address_state" placeholder="Thành phố..." options='{"no_open": True, "no_create": True}' required="1"/>
+                        <field name="district_id" placeholder="Quận/huyện..." class="o_address_country" options='{"no_open": True, "no_create": True}' required="1" />
+                        <field name="ward_id" placeholder="Phường/xã..." class="o_address_country" options='{"no_open": True, "no_create": True}' required="1" />
+                        <field name="street" placeholder="Địa chỉ..." class="o_address_street" required="1" string="Địa chỉ chi tiết"/>
+                        <field name="website" widget="url" placeholder="e.g. www.odoo.com" invisible="1"/>
+                        <field name="id_card" string="CMND/Hộ chiếu"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

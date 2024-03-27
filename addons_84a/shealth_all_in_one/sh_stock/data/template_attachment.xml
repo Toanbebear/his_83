@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="temp.creation" id="nhu_cau_nhap_hang">
+            <field name="template" type="base64" file="shealth_all_in_one/static/xls/Nhu_cau_nhap_hang.xlsx"/>
+            <field name="name">Nhu cầu nhập hàng</field>
+            <field name="max_samples">3</field>
+            <field name="template_name">Nhu_cau_nhap_hang.xlsx</field>
+            <field name="max_row">522</field>
+            <field name="sheet_name" eval="True"/>
+            <field name="main_model" model="ir.model" search="[('model', '=', 'stock.picking')]"/>
+        </record>
+        <record model="fields.line" id="nhu_cau_nhap_hang_fields_line_1">
+            <field name="line" ref="nhu_cau_nhap_hang"/>
+            <field name="python_code">scheduled_date</field>
+            <field name="replacement_format">{'time_format': 'Ngày %d tháng %m năm %Y'}</field>
+            <field name="temp_mark">a3</field>
+        </record>
+        <record model="fields.line" id="nhu_cau_nhap_hang_fields_line_2">
+            <field name="line" ref="nhu_cau_nhap_hang"/>
+            <field name="python_code">move_ids_without_package.product_id.default_code</field>
+            <field name="temp_mark">b6</field>
+        </record>
+        <record model="fields.line" id="nhu_cau_nhap_hang_fields_line_3">
+            <field name="line" ref="nhu_cau_nhap_hang"/>
+            <field name="python_code">move_ids_without_package.product_id.name</field>
+            <field name="temp_mark">c6</field>
+        </record>
+        <record model="fields.line" id="nhu_cau_nhap_hang_fields_line_4">
+            <field name="line" ref="nhu_cau_nhap_hang"/>
+            <field name="python_code">move_ids_without_package.product_uom_qty</field>
+            <field name="temp_mark">d6</field>
+        </record>
+        <record model="fields.line" id="nhu_cau_nhap_hang_fields_line_5">
+            <field name="line" ref="nhu_cau_nhap_hang"/>
+            <field name="python_code">move_ids_without_package.product_uom.name</field>
+            <field name="temp_mark">e6</field>
+        </record>
+
+
+    </data>
+</odoo>

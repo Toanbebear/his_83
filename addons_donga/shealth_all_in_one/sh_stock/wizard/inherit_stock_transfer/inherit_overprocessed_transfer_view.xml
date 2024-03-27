@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record id="view_overprocessed_transfer_inherited" model="ir.ui.view">
+            <field name="name">my_module.overprocessed.transfer.view.form.inherited</field>
+            <field name="model">stock.overprocessed.transfer</field>
+            <field name="inherit_id" ref="stock.view_overprocessed_transfer" />
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="replace">
+                    <form string="Processed more than initial demand">
+                        <p>
+                           Bạn đã xử lý nhiều hơn những gì đã được lên kế hoạch ban đầu của sản phẩm <field name="overprocessed_product_name" class="oe_inline"/>.
+                        </p>
+                        <p>
+                            Bạn không thể xác nhận phiếu điều chuyển này
+                        </p>
+                        <footer>
+    <!--                        <button name="action_confirm" string="Confirm" type="object" class="btn-primary"/>-->
+                            <button string="Cancel" special="cancel" class="btn-secondary"/>
+                        </footer>
+                    </form>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

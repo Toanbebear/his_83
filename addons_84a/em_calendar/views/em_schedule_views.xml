@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_tree_em_schedule" model="ir.ui.view">
+            <field name="name">lịch làm việc</field>
+            <field name="model">em.schedule</field>
+            <field name="arch" type="xml">
+                <tree decoration-danger="state=='4'"
+                       decoration-success="state=='2'"
+                       decoration-info="state=='3'"
+                       default_order="create_date desc" >
+                    <field name="employee" widget="many2many_tags"/>
+                    <field name="department_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="status"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_form_em_schedule" model="ir.ui.view">
+            <field name="name">Lịch làm việc</field>
+            <field name="model">em.schedule</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="set_to_new" type="object" string="Xác nhận" class="btn-info"
+                                confirm="Bạn có chắc muốn xác nhận?"
+                                attrs="{'invisible':[('state','not in', ['1', '3'])]}" groups="em_calendar.group_em_calendar_user"/>
+                        <button name="set_to_draft" type="object" string="Mở lại" class="btn-info"
+                                  attrs="{'invisible':[('state','!=','2')]}" groups="em_calendar.group_em_calendar_manager"/>
+                        <button name="set_to_cancel" type="object" string="Hủy" class="btn-danger"
+                                  attrs="{'invisible':[('state','!=','2')]}" groups="em_calendar.group_em_calendar_manager"/>
+                        <field name="state" widget="statusbar" statusbar_visible="1,2"/>
+                    </header>
+                    <sheet>
+                        <group  string="Đăng kí lịch làm việc">
+                            <group>
+                                <field name="employee" required="True" widget="many2many_tags" options="{'no_create': True, 'no_open': True}" attrs="{'readonly':[('state','in',('2','4'))]}"/>
+                                <field name="department_id" required="True" options="{'no_create': True, 'no_open': True}" attrs="{'readonly':[('state','in',('2','4'))]}"/>
+                                <field name="status" required="True" attrs="{'readonly':[('state','in',('2','4'))]}"/>
+                                <field name="note" attrs="{'required':[('status','in',('1','3','4','5','6','7','8','9'))], 'readonly':[('state','in',('2','4'))]}"/>
+                            </group>
+                            <group>
+                                <field name="start_date" required="True" attrs="{'readonly':[('state','in',('2','4'))]}"/>
+                                <field name="end_date" required="True" attrs="{'readonly':[('state','in',('2','4'))]}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="em_schedule_action" model="ir.actions.act_window">
+            <field name="name">Lịch làm việc</field>
+            <field name="res_model">em.schedule</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="em_schedule_search" model="ir.ui.view">
+            <field name="name">em - schedule - Search</field>
+            <field name="model">em.schedule</field>
+            <field name="arch" type="xml">
+                <search string="Stage Search">
+                     <group>
+                        <filter string="Trạng thái làm việc" name="group_status" context="{'group_by': 'status'}"/>
+                        <filter string="Trạng Thái" name="group_state" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <menuitem id="menu_calendar"
+                  name="Lịch làm việc"
+                  web_icon="em_calendar,static/description/icon_image.png"
+                  sequence="90"
+                  groups="base.group_user"/>
+         <menuitem id="menu_report"
+                  name="Báo cáo"
+                  sequence="2"
+                  parent="em_calendar.menu_calendar"
+                  groups="em_calendar.group_em_calendar_user"/>
+
+        <menuitem action="em_schedule_action" parent="em_calendar.menu_calendar"
+                  id="em_schedule_list" sequence="1" groups="base.group_user"/>
+    </data>
+</odoo>

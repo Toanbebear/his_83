@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data noupdate="1">
+
+        <record model="sh.medical.dosage" id="sh229797004">
+            <field name="name">1 lần 1 ngày</field>
+            <field name="code">229797004</field>
+            <field name="abbreviation">od</field>
+        </record>
+        <record model="sh.medical.dosage" id="sh307472001">
+            <field name="name">1 lần 1 ngày vào buổi sáng</field>
+            <field name="code">307472001</field>
+            <field name="abbreviation">om</field>
+        </record>
+        <record model="sh.medical.dosage" id="sh396147000">
+            <field name="name">1 lần 1 ngày vào buổi tối</field>
+            <field name="code">396147000</field>
+            <field name="abbreviation"></field>
+        </record>
+        <record model="sh.medical.dosage" id="sh396142006">
+            <field name="name">1 lần 1 ngày trước khi đi ngủ</field>
+            <field name="code">396142006</field>
+            <field name="abbreviation">on</field>
+        </record>
+        <record model="sh.medical.dosage" id="sh229799001">
+            <field name="name">2 lần 1 ngày</field>
+            <field name="code">229799001</field>
+            <field name="abbreviation">bd</field>
+        </record>
+        <record model="sh.medical.dosage" id="sh229798009">
+            <field name="name">3 lần 1 ngày</field>
+            <field name="code">229798009</field>
+            <field name="abbreviation">tds</field>
+        </record>
+        <record model="sh.medical.dosage" id="sh396145008">
+            <field name="name">3 lần 1 ngày, trước bữa ăn</field>
+            <field name="code">396145008</field>
+            <field name="abbreviation"></field>
+        </record>
+        <record model="sh.medical.dosage" id="sh396146009">
+            <field name="name">3 lần 1 ngày, sau bữa ăn</field>
+            <field name="code">396146009</field>
+            <field name="abbreviation"></field>
+        </record>
+        <record model="sh.medical.dosage" id="sh307439001">
+            <field name="name">4 lần 1 ngày</field>
+            <field name="code">307439001</field>
+            <field name="abbreviation">qds</field>
+        </record>
+        <record model="sh.medical.dosage" id="sh225750008">
+            <field name="name">cứ sau 2 giờ</field>
+            <field name="code">225750008</field>
+            <field name="abbreviation"></field>
+        </record>
+        <record model="sh.medical.dosage" id="sh225756002">
+            <field name="name">cứ sau 4 giờ</field>
+            <field name="code">225756002</field>
+            <field name="abbreviation"></field>
+        </record>
+        <record model="sh.medical.dosage" id="sh307468000">
+            <field name="name">cứ sau 6 giờ</field>
+            <field name="code">307468000</field>
+            <field name="abbreviation"></field>
+        </record>
+        <record model="sh.medical.dosage" id="sh307469008">
+            <field name="name">cứ sau 8 giờ</field>
+            <field name="code">307469008</field>
+            <field name="abbreviation"></field>
+        </record>
+        <record model="sh.medical.dosage" id="sh307470009">
+            <field name="name">cứ sau 12 giờ</field>
+            <field name="code">307470009</field>
+            <field name="abbreviation"></field>
+        </record>
+        <record model="sh.medical.dosage" id="sh225760004">
+            <field name="name">mỗi ngày khác</field>
+            <field name="code">225760004</field>
+            <field name="abbreviation"></field>
+        </record>
+        <record model="sh.medical.dosage" id="sh225769003">
+            <field name="name">1 tuần 1 lần</field>
+            <field name="code">225769003</field>
+            <field name="abbreviation"></field>
+        </record>
+        <record model="sh.medical.dosage" id="sh20050000">
+            <field name="name">mỗi hai tuần</field>
+            <field name="code">20050000</field>
+            <field name="abbreviation"></field>
+        </record>
+        <record model="sh.medical.dosage" id="sh307476003">
+            <field name="name">mỗi 28 ngày</field>
+            <field name="code">307476003</field>
+            <field name="abbreviation"></field>
+        </record>
+        <record model="sh.medical.dosage" id="sh307475004">
+            <field name="name">mỗi tháng</field>
+            <field name="code">307475004</field>
+            <field name="abbreviation"></field>
+        </record>
+        <record model="sh.medical.dosage" id="sh420449005">
+            <field name="name">khi cần</field>
+            <field name="code">420449005</field>
+            <field name="abbreviation">prn</field>
+        </record>
+        <record model="sh.medical.dosage" id="sh422114001">
+            <field name="name">1 lần</field>
+            <field name="code">422114001</field>
+            <field name="abbreviation">stat</field>
+        </record>
+
+    </data>
+</openerp>

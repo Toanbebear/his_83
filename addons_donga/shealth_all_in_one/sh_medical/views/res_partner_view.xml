@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record id="view_res_partner_form" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="priority" eval="1" />
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='sales_purchases']" position="after">
+                    <page string="sHealth" groups="shealth_all_in_one.group_sh_medical_manager">
+                        <group>
+                            <field name="is_insurance_company" />
+                            <field name="is_institution" />
+                            <field name="is_doctor" />
+                            <field name="is_patient" />
+                            <field name="is_person" />
+                            <field name="is_pharmacy" />
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="qd_nghi_viec_knsg" model="ir.attachment">
+            <field name="name">Quyết định nghỉ việc KN</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="hr_inherit/data/decision_resignation/QD_nghi_viec_KN.docx"/>
+            <field name="store_fname">QĐ nghỉ việc KN.docx</field>
+        </record>
+
+        <record id="qd_nghi_viec_bvda" model="ir.attachment">
+            <field name="name">Quyết định nghỉ việc Bệnh viện Đông Á</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="hr_inherit/data/decision_resignation/QD_nghi_viec_BVDA.docx"/>
+            <field name="store_fname">QĐ nghỉ việc BVĐA.docx</field>
+        </record>
+
+        <record id="qd_nghi_viec_bvrhm" model="ir.attachment">
+            <field name="name">Quyết định nghỉ việc BVRHM</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="hr_inherit/data/decision_resignation/QD_nghi_viec_BVRHM.docx"/>
+            <field name="store_fname">QĐ nghỉ việc BVRHM.docx</field>
+        </record>
+    </data>
+</odoo>

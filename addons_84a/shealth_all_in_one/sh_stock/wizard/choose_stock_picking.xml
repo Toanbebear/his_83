@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="form_view_choose_stock_picking_wizard" model="ir.ui.view">
+            <field name="name">form_view_choose_stock_picking_wizard</field>
+            <field name="model">choose.stock.picking</field>
+            <field name="arch" type="xml">
+                <form string="Chọn phiếu điều chuyển">
+                    <group>
+                        <field name="purchase_id" readonly="True"/>
+                        <field name="picking_ids" required="True" widget="many2many_tags"/>
+                    </group>
+                    <footer>
+                        <button class="btn-primary" name="add_stock_picking" type="object" string="Gắn"/>
+                        <button string="Hủy" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

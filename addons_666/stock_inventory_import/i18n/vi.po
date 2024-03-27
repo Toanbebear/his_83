@@ -1,0 +1,241 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_inventory_import
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-11-05 04:03+0000\n"
+"PO-Revision-Date: 2019-11-05 04:03+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_inventory_import
+#: code:addons/stock_inventory_import/models/stock_inventory.py:14
+#, python-format
+msgid "By File"
+msgstr "Bởi tập tin"
+
+#. module: stock_inventory_import
+#: model_terms:ir.ui.view,arch_db:stock_inventory_import.view_import_inventory
+msgid "Cancel"
+msgstr "Hủy"
+
+#. module: stock_inventory_import
+#: model:ir.model.fields,field_description:stock_inventory_import.field_stock_inventory_import_line__standard_price
+msgid "Cost Price"
+msgstr "Giá"
+
+#. module: stock_inventory_import
+#: model:ir.model.fields,field_description:stock_inventory_import.field_import_inventory__create_uid
+#: model:ir.model.fields,field_description:stock_inventory_import.field_stock_inventory_import_line__create_uid
+msgid "Created by"
+msgstr "Được tạo bởi"
+
+#. module: stock_inventory_import
+#: model:ir.model.fields,field_description:stock_inventory_import.field_import_inventory__create_date
+#: model:ir.model.fields,field_description:stock_inventory_import.field_stock_inventory_import_line__create_date
+msgid "Created on"
+msgstr "Thời điểm tạo"
+
+#. module: stock_inventory_import
+#: model:ir.model.fields,field_description:stock_inventory_import.field_import_inventory__location
+msgid "Default Location"
+msgstr "Địa điểm mặc định"
+
+#. module: stock_inventory_import
+#: model:ir.model.fields,help:stock_inventory_import.field_import_inventory__delimeter
+msgid "Default delimeter is \",\""
+msgstr "Dấu phân cách mặc định là \",\""
+
+#. module: stock_inventory_import
+#: model:ir.model.fields,field_description:stock_inventory_import.field_import_inventory__delimeter
+msgid "Delimeter"
+msgstr "Dấu phân cách"
+
+#. module: stock_inventory_import
+#: model:ir.model.fields,field_description:stock_inventory_import.field_import_inventory__display_name
+#: model:ir.model.fields,field_description:stock_inventory_import.field_stock_inventory_import_line__display_name
+msgid "Display Name"
+msgstr "Tên hiển thị"
+
+#. module: stock_inventory_import
+#: model:ir.model.fields,field_description:stock_inventory_import.field_stock_inventory_import_line__fail
+msgid "Fail"
+msgstr "Thất bại"
+
+#. module: stock_inventory_import
+#: model:ir.model.fields,field_description:stock_inventory_import.field_stock_inventory_import_line__fail_reason
+msgid "Fail Reason"
+msgstr "Lý do thất bại"
+
+#. module: stock_inventory_import
+#: model:ir.model.fields,field_description:stock_inventory_import.field_import_inventory__data
+msgid "File"
+msgstr "Tập tin"
+
+#. module: stock_inventory_import
+#: model:ir.model.fields,field_description:stock_inventory_import.field_import_inventory__name
+msgid "Filename"
+msgstr "Tên tập tin"
+
+#. module: stock_inventory_import
+#: model:ir.model.fields,field_description:stock_inventory_import.field_stock_inventory_import_line__product
+msgid "Found Product"
+msgstr "Sản phẩm tìm thấy"
+
+#. module: stock_inventory_import
+#: model:ir.model.fields,field_description:stock_inventory_import.field_stock_inventory__processed
+msgid "Has been processed at least once?"
+msgstr "Đã được xử lý ít nhất một lần?"
+
+#. module: stock_inventory_import
+#: model:ir.model.fields,field_description:stock_inventory_import.field_import_inventory__id
+#: model:ir.model.fields,field_description:stock_inventory_import.field_stock_inventory_import_line__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_inventory_import
+#: model:ir.model.fields,help:stock_inventory_import.field_stock_inventory__filter
+msgid "If you do an entire inventory, you can choose 'All Products' and it will prefill the inventory with the current stock.  If you only do some products  (e.g. Cycle Counting) you can choose 'Manual Selection of Products' and the system won't propose anything.  You can also let the system propose for a single product / lot /... "
+msgstr "Nếu bạn thực hiện kiểm kê toàn bộ, bạn có thể lựa chọn 'Tất cả sản phẩm' và phần mềm sẽ tự điền toàn bộ các sản phẩm có trong kho. Nếu bạn chỉ muốn kiểm kê một phần (vd: Kiểm kê cuốn chiếu - Cycle Counting), bạn có thể chọn 'Chọn sản phẩm thủ công' và phần mềm sẽ không đề xuất gì cả. Bạn có thể để cho hệ thống đề xuất một sản phẩm / lô /... đơn lẻ"
+
+#. module: stock_inventory_import
+#: model_terms:ir.ui.view,arch_db:stock_inventory_import.view_import_inventory
+msgid "Import"
+msgstr "Nhập"
+
+#. module: stock_inventory_import
+#: model:ir.actions.act_window,name:stock_inventory_import.action_import_inventory
+#: model_terms:ir.ui.view,arch_db:stock_inventory_import.view_import_inventory
+msgid "Import Inventory"
+msgstr "Nhập kho"
+
+#. module: stock_inventory_import
+#: model:ir.model,name:stock_inventory_import.model_import_inventory
+msgid "Import inventory"
+msgstr "Nhập kho"
+
+#. module: stock_inventory_import
+#: model:ir.model.fields,field_description:stock_inventory_import.field_stock_inventory__imported
+msgid "Imported"
+msgstr "Đã nhập"
+
+#. module: stock_inventory_import
+#: model:ir.model.fields,field_description:stock_inventory_import.field_stock_inventory__import_lines
+#: model_terms:ir.ui.view,arch_db:stock_inventory_import.view_inventory_form_inherit
+msgid "Imported Lines"
+msgstr "Dòng đã nhập"
+
+#. module: stock_inventory_import
+#: model:ir.model,name:stock_inventory_import.model_stock_inventory
+#: model:ir.model.fields,field_description:stock_inventory_import.field_stock_inventory_import_line__inventory_id
+msgid "Inventory"
+msgstr "Kho"
+
+#. module: stock_inventory_import
+#: model:ir.model.fields,field_description:stock_inventory_import.field_import_inventory____last_update
+#: model:ir.model.fields,field_description:stock_inventory_import.field_stock_inventory_import_line____last_update
+msgid "Last Modified on"
+msgstr "Sửa lần cuối vào"
+
+#. module: stock_inventory_import
+#: model:ir.model.fields,field_description:stock_inventory_import.field_import_inventory__write_uid
+#: model:ir.model.fields,field_description:stock_inventory_import.field_stock_inventory_import_line__write_uid
+msgid "Last Updated by"
+msgstr "Cập nhật lần cuối bởi"
+
+#. module: stock_inventory_import
+#: model:ir.model.fields,field_description:stock_inventory_import.field_import_inventory__write_date
+#: model:ir.model.fields,field_description:stock_inventory_import.field_stock_inventory_import_line__write_date
+msgid "Last Updated on"
+msgstr "Cập nhật lần cuối vào"
+
+#. module: stock_inventory_import
+#: model_terms:ir.ui.view,arch_db:stock_inventory_import.view_inventory_form_inherit
+msgid "Load File"
+msgstr "Tải tập tin"
+
+#. module: stock_inventory_import
+#: code:addons/stock_inventory_import/models/stock_inventory.py:93
+#, python-format
+msgid "Loaded lines must be processed at least one time for inventory : %s"
+msgstr "Các dòng đã tải phải được xử lý ít nhất một lần cho kho:% s"
+
+#. module: stock_inventory_import
+#: model:ir.model.fields,field_description:stock_inventory_import.field_stock_inventory_import_line__location_id
+msgid "Location"
+msgstr "Địa điểm"
+
+#. module: stock_inventory_import
+#: code:addons/stock_inventory_import/models/stock_inventory.py:25
+#: code:addons/stock_inventory_import/wizard/import_inventory.py:104
+#, python-format
+msgid "No processed"
+msgstr "Không xử lý"
+
+#. module: stock_inventory_import
+#: code:addons/stock_inventory_import/models/stock_inventory.py:59
+#, python-format
+msgid "No product code found"
+msgstr "Không tìm thấy mã sản phẩm"
+
+#. module: stock_inventory_import
+#: code:addons/stock_inventory_import/wizard/import_inventory.py:66
+#, python-format
+msgid "Not 'code' or 'quantity' keys found"
+msgstr "Không tìm thấy khóa 'mã' hoặc 'số lượng'"
+
+#. module: stock_inventory_import
+#: code:addons/stock_inventory_import/wizard/import_inventory.py:60
+#, python-format
+msgid "Not a valid file!"
+msgstr "Không phải là một tập tin hợp lệ!"
+
+#. module: stock_inventory_import
+#: model_terms:ir.ui.view,arch_db:stock_inventory_import.view_inventory_form_inherit
+msgid "Process File Lines"
+msgstr "Xử lý dòng dữ liệu tập tin"
+
+#. module: stock_inventory_import
+#: code:addons/stock_inventory_import/models/stock_inventory.py:85
+#, python-format
+msgid "Processed"
+msgstr "Đã xử lý"
+
+#. module: stock_inventory_import
+#: model:ir.model.fields,field_description:stock_inventory_import.field_stock_inventory_import_line__code
+msgid "Product Code"
+msgstr "Mã sản phẩm"
+
+#. module: stock_inventory_import
+#: model:ir.model.fields,field_description:stock_inventory_import.field_stock_inventory_import_line__lot
+msgid "Product Lot"
+msgstr "Lô sản phẩm"
+
+#. module: stock_inventory_import
+#: model:ir.model.fields,field_description:stock_inventory_import.field_stock_inventory_import_line__quantity
+msgid "Quantity"
+msgstr "Số lượng"
+
+#. module: stock_inventory_import
+#: model:ir.model.fields,field_description:stock_inventory_import.field_stock_inventory__filter
+msgid "Selection Filter"
+msgstr "Bộ lọc lựa chọn"
+
+#. module: stock_inventory_import
+#: model:ir.model,name:stock_inventory_import.model_stock_inventory_import_line
+msgid "Stock Inventory Import Line"
+msgstr "Nhập dòng dữ liệu nhập kho"
+
+#. module: stock_inventory_import
+#: code:addons/stock_inventory_import/models/stock_inventory.py:43
+#, python-format
+msgid "There must be one line at least to process"
+msgstr "Phải có ít nhất một dòng để xử lý"
+

@@ -1,0 +1,93 @@
+.sh_medical_vignette {
+  padding: 8px 8px;
+  min-height: 100px;
+}
+
+.sh_medical_image, .sh_medical_details {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.sh_medical_image {
+  width: 90px;
+  height: 90px;
+  text-align: center;
+  overflow: hidden;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -o-border-radius: 3px;
+  -ms-border-radius: 3px;
+  border-radius: 3px;
+  border-collapse: separate;
+  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  -o-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.sh_medical_picture {
+  width: 90px;
+  height: auto;
+  clip: rect(10px, 100px, 110px, 0px);
+}
+
+.sh_medical_picture_wide {
+  height: 90px;
+  width: auto;
+  clip: rect(0px, 115px, 100px, 15px);
+}
+
+.sh_medical_details {
+  width: 185px;
+  font-size: 13px;
+  padding: 2px 5px;
+  color: #4c4c4c;
+  min-height: 120px;
+}
+
+.sh_medical_details h4 {
+  margin: 0;
+  font-size: 13px;
+}
+
+.sh_medical_details h4 a {
+  color: #4c4c4c;
+}
+
+.sh_medical_details h4 a:hover {
+  text-decoration: underline;
+}
+
+.sh_medical_details ul {
+  margin: 3px 0 5px;
+  padding: 0;
+  list-style: none;
+}
+
+.sh_medical_details li {
+  margin: 2px 0;
+  padding: 0;
+}
+
+.openerp .sh_medical_vignette .oe_followers {
+  width: auto;
+  float: none;
+}
+.sh_header_fixed{position: fixed!important;width: 100%;margin-top: -15px;z-index: 1;}
+.sh_box_change_infor{position: fixed;background-color: #ced4da;bottom: 0;text-align: center;width: 100%;border: 1px solid #CED4DA;color: #000000;z-index: 1;}
+.sh_box_change_infor a{color:#134aaf !important;}
+
+.sh-box-control-print .btn.fa{font-size: 14px;}
+.sh-box-control-print .btn.fa span{margin-left: 5px;font-family: Roboto}
+.sh_has_icon .fa{font-size: 20px;}
+
+.sh_kanban_many2many_tag .o_field_many2manytags .o_tag{
+  border: none!important;
+  box-shadow: none;
+  text-indent: 1vw;
+  font-style: italic;
+}
+
+.sh_result_labtest{padding:10px;}
+.sh_result_labtest tr:first-child > td {text-decoration: underline;}
+.sh_result_labtest td{border:1px solid #ccc;padding: 5px;}

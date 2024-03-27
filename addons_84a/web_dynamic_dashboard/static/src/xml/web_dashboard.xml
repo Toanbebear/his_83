@@ -1,0 +1,150 @@
+<template>
+    <div t-name="DDashboardView" class="o_dashboard_container">
+        <div class="o_dashboard_view">
+            <div class="o_dashboard_buttons"/>
+            <div class="o_dashboard_widget" />
+            <br/>
+            <div class="dashboard_mainbar sci_dashboard_mainbar">
+                <div class="dropdown sci_add_block">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Add Block</button>
+                    <ul class="dropdown-menu">
+                        <li class="new_block new_block_4col">Tile</li>
+                        <li class="new_block new_block_3col">Chart Medium 1/3</li>
+                        <li class="new_block new_block_2col">Chart Large 1/2</li>
+                    </ul>
+                </div>
+                <select id="dashboard_selection" name="dashboard_ids">
+                </select>
+            </div>
+            <div id="loading">
+                <img src="/web_dynamic_dashboard/static/icon/loading.gif"/>
+            </div>
+            <p id="empty_dashboard_message" style="display:none">Your dashboard is empty. <br/> You can make one by create a new object in the list view (top-right). <br/> Happy dashboarding!</p>
+            <div class="block_row">
+            </div>
+            <!-- TODO: -->
+            <div id="tableau_container" style="display:none"></div>
+        </div>
+        <div class="o_dashboard_sidebar_container hidden-xs"/>
+        
+        <div class="dashboard_block block_tile" id="block_tile_template" style="display:none">
+            <div class="block_config" style="display:none">
+                <div class="block_config_header">
+                    <i title="Config" class="fa fa-wrench config_toggle"></i>
+                    <i title="Open Detail Configuration" class="fa fa-cog config_detail"></i>
+                    <!-- <i title="Save" class="fa fa-check config_save"></i> -->
+                    <div style="clear:both"></div>
+                </div>
+                <div class="block_config_content">
+                    <input style="width:100%" type="hidden" class="block_config_model_id"/>
+                    <input style="width:25%;clear:both;" type="hidden" class="block_config_operation"/>
+                    <input style="width:50%" type="hidden" class="block_config_field_id"/>
+                    <input style="width:25%" type="hidden" class="block_config_sort"/>
+                    <input style="width:35%;clear:both;" type="hidden" class="block_config_domain_date_field_id"/>
+                    <input style="width:30%" type="hidden" class="block_config_domain_date"/>
+                    <input style="width:35%" type="hidden" class="block_config_time_calculation_method"/>
+                    <input style="width:100%;clear:both;" type="hidden" class="block_config_domain_values_field_id"/>
+                    <input style="width:100%;clear:both;" type="hidden" class="block_config_domain_values_string"/>
+                    <input style="width:100%;clear:both;" type="hidden" class="block_config_subdomain_values_field_id"/>
+                    <input style="width:100%;clear:both;" type="hidden" class="block_config_subdomain_values_string"/>
+                    <input style="width:100%;clear:both;" type="hidden" class="block_config_block_type"/>
+                    <div style="clear:both"></div>
+                    <button class="config_save button_config_save">Save</button>
+                </div>
+            </div>
+            <h2 class="block_error"></h2>
+            <div class="block_tile_header">
+                <i class="fa"></i>
+            </div>
+            <div class="block_tile_content">
+                <h1><span class="block_tile_value"></span><span class="block_tile_uom"></span></h1>
+                <p><span class="block_tile_desc"><input class="block_text" type="text"/></span></p>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+
+        <div class="dashboard_block block_chart" id="block_chart_template" style="display:none">
+            <div class="block_chart_header">
+                <input class="block_text reset_toggle" type="text"/>
+                <!-- <p class="block_subtitle reset_toggle"></p> -->
+            </div>
+            <div class="block_config" style="display:none">
+                <div class="block_config_header">
+                    <i title="Config" class="fa fa-wrench config_toggle"></i>
+                    <i title="Open Detail Configuration" class="fa fa-cog config_detail"></i>
+                    <i title="Reset" class="fa fa-history reset_toggle"></i>
+                    <i style="float:left" title="Expand" class="fa fa-expand expand_toggle"></i>
+                    <i style="float:left" title="List" class="fa fa-table list_toggle"></i>
+                    <!-- <i title="Save" class="fa fa-check config_save"></i> -->
+                    <div style="clear:both"></div>
+                </div>
+                <div class="block_config_content">
+                    <input style="width:100%" type="hidden" class="block_config_model_id"/>
+                    <input style="width:25%;clear:both;" type="hidden" class="block_config_operation"/>
+                    <input style="width:50%" type="hidden" class="block_config_field_id"/>
+                    <input style="width:25%" type="hidden" class="block_config_sort"/>
+                    <input style="width:35%;clear:both;" type="hidden" class="block_config_group_field_id"/>
+                    <input style="width:30%" type="hidden" class="block_config_group_date_format"/>
+                    <input style="width:30%" type="hidden" class="block_config_group_limit"/>
+                    <input style="width:5%;float:left;" type="checkbox" class="block_config_show_group_others block_checkbox"/>
+                    <input style="width:35%;clear:both;" type="hidden" class="block_config_subgroup_field_id"/>
+                    <input style="width:30%" type="hidden" class="block_config_subgroup_date_format"/>
+                    <input style="width:30%" type="hidden" class="block_config_subgroup_limit"/>
+                    <input style="width:5%;float:left;" type="checkbox" class="block_config_show_subgroup_others block_checkbox"/>
+                    <input style="width:35%;clear:both;" type="hidden" class="block_config_domain_date_field_id"/>
+                    <input style="width:30%" type="hidden" class="block_config_domain_date"/>
+                    <input style="width:35%" type="hidden" class="block_config_time_calculation_method"/>
+                    <input style="width:100%;clear:both;" type="hidden" class="block_config_domain_values_field_id"/>
+                    <input style="width:100%;clear:both;" type="hidden" class="block_config_domain_values_string"/>
+                    <input style="width:100%;clear:both;" type="hidden" class="block_config_subdomain_values_field_id"/>
+                    <input style="width:100%;clear:both;" type="hidden" class="block_config_subdomain_values_string"/>
+                    <input style="width:100%;clear:both;" type="hidden" class="block_config_block_type"/>
+                    <div style="clear:both"></div>
+                    <button class="config_save button_config_save">Save</button>
+                </div>
+            </div>
+            <div class="block_chart_content">
+                <h2 class="block_error"></h2>
+            </div>
+            <div class="block_float_button">
+                <span>Action</span>
+                <i class="fa fa-search"></i>
+            </div>
+        </div>
+    </div>
+
+    <t t-name="FieldColorPicker">
+        <div class="input-group colorpicker-component">
+            <input type="text"
+                    t-att-id="widget.id_for_label"
+                    t-att-tabindex="widget.attrs.tabindex"
+                    t-att-autofocus="widget.attrs.autofocus"
+                    t-att-placeholder="widget.attrs.placeholder"
+                    t-att-maxlength="widget.field.size"
+                    class="colorpickerg form-control"
+                    style="width: 100%;border-radius: 3px;height: 25px;"
+                    />
+            <span class="input-group-addon">
+                <i style="width: 100%;
+                    border-radius: 5px;
+                    height: 100px;
+                    display: block;
+                    margin-top: 10px;"></i>
+            </span>
+        </div>
+    </t>
+
+    <t t-name="FieldIconPicker">
+        <div class="input-group">
+            <input type="text"
+                t-att-id="widget.id_for_label"
+                t-att-tabindex="widget.attrs.tabindex"
+                t-att-autofocus="widget.attrs.autofocus"
+                t-att-placeholder="widget.attrs.placeholder"
+                t-att-maxlength="widget.field.size"
+                class="form-control"
+                style="width: 100%;border-radius: 3px;height: 25px;"
+                />
+        </div>
+    </t>
+</template>

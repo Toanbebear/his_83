@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem id="create_temp_menu_root"
+                  name="MS templates"
+                  groups="group_excel_templates_user"
+                  web_icon="ms_templates,static/description/icon.png"
+                  sequence="99"/>
+
+        <record id="create_document_act" model="ir.actions.act_window">
+            <field name="name">Templates</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">temp.creation</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="create_templates_tree" model="ir.ui.view">
+            <field name="name">Templates</field>
+            <field name="model">temp.creation</field>
+            <field name="arch" type="xml">
+                <tree string="Templates">
+                    <field name="name"/>
+                    <field name="template_name"/>
+                    <field name="main_model"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="create_templates_form" model="ir.ui.view">
+            <field name="name">Templates</field>
+            <field name="model">temp.creation</field>
+            <field name="arch" type="xml">
+                <form string="Templates">
+                    <header>
+                        <field name="wizard_action" invisible="1"/>
+                        <button name="create_wizard_action" type="object"
+                                string="Generate Wizard button"
+                                attrs="{'invisible': [('wizard_action', '!=', False)]}"/>
+                        <button name="create_wizard_action" type="object"
+                                string="Remove Wizard button"
+                                attrs="{'invisible': [('wizard_action', '=', False)]}"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        <button string="Test template"
+                                type="object" name="sample_report"
+                                icon ="fa-book" class="oe_stat_button"/>
+                        <button string="Manage samples"
+                                type="object" name="get_attachment_view"
+                                icon ="fa-book" class="oe_stat_button"/>
+                        </div>
+                        <group>
+                            <group string="Template">
+                                <field name="template" filename="template_name"/>
+                                <field name="name"/>
+                                <field name="main_model"/>
+                                <field name="max_samples"/>
+                                <field name="reference"/>
+                                <field name="access_groups" widget="many2many_tags"/>
+                                <field name="template_name" invisible="1"/>
+                                <field name="template_extension" invisible="1"/>
+                            </group>
+                            <group string="Data options">
+                                <field name="all_in_one"/>
+                                <field name="export_horizontally"/>
+                                <field name="export_current_datetime"/>
+                                <field name="current_datetime_positions" attrs="{'invisible': [('export_current_datetime', '=', False)], 'required': [('export_current_datetime', '=', True)]}"/>
+                                <field name="current_datetime_format" attrs="{'invisible': [('export_current_datetime', '=', False)], 'required': [('export_current_datetime', '=', True)]}"/>
+                                <field name="current_datetime_positions_2" attrs="{'invisible': [('current_datetime_positions', '=', False)]}"/>
+                                <field name="current_datetime_format_2" attrs="{'invisible': [('current_datetime_positions_2', '=', False)], 'required': [('current_datetime_positions_2', '!=', False)]}"/>
+                                <field name="export_user_name"/>
+                                <field name="export_user_position" attrs="{'invisible': [('export_user_name', '=', False)], 'required': [('export_user_name', '=', True)]}"/>
+                                <field name="debug" groups="base.group_system"/>
+                            </group>
+                        </group>
+                        <group string="Excel options" attrs="{'invisible': [('template_extension', 'not in', ('xls', 'xlsx'))]}">
+                            <field name="max_col" attrs="{'invisible': [('export_horizontally', '=', False)]}"/>
+                            <field name="max_row" attrs="{'invisible': [('export_horizontally', '=', True)]}"/>
+                            <field name="sheet_name" attrs="{'invisible': [('all_in_one', '=', True)]}"/>
+                            <field name="grp_by_field" attrs="{'invisible': [('all_in_one', '=', False)]}"
+                                   domain="[('model_id', '=', main_model)]"/>
+                            <field name="grp_by_cell" attrs="{'invisible': [('grp_by_field', '=', False)], 'required': [('grp_by_field', '=', True)]}"/>
+                        </group>
+                        <group string="Words options" attrs="{'invisible': ['|', ('template_extension', '!=', 'docx'), ('all_in_one', '=', True)]}">
+                            <field name="table_marks"/>
+                            <field name="table2_marks" attrs="{'invisible': [('table_marks', '=', False)]}"/>
+                        </group>
+                        <notebook>
+                            <page string="Fields">
+                                <field name="chosen_fields">
+                                    <tree editable="bottom">
+                                        <field name="main_field" domain="[('model_id', '=', parent.main_model)]"
+                                        options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                                        <field name="sub_model" invisible="1"/>
+                                        <field name="sub_field" domain="[('model_id', '=', sub_model)]"
+                                        options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                                        <field name="python_code" attrs="{'column_invisible': [('parent.debug', '=', False)]}"/>
+                                        <field name="replacement_format" attrs="{'column_invisible': [('parent.debug', '=', False)]}"/>
+                                        <field name="field_value"/>
+                                        <field name="temp_mark" required="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                        <group string="Available options for 'Replace and format' field:" attrs="{'invisible': [('debug', '=', False)]}">
+                            <group col="1">
+                                <span>Available options:</span>
+                                <span>{'to_upper': True} - set the whole string to upper case.</span>
+                                <span>{'to_int': True} - convert float or int to string form '1,000,000', for MS words.</span>
+                                <span>{'all_to_str': True} - convert all export results of one2many field to a string.</span>
+                                <span>{'n2w': True} - convert number to text, currently support only Vietnamese.</span>
+                                <span>{'time_format': 'Day %d month %m year %Y'} - convert datetime object to string format, using python strftime format.</span>
+                                <span>{'str_format': "That's %s"} - Wrap value in string format.</span>
+                                <span>{'specific value': 'specific_replacement'} - convert specific value to specific replacement, mostly used for selection field, where export values are fixed.</span>
+                            </group>
+                            <group>
+                                <span>Legit form: {'True': 'Yes', 'False': 'No'} or {'male': 'Mr.', 'female': 'Ms.', 'to_upper': True}</span>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="create_temp_menu"
+                  name="Create templates"
+                  parent="create_temp_menu_root"
+                  action="create_document_act"/>
+    </data>
+</odoo>

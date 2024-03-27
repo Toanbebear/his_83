@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="inherit_sh_medical_physician_view" model="ir.ui.view">
+            <field name="name">inherit_sh_medical_physician_view</field>
+            <field name="model">sh.medical.physician</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_physician_view"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='notes']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='degree_id']" position="before">
+                    <field name="employee_id" string="Nhân viên liên quan" required="True"/>
+                </xpath>
+                <xpath expr="//field[@name='work_location']" position="after">
+                    <field name="status" groups="shealth_all_in_one.group_sh_medical_manager"/>
+                </xpath>
+                <xpath expr="//field[@name='notes']" position="after">
+                    <sheet>
+                        <group style="margin-left: 15px;">
+                            <group string="Trạng thái">
+                                <field name="date_work" />
+                                <field name="type_quy" />
+                                <field name="so_cchn"/>
+                                <field name="cc_qldd"/>
+                                <field name="cc_qlbv"/>
+                                <field name="cc_ksnk_48t"/>
+                                <field name="cc_ksnk_3t"/>
+                            </group>
+                            <group string="Thông tin đơn thuốc Điện tử">
+                                <field name="account_prescription" required="True"/>
+                                <field name="pass_prescription" required="True"  password="True"/>
+                                <field name="code_connected" required="True"/>
+                                <button name="get_token_83" string="Tạo Token" type="object" class="btn-success"/>
+                                <field name="token_his_physician" readonly="True"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

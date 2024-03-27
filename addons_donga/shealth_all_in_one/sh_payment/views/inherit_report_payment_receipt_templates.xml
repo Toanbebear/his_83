@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="account.action_report_payment_receipt" model="ir.actions.report">
+            <field name="paperformat_id" ref="shealth_all_in_one.sh_paperformat_medical_payment"/>
+        </record>
+
+        <template id="inherit_report_payment_receipt_templates" inherit_id="account.report_payment_receipt_document">
+            <xpath expr="//div[@class='page']" position="replace">
+                <div class="page" style="font-family:Times New Roman;font-size:30px;">
+                    <div class="oe_structure"/>
+                        <div class="row">
+                            <div class="col-6" style="font-size:25px;">
+                                <div class="m-0" t-field="o.walkin.institution.company_name" style="text-transform: uppercase;font-family:Times New Roman - Bold;font-weight:bolder;"/>
+                                <div><span class="m-0" t-field="o.walkin.institution.street"/>,
+                                    <span class="m-0" t-field="o.walkin.institution.street2"/>,
+                                    <span class="m-0" t-field="o.walkin.institution.city"/>
+                                </div>
+<!--                                <div class="m-0" t-if="o.walkin.institution.phone">Hotline: <span t-field="o.walkin.institution.phone"/></div>-->
+                            </div>
+                            <div class="col-6 text-center" style="font-size:27px;">
+                                <div style="font-family:Times New Roman - Bold;font-weight:bolder;">Mẫu số 01 - TT</div>
+                                <div><i>(Ban hành theo thông tư số 200/2014/TT-BTC<br/>Ngày 22/12/2014 của Bộ tài chính)</i></div>
+                            </div>
+                        </div>
+<!--                        <div class="row">-->
+<!--                            <div class="col-2">-->
+<!--                                <img t-if="o.walkin.institution.image" t-att-src="image_data_uri(o.walkin.institution.image)"-->
+<!--                                     width="220"-->
+<!--                                     border="1"/>-->
+<!--                            </div>-->
+<!--                            <div class="col-7 text-center">-->
+<!--                                <h2 class="m-0" t-field="o.walkin.institution.name"-->
+<!--                                     style="text-transform: uppercase;font-weight:bold;"/>-->
+<!--                                <div style="font-size:27px;"><span class="m-0" t-field="o.walkin.institution.street"/>,-->
+<!--                                    <span class="m-0" t-field="o.walkin.institution.street2"/>,-->
+<!--                                    <span class="m-0" t-field="o.walkin.institution.city"/>-->
+<!--                                </div>-->
+<!--&lt;!&ndash;                                <div>Hotline:&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <span class="m-0" t-field="o.walkin.institution.phone"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <div style="font-weight: bold;text-decoration: underline;">Website:&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <span class="m-0" t-field="o.walkin.institution.website"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+<!--                            </div>-->
+<!--                            <div class="col-3">-->
+<!--                                <strong style="font-size:24px;margin-left:35px;">Mã BN:-->
+<!--                                    <span t-field="o.walkin.patient.identification_code"/>-->
+<!--                                </strong>-->
+<!--                                <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.walkin.patient.identification_code, 300, 40)"/>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <h1 class="text-center mt16">-->
+<!--                            <strong>PHIẾU THU</strong>-->
+<!--                        </h1>-->
+
+<!--                        <div t-if="o.name">-->
+<!--                            <span>- Số phiếu:</span>-->
+<!--                            <strong t-field="o.name"/>-->
+<!--                        </div>-->
+                        <div class="row">
+                            <div class="col-3">
+<!--                                <strong style="font-size:22px;font-family:Times New Roman - Bold;font-weight:bolder;">Mã BN: <span t-field="o.patient.identification_code"/></strong><br/>-->
+<!--                                <img style="margin-left: -50px;" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.patient.identification_code, 320, 50)"/>-->
+                            </div>
+                            <div class="col-6 text-center" style="font-family:Times New Roman - Bold;font-weight:bolder;">
+                                <div style="font-size: 40px;">PHIẾU THU</div>
+                                <div t-if="o.payment_date">
+                                    <b><i t-esc="o.payment_date.strftime('NGAY %d THANG %m NAM %Y').replace('NGAY', 'Ngày').replace('THANG', 'tháng').replace('NAM', 'năm')"/></b>
+                                </div>
+                            </div>
+                            <div class="col-3 text-left">
+                                <div style="font-size: 24px;">
+                                    Quyển số: ..................<br/>
+                                    <t t-if="o.name">
+                                        Số: <span t-field="o.name"/><br/>
+                                    </t>
+                                    Nợ: 1111<br/>
+                                    Có: 5111, 33311
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-8">
+                                <div t-if="o.walkin">
+                                    <span>Họ tên người nộp tiền:</span>
+                                    <span t-field="o.walkin.patient.name"/>
+                                </div>
+                            </div>
+<!--                            <div class="col-4">-->
+<!--                                <div t-if="o.walkin">-->
+<!--                                    <span class="ml-5">Tuổi:-->
+<!--                                        <span t-field="o.walkin.patient.age"/>-->
+<!--                                    </span>-->
+<!--                                    - <span t-field="o.walkin.patient.sex"/>-->
+<!--                                </div>-->
+<!--                            </div>-->
+                        </div>
+
+                        <div t-if="o.walkin" style="font-size: 26px;">
+                            <span>Địa chỉ:</span>
+                            <span t-field="o.walkin.patient.street"/>,
+                            <span t-field="o.walkin.patient.state_id"/>
+                        </div>
+
+                        <div t-if="o.note" style="font-size: 28px;">
+                            <span>Lý do nộp:</span>
+                            <span t-field="o.note"/>
+                        </div>
+
+                        <div t-if="o.amount">
+                            <t t-set="amount" t-value="'{:,}'.format(int(o.amount))"/>
+                            <span>Số tiền:</span>
+                            <span style="font-family:Times New Roman - Bold;font-weight:bolder;" t-esc="amount"/>
+                            <span style="font-family:Times New Roman - Bold;font-weight:bolder;" t-field="o.currency_id.name"/>
+                        </div>
+
+                        <div t-if="o.text_total">
+                            <span>Viết bằng chữ:</span>
+                            <span style="font-weight:bolder;"><i style="font-family:Times New Roman - Bold;" t-field="o.text_total"/> chẵn.</span>
+                        </div>
+
+                    <div class="row">
+                        <div class="col-7">
+                            <div>Kèm theo: ........... chứng từ gốc</div>
+                        </div>
+                        <div class="col-5 text-center">
+<!--                            <div t-if="o.payment_date">-->
+<!--                                <div><i t-esc="o.payment_date.strftime('Ngày %d tháng %m năm %Y')"/></div>-->
+<!--                            </div>-->
+                            <div><i>Ngày ... tháng ... năm .....</i></div>
+                        </div>
+                    </div>
+
+                    <div class="row text-center">
+                        <div class="text-center mr-4">
+                            <div><span style="font-family:Times New Roman - Bold;font-weight:bolder;">Giám đốc</span></div>
+                            <div><i>(Ký, họ tên, đóng dấu)</i></div>
+                            <div style="height:80px;"/>
+                            <t t-set="gd" t-value="request.env['hr.employee'].search([('job_id', '=', request.env.ref('__import__.khn_medical_job_gd',False).id if request.env.ref('__import__.khn_medical_job_gd',False) else 0)],limit=1)"/>
+<!--                            <div t-if="gd" style="font-size:25px;font-weight:bold;" >-->
+<!--                              <span t-field="gd.name"/>-->
+<!--                            </div>-->
+                            <div>
+                                <span style="font-weight:bolder;font-size:25px;">Đỗ Mỹ Linh</span>
+                            </div>
+                        </div>
+                        <div class="text-center mr-4">
+                            <div><span style="font-family:Times New Roman - Bold;font-weight:bolder;">Kế toán trưởng</span></div>
+                            <div><i>(Ký, họ tên)</i></div>
+                            <div style="height:80px;"/>
+                            <t t-set="ktt" t-value="request.env['hr.employee'].search([('job_id', '=', request.env.ref('__import__.khn_medical_job_ktt',False).id if request.env.ref('__import__.khn_medical_job_ktt',False) else 0)],limit=1)"/>
+                            <div t-if="ktt" style="font-size:25px;font-weight:bold;" >
+                              <span t-field="ktt.name"/>
+                            </div>
+                        </div>
+                        <div class="text-center mr-4">
+                            <div><span style="font-family:Times New Roman - Bold;font-weight:bolder;">Người nộp tiền</span></div>
+                            <div><i>(Ký, họ tên)</i></div>
+                            <div style="height:80px;"/>
+                            <div t-if="o.walkin.patient" style="font-size:25px;font-weight:bold;" >
+                              <span t-field="o.walkin.patient.name"/>
+                            </div>
+                        </div>
+                        <div class="text-center mr-4">
+                            <div><span style="font-family:Times New Roman - Bold;font-weight:bolder;">Người lập phiếu</span></div>
+                            <div><i>(Ký, họ tên)</i></div>
+                            <div style="height:80px;"/>
+                            <t t-set="tn" t-value="request.env['hr.employee'].search([('job_id', '=', request.env.ref('__import__.khn_medical_job_tn',False).id if request.env.ref('__import__.khn_medical_job_tn',False) else 0)],limit=1)"/>
+<!--                            <div t-if="tn" style="font-size:25px;font-weight:bold;" >-->
+<!--                              <span t-field="tn.name"/>-->
+<!--                            </div>-->
+                            <div t-if="o.user.name" style="font-size:25px;font-weight:bold;" >
+                              <span t-field="o.user.name"/>
+                            </div>
+                        </div>
+                        <div class="text-center mr-4">
+                            <div><span style="font-family:Times New Roman - Bold;font-weight:bolder;">Thủ quỹ</span></div>
+                            <div><i>(Ký, họ tên)</i></div>
+                            <div style="height:80px;"/>
+                            <t t-set="tq" t-value="request.env['hr.employee'].search([('job_id', '=', request.env.ref('__import__.khn_medical_job_tq',False).id if request.env.ref('__import__.khn_medical_job_tq',False) else 0)],limit=1)"/>
+                            <div t-if="tq" style="font-size:25px;font-weight:bold;" >
+                              <span t-field="tq.name"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div t-if="o.state=='posted'">
+                        Đã nhận đủ số tiền (Viết bằng chữ): <span t-field="o.text_total"/> chẵn.
+                    </div>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>

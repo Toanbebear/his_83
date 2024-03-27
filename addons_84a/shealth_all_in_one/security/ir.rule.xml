@@ -1,0 +1,716 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <!-- Patient -->
+
+        <record id="sh_medical_patient_patient_profile" model="ir.rule">
+            <field name="name">Each patient can see only own profile</field>
+            <field name="model_id" ref="model_sh_medical_patient"/>
+            <field name="domain_force">[('sh_patient_user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_patient'))]"/>
+        </record>
+
+        <record id="sh_medical_patient_physician_admin_profile" model="ir.rule">
+            <field name="name">Physician and administrator can see all the patients</field>
+            <field name="model_id" ref="model_sh_medical_patient"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician')),(4, ref('shealth_all_in_one.group_sh_medical_manager'))]"/>
+        </record>
+
+        <!-- Appointments -->
+
+<!--        <record id="sh_medical_appointment_patient" model="ir.rule">-->
+<!--            <field name="name">Each patient can see only own appointments</field>-->
+<!--            <field name="model_id" ref="model_sh_medical_appointment"/>-->
+<!--            <field name="domain_force">['|', ('patient', '=', False), ('patient.sh_patient_user_id', '=', user.id)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_patient'))]"/>-->
+<!--        </record>-->
+
+<!--        <record id="sh_medical_appointment_physician" model="ir.rule">-->
+<!--            <field name="name">Each physician can see only own appointment</field>-->
+<!--            <field name="model_id" ref="model_sh_medical_appointment"/>-->
+<!--            <field name="domain_force">['|', ('doctor', '=', False), ('doctor.sh_user_id', '=', user.id)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician'))]"/>-->
+<!--        </record>-->
+
+<!--        <record id="sh_medical_appointment_admin" model="ir.rule">-->
+<!--            <field name="name">Access all the appointments</field>-->
+<!--            <field name="model_id" ref="model_sh_medical_appointment"/>-->
+<!--            <field name="domain_force">[(1, '=', 1)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_manager'))]"/>-->
+<!--        </record>-->
+
+        <!-- Prescriptions -->
+
+        <record id="sh_medical_prescription_patient" model="ir.rule">
+            <field name="name">Each patient can see only own prescriptions</field>
+            <field name="model_id" ref="model_sh_medical_prescription"/>
+            <field name="domain_force">['|', ('patient', '=', False), ('patient.sh_patient_user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_patient'))]"/>
+        </record>
+
+        <record id="sh_medical_prescription_physician" model="ir.rule">
+            <field name="name">Each physician can see only own prescriptions</field>
+            <field name="model_id" ref="model_sh_medical_prescription"/>
+            <field name="domain_force">['|', ('doctor', '=', False), ('doctor.sh_user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician'))]"/>
+            <field name="active">False</field>
+        </record>
+
+        <record id="sh_medical_prescription_admin" model="ir.rule">
+            <field name="name">Access all the prescriptions</field>
+            <field name="model_id" ref="model_sh_medical_prescription"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_stock_manager'))]"/>
+        </record>
+
+        <!-- Inpatient Admissions -->
+
+<!--        <record id="sh_medical_inpatient_mydetails_global" model="ir.rule">-->
+<!--            <field name="name">Each patient can see only own admissions</field>-->
+<!--            <field name="model_id" ref="model_sh_medical_inpatient_mydetails"/>-->
+<!--            <field name="domain_force">['|', ('patient', '=', False), ('patient.sh_patient_user_id', '=', user.id)]</field>-->
+<!--            <field name="global" eval="True"/>-->
+<!--        </record>-->
+
+        <!-- Physician -->
+
+<!--        <record id="sh_medical_physician_physician" model="ir.rule">-->
+<!--            <field name="name">Each physican can see only own profile</field>-->
+<!--            <field name="model_id" ref="model_sh_medical_physician"/>-->
+<!--            <field name="domain_force">[('sh_user_id', '=', user.id)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician'))]"/>-->
+<!--        </record>-->
+
+        <record id="sh_medical_physician_physician_admin" model="ir.rule">
+            <field name="name">Patient and administrator can see all the physicians</field>
+            <field name="model_id" ref="model_sh_medical_physician"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_patient')),(4, ref('shealth_all_in_one.group_sh_medical_document')),(4, ref('shealth_all_in_one.group_sh_medical_manager'))]"/>
+        </record>
+
+        <!-- Vaccines -->
+
+        <record id="sh_medical_vaccines_patient" model="ir.rule">
+            <field name="name">Each patient can see only own vaccines</field>
+            <field name="model_id" ref="model_sh_medical_vaccines"/>
+            <field name="domain_force">['|', ('patient', '=', False), ('patient.sh_patient_user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_patient'))]"/>
+        </record>
+
+        <record id="sh_medical_patient_physician_vaccine" model="ir.rule">
+            <field name="name">Physician and administrator can see all the vaccines</field>
+            <field name="model_id" ref="model_sh_medical_vaccines"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician')),(4, ref('shealth_all_in_one.group_sh_medical_document')),(4, ref('shealth_all_in_one.group_sh_medical_manager'))]"/>
+        </record>
+
+        <!-- Evaluations -->
+
+        <record id="sh_medical_patient_evaluation_profile" model="ir.rule">
+            <field name="name">Each patient can see only own evaluation</field>
+            <field name="model_id" ref="model_sh_medical_evaluation"/>
+            <field name="domain_force">['|', ('patient', '=', False), ('patient.sh_patient_user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_patient'))]"/>
+        </record>
+
+        <record id="sh_medical_evaluation_physician" model="ir.rule">
+            <field name="name">Each physician can see only own evaluation</field>
+            <field name="model_id" ref="model_sh_medical_evaluation"/>
+            <field name="domain_force">['|', ('doctor', '=', False), ('doctor.sh_user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician'))]"/>
+        </record>
+
+        <record id="sh_medical_evaluation_admin" model="ir.rule">
+            <field name="name">Access all the evaluations</field>
+            <field name="model_id" ref="model_sh_medical_evaluation"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_manager')),(4, ref('shealth_all_in_one.group_sh_medical_document'))]"/>
+        </record>
+
+        <!-- Lab Tests -->
+
+        <record id="sh_medical_patient_lab_test_profile" model="ir.rule">
+            <field name="name">Each patient can see only own lab tests</field>
+            <field name="model_id" ref="model_sh_medical_lab_test"/>
+            <field name="domain_force">['|', ('patient', '=', False), ('patient.sh_patient_user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_patient'))]"/>
+        </record>
+
+<!--        <record id="sh_medical_lab_test_physician" model="ir.rule">-->
+<!--            <field name="name">Each physician can see and write only own lab tests</field>-->
+<!--            <field name="model_id" ref="model_sh_medical_lab_test"/>-->
+<!--            <field name="domain_force">['|', ('pathologist', '=', False), ('pathologist.sh_user_id', '=', user.id)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician'))]"/>-->
+<!--            <field name="perm_read" eval="False"/>-->
+<!--            <field name="perm_write" eval="True"/>-->
+<!--            <field name="perm_create" eval="True"/>-->
+<!--            <field name="perm_unlink" eval="True"/>-->
+<!--        </record>-->
+
+        <record id="sh_medical_lab_test_physician_subclinical" model="ir.rule">
+            <field name="name">Each physician subclinical can see and write their department of lab tests</field>
+            <field name="model_id" ref="model_sh_medical_lab_test"/>
+            <field name="domain_force">[('department.physician', 'in', user.physician_ids.ids)]</field>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician_subclinical'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+<!--        <record id="sh_medical_lab_test_state_completed" model="ir.rule">-->
+<!--            <field name="name">Disable sửa khi Phiếu xét nghiệm đã ở trạng thái hoàn thành</field>-->
+<!--            <field name="model_id" ref="model_sh_medical_lab_test"/>-->
+<!--            <field name="domain_force">[('state', 'not in', ['Completed'])]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician_subclinical')),(4, ref('shealth_all_in_one.group_sh_medical_physician')),(4, ref('shealth_all_in_one.group_sh_medical_nurse'))]"/>-->
+<!--            <field name="perm_read" eval="False"/>-->
+<!--            <field name="perm_write" eval="True"/>-->
+<!--            <field name="perm_create" eval="False"/>-->
+<!--            <field name="perm_unlink" eval="False"/>-->
+<!--        </record>-->
+
+<!--        <record id="sh_medical_imaging_state_completed" model="ir.rule">-->
+<!--            <field name="name">Disable sửa khi Phiếu CĐHA-TDCN đã ở trạng thái hoàn thành</field>-->
+<!--            <field name="model_id" ref="model_sh_medical_imaging"/>-->
+<!--            <field name="domain_force">[('state', 'not in', ['Completed'])]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician_subclinical')),(4, ref('shealth_all_in_one.group_sh_medical_physician')),(4, ref('shealth_all_in_one.group_sh_medical_nurse'))]"/>-->
+<!--            <field name="perm_read" eval="False"/>-->
+<!--            <field name="perm_write" eval="True"/>-->
+<!--            <field name="perm_create" eval="False"/>-->
+<!--            <field name="perm_unlink" eval="False"/>-->
+<!--        </record>-->
+
+<!--        <record id="sh_medical_surgery_state_completed" model="ir.rule">-->
+<!--            <field name="name">Disable sửa khi Phiếu PTTT đã ở trạng thái hoàn thành</field>-->
+<!--            <field name="model_id" ref="model_sh_medical_surgery"/>-->
+<!--            <field name="domain_force">[('state', 'not in', ['Done','Signed'])]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician_surgery')),(4, ref('shealth_all_in_one.group_sh_medical_nurse')),(4, ref('shealth_all_in_one.group_sh_medical_stock_manager'))]"/>-->
+<!--            <field name="perm_read" eval="False"/>-->
+<!--            <field name="perm_write" eval="True"/>-->
+<!--            <field name="perm_create" eval="False"/>-->
+<!--            <field name="perm_unlink" eval="False"/>-->
+<!--        </record>-->
+
+<!--        <record id="sh_medical_specialty_state_completed" model="ir.rule">-->
+<!--            <field name="name">Disable sửa khi Phiếu chuyên khoa đã ở trạng thái hoàn thành</field>-->
+<!--            <field name="model_id" ref="model_sh_medical_specialty"/>-->
+<!--            <field name="domain_force">[('state', 'not in', ['Done'])]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician_odontology')),(4, ref('shealth_all_in_one.group_sh_medical_physician_spa')),(4, ref('shealth_all_in_one.group_sh_medical_nurse'))]"/>-->
+<!--            <field name="perm_read" eval="False"/>-->
+<!--            <field name="perm_write" eval="True"/>-->
+<!--            <field name="perm_create" eval="False"/>-->
+<!--            <field name="perm_unlink" eval="False"/>-->
+<!--        </record>-->
+
+        <record id="sh_medical_specialty_admin" model="ir.rule">
+            <field name="name">Access all the specialty</field>
+            <field name="model_id" ref="model_sh_medical_specialty"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_manager')),(4, ref('shealth_all_in_one.group_sh_medical_document'))]"/>
+        </record>
+
+        <record id="sh_medical_lab_test_admin" model="ir.rule">
+            <field name="name">Access all the lab_test</field>
+            <field name="model_id" ref="model_sh_medical_lab_test"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_manager')),(4, ref('shealth_all_in_one.group_sh_medical_document'))]"/>-->
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_manager')),(4, ref('shealth_all_in_one.group_sh_medical_document')),(4, ref('shealth_all_in_one.group_sh_medical_physician_subclinical_labtest'))]"/>
+        </record>
+
+        <record id="sh_medical_imaging_admin" model="ir.rule">
+            <field name="name">Access all the imaging</field>
+            <field name="model_id" ref="model_sh_medical_imaging"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_manager')),(4, ref('shealth_all_in_one.group_sh_medical_document'))]"/>-->
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_manager')),(4, ref('shealth_all_in_one.group_sh_medical_document')),(4, ref('shealth_all_in_one.group_sh_medical_physician_subclinical_imaging'))]"/>
+        </record>
+
+<!--        <record id="sh_stock_picking_state_not_draft" model="ir.rule">-->
+<!--            <field name="name">Disable nút sửa khi Phiếu kho không ở trạng thái Nháp</field>-->
+<!--            <field name="model_id" ref="model_stock_picking"/>-->
+<!--            <field name="domain_force">[('state', 'not in', ['done','cancel','confirmed','assigned'])]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician')),(4, ref('shealth_all_in_one.group_sh_medical_physician_subclinical')),(4, ref('shealth_all_in_one.group_sh_medical_nurse'))]"/>-->
+<!--            <field name="perm_read" eval="False"/>-->
+<!--            <field name="perm_write" eval="True"/>-->
+<!--            <field name="perm_create" eval="False"/>-->
+<!--            <field name="perm_unlink" eval="False"/>-->
+<!--        </record>-->
+
+<!--        <record id="sh_stock_scrap_state_done" model="ir.rule">-->
+<!--            <field name="name">Disable nút sửa khi Phiếu xuất sử dụng phòng/tiêu hủy đã hoàn thành</field>-->
+<!--            <field name="model_id" ref="model_stock_scrap"/>-->
+<!--            <field name="domain_force">[('state', 'not in', ['done'])]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician')),(4, ref('shealth_all_in_one.group_sh_medical_physician_subclinical')),(4, ref('shealth_all_in_one.group_sh_medical_nurse'))]"/>-->
+<!--            <field name="perm_read" eval="False"/>-->
+<!--            <field name="perm_write" eval="True"/>-->
+<!--            <field name="perm_create" eval="False"/>-->
+<!--            <field name="perm_unlink" eval="False"/>-->
+<!--        </record>-->
+
+        <record id="sh_stock_scrap_sh_stock_manager" model="ir.rule">
+            <field name="name">Toàn quyền truy cập phiếu xuất sử dụng và tiêu hủy vs tk quản lý kho dược</field>
+            <field name="model_id" ref="model_stock_scrap"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_stock_manager'))]"/>
+        </record>
+
+        <record id="sh_stock_picking_sh_stock_manager" model="ir.rule">
+            <field name="name">Toàn quyền truy cập phiếu kho vs tk quản lý kho dược</field>
+            <field name="model_id" ref="model_stock_picking"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_stock_manager'))]"/>
+        </record>
+
+<!--        <record id="sh_purchase_order_state_not_draft" model="ir.rule">-->
+<!--            <field name="name">Disable nút sửa khi đơn mua hàng nhà cung cấp ko ở trạng thái nháp</field>-->
+<!--            <field name="model_id" ref="model_purchase_order"/>-->
+<!--            <field name="domain_force">[('state', 'not in', ['purchase','cancel','done'])]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_stock_manager'))]"/>-->
+<!--            <field name="perm_read" eval="False"/>-->
+<!--            <field name="perm_write" eval="True"/>-->
+<!--            <field name="perm_create" eval="False"/>-->
+<!--            <field name="perm_unlink" eval="False"/>-->
+<!--        </record>-->
+
+<!--        <record id="sh_stock_scrap_state_not_draft" model="ir.rule">-->
+<!--            <field name="name">Disable nút sửa khi phiếu tiêu hủy và xuất sử dụng phòng ko ở trạng thái nháp</field>-->
+<!--            <field name="model_id" ref="model_purchase_order"/>-->
+<!--            <field name="domain_force">[('state', 'not in', ['done'])]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician')),(4, ref('shealth_all_in_one.group_sh_medical_physician_subclinical')),(4, ref('shealth_all_in_one.group_sh_medical_nurse')),(4, ref('shealth_all_in_one.group_sh_medical_stock_manager'))]"/>-->
+<!--            <field name="perm_read" eval="False"/>-->
+<!--            <field name="perm_write" eval="True"/>-->
+<!--            <field name="perm_create" eval="False"/>-->
+<!--            <field name="perm_unlink" eval="False"/>-->
+<!--        </record>-->
+
+<!--        <record id="sh_medical_lab_test_physician" model="ir.rule">-->
+<!--            <field name="name">Each physician can write only own lab tests</field>-->
+<!--            <field name="model_id" ref="model_sh_medical_lab_test"/>-->
+<!--            <field name="domain_force">['|', ('pathologist', '=', False), ('pathologist.sh_user_id', '=', user.id)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician'))]"/>-->
+<!--            -->
+<!--        </record>-->
+
+        <record id="sh_medical_lab_test_admin" model="ir.rule">
+            <field name="name">Access all the lab tests</field>
+            <field name="model_id" ref="model_sh_medical_lab_test"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_manager')),(4, ref('shealth_all_in_one.group_sh_medical_document'))]"/>
+        </record>
+
+        <!-- Pediatrics System Checklist -->
+
+<!--        <record id="sh_medical_pediatrics_psc_profile" model="ir.rule">-->
+<!--            <field name="name">Each patient can see only own psc</field>-->
+<!--            <field name="model_id" ref="model_sh_medical_pediatrics_psc"/>-->
+<!--            <field name="domain_force">['|', ('patient', '=', False), ('patient.sh_patient_user_id', '=', user.id)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_patient'))]"/>-->
+<!--        </record>-->
+
+<!--        <record id="sh_medical_pediatrics_psc_physician" model="ir.rule">-->
+<!--            <field name="name">Access all the psc</field>-->
+<!--            <field name="model_id" ref="model_sh_medical_pediatrics_psc"/>-->
+<!--            <field name="domain_force">[(1, '=', 1)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician'))]"/>-->
+<!--        </record>-->
+
+<!--        <record id="sh_medical_pediatrics_psc_admin" model="ir.rule">-->
+<!--            <field name="name">Access all the psc</field>-->
+<!--            <field name="model_id" ref="model_sh_medical_pediatrics_psc"/>-->
+<!--            <field name="domain_force">[(1, '=', 1)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_manager'))]"/>-->
+<!--        </record>-->
+
+        <!-- RCRI -->
+
+        <record id="sh_medical_surgery_rcri_profile" model="ir.rule">
+            <field name="name">Each patient can see only own rcri</field>
+            <field name="model_id" ref="model_sh_medical_surgery_rcri"/>
+            <field name="domain_force">['|', ('patient', '=', False), ('patient.sh_patient_user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_patient'))]"/>
+        </record>
+
+        <record id="sh_medical_surgery_rcri_physician" model="ir.rule">
+            <field name="name">Access all the rcri</field>
+            <field name="model_id" ref="model_sh_medical_surgery_rcri"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician'))]"/>
+        </record>
+
+        <record id="sh_medical_surgery_rcri_admin" model="ir.rule">
+            <field name="name">Access all the rcri</field>
+            <field name="model_id" ref="model_sh_medical_surgery_rcri"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_manager')),(4, ref('shealth_all_in_one.group_sh_medical_document'))]"/>
+        </record>
+
+        <!-- Surgeries -->
+
+        <record id="sh_medical_surgery_profile" model="ir.rule">
+            <field name="name">Each patient can see only own surgeries</field>
+            <field name="model_id" ref="model_sh_medical_surgery"/>
+            <field name="domain_force">['|', ('patient', '=', False), ('patient.sh_patient_user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_patient'))]"/>
+        </record>
+
+<!--        <record id="sh_medical_surgery_physician_surgery" model="ir.rule">-->
+<!--            <field name="name">Each physician can see only own surgeries</field>-->
+<!--            <field name="model_id" ref="model_sh_medical_surgery"/>-->
+<!--            <field name="domain_force">['|', ('surgeon', '=', False), ('surgeon.sh_user_id', '=', user.id)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician_surgery'))]"/>-->
+<!--        </record>-->
+
+        <record id="sh_medical_surgery_admin" model="ir.rule">
+            <field name="name">Access all the surgeries</field>
+            <field name="model_id" ref="model_sh_medical_surgery"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_manager')),(4, ref('shealth_all_in_one.group_sh_medical_document'))]"/>
+        </record>
+
+        <!-- Ophthalmology Management -->
+
+<!--        <record id="sh_medical_ophthalmology_profile" model="ir.rule">-->
+<!--            <field name="name">Each patient can see only own ophthalmology</field>-->
+<!--            <field name="model_id" ref="model_sh_medical_ophthalmology"/>-->
+<!--            <field name="domain_force">['|', ('patient', '=', False), ('patient.sh_patient_user_id', '=', user.id)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_patient'))]"/>-->
+<!--        </record>-->
+
+<!--        <record id="sh_medical_ophthalmology_physician" model="ir.rule">-->
+<!--            <field name="name">Each physician can see only own ophthalmology</field>-->
+<!--            <field name="model_id" ref="model_sh_medical_ophthalmology"/>-->
+<!--            <field name="domain_force">['|', ('doctor', '=', False), ('doctor.sh_user_id', '=', user.id)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician'))]"/>-->
+<!--        </record>-->
+
+<!--        <record id="sh_medical_ophthalmology_admin" model="ir.rule">-->
+<!--            <field name="name">Access all the ophthalmology</field>-->
+<!--            <field name="model_id" ref="model_sh_medical_ophthalmology"/>-->
+<!--            <field name="domain_force">[(1, '=', 1)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_manager'))]"/>-->
+<!--        </record>-->
+
+        <!-- Rounding Management -->
+
+<!--        <record id="sh_medical_patient_rounding_profile" model="ir.rule">-->
+<!--            <field name="name">Each patient can see only own rounding details</field>-->
+<!--            <field name="model_id" ref="model_sh_medical_patient_rounding"/>-->
+<!--            <field name="domain_force">['|', ('patient', '=', False), ('patient.sh_patient_user_id', '=', user.id)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_patient'))]"/>-->
+<!--        </record>-->
+
+<!--        <record id="sh_medical_patient_rounding_physician" model="ir.rule">-->
+<!--            <field name="name">Each physician can see only own rounding details</field>-->
+<!--            <field name="model_id" ref="model_sh_medical_patient_rounding"/>-->
+<!--            <field name="domain_force">['|', ('doctor', '=', False), ('doctor.sh_user_id', '=', user.id)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician'))]"/>-->
+<!--        </record>-->
+
+<!--        <record id="sh_medical_patient_rounding_admin" model="ir.rule">-->
+<!--            <field name="name">Access all the rounding details</field>-->
+<!--            <field name="model_id" ref="model_sh_medical_patient_rounding"/>-->
+<!--            <field name="domain_force">[(1, '=', 1)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_manager'))]"/>-->
+<!--        </record>-->
+
+        <!-- Ambulatory Cares Management -->
+
+<!--        <record id="sh_medical_patient_ambulatory_cares_profile" model="ir.rule">-->
+<!--            <field name="name">Each patient can see only own ambulatory cares details</field>-->
+<!--            <field name="model_id" ref="model_sh_medical_patient_ambulatory"/>-->
+<!--            <field name="domain_force">['|', ('patient', '=', False), ('patient.sh_patient_user_id', '=', user.id)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_patient'))]"/>-->
+<!--        </record>-->
+
+<!--        <record id="sh_medical_patient_ambulatory_cares_physician" model="ir.rule">-->
+<!--            <field name="name">Each physician can see only own ambulatory cares</field>-->
+<!--            <field name="model_id" ref="model_sh_medical_patient_ambulatory"/>-->
+<!--            <field name="domain_force">['|', ('doctor', '=', False), ('doctor.sh_user_id', '=', user.id)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician'))]"/>-->
+<!--        </record>-->
+
+<!--        <record id="sh_medical_patient_ambulatory_cares_admin" model="ir.rule">-->
+<!--            <field name="name">Access all the ambulatory cares details</field>-->
+<!--            <field name="model_id" ref="model_sh_medical_patient_ambulatory"/>-->
+<!--            <field name="domain_force">[(1, '=', 1)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_manager'))]"/>-->
+<!--        </record>-->
+
+        <!-- Imaging Test Management -->
+
+        <record id="sh_medical_imaging_profile" model="ir.rule">
+            <field name="name">Each patient can see only own imaging record</field>
+            <field name="model_id" ref="model_sh_medical_imaging"/>
+            <field name="domain_force">['|', ('patient', '=', False), ('patient.sh_patient_user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_patient'))]"/>
+        </record>
+
+<!--        <record id="sh_medical_imaging_physician" model="ir.rule">-->
+<!--            <field name="name">Each physician can see only own imaging record</field>-->
+<!--            <field name="model_id" ref="model_sh_medical_imaging"/>-->
+<!--            <field name="domain_force">['|', ('requestor', '=', False), ('requestor.sh_user_id', '=', user.id)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician'))]"/>-->
+<!--        </record>-->
+
+        <record id="sh_medical_imaging_admin" model="ir.rule">
+            <field name="name">Access all the imaging</field>
+            <field name="model_id" ref="model_sh_medical_imaging"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_manager')),(4, ref('shealth_all_in_one.group_sh_medical_document'))]"/>
+        </record>
+
+        <record id="sh_medical_imaging_physician_subclinical" model="ir.rule">
+            <field name="name">Each physician subclinical can see and write their department of imaging tests</field>
+            <field name="model_id" ref="model_sh_medical_imaging"/>
+            <field name="domain_force">[('department.physician', 'in', [user.physician_ids.id])]</field>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician_subclinical'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!-- Register for Walkin -->
+
+        <record id="sh_medical_appointment_register_walkin_profile" model="ir.rule">
+            <field name="name">Each patient can see only own walk in</field>
+            <field name="model_id" ref="model_sh_medical_appointment_register_walkin"/>
+            <field name="domain_force">['|', ('patient', '=', False), ('patient.sh_patient_user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_patient'))]"/>
+        </record>
+
+<!--        <record id="sh_medical_appointment_register_walkin_physician" model="ir.rule">-->
+<!--            <field name="name">Each physician can see only own walk ins</field>-->
+<!--            <field name="name">Each physician can see only own walk ins</field>-->
+<!--            <field name="model_id" ref="model_sh_medical_appointment_register_walkin"/>-->
+<!--            <field name="domain_force">['|', ('doctor', '=', False), ('doctor.sh_user_id', '=', user.id)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician'))]"/>-->
+<!--        </record>-->
+
+<!--        <record id="sh_medical_appointment_register_walkin_admin" model="ir.rule">-->
+<!--            <field name="name">Access all the walk ins</field>-->
+<!--            <field name="model_id" ref="model_sh_medical_appointment_register_walkin"/>-->
+<!--            <field name="domain_force">[(1, '=', 1)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_manager')),(4, ref('shealth_all_in_one.group_sh_medical_document'))]"/>-->
+<!--        </record>-->
+
+        <!-- PHIẾU KHÁM -->
+        <record id="sh_medical_walkin_nurse" model="ir.rule">
+            <field name="name">Điều dưỡng xem được tất cả các phiếu khám</field>
+            <field name="model_id" ref="model_sh_medical_appointment_register_walkin"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_nurse'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+        <record id="sh_medical_walkin_physician_surgery" model="ir.rule">
+            <field name="name">Bác sĩ phẫu thuật chỉ thấy các phiếu khám phẫu thuật</field>
+            <field name="model_id" ref="model_sh_medical_appointment_register_walkin"/>
+            <field name="domain_force" model="sh.medical.health.center.ot" eval="[('service_room', 'in', [obj().env.ref('shealth_all_in_one.sh_kb_pttt_room_knhn').id])]"/>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician_surgery'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+        <record id="sh_medical_walkin_physician_odontology" model="ir.rule">
+            <field name="name">Bác sĩ nha khoa chỉ thấy các phiếu khám nha khoa</field>
+            <field name="model_id" ref="model_sh_medical_appointment_register_walkin"/>
+            <field name="domain_force" model="sh.medical.health.center.ot" eval="[('service_room', 'in', [obj().env.ref('shealth_all_in_one.sh_kb_rhm_room_knhn').id])]"/>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician_odontology'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+        <record id="sh_medical_walkin_physician_spa" model="ir.rule">
+            <field name="name">Bác sĩ da liễu chỉ thấy các phiếu khám da liễu</field>
+            <field name="model_id" ref="model_sh_medical_appointment_register_walkin"/>
+            <field name="domain_force" model="sh.medical.health.center.ot" eval="[('service_room', 'in', [obj().env.ref('shealth_all_in_one.sh_kb_dalieu_room_knhn').id])]"/>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician_spa'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+<!--        <record id="sh_medical_stock_picking_physician_subclinical_imaging" model="ir.rule">-->
+<!--            <field name="name">Bác sĩ CĐHA chỉ thấy các phiếu kho của CĐHA</field>-->
+<!--            <field name="model_id" ref="model_stock_picking"/>-->
+<!--            <field name="domain_force" model="stock.location" eval="['|',('location_id', 'child_of', [obj().env.ref('shealth_all_in_one.sh_imaging_dep_knhn').location_id.id]),('location_dest_id', 'child_of', [obj().env.ref('shealth_all_in_one.sh_imaging_dep_knhn').location_id.id])]"/>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician_subclinical_imaging'))]"/>-->
+<!--            <field name="perm_read" eval="True"/>-->
+<!--            <field name="perm_write" eval="False"/>-->
+<!--            <field name="perm_create" eval="False"/>-->
+<!--            <field name="perm_unlink" eval="False"/>-->
+<!--        </record>-->
+<!--        <record id="sh_medical_stock_picking_physician_spa" model="ir.rule">-->
+<!--            <field name="name">Bác sĩ Da liễu chỉ thấy các phiếu kho của Da liễu</field>-->
+<!--            <field name="model_id" ref="model_stock_picking"/>-->
+<!--            <field name="domain_force" model="stock.location" eval="['|',('location_id', 'child_of', [obj().env.ref('shealth_all_in_one.sh_dalieu_dep_knhn').location_id.id]),('location_dest_id', 'child_of', [obj().env.ref('shealth_all_in_one.sh_dalieu_dep_knhn').location_id.id])]"/>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician_spa'))]"/>-->
+<!--            <field name="perm_read" eval="True"/>-->
+<!--            <field name="perm_write" eval="False"/>-->
+<!--            <field name="perm_create" eval="False"/>-->
+<!--            <field name="perm_unlink" eval="False"/>-->
+<!--        </record>-->
+<!--        <record id="sh_medical_stock_picking_physician_odontology" model="ir.rule">-->
+<!--            <field name="name">Bác sĩ Nha chỉ thấy các phiếu kho của Nha</field>-->
+<!--            <field name="model_id" ref="model_stock_picking"/>-->
+<!--            <field name="domain_force" model="stock.location" eval="['|',('location_id', 'child_of', [obj().env.ref('shealth_all_in_one.sh_rhm_dep_knhn').location_id.id]),('location_dest_id', 'child_of', [obj().env.ref('shealth_all_in_one.sh_rhm_dep_knhn').location_id.id])]"/>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician_odontology'))]"/>-->
+<!--            <field name="perm_read" eval="True"/>-->
+<!--            <field name="perm_write" eval="False"/>-->
+<!--            <field name="perm_create" eval="False"/>-->
+<!--            <field name="perm_unlink" eval="False"/>-->
+<!--        </record>-->
+<!--        <record id="sh_medical_stock_picking_physician_surgery" model="ir.rule">-->
+<!--            <field name="name">Bác sĩ Phẫu thuật chỉ thấy các phiếu kho của Phẫu thuật</field>-->
+<!--            <field name="model_id" ref="model_stock_picking"/>-->
+<!--            <field name="domain_force" model="stock.location" eval="['|',('location_id', 'child_of', [obj().env.ref('shealth_all_in_one.sh_surgeries_dep_knhn').location_id.id]),('location_dest_id', 'child_of', [obj().env.ref('shealth_all_in_one.sh_surgeries_dep_knhn').location_id.id])]"/>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician_surgery'))]"/>-->
+<!--            <field name="perm_read" eval="True"/>-->
+<!--            <field name="perm_write" eval="False"/>-->
+<!--            <field name="perm_create" eval="False"/>-->
+<!--            <field name="perm_unlink" eval="False"/>-->
+<!--        </record>-->
+<!--        <record id="sh_medical_stock_picking_stock_manager" model="ir.rule">-->
+<!--            <field name="name">Kho Dược thấy tất cả các phiếu kho của tất cả các tủ</field>-->
+<!--            <field name="model_id" ref="model_stock_picking"/>-->
+<!--            <field name="domain_force" model="stock.location" eval="['|',('location_id', 'child_of', [obj().env.ref('stock.warehouse0').lot_stock_id.id]),('location_dest_id', 'child_of', [obj().env.ref('stock.warehouse0').lot_stock_id.id])]"/>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_stock_manager'))]"/>-->
+<!--            <field name="perm_read" eval="True"/>-->
+<!--            <field name="perm_write" eval="False"/>-->
+<!--            <field name="perm_create" eval="False"/>-->
+<!--            <field name="perm_unlink" eval="False"/>-->
+<!--        </record>-->
+
+        <!-- STOCK PICKING-->
+        <record id="sh_medical_stock_picking_physician_subclinical_labtest" model="ir.rule">
+            <field name="name">Bác sĩ xét nghiệm chỉ thấy các phiếu kho của xét nghiệm</field>
+            <field name="model_id" ref="model_stock_picking"/>
+            <field name="domain_force" model="stock.location" eval="['|',('location_id', 'child_of', [obj().env.ref('shealth_all_in_one.sh_labtest_dep_knhn').location_id.id]),('location_dest_id', 'child_of', [obj().env.ref('shealth_all_in_one.sh_labtest_dep_knhn').location_id.id])]"/>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician_subclinical_labtest'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+<!--        <record id="sh_medical_stock_picking_physician_subclinical_imaging" model="ir.rule">-->
+<!--            <field name="name">Bác sĩ CĐHA chỉ thấy các phiếu kho của CĐHA</field>-->
+<!--            <field name="model_id" ref="model_stock_picking"/>-->
+<!--            <field name="domain_force" model="stock.location" eval="['|',('location_id', 'child_of', [obj().env.ref('shealth_all_in_one.sh_imaging_dep_knhn').location_id.id]),('location_dest_id', 'child_of', [obj().env.ref('shealth_all_in_one.sh_imaging_dep_knhn').location_id.id])]"/>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician_subclinical_imaging'))]"/>-->
+<!--            <field name="perm_read" eval="True"/>-->
+<!--            <field name="perm_write" eval="False"/>-->
+<!--            <field name="perm_create" eval="False"/>-->
+<!--            <field name="perm_unlink" eval="False"/>-->
+<!--        </record>-->
+        <record id="sh_medical_stock_picking_physician_spa" model="ir.rule">
+            <field name="name">Bác sĩ Da liễu chỉ thấy các phiếu kho của Da liễu</field>
+            <field name="model_id" ref="model_stock_picking"/>
+            <field name="domain_force" model="stock.location" eval="['|',('location_id', 'child_of', [obj().env.ref('shealth_all_in_one.sh_dalieu_dep_knhn').location_id.id, obj().env.ref('shealth_all_in_one.sh_location_medicine_prescription_knhn').id]),('location_dest_id', 'child_of', [obj().env.ref('shealth_all_in_one.sh_dalieu_dep_knhn').location_id.id])]"/>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician_spa'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+        <record id="sh_medical_stock_picking_physician_odontology" model="ir.rule">
+            <field name="name">Bác sĩ Nha chỉ thấy các phiếu kho của Nha</field>
+            <field name="model_id" ref="model_stock_picking"/>
+            <field name="domain_force" model="stock.location" eval="['|',('location_id', 'child_of', [obj().env.ref('shealth_all_in_one.sh_rhm_dep_knhn').location_id.id, obj().env.ref('shealth_all_in_one.sh_location_medicine_prescription_knhn').id]),('location_dest_id', 'child_of', [obj().env.ref('shealth_all_in_one.sh_rhm_dep_knhn').location_id.id])]"/>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician_odontology'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+        <record id="sh_medical_stock_picking_physician_surgery" model="ir.rule">
+            <field name="name">Bác sĩ Phẫu thuật chỉ thấy các phiếu kho của Phẫu thuật</field>
+            <field name="model_id" ref="model_stock_picking"/>
+            <field name="domain_force" model="stock.location" eval="['|',('location_id', 'child_of', [obj().env.ref('shealth_all_in_one.sh_surgeries_dep_knhn').location_id.id, obj().env.ref('shealth_all_in_one.sh_location_medicine_prescription_knhn').id]),('location_dest_id', 'child_of', [obj().env.ref('shealth_all_in_one.sh_surgeries_dep_knhn').location_id.id])]"/>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician_surgery'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+        <record id="sh_medical_stock_picking_stock_manager" model="ir.rule">
+            <field name="name">Kho Dược thấy tất cả các phiếu kho của tất cả các tủ</field>
+            <field name="model_id" ref="model_stock_picking"/>
+            <field name="domain_force" model="stock.location" eval="['|',('location_id', 'child_of', [obj().env.ref('stock.warehouse0').lot_stock_id.id]),('location_dest_id', 'child_of', [obj().env.ref('stock.warehouse0').lot_stock_id.id])]"/>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_stock_manager'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- STOCK SCRAP-->
+        <record id="sh_medical_stock_scrap_physician_subclinical_labtest" model="ir.rule">
+            <field name="name">Bác sĩ xét nghiệm chỉ thấy các phiếu tiêu hủy/xuất sử dụng của xét nghiệm</field>
+            <field name="model_id" ref="model_stock_scrap"/>
+            <field name="domain_force" model="stock.location" eval="[('location_id', 'child_of', [obj().env.ref('shealth_all_in_one.sh_labtest_dep_knhn').location_id.id])]"/>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician_subclinical_labtest'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+<!--        <record id="sh_medical_stock_scrap_physician_subclinical_imaging" model="ir.rule">-->
+<!--            <field name="name">Bác sĩ CĐHA chỉ thấy các phiếu tiêu hủy/xuất sử dụng của CĐHA</field>-->
+<!--            <field name="model_id" ref="model_stock_scrap"/>-->
+<!--            <field name="domain_force" model="stock.location" eval="[('location_id', 'child_of', [obj().env.ref('shealth_all_in_one.sh_imaging_dep_knhn').location_id.id])]"/>-->
+<!--            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician_subclinical_imaging'))]"/>-->
+<!--            <field name="perm_read" eval="True"/>-->
+<!--            <field name="perm_write" eval="False"/>-->
+<!--            <field name="perm_create" eval="False"/>-->
+<!--            <field name="perm_unlink" eval="False"/>-->
+<!--        </record>-->
+        <record id="sh_medical_stock_scrap_physician_spa" model="ir.rule">
+            <field name="name">Bác sĩ Da liễu chỉ thấy các phiếu tiêu hủy/xuất sử dụng của Da liễu</field>
+            <field name="model_id" ref="model_stock_scrap"/>
+            <field name="domain_force" model="stock.location" eval="[('location_id', 'child_of', [obj().env.ref('shealth_all_in_one.sh_dalieu_dep_knhn').location_id.id])]"/>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician_spa'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+        <record id="sh_medical_stock_scrap_physician_odontology" model="ir.rule">
+            <field name="name">Bác sĩ Nha chỉ thấy các phiếu tiêu hủy/xuất sử dụng của Nha</field>
+            <field name="model_id" ref="model_stock_scrap"/>
+            <field name="domain_force" model="stock.location" eval="[('location_id', 'child_of', [obj().env.ref('shealth_all_in_one.sh_rhm_dep_knhn').location_id.id])]"/>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician_odontology'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+        <record id="sh_medical_stock_scrap_physician_surgery" model="ir.rule">
+            <field name="name">Bác sĩ Phẫu thuật chỉ thấy các phiếu tiêu hủy/xuất sử dụng của Phẫu thuật</field>
+            <field name="model_id" ref="model_stock_scrap"/>
+            <field name="domain_force" model="stock.location" eval="[('location_id', 'child_of', [obj().env.ref('shealth_all_in_one.sh_surgeries_dep_knhn').location_id.id])]"/>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician_surgery'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+        <record id="sh_medical_stock_scrap_stock_manager" model="ir.rule">
+            <field name="name">Kho Dược thấy tất cả các phiếu tiêu hủy/xuất sử dụng của tất cả các tủ</field>
+            <field name="model_id" ref="model_stock_scrap"/>
+            <field name="domain_force" model="stock.location" eval="[('location_id', 'child_of', [obj().env.ref('stock.warehouse0').lot_stock_id.id])]"/>
+            <field name="groups" eval="[(4, ref('shealth_all_in_one.group_sh_medical_stock_manager'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+    </data>
+</odoo>

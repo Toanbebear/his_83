@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2016, 2019 Openworx.
+    @author Mario Gielissen <mario@openworx.nl>
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+
+<odoo>
+    <data>
+		<template id="assets_backend" name="shealth_style_da assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/shealth_style_da/static/src/scss/da_style.scss"/>
+			</xpath>
+		</template>
+
+        <record id="shealth_all_in_one.sh_medical_menu" model="ir.ui.menu">
+            <field name="web_icon_class">da-logo</field>
+        </record>
+    </data>
+</odoo>

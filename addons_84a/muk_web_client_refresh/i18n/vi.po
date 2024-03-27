@@ -1,0 +1,160 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* muk_web_client_refresh
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-04-29 04:37+0000\n"
+"PO-Revision-Date: 2020-04-29 04:37+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: muk_web_client_refresh
+#: model:ir.model.fields,field_description:muk_web_client_refresh.field_base_automation__state
+#: model:ir.model.fields,field_description:muk_web_client_refresh.field_ir_actions_server__state
+#: model:ir.model.fields,field_description:muk_web_client_refresh.field_ir_cron__state
+msgid "Action To Do"
+msgstr "Hành động để thực hiện"
+
+#. module: muk_web_client_refresh
+#: selection:ir.actions.server,state:0
+msgid "Add Followers"
+msgstr "Thêm Người theo dõi"
+
+#. module: muk_web_client_refresh
+#: model:ir.model,name:muk_web_client_refresh.model_base_automation
+msgid "Automated Action"
+msgstr "Thực hiện tự động"
+
+#. module: muk_web_client_refresh
+#: model:ir.actions.act_window,name:muk_web_client_refresh.action_client_refresh_automation
+#: model:ir.ui.menu,name:muk_web_client_refresh.menu_client_refresh_automation
+msgid "Automated Refresh"
+msgstr ""
+
+#. module: muk_web_client_refresh
+#: model_terms:ir.actions.act_window,help:muk_web_client_refresh.action_client_refresh_automation
+msgid "Automatically updates the views belonging to the model."
+msgstr ""
+
+#. module: muk_web_client_refresh
+#: model:ir.model,name:muk_web_client_refresh.model_base
+msgid "Base"
+msgstr "Cơ bản"
+
+#. module: muk_web_client_refresh
+#: model:ir.model,name:muk_web_client_refresh.model_res_config_settings
+msgid "Config Settings"
+msgstr "Cấu hình thiết lập"
+
+#. module: muk_web_client_refresh
+#: model_terms:ir.ui.view,arch_db:muk_web_client_refresh.res_config_settings_view_form
+msgid "Configure Actions"
+msgstr ""
+
+#. module: muk_web_client_refresh
+#: selection:ir.actions.server,state:0
+msgid "Create Next Activity"
+msgstr ""
+
+#. module: muk_web_client_refresh
+#: model_terms:ir.actions.act_window,help:muk_web_client_refresh.action_client_refresh_automation
+msgid "Create a new Automated Refresh"
+msgstr ""
+
+#. module: muk_web_client_refresh
+#: selection:ir.actions.server,state:0
+msgid "Create a new Record"
+msgstr "Tạo một bản ghi mới"
+
+#. module: muk_web_client_refresh
+#: model:ir.model.fields,field_description:muk_web_client_refresh.field_res_config_settings__refresh_delay
+#: model_terms:ir.ui.view,arch_db:muk_web_client_refresh.res_config_settings_view_form
+msgid "Delay"
+msgstr "Chậm trễ"
+
+#. module: muk_web_client_refresh
+#: selection:ir.actions.server,state:0
+msgid "Execute Python Code"
+msgstr "Thực thi Mã Python"
+
+#. module: muk_web_client_refresh
+#: selection:ir.actions.server,state:0
+msgid "Execute several actions"
+msgstr "Chạy hành động máy chủ"
+
+#. module: muk_web_client_refresh
+#: model:ir.model.fields,help:muk_web_client_refresh.field_res_config_settings__refresh_delay
+msgid "Prevents multiple executions of refresh in a certain timeframe to avoid the view from being\n"
+"            reloaded too often. For example, a delay of 1000 (ms) would mean that the view cannot be\n"
+"            reloaded more than once a second."
+msgstr ""
+
+#. module: muk_web_client_refresh
+#: model:base.automation,name:muk_web_client_refresh.base_automation_refresh_partner_on_create
+#: model:ir.actions.server,name:muk_web_client_refresh.base_automation_refresh_partner_on_create_ir_actions_server
+msgid "Refresh Partner on Creation"
+msgstr ""
+
+#. module: muk_web_client_refresh
+#: model:base.automation,name:muk_web_client_refresh.base_automation_refresh_partner_on_unlink
+#: model:ir.actions.server,name:muk_web_client_refresh.base_automation_refresh_partner_on_unlink_ir_actions_server
+msgid "Refresh Partner on Deletion"
+msgstr ""
+
+#. module: muk_web_client_refresh
+#: model:base.automation,name:muk_web_client_refresh.base_automation_refresh_partner_on_write
+#: model:ir.actions.server,name:muk_web_client_refresh.base_automation_refresh_partner_on_write_ir_actions_server
+msgid "Refresh Partner on Update"
+msgstr ""
+
+#. module: muk_web_client_refresh
+#: selection:ir.actions.server,state:0
+msgid "Refresh Views"
+msgstr ""
+
+#. module: muk_web_client_refresh
+#: selection:ir.actions.server,state:0
+msgid "Send Email"
+msgstr "Gửi email"
+
+#. module: muk_web_client_refresh
+#: model:ir.model,name:muk_web_client_refresh.model_ir_actions_server
+msgid "Server Action"
+msgstr ""
+
+#. module: muk_web_client_refresh
+#: model:ir.model.fields,help:muk_web_client_refresh.field_base_automation__state
+#: model:ir.model.fields,help:muk_web_client_refresh.field_ir_actions_server__state
+#: model:ir.model.fields,help:muk_web_client_refresh.field_ir_cron__state
+msgid "Type of server action. The following values are available:\n"
+"- 'Execute Python Code': a block of python code that will be executed\n"
+"- 'Create or Copy a new Record': create a new record with new values, or copy an existing record in your database\n"
+"- 'Write on a Record': update the values of a record\n"
+"- 'Execute several actions': define an action that triggers several other server actions\n"
+"- 'Add Followers': add followers to a record (available in Discuss)\n"
+"- 'Send Email': automatically send an email (available in email_template)"
+msgstr "Loại hoạt động máy chủ. Sau đây là các hoạt động hiện có:\n"
+"- 'Chạy mã Python': một khối mã python sẽ được thực thi\n"
+"- 'Tạo hoặc Sao chép Bản ghi mới': tạo một bản ghi mới với các giá trị mới hoặc sao chép một bản ghi hiện có trong cơ sở dữ liệu của bạn\n"
+"- 'Cập nhật trên một bản ghi': cập nhật các giá trị của một bản ghi\n"
+"- 'Chạy một vài hoạt động': định nghĩa một hành động kích hoạt một số hành động máy chủ khác\n"
+"- 'Thêm người theo dõi': thêm người theo dõi vào một bản ghi (có sẵn trong Thảo luận)\n"
+"- 'Gửi Email': tự động gửi email (có trong email_template)"
+
+#. module: muk_web_client_refresh
+#: selection:ir.actions.server,state:0
+msgid "Update the Record"
+msgstr "Cập nhật Bản ghi"
+
+#. module: muk_web_client_refresh
+#: model_terms:ir.ui.view,arch_db:muk_web_client_refresh.view_client_refresh_automation_form
+msgid "e.g. Refresh Users on Create"
+msgstr ""
+

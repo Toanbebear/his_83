@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="temp.creation" id="report_revenue_patient_template">
+            <field name="template" type="base64" file="shealth_all_in_one/static/xls/bao_cao_doanh_thu.xlsx"/>
+            <field name="name">Báo cáo doanh thu</field>
+            <field name="max_samples">3</field>
+            <field name="template_name">bao_cao_doanh_thu.xlsx</field>
+            <field name="max_row">10001</field>
+            <field name="all_in_one" eval="True"/>
+            <field name="main_model" model="ir.model"
+                   search="[('model', '=', 'account.payment')]"/>
+        </record>
+
+        <record id="report_revenue_service_template" model="ir.attachment">
+            <field name="name">BÁO CÁO DOANH THU THEO DỊCH VỤ</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="shealth_all_in_one/static/xls/bao_cao_doanh_thu_theo_dich_vu.xlsx"/>
+            <field name="datas_fname">DOANH_THU_THEO_DICH_VU.xlsx</field>
+        </record>
+
+        <record model="fields.line" id="report_revenue_patient_fields_line_1">
+            <field name="line" ref="report_revenue_patient_template"/>
+            <field name="python_code">walkin.patient.identification_code</field>
+            <field name="temp_mark">B8</field>
+        </record>
+        <record model="fields.line" id="report_revenue_patient_fields_line_2">
+            <field name="line" ref="report_revenue_patient_template"/>
+            <field name="python_code">walkin.patient.name</field>
+            <field name="temp_mark">C8</field>
+        </record>
+        <record model="fields.line" id="report_revenue_patient_fields_line_3">
+            <field name="line" ref="report_revenue_patient_template"/>
+            <field name="python_code">walkin.patient.street</field>
+            <field name="temp_mark">D8</field>
+        </record>
+        <record model="fields.line" id="report_revenue_patient_fields_line_4">
+            <field name="line" ref="report_revenue_patient_template"/>
+            <field name="python_code">walkin.service.default_code</field>
+            <field name="temp_mark">E8</field>
+        </record>
+        <record model="fields.line" id="report_revenue_patient_fields_line_5">
+            <field name="line" ref="report_revenue_patient_template"/>
+            <field name="python_code">walkin.service.name</field>
+            <field name="temp_mark">F8</field>
+        </record>
+        <record model="fields.line" id="report_revenue_patient_fields_line_6">
+            <field name="line" ref="report_revenue_patient_template"/>
+            <field name="python_code">walkin.service.list_price</field>
+            <field name="temp_mark">G8</field>
+        </record>
+        <!--        <record model="fields.line" id="report_revenue_patient_fields_line_6">-->
+        <!--            <field name="line" ref="report_revenue_patient"/>-->
+        <!--            <field name="python_code">product_uom_qty</field>-->
+        <!--            <field name="temp_mark">G8</field>-->
+        <!--        </record>-->
+        <!--        <record model="fields.line" id="report_revenue_patient_fields_line_7">-->
+        <!--            <field name="line" ref="report_revenue_patient"/>-->
+        <!--            <field name="python_code">service.list_price</field>-->
+        <!--            <field name="temp_mark">H8</field>-->
+        <!--        </record>-->
+        <!--        <record model="fields.line" id="report_revenue_patient_fields_line_8">-->
+        <!--            <field name="line" ref="report_revenue_patient"/>-->
+        <!--            <field name="python_code">discount</field>-->
+        <!--            <field name="temp_mark">I8</field>-->
+        <!--        </record>-->
+<!--        <record model="fields.line" id="report_revenue_patient_fields_line_9">-->
+<!--            <field name="line" ref="report_revenue_patient"/>-->
+<!--            <field name="python_code">payment_ids.amount</field>-->
+<!--            <field name="temp_mark">J8</field>-->
+<!--        </record>-->
+        <record model="fields.line" id="report_revenue_patient_fields_line_10">
+            <field name="line" ref="report_revenue_patient_template"/>
+            <field name="python_code">payment_date</field>
+            <field name="temp_mark">L8</field>
+        </record>
+        <!--        <record model="ir.actions.act_window" id="act_report_revenue_patient">-->
+        <!--            <field name="name">báo cáo doanh thu</field>-->
+        <!--            <field name="type">ir.actions.act_window</field>-->
+        <!--            <field name="res_model">temp.wizard</field>-->
+        <!--            <field name="view_mode">tree,form</field>-->
+        <!--            <field name="view_type">form</field>-->
+        <!--            <field name="target">inline</field>-->
+        <!--            <field name="view_id" ref="ms_templates.report_wizard"/>-->
+        <!--            <field name="binding_model_id" model="ir.model" search="[('model', '=', 'account.payment')]"/>-->
+        <!--            <field name="context" eval="{'default_template_id': ref('report_revenue_patient')}"/>-->
+        <!--        </record>-->
+
+        <!--Process finished with exit code 0-->
+
+
+    </data>
+</odoo>

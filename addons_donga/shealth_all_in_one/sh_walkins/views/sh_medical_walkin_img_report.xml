@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+<!--        PHIEU CHI DINH CDHA-->
+        <report
+            string="Phiếu chỉ định CĐHA"
+            id="action_report_assign_patient_imaging"
+            model="sh.medical.appointment.register.walkin"
+            report_type="qweb-pdf"
+            name="shealth_all_in_one.report_sh_medical_assign_patient_imaging"
+            file="shealth_all_in_one.report_sh_medical_walkin_patient_imaging"
+            paperformat="shealth_all_in_one.sh_paperformat_test_result"
+            menu="False"
+        />
+
+        <report
+            string="Phiếu chỉ định CĐHA - Từng phiếu theo phòng"
+            id="action_report_assign_patient_imaging_multi"
+            model="sh.medical.appointment.register.walkin"
+            report_type="qweb-pdf"
+            name="shealth_all_in_one.report_sh_medical_assign_patient_imaging_multi"
+            file="shealth_all_in_one.report_sh_medical_walkin_patient_imaging"
+            paperformat="shealth_all_in_one.sh_paperformat_medical_payment"
+            menu="False"
+        />
+
+<!--        PHIEU KET QUA CDHA-->
+        <report
+            string="Phiếu kết quả CĐHA"
+            id="action_result_result_patient_imaging"
+            model="sh.medical.appointment.register.walkin"
+            report_type="qweb-pdf"
+            name="shealth_all_in_one.report_sh_medical_result_patient_imaging_multi"
+            file="shealth_all_in_one.report_sh_medical_walkin_patient_imaging"
+            paperformat="shealth_all_in_one.sh_paperformat_test_result"
+            menu="False"
+        />
+
+    </data>
+</openerp>

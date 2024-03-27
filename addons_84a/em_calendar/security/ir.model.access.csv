@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_em_schedule,em schedule,model_em_schedule,,1,0,0,0
+access_em_schedule_user,em schedule user,model_em_schedule,em_calendar.group_em_calendar_user,1,1,1,0
+access_em_schedule_manager,em schedule manager,model_em_schedule,em_calendar.group_em_calendar_manager,1,1,1,1
+access_human_report,crm human report,model_human_report,em_calendar.group_em_calendar_user,1,1,1,1

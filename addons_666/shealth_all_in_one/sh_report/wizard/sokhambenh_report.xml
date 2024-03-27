@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="so_kham_benh_report_form">
+            <field name="name">so kham benh report form</field>
+            <field name="model">sokhambenh.report</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo sổ khám bệnh">
+                    <group>
+                        <field name="start_date" string="Ngày bắt đầu" required="1"/>
+                        <field name="end_date" string="Ngày kết thúc" required="1"/>
+                        <field name="department" string="Khoa" required="1" options="{'no_open':True,'no_create':True}"/>
+                    </group>
+                    <footer>
+                        <button name="sokhambenh_report" type="object" string="Báo cáo" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="so_kham_benh_report_act">
+            <field name="name">Báo Cáo Sổ Khám Bệnh</field>
+            <field name="res_model">sokhambenh.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="so_kham_benh_report_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="so_kham_benh_report"
+                  name="Báo cáo sổ khám bệnh"
+                  parent="shealth_all_in_one.sh_medical_report_menu"
+                  action="so_kham_benh_report_act"
+                  sequence="8"
+                  groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_physician_subclinical,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_accountant,shealth_all_in_one.group_sh_medical_stock_manager"/>
+
+        <record id="bao_cao_so_kham_benh_attachment" model="ir.attachment">
+            <field name="name">BÁO CÁO SỔ KHÁM BỆNH</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="shealth_all_in_one/static/xls/bao_cao_so_kham_benh.xlsx"/>
+            <field name="datas_fname">bao_cao_so_kham_benh.xlsx</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data noupdate="1">
+
+        <record model="sh.medical.ethnicity" id="sheth_kinh">
+            <field name="name">Kinh</field>
+        </record>
+    </data>
+</openerp>

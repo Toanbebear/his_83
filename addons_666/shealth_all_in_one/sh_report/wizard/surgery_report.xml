@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="surgery_report_form">
+            <field name="name">surgery.report.form</field>
+            <field name="model">surgery.report</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo hoạt động phẫu thuật thủ thuật">
+                    <group>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                    </group>
+                    <footer>
+                        <button name="report_surgery" type="object" string="Báo cáo" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="surgery_report_act">
+            <field name="name">Hoạt động phẫu thuật thủ thuật</field>
+            <field name="res_model">surgery.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="surgery_report_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="surgery_report"
+                  name="Hoạt động phẫu thuật thủ thuật"
+                  parent="shealth_all_in_one.sh_medical_report_menu"
+                  action="surgery_report_act"
+                  sequence="4" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_physician_subclinical,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_accountant,shealth_all_in_one.group_sh_medical_stock_manager"/>
+
+    </data>
+</odoo>

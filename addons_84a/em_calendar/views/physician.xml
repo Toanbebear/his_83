@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="physician_calendar" model="ir.ui.view">
+        <field name="name">Lịch làm việc</field>
+        <field name="model">sh.medical.physician</field>
+        <field name="inherit_id" ref="shealth_all_in_one.sh_medical_physician_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='work_location']" position="after">
+                <field name="is_resign"/>
+            </xpath>
+        </field>
+    </record>
+    </data>
+</odoo>

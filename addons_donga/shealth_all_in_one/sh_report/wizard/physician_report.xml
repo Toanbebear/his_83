@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="physician_report_act" model="ir.actions.server">
+            <field name="name">Tình hình cán bộ, công chức</field>
+            <field name="model_id" ref="shealth_all_in_one.model_sh_medical_physician"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = model.report_physician()
+            </field>
+        </record>
+
+        <menuitem id="physician_report"
+                  name="Tình hình cán bộ, công chức"
+                  parent="shealth_all_in_one.sh_medical_report_menu"
+                  action="physician_report_act"
+                  sequence="4" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_physician_subclinical,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_accountant,shealth_all_in_one.group_sh_medical_stock_manager"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+         <record id="ir_update_source_stage" model="ir.cron">
+            <field name="name">Update Trạng thái hợp đồng ctv</field>
+            <field name="model_id" ref="model_utm_source_ctv_contract"/>
+            <field name="state">code</field>
+            <field name="code">model.update_contract_source()</field>
+            <field name="active" eval="True"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="nextcall" eval="(DateTime.now().replace(hour=17, minute=0)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="numbercall">-1</field>
+        </record>
+
+<!--        <record id="ir_update_source_ctv" model="ir.cron">-->
+<!--            <field name="name">Update cộng tác viên ctv</field>-->
+<!--            <field name="model_id" ref="model_utm_source_ctv"/>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="code">model.update_source_ctv()</field>-->
+<!--            <field name="active" eval="True"/>-->
+<!--            <field name="interval_number">1</field>-->
+<!--            <field name="interval_type">days</field>-->
+<!--            <field name="nextcall" eval="(DateTime.now().replace(hour=17, minute=0)).strftime('%Y-%m-%d %H:%M:%S')"/>-->
+<!--            <field name="numbercall">-1</field>-->
+<!--        </record>-->
+
+        <record id="seq_utm_source_ctv" model="ir.sequence">
+            <field name="name">CTV</field>
+            <field name="code">utm.source.ctv.sequence</field>
+            <field name="prefix">CTV-</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+
+        <record id="seq_utm_source_ctv_contract_knhn" model="ir.sequence">
+            <field name="name">HĐ</field>
+            <field name="code">utm.source.ctv.contract.knhn.sequence</field>
+            <field name="prefix">KN.HN.02-CTV-</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_utm_source_ctv_contract_knhcm" model="ir.sequence">
+            <field name="name">HĐ</field>
+            <field name="code">utm.source.ctv.contract.knhcm.sequence</field>
+            <field name="prefix">KN.HCM.01-CTV-</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_utm_source_ctv_contract_pnhcm" model="ir.sequence">
+            <field name="name">HĐ</field>
+            <field name="code">utm.source.ctv.contract.pnhcm.sequence</field>
+            <field name="prefix">PN.HCM.14-CTV-</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_utm_source_ctv_contract_pnbmt" model="ir.sequence">
+            <field name="name">HĐ</field>
+            <field name="code">utm.source.ctv.contract.pnbmt.sequence</field>
+            <field name="prefix">PN.BMT.15-CTV-</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_utm_source_ctv_contract_pbhn" model="ir.sequence">
+            <field name="name">HĐ</field>
+            <field name="code">utm.source.ctv.contract.pbhn.sequence</field>
+            <field name="prefix">PB.HN.11-CTV-</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_utm_source_ctv_contract_dnbmt11" model="ir.sequence">
+            <field name="name">HĐ</field>
+            <field name="code">utm.source.ctv.contract.dnbmt11.sequence</field>
+            <field name="prefix">DN.BMT.11-CTV-</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_utm_source_ctv_contract_dnhcm" model="ir.sequence">
+            <field name="name">HĐ</field>
+            <field name="code">utm.source.ctv.contract.dnhcm.sequence</field>
+            <field name="prefix">DN.HCM.08-CTV-</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_utm_source_ctv_contract_dbhn" model="ir.sequence">
+            <field name="name">HĐ</field>
+            <field name="code">utm.source.ctv.contract.dbhn.sequence</field>
+            <field name="prefix">DB.HN.01-CTV-</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_utm_source_ctv_contract_kn84" model="ir.sequence">
+            <field name="name">HĐ</field>
+            <field name="code">utm.source.ctv.contract.kn84.sequence</field>
+            <field name="prefix">KN.HCM.03-CTV-</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_utm_source_ctv_contract_dbhp" model="ir.sequence">
+            <field name="name">HĐ</field>
+            <field name="code">utm.source.ctv.contract.dbhp.sequence</field>
+            <field name="prefix">DB.HP.03-CTV-</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_utm_source_ctv_contract_sci" model="ir.sequence">
+            <field name="name">HĐ</field>
+            <field name="code">utm.source.ctv.contract.sci.sequence</field>
+            <field name="prefix">SCI.HO.01-CTV-</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_utm_source_ctv_contract_pbhn" model="ir.sequence">
+            <field name="name">HĐ</field>
+            <field name="code">utm.source.ctv.contract.pbhn.sequence</field>
+            <field name="prefix">PB.HN.01-CTV-</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_utm_source_ctv_contract_pnbtm15" model="ir.sequence">
+            <field name="name">HĐ</field>
+            <field name="code">utm.source.ctv.contract.pnbtm15.sequence</field>
+            <field name="prefix">PN.BMT.15-CTV-</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_utm_source_ctv_contract_pbhn08" model="ir.sequence">
+            <field name="name">HĐ</field>
+            <field name="code">utm.source.ctv.contract.pbhn08.sequence</field>
+            <field name="prefix">PB.HN.08-CTV-</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_utm_source_ctv_contract_pbhp05" model="ir.sequence">
+            <field name="name">HĐ</field>
+            <field name="code">utm.source.ctv.contract.pbhp05.sequence</field>
+            <field name="prefix">PB.HP.05-CTV-</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_utm_source_ctv_contract_bvhhhcm01" model="ir.sequence">
+            <field name="name">HĐ</field>
+            <field name="code">utm.source.ctv.contract.bvhhhcm01.sequence</field>
+            <field name="prefix">BVHH.HCM.01-CTV-</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+         <record id="seq_utm_source_ctv_contract_bvhhhn01" model="ir.sequence">
+            <field name="name">HĐ</field>
+            <field name="code">utm.source.ctv.contract.bvhhhn01.sequence</field>
+            <field name="prefix">BVHH.HN.01-CTV-</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_utm_source_ctv_contract_else" model="ir.sequence">
+            <field name="name">HĐ</field>
+            <field name="code">utm.source.ctv.contract.else.sequence</field>
+            <field name="prefix">HĐHH.01-CTV-</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

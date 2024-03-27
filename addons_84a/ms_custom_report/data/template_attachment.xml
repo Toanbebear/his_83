@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="inventory_report_attachment" model="ir.attachment">
+            <field name="name">Inventory report template</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="ms_custom_report/static/xls/Inventory_report.xlsx"/>
+            <field name="datas_fname">Inventory_report.xlsx</field>
+        </record>
+
+        <record id="current_inventory_report_attachment" model="ir.attachment">
+            <field name="name">Current inventory report template</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="ms_custom_report/static/xls/Current_inventory_report.xlsx"/>
+            <field name="datas_fname">Current_inventory_report.xlsx</field>
+        </record>
+
+        <record id="stock_cards_report_attachment" model="ir.attachment">
+            <field name="name">Stock cards report template</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="ms_custom_report/static/xls/Stock_cards_report.xlsx"/>
+            <field name="datas_fname">Stock_cards_report.xlsx</field>
+        </record>
+
+        <record id="crm_report_attachment" model="ir.attachment">
+            <field name="name">crm report attachment</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="ms_custom_report/static/xls/reportlead.xlsx"/>
+            <field name="datas_fname">reportlead.xlsx</field>
+        </record>
+
+        <record id="crm_report_attachment_opp" model="ir.attachment">
+            <field name="name">crm report attachment opp</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="ms_custom_report/static/xls/reportopp.xlsx"/>
+            <field name="datas_fname">reportopp.xlsx</field>
+        </record>
+
+<!--        <record model="temp.creation" id="internal_course_report">-->
+<!--            <field name="template" type="base64" file="ms_custom_report/static/xls/BCHVNB.xlsx"/>-->
+<!--            <field name="name">BC học viên</field>-->
+<!--            <field name="all_in_one" eval="True"/>-->
+<!--            <field name="grp_by_cell">a15</field>-->
+<!--            <field name="template_name">BCHVNB.xlsx</field>-->
+<!--            <field name="max_row">1524</field>-->
+<!--            <field name="max_samples">3</field>-->
+<!--            <field name="main_model" model="ir.model" search="[('model', '=', 'op.student.course')]"/>-->
+<!--            <field name="access_groups" eval="[(6, 0, [ref('openeducat_core.group_op_back_office_admin')])]"/>-->
+<!--        </record>-->
+<!--        <record model="fields.line" id="internal_course_report_fields_line_1">-->
+<!--            <field name="line" ref="internal_course_report"/>-->
+<!--            <field name="replacement_format">{'False': ' '}</field>-->
+<!--            <field name="python_code">student_id.name</field>-->
+<!--            <field name="temp_mark">B14</field>-->
+<!--        </record>-->
+<!--        <record model="fields.line" id="internal_course_report_fields_line_2">-->
+<!--            <field name="line" ref="internal_course_report"/>-->
+<!--            <field name="replacement_format">{'False': ' '}</field>-->
+<!--            <field name="python_code">student_id.emp_id.department_id.name</field>-->
+<!--            <field name="temp_mark">C14</field>-->
+<!--        </record>-->
+<!--        <record model="fields.line" id="internal_course_report_fields_line_3">-->
+<!--            <field name="line" ref="internal_course_report"/>-->
+<!--            <field name="replacement_format">{'False': ' '}</field>-->
+<!--            <field name="python_code">job_id.name</field>-->
+<!--            <field name="temp_mark">D14</field>-->
+<!--        </record>-->
+<!--        <record model="fields.line" id="internal_course_report_fields_line_4">-->
+<!--            <field name="line" ref="internal_course_report"/>-->
+<!--            <field name="replacement_format">{'False': ' '}</field>-->
+<!--            <field name="python_code">student_id.emp_id.mobile_phone</field>-->
+<!--            <field name="temp_mark">E14</field>-->
+<!--        </record>-->
+<!--        <record model="fields.line" id="internal_course_report_fields_line_5">-->
+<!--            <field name="line" ref="internal_course_report"/>-->
+<!--            <field name="replacement_format">{'False': ' '}</field>-->
+<!--            <field name="python_code">student_id.emp_id.work_email</field>-->
+<!--            <field name="temp_mark">F14</field>-->
+<!--        </record>-->
+<!--        <record model="fields.line" id="internal_course_report_fields_line_6">-->
+<!--            <field name="line" ref="internal_course_report"/>-->
+<!--            <field name="replacement_format">{'False': ' ', 'not': 'Chưa học', 'study': 'Chưa học', 'finish': 'Đã học'}</field>-->
+<!--            <field name="python_code">status</field>-->
+<!--            <field name="temp_mark">G14</field>-->
+<!--        </record>-->
+<!--        <record model="fields.line" id="internal_course_report_fields_line_7">-->
+<!--            <field name="line" ref="internal_course_report"/>-->
+<!--            <field name="python_code">course_id.name</field>-->
+<!--            <field name="temp_mark">aa14</field>-->
+<!--        </record>-->
+
+<!--        <record model="temp.creation" id="internal_batch_report">-->
+<!--            <field name="template" type="base64" file="ms_custom_report/static/xls/BCKHNB.xlsx"/>-->
+<!--            <field name="name">BC tổng hợp lớp nội bộ</field>-->
+<!--            <field name="all_in_one" eval="True"/>-->
+<!--            <field name="template_name">BCKHNB.xlsx</field>-->
+<!--            <field name="max_row">500</field>-->
+<!--            <field name="max_samples">3</field>-->
+<!--            <field name="main_model" model="ir.model" search="[('model', '=', 'op.batch')]"/>-->
+<!--            <field name="access_groups" eval="[(6, 0, [ref('openeducat_core.group_op_back_office_admin')])]"/>-->
+<!--        </record>-->
+<!--        <record model="fields.line" id="internal_batch_report_fields_line_1">-->
+<!--            <field name="line" ref="internal_batch_report"/>-->
+<!--            <field name="python_code">course_id.name</field>-->
+<!--            <field name="temp_mark">c11</field>-->
+<!--        </record>-->
+<!--        <record model="fields.line" id="internal_batch_report_fields_line_2">-->
+<!--            <field name="line" ref="internal_batch_report"/>-->
+<!--            <field name="python_code">start_date</field>-->
+<!--            <field name="temp_mark">b11</field>-->
+<!--        </record>-->
+<!--        <record model="fields.line" id="internal_batch_report_fields_line_3">-->
+<!--            <field name="line" ref="internal_batch_report"/>-->
+<!--            <field name="python_code">num_lessons</field>-->
+<!--            <field name="temp_mark">d11</field>-->
+<!--        </record>-->
+<!--        <record model="fields.line" id="internal_batch_report_fields_line_4">-->
+<!--            <field name="line" ref="internal_batch_report"/>-->
+<!--            <field name="python_code">num_students</field>-->
+<!--            <field name="temp_mark">e11</field>-->
+<!--        </record>-->
+<!--        <record model="fields.line" id="internal_batch_report_fields_line_5">-->
+<!--            <field name="line" ref="internal_batch_report"/>-->
+<!--            <field name="python_code">faculty_id</field>-->
+<!--            <field name="temp_mark">f11</field>-->
+<!--        </record>-->
+
+    </data>
+</odoo>

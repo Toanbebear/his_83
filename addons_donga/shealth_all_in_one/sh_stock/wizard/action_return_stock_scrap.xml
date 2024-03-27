@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="return_stock_scrap_form">
+            <field name="name">return_stock_scrap_form</field>
+            <field name="model">return.stock.scrap</field>
+            <field name="arch" type="xml">
+                <form string="Thông tin hoàn tiêu hủy thuốc vật tư">
+                    <group>
+                        <group>
+                            <field name="product_id" readonly="True"/>
+                            <field name="location_id" readonly="True" context="{'view_only_name':True}"/>
+                            <field name="location_dest_id" readonly="True" context="{'view_only_name':True}"/>
+                            <label for="scrap_qty"/>
+                            <div class="o_row">
+                                <field name="scrap_qty" readonly="True"/>
+                                <field name="product_uom_id" readonly="True"/>
+                            </div>
+                            <field name="origin" readonly="True"/>
+                        </group>
+                        <group>
+                            <field name="scrap_id" readonly="True"/>
+                            <field name="sci_date_done" readonly="True"/>
+                            <field name="final_lot_id" readonly="True"/>
+                            <field name="note_return" required="True"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="post" type="object" string="Xác nhận" class="oe_highlight"/>
+                        <button string="Hủy" special="cancel" class="btn-secondary"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

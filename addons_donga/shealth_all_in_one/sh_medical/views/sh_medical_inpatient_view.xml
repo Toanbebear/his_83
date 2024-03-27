@@ -1,0 +1,254 @@
+<?xml version="1.0" ?>
+<odoo>
+        <data>
+
+            <!-- Inpatient Hospitalization -->
+
+            <record model="ir.ui.view" id="sh_medical_inpatient_view">
+                <field name="name">Inpatient Admission</field>
+                <field name="model">sh.medical.inpatient</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                    <form string="Inpatient Admission" create="0">
+                        <header>
+                            <button confirm="Are you sure you want to admit the patient?" name="set_to_hospitalized" states="Draft" string="Xác nhận vào khoa" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse"/>
+                            <button confirm="Are you sure you want to discharge the patient?" name="set_to_discharged" states="Hospitalized" string="Discharge Now" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse"/>
+<!--                            <button confirm="Are you sure you want to create the invoice?" name="set_to_invoiced" states="Discharged" string="Create Invoice" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_manager"/>-->
+                            <button confirm="Are you sure you want to cancel the admission?" name="set_to_cancelled" states="Hospitalized" string="Cancel Admission" type="object" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse"/>
+                            <button confirm="Are you sure you want to set record to draft mode?" name="set_to_draft" states="Cancelled" string="Set to Draft" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse"/>
+                            <button confirm="Bạn có chắc muốn đặt lại phiếu về trang thái Nhập viện?" name="set_to_hospitalized" states="Discharged" string="Đặt lại là Nháp" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_manager"/>
+                            <field name="state" widget="statusbar" statusbar_visible="Draft,Hospitalized,Discharged,Cancelled" statusbar_colors='{"Hospitalized":"red","Draft":"blue","Invoiced":"Cancelled","Discharged":"red"}'/>
+                        </header>
+                        <sheet>
+                            <div class="oe_left" style="width: 500px;">
+                                <div class="oe_title" style="width: 390px;">
+                                    <label class="oe_edit_only" for="name" string="Inpatient #"/>
+                                    <h1><field name="name" class="oe_inline"/></h1>
+                                </div>
+                            </div>
+                            <group>
+                                <group>
+                                    <field name="patient" class="text-uppercase" force_save="1" readonly="1"/>
+                                    <field name="admission_reason" invisible="1"/>
+                                    <field name="admission_reason_walkin" string="Lý do nhập viện"/>
+<!--                                    <field name="ward_surgery" options="{'no_create': True}"/>-->
+                                    <field name="services" widget="many2many_tags"/>
+                                    <field name="ward" options="{'no_create': True,'no_open':True}" force_save="1"/>
+                                    <field name="bed" domain="[('state','=','Free')]" required="1" options="{'no_create': True,'no_open':True}"/>
+                                </group>
+                                <group>
+
+                                    <field name="admission_type" readonly="1" force_save="1"/>
+                                    <field name="attending_physician" options="{'no_create': True,'no_open':True}"/>
+                                    <field name="operating_physician" options="{'no_create': True,'no_open':True}"/>
+                                </group>
+                            </group>
+                            <group string="Dates">
+                                <group>
+                                    <field name="admission_date"/>
+                                </group>
+                                <group>
+                                    <field name="discharge_date"/>
+                                </group>
+                            </group>
+                            <notebook>
+<!--                                <page string="Y lệnh">-->
+<!--                                    <group>-->
+<!--                                        <field name="discharge_plan"/>-->
+<!--                                    </group>-->
+<!--                                </page>-->
+                                <page string="Chi tiết chăm sóc">
+                                    <group>
+                                        <field name="discharge_plan"/>
+                                    </group>
+<!--                                    <group>-->
+<!--                                        <field name="admission_condition" invisible="1"/>-->
+<!--                                    </group>-->
+                                    <group>
+                                        <field name="nursing_plan" string="Chế độ dinh dưỡng"/>
+                                    </group>
+                                </page>
+                                <page string="Extra Information">
+                                    <field name="info" nolabel="1"/>
+                                </page>
+                            </notebook>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_inpatient_tree">
+                <field name="name">Inpatient Admission</field>
+                <field name="model">sh.medical.inpatient</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree class="sh_has_icon" string='Inpatient Admission' create="false" decoration-muted="state=='Cancelled'" decoration-danger="state=='Hospitalized'" decoration-success="state=='Discharged'" decoration-info="state=='Draft'">
+                        <field name="name"/>
+                        <button attrs="{'invisible': [('state','in',['Discharged','Cancelled'])]}" name="view_detail_inpatient" type="object" icon="fa-pencil-square-o" title="Chi tiết"/>
+                        <field name="patient" class="text-uppercase"/>
+                        <field name="admission_type" invisible="1"/>
+                        <field name="ward"/>
+                        <field name="bed"/>
+                        <field name="admission_date"/>
+                        <field name="discharge_date"/>
+                        <field name="state"/>
+                    </tree>
+                </field>
+            </record>
+
+             <record id="view_medical_inpatient_filter" model="ir.ui.view">
+                <field name="name">Inpatient Admission Search</field>
+                <field name="model">sh.medical.inpatient</field>
+                <field name="priority" eval="8" />
+			    <field name="arch" type="xml">
+                    <search string="Inpatient Admission">
+                        <field name="name"/>
+                        <field name="patient"/>
+                        <field name="attending_physician"/>
+                        <field name="operating_physician"/>
+                        <field name="bed"/>
+                        <newline />
+                        <group expand="0" string="Group By...">
+                            <filter string="Admission Type" name="group_admission_type" domain="[]" context="{'group_by':'admission_type'}" />
+                            <filter string="Ward" name="group_ward" domain="[]" context="{'group_by':'ward'}" />
+                            <filter string="State" name="group_state" domain="[]" context="{'group_by':'state'}" />
+                        </group>
+				    </search>
+                </field>
+            </record>
+
+            <record id="sh_medical_inpatient_action_tree" model="ir.actions.act_window">
+                    <field name="name">Inpatient Admissions</field>
+                    <field name="res_model">sh.medical.inpatient</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                    <field name="domain">[]</field>
+                    <field name="context">{}</field>
+                    <field name="view_id" eval="False"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to admit new patient.
+                      </p>
+                    </field>
+            </record>
+
+            <menuitem action="sh_medical_inpatient_action_tree" id="sh_medical_inpatient_list" parent="sh_medical_patients_menu" sequence="2"/>
+            <record model='ir.ui.menu' id='shealth_all_in_one.sh_medical_inpatient_list'>
+                <field name="web_icon_class">fa fa-h-square</field>
+            </record>
+
+            <!-- Patient's Profile Inpatient Hospitalization -->
+
+<!--            <record model="ir.ui.view" id="sh_medical_inpatient_mydetails_view">-->
+<!--                <field name="name">My Admission</field>-->
+<!--                <field name="model">sh.medical.inpatient.mydetails</field>-->
+<!--                <field name="type">form</field>-->
+<!--                <field name="arch" type="xml">-->
+<!--                    <form string="My Admission">-->
+<!--                        <header>-->
+<!--                            <field name="state" widget="statusbar" statusbar_visible="Draft,Hospitalized,Discharged,Invoiced" statusbar_colors='{"Hospitalized":"red","Draft":"blue","Invoiced":"grey","Discharged":"green"}'/>-->
+<!--                        </header>-->
+<!--                        <sheet>-->
+<!--                            <div class="oe_left" style="width: 500px;">-->
+<!--                                <div class="oe_title" style="width: 390px;">-->
+<!--                                    <label class="oe_edit_only" for="name" string="Inpatient #"/>-->
+<!--                                    <h1><field name="name" class="oe_inline"/></h1>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <group>-->
+<!--                                <group>-->
+<!--                                    <field name="patient"/>-->
+<!--                                    <field name="admission_reason"/>-->
+<!--                                    <field name="ward"/>-->
+<!--                                    <field name="bed"/>-->
+<!--                                </group>-->
+<!--                                <group>-->
+<!--                                    <field name="admission_type"/>-->
+<!--                                    <field name="attending_physician"/>-->
+<!--                                    <field name="operating_physician"/>-->
+<!--                                </group>-->
+<!--                            </group>-->
+<!--                            <group string="Dates">-->
+<!--                                <group>-->
+<!--                                    <field name="admission_date"/>-->
+<!--                                </group>-->
+<!--                                <group>-->
+<!--                                    <field name="discharge_date"/>-->
+<!--                                </group>-->
+<!--                            </group>-->
+<!--                            <notebook>-->
+<!--                                <page string="Details">-->
+<!--                                    <group>-->
+<!--                                        <field name="admission_condition"/>-->
+<!--                                    </group>-->
+<!--                                    <group>-->
+<!--                                        <field name="nursing_plan"/>-->
+<!--                                    </group>-->
+<!--                                    <group>-->
+<!--                                        <field name="discharge_plan"/>-->
+<!--                                    </group>-->
+<!--                                </page>-->
+<!--                                <page string="Extra Information">-->
+<!--                                    <field name="info" nolabel="1"/>-->
+<!--                                </page>-->
+<!--                            </notebook>-->
+<!--                        </sheet>-->
+<!--                    </form>-->
+<!--                </field>-->
+<!--            </record>-->
+
+
+<!--            <record model="ir.ui.view" id="sh_medical_inpatient_mydetails_tree">-->
+<!--                <field name="name">My Admission</field>-->
+<!--                <field name="model">sh.medical.inpatient.mydetails</field>-->
+<!--                <field name="type">tree</field>-->
+<!--                <field name="arch" type="xml">-->
+<!--                    <tree string='My Admission' decoration-muted="state=='Invoiced'" decoration-info="state=='Hospitalized'" decoration-success="state=='Discharged'" decoration-danger="state=='Cancelled'">-->
+<!--                        <field name="name"/>-->
+<!--                        <field name="patient"/>-->
+<!--                        <field name="admission_type"/>-->
+<!--                        <field name="ward"/>-->
+<!--                        <field name="bed"/>-->
+<!--                        <field name="admission_date"/>-->
+<!--                        <field name="discharge_date"/>-->
+<!--                        <field name="state"/>-->
+<!--                    </tree>-->
+<!--                </field>-->
+<!--            </record>-->
+
+<!--             <record id="view_medical_inpatient_myadmission_filter" model="ir.ui.view">-->
+<!--                <field name="name">My Admission Search</field>-->
+<!--                <field name="model">sh.medical.inpatient.mydetails</field>-->
+<!--                <field name="priority" eval="8" />-->
+<!--			    <field name="arch" type="xml">-->
+<!--                    <search string="My Admission">-->
+<!--                        <field name="name"/>-->
+<!--                        <field name="patient"/>-->
+<!--                        <field name="attending_physician"/>-->
+<!--                        <field name="operating_physician"/>-->
+<!--                        <field name="bed"/>-->
+<!--                        <newline />-->
+<!--                        <group expand="0" string="Group By...">-->
+<!--                            <filter string="Admission Type" name="group_admission_type" domain="[]" context="{'group_by':'admission_type'}" />-->
+<!--                            <filter string="Ward" name="group_ward" domain="[]" context="{'group_by':'ward'}" />-->
+<!--                            <filter string="State" name="group_state" domain="[]" context="{'group_by':'state'}" />-->
+<!--                        </group>-->
+<!--				    </search>-->
+<!--                </field>-->
+<!--            </record>-->
+
+<!--            <record id="sh_medical_inpatient_myadmission_action_tree" model="ir.actions.act_window">-->
+<!--                    <field name="name">My Admissions</field>-->
+<!--                    <field name="res_model">sh.medical.inpatient.mydetails</field>-->
+<!--                    <field name="view_type">form</field>-->
+<!--                    <field name="view_mode">tree,form</field>-->
+<!--                    <field name="domain">[]</field>-->
+<!--                    <field name="context">{}</field>-->
+<!--                    <field name="view_id" eval="False"/>-->
+<!--            </record>-->
+
+<!--            <menuitem action="sh_medical_inpatient_myadmission_action_tree" id="sh_medical_inpatient_myadmission_list" parent="sh_medical_patients_menu" sequence="3"/>-->
+
+
+        </data>
+</odoo>

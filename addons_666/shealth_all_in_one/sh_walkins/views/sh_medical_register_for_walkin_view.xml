@@ -1,0 +1,1110 @@
+<?xml version="1.0" ?>
+<odoo>
+        <data>
+
+            <!-- Inheriting Physician screen to add Walkin Schedule -->
+
+            <record id="sh_medical_physician_walkin_view" model="ir.ui.view">
+                <field name="name">Physicians</field>
+                <field name="model">sh.medical.physician</field>
+                <field name="inherit_id" ref="shealth_all_in_one.sh_medical_physician_view"/>
+                <field name="arch" type="xml">
+                    <notebook position="inside">
+                        <page string="Walkin Schedule" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_manager">
+                            <field name="walkin" nolabel="1">
+<!--                                <tree string="Walkin Schedule" nolabel="1" editable="bottom">-->
+<!--                                    <field name="name"/>-->
+<!--                                    <field name="end_date"/>-->
+<!--                                </tree>-->
+                            </field>
+                        </page>
+                    </notebook>
+                </field>
+            </record>
+
+            <!-- Inheriting vaccine screen to display walkin reference -->
+
+            <record id="sh_medical_vaccine_walkin_view" model="ir.ui.view">
+                <field name="name">Vaccines</field>
+                <field name="model">sh.medical.vaccines</field>
+                <field name="inherit_id" ref="shealth_all_in_one.sh_medical_vaccine_view"/>
+                <field name="arch" type="xml">
+                    <field name="institution" options="{'no_create': True}" position="after">
+                        <field name="walkin"/>
+                    </field>
+                </field>
+            </record>
+
+           <!-- Inheriting evaluation screen to display walkin reference -->
+
+            <record id="sh_medical_evaluation_walkin_view" model="ir.ui.view">
+                <field name="name">Tái Khám</field>
+                <field name="model">sh.medical.evaluation</field>
+                <field name="inherit_id" ref="shealth_all_in_one.sh_medical_evaluation_view"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//sheet//h1" position="after">
+                        <label for="walkin" string="Phiếu khám liên quan"/>
+                        <field name="walkin" required="1" force_save="1" options="{'no_create':True}"/>
+                        <field name="service_related" invisible="1"/>
+                    </xpath>
+                </field>
+            </record>
+
+            <!-- Inheriting prescription screen to display walkin reference -->
+
+            <record id="sh_medical_prescription_walkin_view" model="ir.ui.view">
+                <field name="name">Prescriptions</field>
+                <field name="model">sh.medical.prescription</field>
+                <field name="inherit_id" ref="shealth_all_in_one.sh_medical_prescription_view"/>
+                <field name="arch" type="xml">
+                    <field name="doctor" position="after">
+                        <field name="walkin" readonly="1" force_save="1" options="{'no_create':True}"/>
+                    </field>
+                    <field name="date" position="after">
+                        <field name="location_id" invisible="1"  options="{'no_open':True,'no_create':True}" domain="[('usage','=','internal')]" attrs="{'readonly':['|',('state','=','Đã xuất thuốc'),('location_id','!=',False)]}" force_save="1" context="{'view_only_name': True}"/>
+                    </field>
+                </field>
+            </record>
+
+            <!-- Inheriting admissions screen to display walkin reference -->
+
+            <record id="sh_medical_inpatient_walkin_view" model="ir.ui.view">
+                <field name="name">Inpatient Admissions</field>
+                <field name="model">sh.medical.inpatient</field>
+                <field name="inherit_id" ref="shealth_all_in_one.sh_medical_inpatient_view"/>
+                <field name="arch" type="xml">
+                    <field name="patient" options="{'no_create': True}" position="before">
+                        <field name="walkin" attrs="{'readonly':[('walkin','!=',False)]}" force_save="1"/>
+                    </field>
+                </field>
+            </record>
+
+            <!-- Inheriting lab tests screen to display walkin reference -->
+
+            <record id="sh_medical_lab_test_walkin_view" model="ir.ui.view">
+                <field name="name">Lab Tests</field>
+                <field name="model">sh.medical.lab.test</field>
+                <field name="inherit_id" ref="shealth_all_in_one.sh_medical_lab_test_form"/>
+                <field name="arch" type="xml">
+                    <field name="patient" options="{'no_create': True}" position="after">
+                        <field name="walkin" readonly="1" force_save="1" options="{'no_open': True}"/>
+                    </field>
+                </field>
+            </record>
+
+            <!-- Inheriting imaging tests screen to display walkin reference -->
+
+            <record id="sh_medical_imaging_test_walkin_view" model="ir.ui.view">
+                <field name="name">Imaging Tests</field>
+                <field name="model">sh.medical.imaging</field>
+                <field name="inherit_id" ref="shealth_all_in_one.sh_medical_imaging_test_form"/>
+                <field name="arch" type="xml">
+                    <field name="patient" options="{'no_create': True}" position="after">
+                        <field name="walkin" readonly="1" force_save="1" options="{'no_open': True}"/>
+                    </field>
+                </field>
+            </record>
+
+            <!-- Register for Walkin -->
+
+            <record model="ir.ui.view" id="view_sh_medical_register_for_walkin_calendar">
+                <field name="name">Walkins Calendar</field>
+                <field name="model">sh.medical.appointment.register.walkin</field>
+                <field name="priority" eval="2"/>
+                <field name="arch" type="xml">
+                    <calendar string="Walkins" date_start="date"
+                              color="state" quick_add="False" mode="week">
+                        <field name="patient" class="text-uppercase"/>
+                    </calendar>
+                </field>
+            </record>
+
+            <record id="view_sh_medical_register_for_walkin_filter" model="ir.ui.view">
+                <field name="name">Walkin Search</field>
+                <field name="model">sh.medical.appointment.register.walkin</field>
+                <field name="type">search</field>
+                <field name="arch" type="xml">
+                    <search string="Search Walkins">
+                        <separator orientation="vertical"/>
+                            <field name="patient" string="Patient" select="1"/>
+                            <field name="name" select="1"/>
+                            <field name="service" string="Service" select="1"/>
+<!--                            <field name="service_expected" string="Service expected" select="1"/>-->
+                            <field name="doctor" string="Physician" select="1"/>
+                            <field name="state" string="State" select="1"/>
+                        <newline/>
+                            <filter string="My Walkin" name="my_walkin" domain="['|', ('doctor', '=', False), ('doctor.sh_user_id', '=', uid)]"/>
+                            <filter string="Walkin Scheduled" name="state" domain="[('state', '=', 'Scheduled')]"/>
+                            <filter string="Phiếu khám đang chờ thanh toán" name="state" domain="[('state', '=', 'WaitPayment')]"/>
+                            <filter string="Phiếu khám đã thanh toán" name="state" domain="[('state', '=', 'Payment')]"/>
+                            <filter string="Phiếu khám đang thực hiện dịch" name="state" domain="[('state', '=', 'InProgress')]"/>
+                            <filter string="Phiếu khám chưa trả kết quả XN" name="stat_not_done_lab" domain="[('has_lab_result', '=', False)]"/>
+                            <filter string="Phiếu khám chưa trả kết quả CĐHA" name="state" domain="[('has_img_result', '=', False)]"/>
+                            <filter string="Walkin Completed" name="state" domain="[('state', '=', 'Completed')]"/>
+                            <filter string="Ngày khám" name="date" date="date"/>
+<!--                            <filter string="Walkin Cancelled" name="state" domain="[('state', '=', 'Cancelled')]"/>-->
+                        <newline/>
+                        <filter string="Not completed" name="filter_not_completed" domain="[('state','!=','Completed')]" context="{}"/>
+                        <newline/>
+                        <filter string="Đã hoàn thành" name="filter_completed" domain="[('state','=','Completed')]" context="{}"/>
+                        <newline/>
+                        <filter string="Đã thanh toán" name="filter_payment" domain="[('state','=','Payment')]" context="{}"/>
+                        <newline/>
+                        <group expand="0" string="Group By..." colspan="11" col="11">
+                            <filter name="group_patient" string="Patient" context="{'group_by':'patient'}"/>
+                            <filter name="group_doctor" string="Doctor" context="{'group_by':'doctor'}"/>
+                            <filter name="group_sex" string="Sex" context="{'group_by':'sex'}"/>
+                            <filter name="group_blood_type" string="Blood Type" context="{'group_by':'blood_type'}"/>
+                            <filter name="group_marital_status" string="Marital Status" context="{'group_by':'marital_status'}"/>
+                            <filter name="group_service_room" string="Phòng khám" context="{'group_by':'service_room'}"/>
+                            <filter name="group_date" string="Walkin Date" context="{'group_by':'date'}"/>
+                            <filter name="group_state" string="State" context="{'group_by':'state'}"/>
+                        </group>
+                    </search>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="view_sh_medical_walkin_image_form">
+                <field name="name">sh.medical.walkin.image.form</field>
+                <field name="model">sh.medical.walkin.image</field>
+                <field name="arch" type="xml">
+                    <form string="Ảnh">
+                        <div class="row o_walkin_image_modal">
+                            <div class="col-md-6 col-xl-5">
+                                <div class="oe_title">
+                                    <label class="small" for="name" string="Tên ảnh"/>
+                                    <h2><field name="name" placeholder="Tên ảnh" required="True"/></h2>
+                                    <field name="walkin" invisible="1"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-7 text-center o_walkin_image_modal_container">
+                                <field name="image" widget="image"/>
+                            </div>
+                        </div>
+                    </form>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_register_for_walkin_view">
+                <field name="name">Walkins</field>
+                <field name="model">sh.medical.appointment.register.walkin</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                <form string="Walkins" create="0" duplicate="false" edit_expr="state not in ['WaitPayment','Payment','Completed']">
+<!--                    <header class="sh_header_fixed">-->
+                    <header>
+                        <button confirm="Bạn có chắc muốn tạo một yêu cầu thu phí cho phiếu này?" name="create_draft_payment" string="Yêu cầu thu phí" attrs="{'invisible': ['|',('service','=',[]),('state','!=','Scheduled')]}" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician"/>
+                        <button confirm="Bạn có chắc muốn đánh dấu phiếu này Đang thực hiện?" name="set_to_progress" states="Payment" string="Đang thực hiện" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician"/>
+                        <button confirm="Bạn có chắc muốn đánh dấu phiếu này Đã Hoàn thành?" name="set_to_completed" states="InProgress" string="Đã Hoàn thành" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician_odontology,shealth_all_in_one.group_sh_medical_physician_surgery,shealth_all_in_one.group_sh_medical_physician_spa"/>
+                        <button confirm="Bạn có chắc muốn đặt lại phiếu này về Khám?" name="set_to_scheduled" states="InProgress" string="Đặt lại là Khám" type="object" class="btn-warning" groups="shealth_all_in_one.group_sh_medical_manager"/>
+                        <button name="view_walkin_material" states="InProgress,Completed" string="Xem VTTH của Phiếu" type="object" class="btn-info" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_accountant"/>
+
+                        <button confirm="Are you sure you want to mark walkin as Cancelled?" name="set_to_cancelled" states="Scheduled,Completed" string="Mark as Cancelled" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_manager"/>
+                        <button confirm="Bạn có chắc muốn đánh dấu phiếu này Đang thực hiện (Chỉ Admin)?" name="set_to_progress_admin" states="Completed" string="Đặt lại là Đang thực hiện" type="object" class="btn-warning" groups="shealth_all_in_one.group_sh_medical_manager"/>
+                        <button confirm="Are you sure you want to create the invoice?" name="action_walkin_invoice_create" states="Completed" string="Consultancy Invoice" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_manager"/>
+                        <field name="state" widget="statusbar" statusbar_visible="Scheduled,WaitPayment,InProgress,Completed" statusbar_colors='{"Scheduled":"blue","InProgress":"red","Completed":"green","Cancelled":"grey"}'/>
+                    </header>
+                    <sheet>
+                        <h3>STT: <span style="font-size:36px;"><field name="index_by_day" class="text-danger oe_inline"/></span></h3>
+                        <div class="oe_title oe_left">
+                            <label class="oe_edit_only" for="name" string="Walkin #"/>
+                            <h1><field name="name" class="oe_inline" force_save="1" readonly="1"/></h1>
+<!--                            <h1><field name="name" class="oe_inline" force_save="1" attrs="{'readonly': [('state','in',['WaitPayment','Payment','InProgress','Completed'])]}"/></h1>-->
+                            <div>
+                                <label for="patient" class="oe_edit_only"/>
+                                <field name="patient" class="text-uppercase" on_change="onchange_patient(patient)" force_save="1" readonly="1"/>
+                            </div>
+                            <div>
+                                <field name="dob" placeholder="Ngày sinh..." force_save="1"/>
+                                <field name="sex" placeholder="Giới tính..." class="ml-5" force_save="1"/>
+                            </div>
+                        </div>
+                        <div style="margin-right:450px">
+<!--                            <div class="oe_title text-center border p-2 float-right">-->
+<!--                                <label for="money_spent" string="Spent"/>-->
+<!--                                <h3><span title="Done"><field name="money_spent" class="text-success"/></span></h3>-->
+<!--                            </div>-->
+                            <div class="oe_title text-center border p-2 float-right">
+                                <label for="specialty_count" string="Specialty"/>
+                                <h3>
+<!--                                    <span title="Done"><field name="specialty_done_count" class="text-success"/></span> /-->
+                                    <span title="Total"><field name="specialty_count" class="text-primary" style="overflow: unset;"/></span>
+                                </h3>
+                            </div>
+                            <div class="oe_title text-center border p-2 float-right">
+                                <label for="surgery_count" string="Surgery"/>
+                                <h3>
+<!--                                    <span title="Done"><field name="surgery_done_count" class="text-success"/></span> /-->
+                                    <span title="Total"><field name="surgery_count" class="text-primary" style="overflow: unset;"/></span>
+                                </h3>
+                            </div>
+                            <div class="oe_title text-center border p-2 float-right">
+                                <label for="img_test_count" string="Imaging test"/>
+                                <h3><span title="Done"><field name="img_test_done_count" class="text-success" style="overflow: unset;"/></span> /
+                                    <span title="Total"><field name="img_test_count" class="text-primary" style="overflow: unset;"/></span>
+                                </h3>
+                            </div>
+                            <div class="oe_title text-center border p-2 float-right">
+                                <label for="lab_type_count" string="Lab test"/>
+                                <h3><span title="Done"><field name="lab_test_done_count" class="text-success" style="overflow: unset;"/></span> /
+                                    <span title="Total"><field name="lab_test_count" class="text-primary" style="overflow: unset;"/></span>
+                                </h3>
+                            </div>
+                        </div>
+                        <group>
+                            <group string="Thông tin chung">
+                                <field name="institution" options="{'no_create': True,'no_open': True}" readonly="1" force_save="1"/>
+                                <field name="department" options="{'no_create': True}" invisible="1"/>
+                                <field name="department_current" options="{'no_create': True}" invisible="1"/>
+                                <field name="service_room" string="Phòng khám" options="{'no_create': True,'no_open': True}" required="True" readonly="1" force_save="1"/>
+                                <field name="date" attrs="{'readonly': [('state','in',['WaitPayment','Payment','Completed'])]}" force_save="1"/>
+                                <field name="reason_check" required="True" readonly="1" force_save="1"/>
+                                <field name="doctor" required="True" options="{'no_create': True,'no_open': True}" attrs="{'readonly': [('state','in',['WaitPayment','Payment','InProgress','Completed'])]}" force_save="1"/>
+                                <field name="flag_surgery" invisible="1"/>
+<!--                            </group>-->
+<!--                            <group invisible="1">-->
+<!--                                <field name="service_expected" widget="many2many_tags" options="{'no_create': True}" invisible="1"/>-->
+<!--&lt;!&ndash;                                <field name="service" widget="many2many_tags" options="{'no_create': True}" attrs="{'invisible': [('state','in',('Scheduled'))]}" domain="[('exam_room','=',service_room)]"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <field name="taskmaster" force_save="1"/>&ndash;&gt;-->
+<!--                                <field name="user_approval" force_save="1" invisible="1"/>-->
+                                <field name="root_walkin" options="{'no_create': True}" domain="[('patient','=',patient)]" invisible="1"/>
+                            </group>
+                            <group string="Quá trình bệnh lý">
+                                <field name="pathological_process" nolabel="1" attrs="{'readonly': [('state','in',['WaitPayment','Payment','Completed'])]}" force_save="1"/>
+                            </group>
+                            <group string="Tiền sử bệnh">
+                                <field name="surgery_history" attrs="{'readonly': [('state','in',['WaitPayment','Payment','Completed'])]}" force_save="1"/>
+                                <field name="medical_history" attrs="{'readonly': [('state','in',['WaitPayment','Payment','Completed'])]}" force_save="1"/>
+                                <field name="allergy_history" attrs="{'readonly': [('state','in',['WaitPayment','Payment','Completed'])]}" force_save="1"/>
+                                <field name="family_history" attrs="{'readonly': [('state','in',['WaitPayment','Payment','Completed'])]}" force_save="1"/>
+                            </group>
+                            <group string="Khám bệnh">
+                                <field name="physical_exam" attrs="{'readonly': [('state','in',['WaitPayment','Payment','Completed'])]}" force_save="1"/>
+                                <field name="cyclic_info" attrs="{'readonly': [('state','in',['WaitPayment','Payment','Completed'])]}" force_save="1"/>
+                                <field name="respiratory_exam" attrs="{'readonly': [('state','in',['WaitPayment','Payment','Completed'])]}" force_save="1"/>
+                                <field name="digest_exam" attrs="{'readonly': [('state','in',['WaitPayment','Payment','Completed'])]}" force_save="1"/>
+                                <field name="reins_exam" attrs="{'readonly': [('state','in',['WaitPayment','Payment','Completed'])]}" force_save="1"/>
+                                <field name="nerve_exam" attrs="{'readonly': [('state','in',['WaitPayment','Payment','Completed'])]}" force_save="1"/>
+                                <field name="other_exam" attrs="{'readonly': [('state','in',['WaitPayment','Payment','Completed'])]}" force_save="1"/>
+                                <field name="specialty_exam" attrs="{'readonly': [('state','in',['WaitPayment','Payment','Completed'])]}" force_save="1"/>
+                            </group>
+                            <group string="Các chỉ số">
+                                <field name="temperature" attrs="{'readonly': [('state','in',['WaitPayment','Payment','Completed'])]}" force_save="1"/>
+                                <label for="systolic" string="Huyết áp (mmHg)"/>
+                                <div class="o_row">
+                                    <field name="systolic" attrs="{'readonly': [('state','in',['WaitPayment','Payment','Completed'])]}" force_save="1"/>
+                                    <label for="diastolic" string="/"/>
+                                    <field name="diastolic" attrs="{'readonly': [('state','in',['WaitPayment','Payment','Completed'])]}" force_save="1"/>
+                                </div>
+                                <field name="respiratory_rate" attrs="{'readonly': [('state','in',['WaitPayment','Payment','Completed'])]}" force_save="1"/>
+                                <field name="bpm" attrs="{'readonly': [('state','in',['WaitPayment','Payment','Completed'])]}" force_save="1"/>
+
+                                <field name="weight" on_change="onchange_height_weight(height,weight)" attrs="{'readonly': [('state','in',['WaitPayment','Payment','Completed'])]}" force_save="1"/>
+                                <field name="height" on_change="onchange_height_weight(height,weight)" attrs="{'readonly': [('state','in',['WaitPayment','Payment','Completed'])]}" force_save="1"/>
+                                <field name="bmi" readonly="1" force_save="1"/>
+                            </group>
+                            <group invisible="1">
+                                <group>
+                                    <field name="marital_status" invisible="1"/>
+                                     <field name="rh" invisible="1"/>
+                                </group>
+                                <group>
+                                    <field name="blood_type" invisible="1"/>
+                                </group>
+                            </group>
+                            <group>
+                                <group string="Thông tin chẩn đoán">
+                                    <field name="info_diagnosis" nolabel="1"/>
+                                </group>
+                            </group>
+                            <group string="Hướng xử trí">
+                                <field name="service"  widget="many2many_tags" options="{'no_create': True}" required="1" domain="[('exam_room','=',service_room)]" attrs="{'readonly': [('state','in',['WaitPayment','Payment','Completed'])]}" context="{'name_service_with_pathology': True}" force_save="1"/>
+                                <field name="pathology" widget="many2many_tags" options="{'no_create': True,'no_open': True}"  readonly="True" force_save="1"/>
+                            </group>
+                        </group>
+                        <div class="sh-box-control-print">
+                            <field name="has_lab_result" invisible="1" force_save="1"/>
+                            <field name="has_img_result" invisible="1" force_save="1"/>
+
+                            <button name="print_assign_patient_labtest" attrs="{'invisible': [('lab_test_count','=',0)]}" string="CHỈ ĐỊNH XN" type="object" class="btn-info fa fa-print mr-5" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_physician_subclinical_labtest,shealth_all_in_one.group_sh_medical_manager"/>
+                            <button name="print_result_patient_labtest" attrs="{'invisible': ['|',('has_lab_result','=',False),('lab_test_count','=',0)]}" string="KẾT QUẢ XN" type="object" class="btn-success fa fa-print mr-5" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_physician_subclinical_labtest,shealth_all_in_one.group_sh_medical_manager"/>
+
+                            <button name="print_assign_patient_imaging" attrs="{'invisible': [('img_test_count','=',0)]}" string="CHỈ ĐỊNH CĐHA" type="object" class="btn-info fa fa-print mr-5" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_physician_subclinical_imaging,shealth_all_in_one.group_sh_medical_manager"/>
+                            <button name="print_result_patient_imaging" attrs="{'invisible': ['|',('has_img_result','=',False),('img_test_count','=',0)]}" string="KẾT QUẢ CĐHA" type="object" class="btn-success fa fa-print mr-5" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_physician_subclinical_imaging,shealth_all_in_one.group_sh_medical_manager"/>
+
+                            <button name="print_assign_patient_services" attrs="{'invisible': ['|',('service','=',[]),('state','not in',['InProgress','Completed'])]}" string="CHỈ ĐỊNH DỊCH VỤ" type="object" class="btn-info fa fa-print mr-5" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_physician_subclinical_imaging,shealth_all_in_one.group_sh_medical_manager"/>
+                        </div>
+                        <notebook>
+                            <page string="Ảnh liên quan">
+                                <field name="walkin_image_ids" class="o_website_sale_image_list" context="{'default_name': name, 'default_walkin': active_id}" nolabel="1">
+                                    <kanban string="Ảnh" class="o_attachments_previews">
+                                        <field name="id"/>
+                                        <field name="name"/>
+                                        <field name="image"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div class="o_attachment oe_kanban_global_click o_website_sale_image_card">
+                                                    <div class="o_attachment_wrap">
+                                                        <div class="o_image_box">
+                                                            <div class="o_attachment_image" t-attf-style="background-image:url({{kanban_image('sh.medical.walkin.image', 'image', record.id.raw_value)}});"/>
+                                                            <div t-attf-class="o_image_overlay" t-att-title="record.name.value"/>
+                                                            <div class="o_website_sale_image_card_title" t-att-title="record.name.value">
+                                                                <field name="name"/>
+                                                            </div>
+                                                        </div>
+
+                                                        <t t-set="size" t-value="[record.image.value][0]"/>
+                                                        <t t-set="size_status" t-value="'normal'" t-if="size.indexOf('Bytes') !== -1 or ( size.indexOf('Kb') !== -1 and size[2]=='.')"/>
+                                                        <t t-set="size_status" t-value="'warning'" t-elif="( size.indexOf('Kb') !== -1 and size[3]=='.')"/>
+                                                        <t t-set="size_status" t-value="'danger'"  t-else=""/>
+                                                        <t t-set="message" t-value="'Acceptable file size'" t-if="size_status == 'normal'"></t>
+                                                        <t t-set="message" t-value="'Huge file size. The image should be optimized/reduced.'" t-elif="size_status == 'warning'"></t>
+                                                        <t t-set="message" t-value="'Optimization required! Reduce the image size or increase your compression settings.'" t-else=""></t>
+
+                                                        <span t-attf-class="o_website_sale_image_card_size badge badge-#{size_status}" t-att-title="message">
+                                                            <t t-esc="record.image.value"/>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+                            </page>
+                            <page string="Thăm khám" invisible="1" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_manager">
+                                <field name="evaluation_ids" context="{'default_walkin': active_id,'default_evaluation_start_date': date,'default_chief_complaint': reason_check,'default_doctor': doctor,'default_indication':pathology,'default_evaluation_type':'Pre-arraganged Appointment','default_patient':patient}" domain="[('walkin', '=', active_id)]">
+                                </field>
+                            </page>
+<!--                            <page string="Prescriptions">-->
+<!--                                <field name="prescription_ids" options="{'reload_on_button': true}" context="{'default_walkin': active_id}" domain="[('walkin', '=', active_id)]">-->
+<!--                                    <form string="Prescriptions">-->
+<!--                                        <header>-->
+<!--                                            <button confirm="Are you sure you want to create the invoice?" name="action_prescription_invoice_create" states="Draft" string="Consultancy Invoice" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_manager"/>-->
+<!--                                            <button confirm="Are you sure you want to send prescription to selected pharmacy?" name="action_prescription_send_to_pharmacy" states="Draft" string="Send to Pharmacy" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_manager"/>-->
+<!--                                            <field name="state" widget="statusbar" statusbar_visible="Draft,Invoiced,Sent to Pharmacy" statusbar_colors='{"Draft":"blue","Invoiced":"grey"}'/>-->
+<!--                                        </header>-->
+<!--                                        <sheet>-->
+<!--                                            <div class="oe_title">-->
+<!--                                                <label string="Prescription #" class="oe_edit_only"/>-->
+<!--                                                <h1>-->
+<!--                                                    <field name="name"/>-->
+<!--                                                </h1>-->
+<!--                                            </div>-->
+<!--                                            <group>-->
+<!--                                                <group>-->
+<!--                                                    <field name="patient" domain="[('id', '=', parent.patient)]"/>-->
+<!--                                                    <field name="pharmacy" options="{'no_create': True}"/>-->
+<!--                                                    <field name="walkin" readonly="1"/>-->
+<!--                                                </group>-->
+<!--                                                <group>-->
+<!--                                                    <field name="doctor" options="{'no_create': True}"/>-->
+<!--                                                    <field name="date"/>-->
+<!--                                                </group>-->
+<!--                                            </group>-->
+<!--                                            <notebook>-->
+<!--                                                <page string="Prescription Lines">-->
+<!--                                                    <field name="prescription_line">-->
+<!--                                                        <form string="Prescription Lines">-->
+<!--                                                            <group>-->
+<!--                                                                <group>-->
+<!--                                                                    <field name="name"/>-->
+<!--                                                                    <field name="dose_form"/>-->
+<!--                                                                    <field name="start_treatment"/>-->
+<!--                                                                    <field name="patient" domain="[('id', '=', parent.patient)]" required="1"/>-->
+<!--                                                                </group>-->
+<!--                                                                <group>-->
+<!--                                                                    <field name="indication"/>-->
+<!--                                                                    <field name="dose_route"/>-->
+<!--                                                                    <field name="end_treatment"/>-->
+<!--                                                                </group>-->
+<!--                                                            </group>-->
+<!--                                                            <group>-->
+<!--                                                                <group string="Dosage">-->
+<!--                                                                    <field name="qty" required="1"/>-->
+<!--                                                                    <label for="dose"/>-->
+<!--                                                                    <div>-->
+<!--                                                                        <field name="dose" placeholder="250" style="width: 20%%"/>-->
+<!--                                                                        <field name="dose_unit" placeholder="mg" style="width: 40%%"/>-->
+<!--                                                                    </div>-->
+<!--                                                                </group>-->
+<!--                                                                <group string="Common Dosage">-->
+<!--                                                                    <field name="common_dosage"/>-->
+<!--                                                                    <field name="admin_times"/>-->
+<!--                                                                </group>-->
+<!--                                                            </group>-->
+<!--                                                            <group string="Specific Dosage">-->
+<!--                                                                <p class="oe_grey">-->
+<!--                                                                    Time in between doses the patient must wait (ie, for 1 pill each 8 hours, put here 8 and select 'hours' in the unit field-->
+<!--                                                                </p>-->
+<!--                                                            </group>-->
+<!--                                                            <group>-->
+<!--                                                                <group>-->
+<!--                                                                    <field name="frequency"/>-->
+<!--                                                                </group>-->
+<!--                                                                <group>-->
+<!--                                                                    <field name="frequency_unit"/>-->
+<!--                                                                </group>-->
+<!--                                                            </group>-->
+<!--                                                            <group string="Treatment">-->
+<!--                                                                <p class="oe_grey">-->
+<!--                                                                    Treatment period that the patient must take the medication in minutes, hours, days, months, years or indefinitely-->
+<!--                                                                </p>-->
+<!--                                                            </group>-->
+<!--                                                            <group>-->
+<!--                                                                <group>-->
+<!--                                                                    <field name="duration" string="Day(s)"/>-->
+<!--                                                                </group>-->
+<!--                                                                <group>-->
+<!--                                                                    <field name="duration_period" string="Period"/>-->
+<!--                                                                </group>-->
+<!--                                                            </group>-->
+<!--                                                            <group string="Comment">-->
+<!--                                                                <field name="info" nolabel="1"/>-->
+<!--                                                            </group>-->
+<!--                                                        </form>-->
+<!--                                                        <tree string="Prescription Lines">-->
+<!--                                                            <field name="name"/>-->
+<!--                                                            <field name="indication"/>-->
+<!--                                                            <field name="dose"/>-->
+<!--                                                            <field name="dose_unit"/>-->
+<!--                                                            <field name="dose_form"/>-->
+<!--                                                            <field name="common_dosage"/>-->
+<!--                                                            <field name="qty"/>-->
+<!--                                                            <field name="duration"/>-->
+<!--                                                            <field name="duration_period"/>-->
+<!--                                                            <field name="info"/>-->
+<!--                                                        </tree>-->
+<!--                                                    </field>-->
+<!--                                                </page>-->
+<!--                                                <page string="Notes">-->
+<!--                                                    <field name="info" nolabel="1"/>-->
+<!--                                                </page>-->
+<!--                                            </notebook>-->
+<!--                                        </sheet>-->
+<!--                                    </form>-->
+<!--                                    <tree string='Prescriptions' decoration-muted="state=='Invoiced'" decoration-info="state=='Draft'" decoration-success="state=='Sent to Pharmacy'">-->
+<!--                                        <field name="name"/>-->
+<!--                                        <field name="patient"/>-->
+<!--                                        <field name="date"/>-->
+<!--                                        <field name="doctor"/>-->
+<!--                                        <field name="pharmacy"/>-->
+<!--                                        <field name="walkin"/>-->
+<!--                                        <field name="state"/>-->
+<!--                                        <button confirm="Are you sure you want to send prescription to selected pharmacy?" name="action_prescription_send_to_pharmacy"-->
+<!--                                           string="Send to Pharmacy" type="object"-->
+<!--                                           icon="gtk-convert"-->
+<!--                                           states="Draft"-->
+<!--                                           groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_manager"/>-->
+<!--                                    </tree>-->
+<!--                                </field>-->
+<!--                            </page>-->
+                             <page string="Lab Tests" attrs="{'invisible': ['|',('state','in',['Scheduled','WaitPayment','Payment','Scheduled']),('flag_surgery','=', False)]}">
+                                <field name="lab_test_ids" context="{'default_walkin': active_id, 'default_requestor': doctor, 'default_patient': patient, 'default_sex': sex, 'default_dob': dob,'default_department': department,'default_institution': institution}" domain="[('walkin', '=', active_id)]">
+<!--                                    <tree class="tree_no_open" delete="false" string='Lab Tests' decoration-info="state=='Draft'" decoration-success="state=='Completed'" decoration-danger="state=='Test In Progress'">-->
+                                    <tree delete="false" string='Lab Tests' decoration-info="state=='Draft'" decoration-success="state=='Completed'" decoration-danger="state=='Test In Progress'">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name" invisible="1"/>
+                                        <field name="walkin" invisible="1"/>
+                                        <field name="patient" class="text-uppercase"/>
+                                        <field name="institution" invisible="1"/>
+                                        <field name="department" invisible="1"/>
+                                        <field name="perform_room"/>
+                                        <field name="test_type"/>
+                                        <button attrs="{'invisible': [('state','in',['Completed'])]}" name="view_detail_labtest" type="object" icon="fa-pencil-square-o" title="Chi tiết" style="font-size: 20px;"/>
+                                        <field name="pathologist"/>
+                                        <field name="requestor" invisible="1"/>
+                                        <field name="date_requested"/>
+                                        <field name="date_done"/>
+                                        <field name="walkin" invisible="1"/>
+                                        <field name="state"/>
+                                        <field name="lab_test_material_ids" invisible="1"/>
+                                        <field name="lab_test_criteria" invisible="1"/>
+                                        <button confirm="Bạn có chắc chắn muốn xóa phiếu Xét nghiệm này?" attrs="{'invisible': [('state','!=','Draft')]}" class="oe_edit_only" name="unlink" type="object" icon="fa-trash-o" title="Xóa" style="font-size: 20px;color:#000;"/>
+<!--                                        <button name="action_confirm_and_print" string="Print" type="object"/>-->
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Imaging Tests" attrs="{'invisible': ['|',('state','in',['Scheduled','WaitPayment','Payment','Scheduled']),('flag_surgery','=', False)]}">
+                                <field name="imaging_ids" context="{'default_walkin': active_id, 'default_requestor': doctor, 'default_patient': patient, 'default_sex': sex, 'default_dob': dob,'default_department': department,'default_institution': institution}" domain="[('walkin', '=', active_id)]">
+<!--                                    <tree class="tree_no_open" delete="false" string="Imaging Test" decoration-info="state=='Draft'" decoration-success="state=='Completed'" decoration-danger="state=='Test In Progress'">-->
+                                    <tree delete="false" string="Imaging Test" decoration-info="state=='Draft'" decoration-success="state=='Completed'" decoration-danger="state=='Test In Progress'">
+                                        <field name="name" invisible="1"/>
+                                        <field name="walkin" invisible="1"/>
+                                        <field name="patient" class="text-uppercase"/>
+                                        <field name="institution" invisible="1"/>
+                                        <field name="department" invisible="1"/>
+                                        <field name="perform_room"/>
+                                        <field name="test_type"/>
+                                        <button attrs="{'invisible': [('state','in',['Completed'])]}" name="view_detail_imaging" type="object" icon="fa-pencil-square-o" title="Chi tiết" style="font-size: 20px;"/>
+                                        <field name="pathologist"/>
+                                        <field name="requestor" invisible="1"/>
+                                        <field name="date_requested"/>
+                                        <field name="date_done"/>
+                                        <field name="walkin" invisible="1"/>
+                                        <field name="state"/>
+                                        <field name="imaging_material_ids" invisible="1"/>
+                                        <button confirm="Bạn có chắc chắn muốn xóa phiếu CĐHA - TDCN này?" attrs="{'invisible': [('state','!=','Draft')]}" class="oe_edit_only" name="unlink" type="object" icon="fa-trash-o" title="Xóa" style="font-size: 20px;color:#000;"/>
+<!--                                        <button name="action_confirm_and_print" string="Print" type="object"/>-->
+                                    </tree>
+                                </field>
+		                    </page>
+                            <page string="Surgeries" attrs="{'invisible': ['|',('state','in',['Scheduled','WaitPayment','Payment','Scheduled']),('flag_surgery','=', False)]}" groups="shealth_all_in_one.group_sh_medical_physician_surgery,shealth_all_in_one.group_sh_medical_nurse">
+                                <field name="doctor_surgeon" invisible="1"/>
+                                <field name="doctor_anesthetist" invisible="1"/>
+                                <field name="surgeries_ids" context="{'default_walkin': active_id, 'default_surgeon': doctor, 'default_pathology': pathology, 'default_patient': patient, 'default_sex': sex, 'default_dob': dob,'default_institution': institution}" domain="[('walkin', '=', active_id)]">
+<!--                                    <tree class="tree_no_open" delete="false" create="0" string="Surgeries" decoration-bf="state=='Signed'" decoration-it="state=='Confirmed'" decoration-info="state=='Draft'" decoration-success="state=='Done'" decoration-danger="state=='In Progress'">-->
+<!--                                    <tree delete="false" create="0" string="Surgeries" decoration-bf="state=='Signed'" decoration-it="state=='Confirmed'" decoration-info="state=='Draft'" decoration-success="state=='Done'" decoration-danger="state=='In Progress'">-->
+                                    <tree string="Surgeries" decoration-bf="state=='Signed'" decoration-it="state=='Confirmed'" decoration-info="state=='Draft'" decoration-success="state=='Done'" decoration-danger="state=='In Progress'">
+                                        <field name="name"/>
+                                        <field name="walkin" invisible="1"/>
+<!--                                        <field name="description"/>-->
+                                        <field name="patient" class="text-uppercase"/>
+                                        <field name="services" widget="many2many_tags"/>
+                                        <button attrs="{'invisible': [('state','in',['Done','Signed'])]}" name="view_detail_surgery" type="object" icon="fa-pencil-square-o" title="Chi tiết" style="font-size: 20px;"/>
+                                        <field name="surgery_date"/>
+                                        <field name="pathology" invisible="1"/>
+                                        <field name="classification" invisible="1"/>
+                                        <field name="operating_room"/>
+                                        <field name="surgeon"/>
+                                        <field name="anesthetist"/>
+                                        <field name="institution" invisible="1"/>
+                                        <field name="department" invisible="1"/>
+                                        <field name="state"/>
+<!--                                        <button name="action_confirm_and_print" string="Print" type="object"/>-->
+                                    </tree>
+                                </field>
+		                    </page>
+                            <page string="Specialty" attrs="{'invisible': ['|',('state','in',['Scheduled','WaitPayment','Payment','Scheduled']),('flag_surgery','=', True)]}" groups="shealth_all_in_one.group_sh_medical_physician_odontology,shealth_all_in_one.group_sh_medical_physician_spa,shealth_all_in_one.group_sh_medical_nurse">
+                                <field name="specialty_ids" context="{'default_walkin': active_id,'default_pathology': pathology, 'default_physician': doctor, 'default_patient': patient, 'default_sex': sex, 'default_dob': dob,'default_institution': institution}" domain="[('walkin', '=', active_id)]">
+<!--                                    <tree class="tree_no_open" delete="false" create="0" string="Specialty" decoration-bf="state=='Signed'" decoration-it="state=='Confirmed'" decoration-info="state=='Draft'" decoration-success="state=='Done'" decoration-danger="state=='In Progress'">-->
+                                    <tree create="0" string="Specialty" decoration-bf="state=='Signed'" decoration-it="state=='Confirmed'" decoration-info="state=='Draft'" decoration-success="state=='Done'" decoration-danger="state=='In Progress'">
+<!--                                    <tree string="Specialty" decoration-bf="state=='Signed'" decoration-it="state=='Confirmed'" decoration-info="state=='Draft'" decoration-success="state=='Done'" decoration-danger="state=='In Progress'">-->
+                                        <field name="name"/>
+                                        <field name="walkin" invisible="1"/>
+                                        <field name="patient" class="text-uppercase"/>
+                                        <field name="services" widget="many2many_tags"/>
+                                        <button attrs="{'invisible': [('state','in',['Done'])]}" name="view_detail_specialty" type="object" icon="fa-pencil-square-o" title="Chi tiết" style="font-size: 20px;"/>
+                                        <field name="pathology" invisible="1"/>
+                                        <field name="services_date"/>
+                                        <field name="perform_room"/>
+                                        <field name="physician"/>
+                                        <field name="institution" invisible="1"/>
+                                        <field name="department" invisible="1"/>
+                                        <field name="state"/>
+<!--                                        <button name="action_confirm_and_print" string="Print" type="object"/>-->
+                                    </tree>
+                                </field>
+		                    </page>
+                            <page string="Inpatient Admissions" attrs="{'invisible': ['|',('state','in',['Scheduled','WaitPayment','Payment','Scheduled']),('flag_surgery','=', False)]}" groups="shealth_all_in_one.group_sh_medical_physician_surgery,shealth_all_in_one.group_sh_medical_nurse">
+                                <field name="inpatient_ids" context="{'default_walkin': active_id,'default_admission_reason':pathology,'default_admission_type':'Elective','default_patient':patient,'default_operating_physician':doctor_surgeon,'default_attending_physician':doctor_anesthetist,'default_services':service}"  domain="[('walkin', '=', active_id)]">
+<!--                                    <tree class="sh_has_icon tree_no_open" delete="false" string='Inpatient Admission' decoration-muted="state=='Invoiced'" decoration-info="state=='Hospitalized'" decoration-success="state=='Discharged'" decoration-danger="state=='Cancelled'">-->
+                                    <tree class="sh_has_icon" delete="false" string='Inpatient Admission' decoration-muted="state=='Invoiced'" decoration-info="state=='Hospitalized'" decoration-success="state=='Discharged'" decoration-danger="state=='Cancelled'">
+                                        <field name="name"/>
+                                        <button attrs="{'invisible': [('state','in',['Discharged','Cancelled'])]}" name="view_detail_inpatient" type="object" icon="fa-pencil-square-o" title="Chi tiết"/>
+                                        <field name="patient" class="text-uppercase"/>
+                                        <field name="admission_type"/>
+                                        <field name="ward"/>
+                                        <field name="bed"/>
+                                        <field name="admission_date"/>
+                                        <field name="discharge_date"/>
+                                        <field name="walkin"/>
+                                        <field name="state"/>
+                                        <button attrs="{'invisible': [('state','!=','Draft')]}" class="oe_edit_only" name="unlink" type="object" icon="fa-trash-o" title="Xóa" style="font-size: 20px;color:#000;"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Treatment" attrs="{'invisible': [('state','in',['Scheduled','WaitPayment','Payment','Scheduled'])]}">
+                                <group>
+                                    <group>
+<!--                                        <field name="symptoms_ids" widget="many2many_tags" attrs="{'readonly': [('state','=','Completed')]}"/>-->
+                                        <field name="handle" string="Xử trí" attrs="{'required' :[('state','in',['Completed'])]}"/>
+                                        <field name="comments" string="Lời dặn bác sĩ"/>
+                                    </group>
+                                    <group>
+<!--                                        <field name="diagnosis_ids" widget="many2many_tags" attrs="{'readonly': [('state','=','Completed')]}"/>-->
+                                        <field name="date_out" attrs="{'readonly': [('state','=','Completed')]}"/>
+                                        <field name="date_re_exam" attrs="{'readonly': [('state','=','Completed')]}"/>
+                                    </group>
+                                </group>
+<!--                                DON THUOC-->
+                                <group string="Prescriptions">
+                                    <field nolabel="1" name="prescription_ids" options="{'reload_on_button': true}" domain="[('walkin', '=', active_id)]"
+                                           context="{'view_only_name': True,'default_walkin': active_id, 'default_date': date, 'default_date_out': date, 'default_is_normal': True, 'default_patient': patient,'default_doctor': doctor,'default_services':service}">
+<!--                                        <tree string="Prescriptions" class="sh_has_icon tree_no_open" delete="false" decoration-info="state=='Draft'" decoration-success="state=='Đã xuất thuốc'">-->
+                                        <tree string="Prescriptions" class="sh_has_icon" delete="false" decoration-info="state=='Draft'" decoration-success="state=='Đã xuất thuốc'">
+                                            <field name="walkin" force_save="1" invisible="1"/>
+                                            <field name="date_out"/>
+                                            <field name="name" force_save="1"/>
+                                            <button attrs="{'invisible': [('state','in',['Đã xuất thuốc'])]}" name="view_detail_prescriptions" type="object" icon="fa-pencil-square-o" title="Chi tiết"/>
+                                            <field name="patient" class="text-uppercase" invisible="1"/>
+                                            <field name="services" invisible="1"/>
+                                            <field name="doctor"/>
+                                            <field name="pharmacy" invisible="1"/>
+                                            <field name="location_id" domain="[('usage', '=', 'internal')]" options="{'no_create': True,'no_open': True}"/>
+                                            <field name="state"/>
+                                            <button attrs="{'invisible': [('state','!=','Draft')]}" class="oe_edit_only" name="unlink" type="object" icon="fa-trash-o" title="Xóa" style="font-size: 20px;color:#000;"/>
+    <!--                                        <button name="action_confirm_and_print" string="Print" type="object"/>-->
+                                        </tree>
+                                    </field>
+                                </group>
+		                    </page>
+<!--                            <page string="Material Information" attrs="{'invisible': [('state','in',('Scheduled'))]}">-->
+<!--                                <field name="material_ids" domain="[('walkin', '=', active_id)]" force_save="1">-->
+<!--                                    <tree editable="bottom">-->
+<!--                                        <field name="sequence" widget="handle"/>-->
+<!--                                        <field name="product_id" attrs="{'readonly': [('is_readonly','=',True)]}" force_save="1"/>-->
+<!--                                        <field name="institution" attrs="{'readonly': [('is_readonly','=',True)]}" force_save="1"/>-->
+<!--                                        <field name="department" attrs="{'readonly': [('is_readonly','=',True)]}" force_save="1"/>-->
+<!--                                        <field name="init_quantity" attrs="{'readonly': [('is_readonly','=',True)]}" force_save="1"/>-->
+<!--                                        <field name="quantity" attrs="{'readonly': [('is_readonly','=',True)]}" force_save="1"/>-->
+<!--                                        <field name="uom_id" attrs="{'readonly': [('is_readonly','=',True)]}" force_save="1"/>-->
+<!--                                        <field name="note" attrs="{'readonly': [('is_readonly','=',True)]}" force_save="1"/>-->
+<!--                                        <field name="interner_note"/>-->
+<!--                                        <field name="is_readonly" invisible="1"/>-->
+<!--                                    </tree>-->
+<!--                                </field>-->
+<!--		                    </page>-->
+<!--                            <page string="Vaccines">-->
+<!--                                <field name="vaccine_ids" context="{'default_walkin': active_id}" domain="[('walkin', '=', active_id)]">-->
+<!--                                    <form string="Vaccines">-->
+<!--                                        <sheet>-->
+<!--                                            <div class="oe_title">-->
+<!--                                                <label string="Vaccine" class="oe_edit_only"/>-->
+<!--                                                <h1>-->
+<!--                                                    <field name="name"/>-->
+<!--                                                </h1>-->
+<!--                                                <label for="patient" class="oe_edit_only"/>-->
+<!--                                                <field name="patient" domain="[('id', '=', parent.patient)]" on_change="onchange_patient(patient)"/>-->
+<!--                                            </div>-->
+<!--                                            <group>-->
+<!--                                                <group>-->
+<!--                                                    <field name="dose"/>-->
+<!--                                                    <field name="date"/>-->
+<!--                                                    <field name="walkin" readonly="1"/>-->
+<!--                                                </group>-->
+<!--                                                <group>-->
+<!--                                                    <field name="doctor" options="{'no_create': True}"/>-->
+<!--                                                    <field name="institution" options="{'no_create': True}"/>-->
+<!--                                                </group>-->
+<!--                                            </group>-->
+<!--                                            <notebook>-->
+<!--                                                <page string="Observations">-->
+<!--                                                    <field name="info" nolabel="1"/>-->
+<!--                                                </page>-->
+<!--                                            </notebook>-->
+<!--                                        </sheet>-->
+<!--                                    </form>-->
+<!--                                    <tree string='Vaccines'>-->
+<!--                                        <field name="name"/>-->
+<!--                                        <field name="patient"/>-->
+<!--                                        <field name="dose"/>-->
+<!--                                        <field name="doctor"/>-->
+<!--                                        <field name="date"/>-->
+<!--                                        <field name="institution"/>-->
+<!--                                        <field name="walkin"/>-->
+<!--                                    </tree>-->
+<!--                                </field>-->
+<!--                            </page>-->
+<!--                            <page string="Log" invisible="1">-->
+<!--                                <field name="patient_log" context="{'default_walkin': active_id,-->
+<!--                                    'default_patient': patient}" domain="[('walkin', '=', active_id)]" readonly="1" force_save="1">-->
+<!--                                    <tree decoration-danger="date_out==False" editable="bottom" create="0">-->
+<!--                                        <field name="walkin" string="Phiếu khám" invisible="1"/>-->
+<!--                                        <field name="patient" string="Bệnh nhân"/>-->
+<!--                                        <field name="department" string="Khoa/Phòng"/>-->
+<!--                                        <field name="date_in" string="Ngày vào"/>-->
+<!--                                        <field name="date_out" string="Ngày ra"/>-->
+<!--                                    </tree>-->
+<!--                                    <form>-->
+<!--                                        <sheet>-->
+<!--                                            <group>-->
+<!--                                                <group>-->
+<!--                                                    <field name="walkin" string="Phiếu khám"/>-->
+<!--                                                    <field name="patient" string="Bệnh nhân" options="{'no_create': True}"/>-->
+<!--                                                    <field name="department" string="Khoa/Phòng" options="{'no_create': True}"/>-->
+<!--                                                </group>-->
+<!--                                                <group>-->
+<!--                                                    <field name="date_in"/>-->
+<!--                                                    <field name="date_out"/>-->
+<!--                                                </group>-->
+<!--                                            </group>-->
+<!--                                        </sheet>-->
+<!--                                    </form>-->
+<!--                                </field>-->
+<!--                            </page>-->
+                        </notebook>
+                    </sheet>
+<!--                    <div class="oe_chatter">-->
+<!--                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>-->
+<!--                        <field name="activity_ids" widget="mail_activity"/>-->
+<!--                        <field name="message_ids" widget="mail_thread"/>-->
+<!--                    </div>-->
+<!--                    <footer>-->
+<!--                        <div class="sh_box_change_infor">-->
+<!--                            <div class="container">-->
+<!--                                <div class="row pt-3">-->
+<!--                                    <div class="col-md-3">-->
+<!--                                        <label for="create_date"><strong>Create on:</strong></label>-->
+<!--                                        <field name="create_date"/>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-3">-->
+<!--                                        <label for="create_uid"><strong>Create by:</strong></label>-->
+<!--                                        <field name="create_uid"/>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-3">-->
+<!--                                        <label for="write_date"><strong>Modify on:</strong></label>-->
+<!--                                        <field name="write_date"/>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-3">-->
+<!--                                        <label for="write_uid"><strong>Modify by:</strong></label>-->
+<!--                                        <field name="write_uid"/>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </footer>-->
+                    </form>
+                </field>
+            </record>
+
+            <!--            TRẢ KẾT QUẢ PHIẾU XN-->
+            <record model="ir.ui.view" id="sh_medical_walkin_result_labtest_tree">
+                <field name="name">CÁC XN CỦA PHIẾU KHÁM</field>
+                <field name="model">sh.medical.appointment.register.walkin</field>
+                <field name="type">tree</field>
+                    <field name="arch" type="xml">
+                        <tree create="0" duplicate="false" delete="1" decoration-success="has_lab_result==True" decoration-danger="has_lab_result==False" default_order="date desc">
+                            <field name="date"/>
+<!--                            <field name="name"/>-->
+                            <field name="patient" class="text-uppercase"/>
+<!--                            <field name="dob"/>-->
+                            <field name="sex"/>
+                            <field name="institution" invisible="1"/>
+                            <field name="service" widget="many2many_tags"/>
+                            <field name="doctor"/>
+                            <field name="state" invisible="1"/>
+                            <field name="has_lab_result" invisible="1"/>
+                            <field name="lab_test_ids" invisible="1"/>
+                            <field name="imaging_ids" invisible="1"/>
+                            <field name="surgeries_ids" invisible="1"/>
+                            <field name="specialty_ids" invisible="1"/>
+                            <button name="return_result_labtest_by_walkin" class="btn-primary" type="object" title="Trả kết quả XN" context="{'default_date_exam': date, 'default_patient': patient, 'default_service': service}" attrs="{'invisible': [('has_lab_result','=',True)]}" string="TRẢ KẾT QUẢ"/>
+                            <button name="print_result_patient_labtest" class="btn-info" type="object" title="Xem kết quả XN" attrs="{'invisible': [('has_lab_result','=',False)]}" string="XEM KẾT QUẢ"/>
+                        </tree>
+                    </field>
+            </record>
+
+            <record id="sh_medical_walkin_result_labtest_tree_action" model="ir.actions.act_window">
+                    <field name="name">CÁC XN CỦA PHIẾU KHÁM</field>
+                    <field name="res_model">sh.medical.appointment.register.walkin</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree</field>
+                    <field name="domain">['!',('lab_test_ids','=', False)]</field>
+                    <field name="context">{'search_default_group_date': True}</field>
+                    <field name="view_id" ref="sh_medical_walkin_result_labtest_tree"/>
+            </record>
+
+            <menuitem name="Phiếu xét nghiệm - Trả KQ" id="sh_medical_walkin_result_labtest_menu" action="sh_medical_walkin_result_labtest_tree_action" parent="sh_medical_lab_and_img_menu" sequence="0"/>
+            <record id="sh_medical_walkin_result_labtest_menu" model="ir.ui.menu">
+				<field name="web_icon_class">fa fa-flask</field>
+			</record>
+
+            <record model="ir.ui.view" id="sh_medical_register_for_walkin_tree">
+                <field name="name">Walkins</field>
+                <field name="model">sh.medical.appointment.register.walkin</field>
+                <field name="type">tree</field>
+                    <field name="arch" type="xml">
+                        <tree create="0" duplicate="false" string="Walkin Details" decoration-info="state=='Scheduled'" decoration-bf="state=='WaitPayment'" decoration-it="state=='Payment'" decoration-success="state=='Completed'" decoration-danger="state=='InProgress'" default_order="date desc">
+                            <field name="date"/>
+                            <field name="index_by_day"/>
+                            <field name="name"/>
+                            <field name="patient" class="text-uppercase"/>
+                            <field name="dob"/>
+                            <field name="sex"/>
+                            <field name="institution" invisible="1"/>
+                            <field name="service_room"/>
+                            <field name="service_expected" widget="many2many_tags" invisible="1"/>
+                            <field name="service" widget="many2many_tags"/>
+                            <field name="doctor"/>
+                            <field name="blood_type" invisible="1"/>
+                            <field name="rh" invisible="1"/>
+                            <field name="state"/>
+                            <field name="lab_test_ids" invisible="1"/>
+                            <field name="imaging_ids" invisible="1"/>
+                            <field name="surgeries_ids" invisible="1"/>
+                            <field name="specialty_ids" invisible="1"/>
+                            <button name="view_labtest_by_walkin" type="object" icon="fa-flask" title="View Labtest by walkin" attrs="{'invisible': [('lab_test_ids','=',[])]}"/>
+                            <button name="view_imaging_by_walkin" type="object" icon="fa-file-image-o" title="View Imaging Test by walkin" attrs="{'invisible': [('imaging_ids','=',[])]}"/>
+                            <button name="view_surgery_by_walkin" type="object" icon="fa-heartbeat" title="View Surgery by walkin" attrs="{'invisible': [('surgeries_ids','=',[])]}"/>
+                            <button name="view_specialty_by_walkin" type="object" icon="fa-file-text" title="Xem Phiếu Chuyên khoa của Phiếu khám" attrs="{'invisible': [('specialty_ids','=',[])]}"/>
+                        </tree>
+                    </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_walkin_kanban_view">
+                <field name="name">Walkins</field>
+                <field name="model">sh.medical.appointment.register.walkin</field>
+                <field name="arch" type="xml">
+                    <kanban default_group_by="state" class="oe_notes" quick_create="false" create="false" group_create="false">
+                        <templates>
+                            <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="sh_medical_vignette oe_semantic_html_override">
+<!--                                    <div class="o_kanban_image" style="margin-top:15px;">-->
+<!--                                        <a type="open"><img t-att-alt="Image patient" t-att-src="kanban_image('sh.medical.patient', 'image_small', record.patient.raw_value)" t-att-title="record.patient.value" class="sh_medical_picture"/></a>-->
+<!--                                    </div>-->
+                                    <div class="oe_kanban_details">
+                                        <h4>
+                                            <a type="open"><field name="patient" class="text-uppercase"/></a>
+                                        </h4>
+                                        <ul>
+                                            <li t-if="record.name.raw_value"><b>Phiếu #:</b> <field name="name"/></li>
+<!--                                            <li t-if="record.institution.raw_value"><b>Cơ sở:</b> <field name="institution"/></li>-->
+                                            <li t-if="record.service.raw_value" class="sh_kanban_many2many_tag"><b>Dịch vụ:</b> <field name="service" class="a"/></li>
+                                            <li t-if="record.reason_check.raw_value"><b>Lý do khám:</b> <field name="reason_check"/></li>
+                                            <li t-if="record.sex.raw_value"><b>Giới tính:</b> <field name="sex"/></li>
+                                            <li t-if="record.date.raw_value"><b>Ngày khám:</b> <field name="date"/></li>
+                                        </ul>
+                                        <div class="float-right">
+                                            <div t-if="record.state.raw_value == 'Scheduled'" class="text-info"><b><field name="state"/></b></div>
+                                            <div t-if="record.state.raw_value == 'WaitPayment'"><b><field name="state"/></b></div>
+                                            <div t-if="record.state.raw_value == 'Payment'"><i><field name="state"/></i></div>
+                                            <div t-if="record.state.raw_value == 'InProgress'" class="text-danger"><b><field name="state"/></b></div>
+                                            <div t-if="record.state.raw_value == 'Completed'" class="text-success"><b><field name="state"/></b></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </t>
+                        </templates>
+                    </kanban>
+                </field>
+            </record>
+
+
+            <record id="sh_medical_register_for_walkin_action_tree" model="ir.actions.act_window">
+                    <field name="name">Register for Walkins</field>
+                    <field name="res_model">sh.medical.appointment.register.walkin</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,kanban,calendar,form</field>
+<!--                    <field name="domain">[('institution.user_access','in', [uid])]</field>-->
+                    <field name="context">{'search_default_group_service_room': True}</field>
+                    <field name="view_id" ref="sh_medical_register_for_walkin_tree"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to add a new patient for walkins.
+                      </p>
+                    </field>
+            </record>
+
+            <record id="action_walkin_department_view" model="ir.actions.act_window">
+                    <field name="name">Register for Walkins</field>
+                    <field name="res_model">sh.medical.appointment.register.walkin</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,kanban,calendar,form</field>
+                    <field name="domain">[('department','=',active_id)]</field>
+                    <field name="context">{'search_default_group_state': True,'search_default_filter_not_completed':True,'default_department':active_id}</field>
+                    <field name="view_id" ref="sh_medical_register_for_walkin_tree"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to add a new patient for walkins.
+                      </p>
+                    </field>
+            </record>
+
+<!--            <menuitem action="sh_medical_register_for_walkin_action_tree" parent="sh_medical_appointment_menu"  id="sh_medical_register_for_walkin_list" sequence="10"/>-->
+<!--            <menuitem action="sh_medical_register_for_walkin_action_tree" parent="sh_medical_walkin_menu"  id="sh_medical_register_for_walkin_list" sequence="1"/>-->
+            <!-- Walkin Management -->
+            <menuitem name="Register for Walkins" id="sh_medical_walkin_menu" action="sh_medical_register_for_walkin_action_tree" parent="sh_medical_menu" sequence="3"/>
+
+<!--            VIEW PHIEU KHAM VUOT QUA VTTH-->
+            <record model="ir.ui.view" id="sh_medical_register_for_walkin_over_tree">
+                <field name="name">Walkins over material</field>
+                <field name="model">sh.medical.appointment.register.walkin</field>
+                <field name="type">tree</field>
+                    <field name="arch" type="xml">
+                        <tree string="Walkin Details" decoration-info="state=='Scheduled'" decoration-success="state=='Completed'" decoration-danger="state=='InProgress'">
+                            <field name="name"/>
+                            <field name="patient" class="text-uppercase"/>
+                            <field name="institution"/>
+                            <field name="service_room"/>
+                            <field name="service_expected" widget="many2many_tags"/>
+                            <field name="service" widget="many2many_tags"/>
+                            <field name="doctor"/>
+                            <field name="date"/>
+                            <field name="sex" invisible="1"/>
+                            <field name="dob"/>
+                            <field name="blood_type" invisible="1"/>
+                            <field name="rh" invisible="1"/>
+                            <field name="state"/>
+                            <field name="lab_test_ids" invisible="1"/>
+                            <field name="imaging_ids" invisible="1"/>
+                            <field name="surgeries_ids" invisible="1"/>
+                            <button name="view_walkin_material_over" type="object" icon="fa-cubes" title="View Material of walkin details"/>
+                        </tree>
+                    </field>
+            </record>
+
+<!--            <record model="ir.ui.view" id="sh_medical_walkin_kanban_view">-->
+<!--                <field name="name">Walkins</field>-->
+<!--                <field name="model">sh.medical.appointment.register.walkin</field>-->
+<!--                <field name="arch" type="xml">-->
+<!--                    <kanban default_group_by="state" class="oe_notes">-->
+<!--                        <templates>-->
+<!--                            <t t-name="kanban-box">-->
+<!--                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">-->
+<!--                                <div class="sh_medical_vignette oe_semantic_html_override">-->
+<!--                                    <div class="o_kanban_image" style="margin-top:15px;">-->
+<!--                                        <a type="open"><img t-att-src="kanban_image('sh.medical.patient', 'image_small', record.patient.raw_value)" t-att-title="record.patient.value" class="sh_medical_picture"/></a>-->
+<!--                                    </div>-->
+<!--                                    <div class="oe_kanban_details">-->
+<!--                                        <h4>-->
+<!--                                            <a type="open"><field name="patient"/></a>-->
+<!--                                        </h4>-->
+<!--                                        <ul>-->
+<!--                                            <li t-if="record.name.raw_value"><b>Queue #:</b> <field name="name"/></li>-->
+<!--                                            <li t-if="record.institution.raw_value"><b>Institution:</b> <field name="institution"/></li>-->
+<!--                                            <li t-if="record.service.raw_value"><b>Service:</b> <field name="service"/></li>-->
+<!--                                            <li t-if="record.sex.raw_value"><b>Sex:</b> <field name="sex"/></li>-->
+<!--                                            <li t-if="record.date.raw_value"><b>Date:</b> <field name="date"/></li>-->
+<!--                                        </ul>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            </t>-->
+<!--                        </templates>-->
+<!--                    </kanban>-->
+<!--                </field>-->
+<!--            </record>-->
+
+
+            <record id="sh_medical_register_for_walkin_over_action_tree" model="ir.actions.act_window">
+                    <field name="name">Register for Walkins over Material</field>
+                    <field name="res_model">sh.medical.appointment.register.walkin</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                    <field name="domain">[('is_over_material','=',True)]</field>
+<!--                    <field name="domain">[('institution.user_access','in', [uid]),('is_over_material','=',True)]</field>-->
+                    <field name="context">{}</field>
+                    <field name="view_id" eval="sh_medical_register_for_walkin_over_tree"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to add a new patient for walkins.
+                      </p>
+                    </field>
+            </record>
+
+<!--            <menuitem action="sh_medical_register_for_walkin_over_action_tree" parent="sh_medical_walkin_menu"  id="sh_medical_register_for_walkin_over_list" sequence="2"/>-->
+
+<!--            MATERIALS OF WALKIN-->
+            <record id="view_sh_medical_walkin_material_filter" model="ir.ui.view">
+                <field name="name">Material of walkin Search</field>
+                <field name="model">sh.medical.walkin.material</field>
+                <field name="type">search</field>
+                <field name="arch" type="xml">
+                    <search string="Search Material of walkin ">
+                        <separator orientation="vertical"/>
+                            <field name="institution" string="Institution" select="1"/>
+                            <field name="department" string="Department" select="1"/>
+                        <newline/>
+                        <group expand="0" string="Group By..." colspan="11" col="11">
+                            <filter name="group_institution" string="Institution" context="{'group_by':'institution'}"/>
+                            <filter name="group_department" string="Department" context="{'group_by':'department'}"/>
+                        </group>
+                    </search>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_materials_of_walkin_tree">
+                <field name="name">Materials of Walkins</field>
+                <field name="model">sh.medical.walkin.material</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string="Materials of walkin Details" create='false' delete="false">
+                        <field name="sequence" widget="handle" invisible="1"/>
+                        <field name="product_id" attrs="{'readonly': [('is_readonly','=',True)]}" force_save="1"/>
+                        <field name="institution" invisible="1" attrs="{'readonly': [('is_readonly','=',True)]}" force_save="1"/>
+                        <field name="department" attrs="{'readonly': [('is_readonly','=',True)]}" force_save="1"/>
+                        <field name="init_quantity" attrs="{'readonly': [('is_readonly','=',True)]}" force_save="1" invisible="1"/>
+                        <field name="quantity" attrs="{'readonly': [('is_readonly','=',True)]}" force_save="1"/>
+                        <field name="uom_id" attrs="{'readonly': [('is_readonly','=',True)]}" force_save="1"/>
+                        <field name="note" attrs="{'readonly': [('is_readonly','=',True)]}" force_save="1"/>
+                        <field name="location_id" string="Tủ xuất" attrs="{'readonly': [('is_readonly','=',True)]}" force_save="1"/>
+                        <field name="interner_note"/>
+                        <field name="is_readonly" invisible="1"/>
+                    </tree>
+                </field>
+            </record>
+
+            <record id="action_materials_of_walkin_tree_view" model="ir.actions.act_window">
+                    <field name="name">Register for Walkins</field>
+                    <field name="res_model">sh.medical.appointment.register.walkin</field>
+                    <field name="view_type">tree</field>
+                    <field name="view_mode">tree,form</field>
+                    <field name="domain">[]</field>
+                    <field name="context">{'search_default_group_department': True,'default_walkin':active_id}</field>
+                    <field name="view_id" eval="sh_medical_materials_of_walkin_tree"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Chưa có dữ liệu
+                      </p>
+                    </field>
+            </record>
+            <!-- Inheriting Patient screen to display patient's walkin -->
+
+            <record id="sh_medical_patient_walkin_view" model="ir.ui.view">
+                <field name="name">Patient</field>
+                <field name="model">sh.medical.patient</field>
+                <field name="inherit_id" ref="shealth_all_in_one.sh_medical_patient_view"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//page[3]" position="after">
+                        <page string="Registers of walkin" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_manager">
+                            <field name="walkin">
+                                <tree create="0" delete="0" string="Chi tiết phiếu khám" decoration-info="state=='Scheduled'" decoration-bf="state=='WaitPayment'" decoration-it="state=='Payment'" decoration-success="state=='Completed'" decoration-danger="state=='InProgress'">
+                                    <field name="name"/>
+                                    <field name="patient" class="text-uppercase"/>
+                                    <field name="institution" invisible="1"/>
+                                    <field name="service_room"/>
+                                    <field name="service_expected" widget="many2many_tags" invisible="1"/>
+                                    <field name="service" widget="many2many_tags"/>
+                                    <field name="doctor"/>
+                                    <field name="date"/>
+                                    <field name="sex" invisible="1"/>
+                                    <field name="dob"/>
+                                    <field name="blood_type" invisible="1"/>
+                                    <field name="rh" invisible="1"/>
+                                    <field name="state"/>
+                                    <field name="lab_test_ids" invisible="1"/>
+                                    <field name="imaging_ids" invisible="1"/>
+                                    <field name="surgeries_ids" invisible="1"/>
+<!--                                    <button name="view_labtest_by_walkin" type="object" icon="fa-flask" title="View Labtest by walkin" attrs="{'invisible': [('lab_test_ids','=',[])]}"/>-->
+<!--                                    <button name="view_imaging_by_walkin" type="object" icon="fa-file-image-o" title="View Imaging Test by walkin" attrs="{'invisible': [('imaging_ids','=',[])]}"/>-->
+<!--                                    <button name="view_surgery_by_walkin" type="object" icon="fa-heartbeat" title="View Surgery by walkin" attrs="{'invisible': [('surgeries_ids','=',[])]}"/>-->
+                                </tree>
+                            </field>
+                        </page>
+                    </xpath>
+                    <xpath expr="//sheet//div[hasclass('oe_button_box')]//button[last()]" position="before">
+                        <button invisible="1" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_manager" type="action" class="oe_stat_button" name="%(sh_medical_register_for_walkin_action_tree)d" context="{'search_default_patient': active_id,'default_patient': active_id}" icon="fa-list">
+                                <field string="Registers of walkin" name="walkin_count" widget="statinfo"/>
+                        </button>
+                    </xpath>
+                </field>
+            </record>
+
+<!--            <record model="ir.ui.view" id="sh_medical_healthcenters_ward_walkin_kanban_view">-->
+<!--                <field name="name">Departments</field>-->
+<!--                <field name="model">sh.medical.health.center.ward</field>-->
+<!--                <field name="inherit_id" ref="shealth_all_in_one.sh_medical_healthcenters_ward_kanban_view"/>-->
+<!--                <field name="arch" type="xml">-->
+<!--                    <xpath expr="//templates//t//div[hasclass('sh_medical_details')]//ul" position="after">-->
+<!--                        <div class="mt-4 o_kanban_primary_left">-->
+<!--                            <button t-if="record.type.raw_value == 'Examination'" class="btn btn-primary" name="%(action_walkin_department_view)d" type="action">-->
+<!--                                <field string="Walkin not completed" name="count_walkin_not_completed" widget="statinfo"/>-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </xpath>-->
+<!--                </field>-->
+<!--            </record>-->
+        </data>
+</odoo>

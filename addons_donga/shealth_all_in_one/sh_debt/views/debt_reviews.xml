@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="debt_view_form" model="ir.ui.view">
+            <field name="name">Duyệt nợ</field>
+            <field name="model">crm.debt.review</field>
+            <field name="arch" type="xml">
+                <form create="false" >
+                    <header>
+                        <button name="set_approve" string="Duyệt" class="btn-info" type="object"
+                                 attrs="{'invisible': [('stage', '!=', 'offer')]}"/>
+                        <button name="set_refuse" string="Từ chối" class="btn-danger" type="object"
+                                attrs="{'invisible': [('stage', '=', 'refuse')]}"/>
+                        <field name="stage" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="institution" attrs="{'readonly': [('stage', '!=', 'offer')]}" readonly="True"
+                                   force_save="True"/>
+                            <field name="patient" readonly="True" required="True"
+                                   options="{'no_create': True, 'no_open': True}"/>
+                            <field name="walkin"  readonly="True" required="True"
+                                   options="{'no_create': True}" force_save="True"/>
+                            <field name="services" string="Dịch vụ" readonly="True" force_save="1" widget="many2many_tags" options="{'no_create': True}" />
+                            <field name="currency_id" attrs="{'readonly': [('stage', '!=', 'offer')]}"
+                                   options="{'no_open':True,'no_create':True}" readonly="True"/>
+                            <field name="total" string="Tổng tiền cần thu" attrs="{'readonly': [('stage', '!=', 'offer')]}" required="True"/>
+                            <field name="amount_owed" required="True" attrs="{'readonly': [('stage', '!=', 'offer')]}"
+                                   options="{'no_open':True,'no_create':True}" widget="monetary_format"/>
+                            <field name="name" required="True" attrs="{'readonly': [('stage', '!=', 'offer')]}"/>
+                            <field name="create_uid" string="Người yêu cầu" readonly="True"  attrs="{'invisible': [('create_uid', '=', False)]}"/>
+                            <field name="user_approve" string="Người duyệt" readonly="True" attrs="{'invisible': [('user_approve', '=', False)]}"/>
+                            <field name="date_approve" readonly="True" attrs="{'invisible': [('date_approve', '=', False)]}"/>
+                        </group>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="activity_ids" widget="mail_activity"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="debt_view_tree" model="ir.ui.view">
+            <field name="name">Duyệt nợ</field>
+            <field name="model">crm.debt.review</field>
+            <field name="arch" type="xml">
+                <tree default_order="create_date desc" decoration-muted="paid ==True" create="false">
+                    <field name="patient"/>
+                    <field name="walkin"/>
+                    <field name="amount_owed"/>
+                    <field name="name"/>
+                    <field name="stage"/>
+                    <field name="name"/>
+                    <field name="paid"/>
+                    <field name="create_uid" string="Người tạo"/>
+                    <field name="user_approve" string="Người duyệt"/>
+                    <field name="date_approve"/>
+                    <button name="action_paid" class="btn-primary" type="object" title="Chưa trả"
+                            attrs="{'invisible': [('paid','=',True)]}" readonly="True" string="Chưa trả"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_debt_review_search">
+            <field name="name">Tìm kiếm khoản nợ</field>
+            <field name="model">crm.debt.review</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm khoản nợ">
+                    <separator orientation="vertical"/>
+                    <field name="patient" string="Khách hàng" select="1"/>
+                    <field name="walkin" string="Phiếu khám" select="1"/>
+                    <group expand="0" string="Group By..." colspan="11" col="11">
+                        <filter name="group_patient" string="Khách hàng" context="{'group_by':'patient'}"/>
+                        <filter name="group_walkin" string="walkin"
+                                context="{'group_by':'walkin'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="debt_review_action" model="ir.actions.act_window">
+            <field name="name">Duyệt nợ</field>
+            <field name="view_mode">tree,form</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.debt.review</field>
+            <field name="domain">[]</field>
+        </record>
+
+        <menuitem id="sh_medical_root_payment_menu_2" name="Duyệt nợ" parent="shealth_all_in_one.sh_medical_root_payment_menu"
+          action="debt_review_action" sequence="2"/>
+
+    </data>
+</odoo>

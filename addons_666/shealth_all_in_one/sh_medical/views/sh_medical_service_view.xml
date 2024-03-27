@@ -1,0 +1,492 @@
+<?xml version="1.0" ?>
+    <openerp>
+        <data>
+<!--           OTHER BOM -->
+            <record id="sh_medical_products_line_action_tree" model="ir.actions.act_window">
+                    <field name="name">BOM data</field>
+                    <field name="res_model">sh.medical.products.line</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                    <field name="domain">[]</field>
+                    <field name="context">{}</field>
+                    <field name="view_id" eval="False"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to add a new data.
+                      </p>
+                    </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_products_line_tree">
+                <field name="name">BOM data</field>
+                <field name="model">sh.medical.products.line</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree editable="bottom">
+                        <field name="bundle" invisible="1"/>
+                        <field name="product_id" required="1"/>
+                        <field name="quantity" required="1"/>
+                        <field name="uom_id" required="1"/>
+                        <field name="location_id" required="1"/>
+                        <field name="note" required="1"/>
+                    </tree>
+                </field>
+            </record>
+
+            <!-- Services child Management -->
+            <record id="view_sh_medical_service_childs_filter" model="ir.ui.view">
+                <field name="name">Service Childs</field>
+                <field name="model">sh.medical.health.center.service.childs</field>
+                <field name="type">search</field>
+                <field name="arch" type="xml">
+                    <search string="Search Services childs">
+                        <separator orientation="vertical"/>
+                            <field name="service_child_ids"/>
+                            <field name="service_unit"/>
+                    </search>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_service_childs_tree">
+                <field name="name">Service Childs</field>
+                <field name="model">sh.medical.health.center.service.childs</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string='Services Childs'>
+                        <field name="service_child_ids"/>
+                        <field name="name"/>
+                        <field name="default_code"/>
+                        <field name="pathology"/>
+                        <field name="institution"/>
+                        <field name="service_department"/>
+                        <field name="list_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                        <field name="currency_id"/>
+                        <field name="service_unit"/>
+                    </tree>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_service_childs_form">
+                <field name="name">Service Childs</field>
+                <field name="model">sh.medical.health.center.service.childs</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                    <form string="Service Childs">
+                        <sheet>
+                            <group>
+                                <group>
+                                    <field name="service_child_ids" required="1"/>
+                                    <field name="service_unit" required="1"/>
+                                </group>
+                                <group string="Service information">
+                                    <field name="name"/>
+                                    <field name="default_code"/>
+                                    <field name="pathology"/>
+                                    <field name="institution"/>
+                                    <field name="service_department"/>
+                                    <field name="list_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <field name="currency_id"/>
+                                </group>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+
+            <record id="sh_medical_service_childs_action_tree" model="ir.actions.act_window">
+                    <field name="name">Service Childs</field>
+                    <field name="res_model">sh.medical.health.center.service.childs</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                    <field name="domain">[]</field>
+                    <field name="context">{}</field>
+                    <field name="view_id" eval="False"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to add a new service childs.
+                      </p>
+                    </field>
+            </record>
+
+            <!-- Services Management -->
+            <record id="view_sh_medical_service_filter" model="ir.ui.view">
+                <field name="name">Services</field>
+                <field name="model">sh.medical.health.center.service</field>
+                <field name="type">search</field>
+                <field name="arch" type="xml">
+                    <search string="Search Services">
+                        <separator orientation="vertical"/>
+                            <field name="name"/>
+                            <field name="default_code"/>
+                            <field name="pathology"/>
+<!--                            <field name="institution"/>-->
+                            <field name="service_department"/>
+                            <field name="list_price"/>
+                            <field name="currency_id"/>
+                    </search>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_service_material_tree">
+                <field name="name">Thông tin vật tư theo dịch vụ</field>
+                <field name="model">sh.medical.service.material</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string='Thông tin vật tư theo dịch vụ' editable="top">
+                        <field name="sequence" widget="handle"/>
+                        <field name="product_id"/>
+                        <field name="quantity" required="1"/>
+                        <field name="uom_id" required="1"/>
+                        <field name="note" required="1"/>
+                    </tree>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_service_prescription_tree">
+                <field name="name">Thông tin đơn thuốc theo dịch vụ</field>
+                <field name="model">sh.medical.service.prescription</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree editable="bottom">
+                        <field name="sequence" widget="handle"/>
+                        <field name="product_id"/>
+                        <field name="qty" required="1"/>
+                        <field name="dose" invisible="1"/>
+                        <field name="dose_unit" required="1"/>
+                        <field name="common_dosage" invisible="1"/>
+                        <field name="duration" invisible="1"/>
+                        <field name="duration_period" invisible="1"/>
+                        <field name="note" string="Hướng dẫn" required="1"/>
+                        <field name="is_buy_out" invisible="1"/>
+                    </tree>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_service_tree_simple">
+                <field name="name">Dịch vụ</field>
+                <field name="model">sh.medical.health.center.service</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string='Dịch vụ'>
+                        <field name="default_code"/>
+                        <field name="name"/>
+                        <field name="pathology"/>
+<!--                        <field name="is_surgeries"/>-->
+<!--                        <field name="service_department" widget="many2many_tags"/>-->
+<!--                        <field name="service_room" widget="many2many_tags"/>-->
+<!--                        <field name="exam_room" widget="many2many_tags"/>-->
+<!--                        <field name="list_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>-->
+<!--                        <field name="currency_id"/>-->
+                    </tree>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_service_tree">
+                <field name="name">Services</field>
+                <field name="model">sh.medical.health.center.service</field>
+                <field name="type">tree</field>
+                <field name="priority">1</field>
+                <field name="arch" type="xml">
+                    <tree string='Services'>
+                        <field name="default_code"/>
+                        <field name="pathology"/>
+                        <field name="name"/>
+                        <field name="is_surgeries"/>
+                        <field name="service_department" widget="many2many_tags"/>
+                        <field name="service_room" widget="many2many_tags"/>
+                        <field name="exam_room" widget="many2many_tags"/>
+<!--                        <field name="institution"/>-->
+<!--                        <field name="service_department"/>-->
+                        <field name="list_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                        <field name="currency_id"/>
+                    </tree>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_service_form">
+                <field name="name">Services</field>
+                <field name="model">sh.medical.health.center.service</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                    <form string="Services">
+                        <sheet>
+<!--                            <div class="oe_left">-->
+<!--                                <div class="oe_title">-->
+                                    <label class="oe_edit_only" for="name" string="Service Name"/>
+                                    <h1><field name="name" style="width: 1000px"/></h1>
+<!--                                </div>-->
+<!--                            </div>-->
+                            <div class="oe_right">
+                                <div class="oe_title text-center border p-2 float-right">
+                                    <label for="img_type_count" string="Imaging type"/>
+                                    <h3><field name="img_type_count" class="text-primary"/></h3>
+                                </div>
+                                <div class="oe_title text-center border p-2 float-right">
+                                    <label for="lab_type_count" string="Lab type"/>
+                                    <h3><field name="lab_type_count" class="text-primary"/></h3>
+                                </div>
+<!--                                <div class="oe_title text-center border p-2 float-right">-->
+<!--                                    <label for="child_service_count" string="Extra service"/>-->
+<!--                                    <h3><field name="child_service_count" class="text-primary"/></h3>-->
+<!--                                </div>-->
+                            </div>
+                            <group>
+                                <group>
+                                    <field name="is_surgeries"/>
+<!--                                    <field name="institution" required="1"/>-->
+                                    <field name="service_department" widget="my_many2many_tags"/>
+                                    <field name="pathology"/>
+                                    <field name="default_code" required="1"/>
+                                    <field name="list_price" required="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <field name="currency_id" required="1"/>
+                                    <field name="diagnose" required="1"/>
+                                    <field name="item_ids" invisible="1" mode="tree,kanban" context="{'default_base':'list_price', 'default_applied_on' :'1_product'}">
+                                        <tree string="Pricelist Items" editable="bottom">
+                                            <field name="pricelist_id" string="Pricelist" required="1"/>
+                                            <field name="currency_id" invisible="1"/>
+                                            <field name="fixed_price" string="Price" required="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                            <field name="min_quantity"/>
+                                            <field name="date_start"/>
+                                            <field name="date_end"/>
+                                            <field name="applied_on" invisible="1"/>
+                                        </tree>
+                                        <kanban string="Pricelist Items" class="o_kanban_mobile">
+                                           <field name="pricelist_id"/>
+                                           <field name="currency_id"/>
+                                           <field name="fixed_price"/>
+                                           <field name="min_quantity"/>
+                                           <field name="date_start"/>
+                                           <field name="date_end"/>
+                                           <templates>
+                                               <t t-name="kanban-box">
+                                                   <div t-attf-class="oe_kanban_global_click">
+                                                       <div class="row">
+                                                           <div class="col-12">
+                                                               <strong>
+                                                                   <field name="pricelist_id"/>: <field name="fixed_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                                               </strong>
+                                                           </div>
+                                                       </div>
+                                                       <div class="row">
+                                                           <div class="col-12">
+                                                               <span><t t-esc="record.min_quantity.string"/>: <t t-esc="record.min_quantity.value"/></span>
+                                                           </div>
+                                                       </div>
+                                                       <span t-if="record.date_start.value || record.date_end.value">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                Valid <span t-if="record.date_start.value"> from <t t-esc="record.date_start.value"/></span><span t-if="record.date_end.value"> until <t t-esc="record.date_end.value"/></span>
+                                                            </div>
+                                                        </div>
+                                                       </span>
+                                                   </div>
+                                               </t>
+                                           </templates>
+                                       </kanban>
+                                       <form string="Pricelist Items">
+                                           <h1><field name="name"/></h1>
+                                           <group>
+                                               <group>
+                                                   <field name="applied_on" invisible="1"/>
+                                                   <field name="pricelist_id" string="Pricelist" required="1"/>
+                                                   <field name="currency_id" invisible="1"/>
+                                                   <field name="fixed_price" string="Price" required="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                               </group>
+                                               <group>
+                                                   <field name="min_quantity"/>
+                                                   <field name="date_start"/>
+                                                   <field name="date_end"/>
+                                               </group>
+                                           </group>
+                                       </form>
+                                    </field>
+                                    <field name="child_service_other" invisible="1"/>
+<!--                                <group string="Info test">-->
+<!--                                    <field name="lab_type_count"></field>-->
+<!--                                    <field name="img_type_count"></field>-->
+<!--                                </group>-->
+                                </group>
+                                <group>
+                                    <field name="specialty_exam" required="1" options="{'no_create': True}"/>
+                                    <field name="division_specialty" required="1"/>
+                                </group>
+                            </group>
+                            <notebook>
+<!--                                <page string="Extra services">-->
+<!--                                    <group>-->
+<!--                                        <field name="child_service" nolabel="1" context="{'parent_id': id}">-->
+<!--                                            <tree editable="bottom">-->
+<!--                                                <field name="service_child_ids" domain="[('id','not in',parent.child_service_other)]" required="1"/>-->
+<!--                                                <field name="default_code"/>-->
+<!--                                                <field name="institution"/>-->
+<!--                                                <field name="service_department"/>-->
+<!--                                                <field name="list_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>-->
+<!--                                                <field name="currency_id"/>-->
+<!--                                                <field name="service_unit"/>-->
+<!--                                            </tree>-->
+<!--                                        </field>-->
+<!--                                    </group>-->
+<!--                                </page>-->
+                                <page string="Thông tin phẫu thuật" attrs="{'invisible': [('is_surgeries','=', False)]}">
+                                    <group>
+                                        <field name="surgery_type"></field>
+                                        <field name="anesthetist_type"/>
+                                        <field name="surgical_diagram"></field>
+                                        <field name="surgical_order"></field>
+                                    </group>
+                                </page>
+                                <page string="Labtest Type" class="sh_service_labtest" attrs="{'invisible': [('is_surgeries','=', False)]}">
+                                    <group>
+                                        <field name="lab_type_ids" nolabel="1"></field>
+                                    </group>
+                                </page>
+                                <page string="Imaging Type" class="sh_service_imaging" attrs="{'invisible': [('is_surgeries','=', False)]}">
+                                    <group>
+                                        <field name="imaging_type_ids" nolabel="1"></field>
+                                    </group>
+                                </page>
+                                <page string="Material Information">
+                                    <group>
+                                        <field name="material_ids" nolabel="1">
+                                            <tree editable="bottom">
+                                                <field name="sequence" widget="handle"/>
+                                                <field name="product_id"/>
+<!--                                                <field name="institution"/>-->
+<!--                                                <field name="department"/>-->
+                                                <field name="quantity" required="1"/>
+                                                <field name="uom_id" required="1"/>
+                                                <field name="note" required="1"/>
+                                            </tree>
+                                        </field>
+                                    </group>
+                                </page>
+                                <page string="Other BOM">
+                                    <group>
+                                        <field name="other_bom" nolabel="1" context="{'default_service_id':active_id}">
+                                            <form>
+                                                <group>
+                                                    <group>
+                                                        <field name="code" required="1"/>
+                                                        <field name="name" required="1"/>
+                                                    </group>
+                                                    <group>
+                                                        <field name="service_id" invisible="1"/>
+                                                        <field name="duplicate"/>
+                                                    </group>
+                                                </group>
+                                                <group>
+                                                    <field name="products"/>
+                                                    <field name="products_domain" invisible="1"/>
+                                                </group>
+                                            </form>
+                                            <tree>
+                                                <field name="code" required="1"/>
+                                                <field name="name" required="1"/>
+                                                <field name="service_id"/>
+                                                <field name="duplicate"/>
+                                                <field name="products" invisible="1"/>
+                                                <field name="products_domain" invisible="1"/>
+                                            </tree>
+                                        </field>
+                                    </group>
+                                </page>
+                                <page string="Prescription Information">
+                                    <div class="sh-box-control-print">
+                                        <button name="print_temp_donthuoc" attrs="{'invisible': [('prescription_ids','=',False)]}" string="THUỐC KÊ ĐƠN MANG VỀ" type="object" class="btn-info fa fa-print mr-5"/>
+                                    </div>
+                                    <group>
+                                        <field name="prescription_ids" nolabel="1">
+                                            <tree editable="bottom">
+                                                <field name="sequence" widget="handle"/>
+                                                <field name="product_id"/>
+                                                <field name="qty" required="1"/>
+                                                <field name="dose" invisible="1"/>
+                                                <field name="dose_unit" required="1"/>
+                                                <field name="common_dosage" invisible="1"/>
+                                                <field name="duration" invisible="1"/>
+                                                <field name="duration_period" invisible="1"/>
+                                                <field name="note" string="Hướng dẫn" required="1"/>
+                                                <field name="is_buy_out" invisible="1"/>
+                                            </tree>
+                                        </field>
+                                    </group>
+                                </page>
+                                <page string="Hướng dẫn sau dịch vụ">
+                                    <div class="sh-box-control-print">
+                                        <button name="print_temp_huongdan" attrs="{'invisible': [('info','=',False)]}" string="HƯỚNG DẪN SAU DỊCH VỤ" type="object" class="btn-info fa fa-print mr-5"/>
+                                    </div>
+                                    <group string="Lịch tái khám">
+                                        <field name="days_reexam" nolabel="1">
+                                            <tree editable="bottom">
+                                                <field name="name"/>
+                                                <field name="after_service_date"/>
+                                                <field name="type"/>
+                                            </tree>
+                                        </field>
+                                    </group>
+                                    <group string="Hướng dẫn chăm sóc">
+                                        <field name="info" nolabel="1"/>
+                                    </group>
+                                </page>
+                            </notebook>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+
+            <record id="sh_medical_service_action_tree" model="ir.actions.act_window">
+                    <field name="name">Services</field>
+                    <field name="res_model">sh.medical.health.center.service</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                    <field name="domain">[]</field>
+                    <field name="context">{}</field>
+                    <field name="view_id" eval="False"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to add a new service.
+                      </p>
+                    </field>
+            </record>
+
+            <menuitem action="sh_medical_service_action_tree" id="sh_medical_service_list" parent="sh_medical_hospital_menu" sequence="3"/>
+
+<!--            inherit product pricelist-->
+            <record model="ir.ui.view" id="sh_product_pricelist_form">
+                <field name="name">Product Pricelist</field>
+                <field name="model">product.pricelist</field>
+                <field name="type">form</field>
+                <field name="inherit_id" ref="product.product_pricelist_view"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//field[@name='currency_id']" position="after">
+                        <field name="branch"/>
+                    </xpath>
+                </field>
+            </record>
+
+<!--            #ACTION AND MENU CALL BAO CAO DMKT-->
+            <!--        BAO CAO DANH MUC KY THUAT - FIX DATA    -->
+            <record id="dmkt_report_attachment" model="ir.attachment">
+                <field name="name">BÁO CÁO DANH MỤC KỸ THUẬT</field>
+                <field name="type">binary</field>
+                <field name="datas" type="base64" file="shealth_all_in_one/static/xls/BAO_CAO_DMKT.docx"/>
+                <field name="datas_fname">BAO_CAO_DANH_MUC_KY_THUAT.docx</field>
+                <field name="public">True</field>
+            </record>
+            <record model="ir.actions.act_window" id="dmkt_report_act">
+                <field name="name">Báo cáo Danh mục kỹ thuật</field>
+                <field name="res_model">temp.wizard</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">form</field>
+                <field name="view_id" ref="ms_templates.report_wizard"/>
+                <field name="context" eval="{'attachment_id': ref('shealth_all_in_one.dmkt_report_attachment')}"/>
+                <field name="target">inline</field>
+            </record>
+
+            <menuitem id="dmkt_report"
+                      name="Báo cáo Danh mục kỹ thuật"
+                      parent="shealth_all_in_one.sh_medical_report_menu"
+                      action="dmkt_report_act"
+                      sequence="1" groups="shealth_all_in_one.group_sh_medical_document,shealth_all_in_one.group_sh_medical_manager"/>
+        </data>
+    </openerp>

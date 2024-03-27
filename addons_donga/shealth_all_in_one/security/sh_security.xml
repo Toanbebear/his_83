@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.module.category" id="module_sh_medical_category">
+                <field name="name">Health Center Access</field>
+                <field name="sequence">0</field>
+                <field name="visible" eval="0" />
+        </record>
+<!--        BỆNH NHÂN -->
+        <record id="group_sh_medical_patient" model="res.groups">
+            <field name="name">Patient</field>
+            <field name="category_id" ref="module_sh_medical_category"/>
+        </record>
+<!--        BÁC SĨ CHUYÊN KHOA CHUNG -->
+        <record id="group_sh_medical_physician" model="res.groups">
+            <field name="name">Physician</field>
+            <field name="category_id" ref="module_sh_medical_category"/>
+            <field name="implied_ids" eval="[(4, ref('stock.group_stock_user')),(4, ref('account.group_account_invoice'))]"/>
+        </record>
+<!--        BÁC SĨ PHẪU THUẬT -->
+        <record id="group_sh_medical_physician_surgery" model="res.groups">
+            <field name="name">Physician Surgery</field>
+            <field name="category_id" ref="module_sh_medical_category"/>
+            <field name="implied_ids" eval="[(4, ref('group_sh_medical_physician'))]"/>
+        </record>
+<!--        BÁC SĨ RĂNG HÀM MẶT -->
+        <record id="group_sh_medical_physician_odontology" model="res.groups">
+            <field name="name">Physician Odontology</field>
+            <field name="category_id" ref="module_sh_medical_category"/>
+            <field name="implied_ids" eval="[(4, ref('group_sh_medical_physician'))]"/>
+        </record>
+<!--        BÁC SĨ DA LIỄU -->
+        <record id="group_sh_medical_physician_spa" model="res.groups">
+            <field name="name">Physician Spa</field>
+            <field name="category_id" ref="module_sh_medical_category"/>
+            <field name="implied_ids" eval="[(4, ref('group_sh_medical_physician'))]"/>
+        </record>
+<!--        BÁC SĨ CẬN LÂM SÀNG - CHUNG -->
+        <record id="group_sh_medical_physician_subclinical" model="res.groups">
+            <field name="name">Physician subclinical</field>
+            <field name="category_id" ref="module_sh_medical_category"/>
+            <field name="implied_ids" eval="[(4, ref('stock.group_stock_user')),(4, ref('account.group_account_invoice'))]"/>
+        </record>
+<!--        BÁC SĨ CẬN LÂM SÀNG - XN -->
+        <record id="group_sh_medical_physician_subclinical_labtest" model="res.groups">
+            <field name="name">Physician subclinical labtest</field>
+            <field name="category_id" ref="module_sh_medical_category"/>
+            <field name="implied_ids" eval="[(4, ref('group_sh_medical_physician_subclinical'))]"/>
+        </record>
+<!--        BÁC SĨ CẬN LÂM SÀNG - CĐHA -->
+        <record id="group_sh_medical_physician_subclinical_imaging" model="res.groups">
+            <field name="name">Physician subclinical imaging</field>
+            <field name="category_id" ref="module_sh_medical_category"/>
+            <field name="implied_ids" eval="[(4, ref('group_sh_medical_physician_subclinical'))]"/>
+        </record>
+<!--        QUYỀN Y TÁ-->
+        <record id="group_sh_medical_nurse" model="res.groups">
+            <field name="name">Nurse</field>
+            <field name="category_id" ref="module_sh_medical_category"/>
+            <field name="implied_ids" eval="[(4, ref('stock.group_stock_user')),(4, ref('account.group_account_invoice'))]"/>
+        </record>
+<!--        QUYỀN LỄ TÂN-->
+        <record id="group_sh_medical_receptionist" model="res.groups">
+            <field name="name">Receptionist</field>
+            <field name="category_id" ref="module_sh_medical_category"/>
+        </record>
+
+<!--        QUẢN LÝ KHO + MUA HÀNG-->
+        <record id="group_sh_medical_stock_manager" model="res.groups">
+            <field name="name">Medicine stock manager</field>
+            <field name="category_id" ref="module_sh_medical_category"/>
+            <field name="implied_ids" eval="[(4, ref('stock.group_stock_manager')),(4, ref('purchase.group_purchase_user'))]"/>
+        </record>
+
+<!--        QUẢN LÝ KHO + MUA HÀNG + THÊM QUYỀN QUẢN TRỊ KẾ TOÁN -->
+        <record id="group_sh_medical_accountant" model="res.groups">
+            <field name="name">Accountant</field>
+            <field name="category_id" ref="module_sh_medical_category"/>
+            <field name="implied_ids" eval="[(4, ref('stock.group_stock_manager')),(4, ref('purchase.group_purchase_user')),(4, ref('account.group_account_manager'))]"/>
+        </record>
+
+        <!--   có tất cả các quyền vận hành-->
+        <record id="group_sh_medical_document" model="res.groups">
+            <field name="name">Document</field>
+            <field name="category_id" ref="module_sh_medical_category"/>
+            <field name="implied_ids" eval="[(4, ref('shealth_all_in_one.group_sh_medical_receptionist')),
+            (4, ref('shealth_all_in_one.group_sh_medical_accountant')),(4, ref('shealth_all_in_one.group_sh_medical_stock_manager')),
+            (4, ref('shealth_all_in_one.group_sh_medical_physician_subclinical_labtest')),(4, ref('shealth_all_in_one.group_sh_medical_physician_subclinical_imaging')),
+            (4, ref('shealth_all_in_one.group_sh_medical_physician_odontology')),(4, ref('shealth_all_in_one.group_sh_medical_physician_spa')),
+            (4, ref('shealth_all_in_one.group_sh_medical_physician_surgery'))]"/>
+        </record>
+
+<!--    KẾ THỪA QUYỀN NHẬP LIỆU VÀ THÊM QLY HR-->
+        <record id="group_sh_medical_manager" model="res.groups">
+            <field name="name">Health Center Admin</field>
+            <field name="category_id" ref="module_sh_medical_category"/>
+            <field name="implied_ids" eval="[(4, ref('shealth_all_in_one.group_sh_medical_document')),(4, ref('hr.group_hr_manager')),(4, ref('ms_templates.group_excel_templates_user'))]"/>
+        </record>
+
+        <record id="base.user_admin" model="res.users">
+            <field name="groups_id" eval="[(4, ref('group_sh_medical_manager'))]"/>
+        </record>
+
+        <record id="base.user_root" model="res.users">
+            <field name="groups_id" eval="[(4, ref('group_sh_medical_manager'))]"/>
+        </record>
+<!--    Phân quyền ĐƠN THUỐC QUỐC GIA-->
+        <record id="group_sh_medical_prescription" model="res.groups">
+            <field name="name">Đơn thuốc quốc gia</field>
+            <field name="category_id" ref="module_sh_medical_category"/>
+        </record>
+
+        <!--    Phân quyền Xuất thuốc-->
+        <record id="group_sh_medical_prescription_medicine" model="res.groups">
+            <field name="name">Xuất thuốc</field>
+            <field name="category_id" ref="module_sh_medical_category"/>
+        </record>
+    </data>
+</odoo>

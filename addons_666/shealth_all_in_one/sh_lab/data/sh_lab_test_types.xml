@@ -1,0 +1,709 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+        
+<!--        <record model="product.category" id="sh_labtests">-->
+<!--            <field name="name">Medical Labtests</field>-->
+<!--        </record>-->
+        <!--        NHÓM xét nghiệm-->
+        <record model="sh.medical.lab.group.type" id="lab_group_1">
+            <field name="name">Hóa sinh</field>
+            <field name="info">Hóa sinh</field>
+        </record>
+        <record model="sh.medical.lab.group.type" id="lab_group_2">
+            <field name="name">Đông máu</field>
+            <field name="info">Đông máu</field>
+        </record>
+        <record model="sh.medical.lab.group.type" id="lab_group_3">
+            <field name="name">Huyết học</field>
+            <field name="info">Huyết học</field>
+        </record>
+        <record model="sh.medical.lab.group.type" id="lab_group_4">
+            <field name="name">Test nhanh</field>
+            <field name="info">Test nhanh</field>
+        </record>
+        <record model="sh.medical.lab.group.type" id="lab_group_5">
+            <field name="name">Vi sinh</field>
+            <field name="info">Vi sinh</field>
+        </record>
+
+<!--        Định lượng IgG-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis0">
+            <field name="name">Định lượng IgG</field>
+            <field name="default_code">SH01</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_1"></field>
+        </record>
+
+<!--        Định lượng IgM-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis1">
+            <field name="name">Định lượng IgM</field>
+            <field name="default_code">SH02</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_1"></field>
+        </record>
+
+<!--        Định lượng IgE-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis2">
+            <field name="name">Định lượng IgE</field>
+            <field name="default_code">SH03</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_1"></field>
+        </record>
+
+<!--        Định lượng Bilirubin trực tiếp-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis3">
+            <field name="name">Định lượng Bilirubin trực tiếp</field>
+            <field name="default_code">M03</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_1"></field>
+        </record>
+
+<!--        Định lượng Bilirubin gián tiếp-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis4">
+            <field name="name">Định lượng Bilirubin gián tiếp</field>
+            <field name="default_code">M04</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_1"></field>
+        </record>
+
+<!--        Định lượng Bilirubin toàn phần-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis5">
+            <field name="name">Định lượng Bilirubin toàn phần</field>
+            <field name="default_code">M05</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_1"></field>
+        </record>
+
+<!--        Định lượng BNP (B- Type Natriuretic Peptide)-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis6">
+            <field name="name">Định lượng BNP (B- Type Natriuretic Peptide)</field>
+            <field name="default_code">M06</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_1"></field>
+        </record>
+
+<!--        Định lượng CRP hs (C-Reactive Protein high sesitivity)-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis7">
+            <field name="name">Định lượng CRP hs (C-Reactive Protein high sesitivity)</field>
+            <field name="default_code">M08</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_1"></field>
+        </record>
+
+<!--        Định lượng D-Dimer-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis8">
+            <field name="name">Định lượng D-Dimer</field>
+            <field name="default_code">M10</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_1"></field>
+        </record>
+
+<!--        Điện giải đồ (Na, K, Cl)-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis9">
+            <field name="name">Điện giải đồ (Na, K, Cl)</field>
+            <field name="default_code">M11</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_1"></field>
+        </record>
+
+<!--        Định lượng HDL - c (High density lipoprotein cholesterol)-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis10">
+            <field name="name">Định lượng HDL - c (High density lipoprotein cholesterol)</field>
+            <field name="default_code">M13</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_1"></field>
+        </record>
+
+<!--        Định lượng IgG (Immunoglobuline G)-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis11">
+            <field name="name">Định lượng IgG (Immunoglobuline G)</field>
+            <field name="default_code">M14</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_1"></field>
+        </record>
+
+<!--        Định lượng IgM (Immunoglobuline M)-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis12">
+            <field name="name">Định lượng IgM (Immunoglobuline M)</field>
+            <field name="default_code">M15</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_1"></field>
+        </record>
+
+<!--        Đo hoạt độ LDH (Lactat dehydrogenase)-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis13">
+            <field name="name">Đo hoạt độ LDH (Lactat dehydrogenase)</field>
+            <field name="default_code">M16</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_1"></field>
+        </record>
+
+<!--        Định lượng LDL - c (Low density lipoprotein Cholesterol)-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis14">
+            <field name="name">Định lượng LDL - c (Low density lipoprotein Cholesterol)</field>
+            <field name="default_code">M17</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_1"></field>
+        </record>
+
+<!--        Định lượng Pre-albumin-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis15">
+            <field name="name">Định lượng Pre-albumin</field>
+            <field name="default_code">M18</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_1"></field>
+        </record>
+
+<!--        Định lượng Pro-calcitonin-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis16">
+            <field name="name">Định lượng Pro-calcitonin</field>
+            <field name="default_code">M19</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_1"></field>
+        </record>
+
+<!--        Định lượng T3 (Tri iodothyronine)-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis17">
+            <field name="name">Định lượng T3 (Tri iodothyronine)</field>
+            <field name="default_code">M20</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_1"></field>
+        </record>
+
+<!--        Định lượng T4 (Thyroxine)-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis18">
+            <field name="name">Định lượng T4 (Thyroxine)</field>
+            <field name="default_code">M21</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_1"></field>
+        </record>
+
+<!--        Định lượng Troponin T-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis19">
+            <field name="name">Định lượng Troponin T</field>
+            <field name="default_code">M23</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_1"></field>
+        </record>
+
+<!--        Hóa sinh (7 thông số)-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis20">
+            <field name="name">Hóa sinh (7 thông số)</field>
+            <field name="default_code">HS01</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_1"></field>
+            <field name="has_child">True</field>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis0">
+            <field name="name">Đo hoạt độ AST (GOT)</field>
+            <field name="sequence">1</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_ul2"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis20"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis1">
+            <field name="name">Đo hoạt độ ALT (GPT)</field>
+            <field name="sequence">2</field>
+            <field name="normal_range">&lt;45</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_ul2"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis20"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis2">
+            <field name="name">Định lượng Cholesterol toàn phần</field>
+            <field name="sequence">3</field>
+            <field name="normal_range">3.4-5.4</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_mmoll0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis20"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis3">
+            <field name="name">Định lượng Creatinin</field>
+            <field name="sequence">4</field>
+            <field name="normal_range">53-120</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_umoll0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis20"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis4">
+            <field name="name">Định lượng Glucose</field>
+            <field name="sequence">5</field>
+            <field name="normal_range">4.0-6.1</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_mmoll0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis20"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis5">
+            <field name="name">Định lượng Triglycerid</field>
+            <field name="sequence">6</field>
+            <field name="normal_range">0.5-2.2</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_mmoll0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis20"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis6">
+            <field name="name">Định lượng Urê</field>
+            <field name="sequence">7</field>
+            <field name="normal_range">3.0-8.0</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_mmoll0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis20"/>
+        </record>
+
+<!--        Tổng phân tích nước tiểu (10 thông số)-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis21">
+            <field name="name">Tổng phân tích nước tiểu (10 thông số)</field>
+            <field name="default_code">HS02</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_1"></field>
+            <field name="has_child">True</field>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis7">
+            <field name="name">GLU</field>
+            <field name="sequence">1</field>
+            <field name="normal_range">2-30</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_mgdl0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis21"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis8">
+            <field name="name">PRO</field>
+            <field name="sequence">2</field>
+            <field name="normal_range">Âm tính</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_mgdl0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis21"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis9">
+            <field name="name">BIL</field>
+            <field name="sequence">3</field>
+            <field name="normal_range">&lt; 0.5</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_mgdl0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis21"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis10">
+            <field name="name">URO</field>
+            <field name="sequence">4</field>
+            <field name="normal_range">Normal</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_mgdl0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis21"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis11">
+            <field name="name">PH</field>
+            <field name="sequence">5</field>
+            <field name="normal_range"></field>
+            <field name="medical_type_id" ref="lab_test_semenanalysis21"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis12">
+            <field name="name">S.G</field>
+            <field name="sequence">6</field>
+            <field name="normal_range"></field>
+            <field name="medical_type_id" ref="lab_test_semenanalysis21"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis13">
+            <field name="name">BLD</field>
+            <field name="sequence">7</field>
+            <field name="normal_range">Âm tính</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_eryul0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis21"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis14">
+            <field name="name">KET</field>
+            <field name="sequence">8</field>
+            <field name="normal_range">Âm tính</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_mgdl0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis21"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis15">
+            <field name="name">NIT</field>
+            <field name="sequence">9</field>
+            <field name="normal_range">Âm tính</field>
+            <field name="medical_type_id" ref="lab_test_semenanalysis21"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis16">
+            <field name="name">LEU</field>
+            <field name="sequence">10</field>
+            <field name="normal_range">Âm tính</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_leuul0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis21"/>
+        </record>
+
+<!--        Thể tích khối hồng cầu (hematocrit) bằng máy ly tâm-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis22">
+            <field name="name">Thể tích khối hồng cầu (hematocrit) bằng máy ly tâm</field>
+            <field name="default_code">TBH01</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_3"></field>
+        </record>
+
+<!--        Định lượng huyết sắc tố (hemoglobin) bằng quang kế-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis23">
+            <field name="name">Định lượng huyết sắc tố (hemoglobin) bằng quang kế</field>
+            <field name="default_code">TBH02</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_3"></field>
+        </record>
+
+<!--        Xét nghiệm số lượng và độ tập trung tiểu cầu (bằng máy đếm tổng trở)-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis24">
+            <field name="name">Xét nghiệm số lượng và độ tập trung tiểu cầu (bằng máy đếm tổng trở)</field>
+            <field name="default_code">TBH03</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_3"></field>
+        </record>
+
+<!--        Xét nghiệm số lượng và độ tập trung tiểu cầu (bằng phương pháp thủ công)-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis25">
+            <field name="name">Xét nghiệm số lượng và độ tập trung tiểu cầu (bằng phương pháp thủ công)</field>
+            <field name="default_code">TBH04</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_3"></field>
+        </record>
+
+<!--        Đông máu-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis26">
+            <field name="name">Đông máu</field>
+            <field name="default_code">DM01</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_2"></field>
+            <field name="has_child">True</field>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis17">
+            <field name="name">Thời gian prothrombin (PT: Giây )</field>
+            <field name="sequence">1</field>
+            <field name="normal_range">10 - 14</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_s0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis26"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis18">
+            <field name="name">Xét nghiệm nhanh INR (Có thể kèm theo cả chỉ số PT%, PTs) bằng máy cầm tay</field>
+            <field name="sequence">2</field>
+            <field name="normal_range">0.8 - 1.2</field>
+            <field name="medical_type_id" ref="lab_test_semenanalysis26"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis19">
+            <field name="name">Thời gian prothrombin (PT: % )</field>
+            <field name="sequence">3</field>
+            <field name="normal_range">70-140</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis26"/>
+        </record>
+
+<!--        Thời gian thromboplastin một phần hoạt hóa (APTT: Activated Partial Thromboplastin Time), (Tên khác: TCK) bằng máy tự động-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis27">
+            <field name="name">Thời gian thromboplastin một phần hoạt hóa (APTT: Activated Partial Thromboplastin Time), (Tên khác: TCK) bằng máy tự động</field>
+            <field name="default_code">XN04</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_2"></field>
+        </record>
+
+<!--        Định lượng Fibrinogen (Tên khác: Định lượng yếu tố I), phương pháp gián tiếp, bằng máy tự động-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis28">
+            <field name="name">Định lượng Fibrinogen (Tên khác: Định lượng yếu tố I), phương pháp gián tiếp, bằng máy tự động</field>
+            <field name="default_code">XN05</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_2"></field>
+        </record>
+
+<!--        Test thử thai (HCG)-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis29">
+            <field name="name">Test thử thai (HCG)</field>
+            <field name="default_code">HSHCG</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+            <field name="normal_range">Âm tính</field>
+            <field name="group_type" ref="shealth_all_in_one.lab_group_4"></field>
+        </record>
+
+<!--        HBsAg test nhanh-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis30">
+            <field name="name">HBsAg test nhanh</field>
+            <field name="default_code">VR02</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+            <field name="normal_range">Âm tính</field>
+            <field name="group_type" ref="shealth_all_in_one.lab_group_4"></field>
+        </record>
+
+<!--        HIV Ab test nhanh-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis31">
+            <field name="name">HIV Ab test nhanh</field>
+            <field name="default_code">VR04</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+            <field name="normal_range">Âm tính</field>
+            <field name="group_type" ref="shealth_all_in_one.lab_group_4"></field>
+        </record>
+
+<!--        Tổng phân tích máu ngoại vi (19 thông số)-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis32">
+            <field name="name">Tổng phân tích máu ngoại vi (19 thông số)</field>
+            <field name="default_code">CTM19</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_3"></field>
+            <field name="has_child">True</field>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis20">
+            <field name="name">WBC</field>
+            <field name="sequence">1</field>
+            <field name="normal_range">4.0-10.0</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_l0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis32"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis21">
+            <field name="name">Lymph#</field>
+            <field name="sequence">2</field>
+            <field name="normal_range">0.8-4.0</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_l0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis32"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis22">
+            <field name="name">Mid#</field>
+            <field name="sequence">3</field>
+            <field name="normal_range">0.1-1.5</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_l0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis32"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis23">
+            <field name="name">Gran#</field>
+            <field name="sequence">4</field>
+            <field name="normal_range">2.0-7.0</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_l0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis32"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis24">
+            <field name="name">Lymph%</field>
+            <field name="sequence">5</field>
+            <field name="normal_range">20.0-40.0</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis32"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis25">
+            <field name="name">Mid%</field>
+            <field name="sequence">6</field>
+            <field name="normal_range">3.0-15.0</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis32"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis26">
+            <field name="name">Gran%</field>
+            <field name="sequence">7</field>
+            <field name="normal_range">50.0-70.0</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis32"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis27">
+            <field name="name">RBC</field>
+            <field name="sequence">8</field>
+            <field name="normal_range">3.5-5.5</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_l1"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis32"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis28">
+            <field name="name">HGB</field>
+            <field name="sequence">9</field>
+            <field name="normal_range">110-160</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_l2"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis32"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis29">
+            <field name="name">HCT</field>
+            <field name="sequence">10</field>
+            <field name="normal_range">37-54</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis32"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis30">
+            <field name="name">MCV</field>
+            <field name="sequence">11</field>
+            <field name="normal_range">80.0-100.0</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_fl0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis32"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis31">
+            <field name="name">MCH</field>
+            <field name="sequence">12</field>
+            <field name="normal_range">27.0-34.0</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_pg0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis32"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis32">
+            <field name="name">MCHC</field>
+            <field name="sequence">13</field>
+            <field name="normal_range">320-360</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_l2"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis32"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis33">
+            <field name="name">RDW-CV</field>
+            <field name="sequence">14</field>
+            <field name="normal_range">11.0-16.0</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis32"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis34">
+            <field name="name">RDW_SD</field>
+            <field name="sequence">15</field>
+            <field name="normal_range">35.0-56.0</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_fl0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis32"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis35">
+            <field name="name">PLT</field>
+            <field name="sequence">16</field>
+            <field name="normal_range">150-450</field>
+            <field name="medical_type_id" ref="lab_test_semenanalysis32"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis36">
+            <field name="name">MPV</field>
+            <field name="sequence">17</field>
+            <field name="normal_range">6.5-12.0</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_fl0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis32"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis37">
+            <field name="name">PDW</field>
+            <field name="sequence">18</field>
+            <field name="normal_range">15.0-17.0</field>
+            <field name="medical_type_id" ref="lab_test_semenanalysis32"/>
+        </record>
+        <record model="sh.medical.labtest.criteria" id="lab_test_criteria_semenanalysis38">
+            <field name="name">PCT</field>
+            <field name="sequence">19</field>
+            <field name="normal_range">0.108-0.282</field>
+            <field name="units" ref="shealth_all_in_one.lab_units_0"/>
+            <field name="medical_type_id" ref="lab_test_semenanalysis32"/>
+        </record>
+
+<!--        Xác định nhóm máu hệ ABO bằng phương pháp Huyết thanh mẫu-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis33">
+            <field name="name">Xác định nhóm máu hệ ABO bằng phương pháp Huyết thanh mẫu</field>
+            <field name="default_code">NMABO</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_1"></field>
+        </record>
+
+<!--        Xác định nhóm máu hệ Rh bằng phương pháp Huyết thanh mẫu-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis34">
+            <field name="name">Xác định nhóm máu hệ Rh bằng phương pháp Huyết thanh mẫu</field>
+            <field name="default_code">NMRH</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_1"></field>
+        </record>
+
+<!--        HCV Ab test nhanh-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis35">
+            <field name="name">HCV Ab test nhanh</field>
+            <field name="default_code">VR03</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_5"></field>
+        </record>
+
+<!--        Virus test nhanh-->
+        <record model="sh.medical.labtest.types" id="lab_test_semenanalysis36">
+            <field name="name">Virus test nhanh</field>
+            <field name="default_code">VR01</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_labtests"></field>
+            <field name="type">service</field>
+
+            <field name="group_type" ref="shealth_all_in_one.lab_group_5"></field>
+        </record>
+
+    </data>
+</odoo>
+

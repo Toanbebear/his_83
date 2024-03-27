@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_patient_rounding_evaluation_document">
+    <t t-call="web.external_layout">
+        <t t-set="o" t-value="o.with_context({'lang':o.patient.partner_id.lang})"/>
+        <t t-set="address">
+            <div t-field="o.patient.partner_id"
+            t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+        </t>
+        <div class="page">
+            <div class="oe_structure"/>
+
+            <h2>Patient Rounding Report</h2>
+
+            <div class="row mt32 mb32">
+                <div t-if="o.name" class="col-3 bm-2">
+                    <strong>Rounding #:</strong>
+                    <p class="m-0" t-field="o.name"/>
+                </div>
+                <div t-if="o.doctor" class="col-3 bm-2">
+                    <strong>Physician:</strong>
+                    <p class="m-0" t-field="o.doctor.name"/>
+                </div>
+                <div t-if="o.patient" class="col-3 bm-2">
+                    <strong>Patient:</strong>
+                    <p class="m-0" t-field="o.patient.name"/>
+                </div>
+                <div t-if="o.patient.identification_code" class="col-3 bm-2">
+                    <strong>Patient ID:</strong>
+                    <p class="m-0" t-field="o.patient.identification_code"/>
+                </div>
+            </div>
+            <div class="row mt32 mb32">
+                <div t-if="o.patient.sex" class="col-3 bm-2">
+                    <strong>Sex:</strong>
+                    <p class="m-0" t-field="o.patient.sex"/>
+                </div>
+                <div t-if="o.evaluation_start_date" class="col-3 bm-2">
+                    <strong>Start date &amp; time:</strong>
+                    <p class="m-0" t-field="o.evaluation_start_date"/>
+                </div>
+                <div t-if="o.evaluation_end_date" class="col-3 bm-2">
+                    <strong>End date &amp; time:</strong>
+                    <p class="m-0" t-field="o.evaluation_end_date"/>
+                </div>
+                <div t-if="o.evolution" class="col-3 bm-2">
+                    <strong>Evolution:</strong>
+                    <p class="m-0" t-field="o.evolution"/>
+                </div>
+            </div>
+            <br/><br/>
+            <div class="row mt32 mb32">
+                <div t-if="o.systolic" class="col-3 bm-2">
+                    <strong>Systolic Pressure:</strong>
+                    <p class="m-0" t-field="o.systolic"/>
+                </div>
+                <div t-if="o.diastolic" class="col-3 bm-2">
+                    <strong>Diastolic Pressure:</strong>
+                    <p class="m-0" t-field="o.diastolic"/>
+                </div>
+                <div t-if="o.temperature" class="col-3 bm-2">
+                    <strong>Temp. (C):</strong>
+                    <p class="m-0" t-field="o.temperature"/>
+                </div>
+                <div t-if="o.weight" class="col-3 bm-2">
+                    <strong>Weight (kg):</strong>
+                    <p class="m-0" t-field="o.weight"/>
+                </div>
+            </div>
+            <div class="row mt32 mb32">
+                <div t-if="o.bpm" class="col-3 bm-2">
+                    <strong>Heart rate:</strong>
+                    <p class="m-0" t-field="o.bpm"/>
+                </div>
+                <div t-if="o.glycemia" class="col-3 bm-2">
+                    <strong>Glycemia:</strong>
+                    <p class="m-0" t-field="o.glycemia"/>
+                </div>
+                <div t-if="o.diuresis" class="col-3 bm-2">
+                    <strong>Diuresis:</strong>
+                    <p class="m-0" t-field="o.diuresis"/>
+                </div>
+                <div t-if="o.pain" class="col-3 bm-2">
+                    <strong>Pain:</strong>
+                    <p class="m-0"> Yes </p>
+                </div>
+            </div>
+            <br/><br/>
+            <p style="font-size:24px;text-align:left;font-weight:bold;">Procedures</p>
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Code </th>
+                        <th>Description </th>
+                        <th>Notes</th>
+                    </tr>
+               </thead>
+               <tbody class="sale_tbody">
+                    <t t-foreach="o.procedures" t-as="l">
+                        <tr t-if="l.procedures">
+                            <td>
+                               <span t-field="l.procedures"/>
+                            </td>
+                            <td>
+                               <span t-field="l.procedures.description"/>
+                            </td>
+                            <td>
+                               <span t-field="l.notes"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+            <br/><br/>
+            <div class="col-xs-12">
+                <div t-if="o.round_summary">
+                    <p style="font-size:24px;text-align:left;font-weight:bold;">Round Summary</p>
+                    <p t-field="o.round_summary"/>
+                </div>
+            </div>
+            <div class="oe_structure"/>
+        </div>
+    </t>
+</template>
+<template id="report_patient_rounding_evaluation">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="shealth_all_in_one.report_patient_rounding_evaluation_document" t-lang="o.patient.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+</odoo>

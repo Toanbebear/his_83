@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data noupdate="1">
+
+<!--        <record model="product.category" id="sh_imaging">-->
+<!--            <field name="name">Medical Imaging</field>-->
+<!--        </record>-->
+
+<!--        NHÓM CĐHA-->
+        <record model="sh.medical.imaging.group.type" id="imaging_group_1">
+            <field name="name">XQuang</field>
+            <field name="info">Chiếu/Chụp XQuang</field>
+            <field name="type">cdha</field>
+        </record>
+        <record model="sh.medical.imaging.group.type" id="imaging_group_2">
+            <field name="name">Siêu âm</field>
+            <field name="info">Siêu âm</field>
+            <field name="type">cdha</field>
+        </record>
+        <record model="sh.medical.imaging.group.type" id="imaging_group_3">
+            <field name="name">CT-Scanner</field>
+            <field name="info">CT-Scanner</field>
+            <field name="type">cdha</field>
+        </record>
+        <record model="sh.medical.imaging.group.type" id="imaging_group_4">
+            <field name="name">Cộng hưởng từ</field>
+            <field name="info">Cộng hưởng từ</field>
+            <field name="type">cdha</field>
+        </record>
+        <record model="sh.medical.imaging.group.type" id="imaging_group_5">
+            <field name="name">CĐHA Khác</field>
+            <field name="info">CĐHA Khác</field>
+            <field name="type">cdha</field>
+        </record>
+
+        <!--        NHÓM THĂM DÒ CHỨC NĂNG-->
+        <record model="sh.medical.imaging.group.type" id="imaging_group_6">
+            <field name="name">Điện tim</field>
+            <field name="info">Điện tim</field>
+            <field name="type">tdcn</field>
+        </record>
+        <record model="sh.medical.imaging.group.type" id="imaging_group_7">
+            <field name="name">Điện não</field>
+            <field name="info">Điện não</field>
+            <field name="type">tdcn</field>
+        </record>
+        <record model="sh.medical.imaging.group.type" id="imaging_group_8">
+            <field name="name">Nội soi</field>
+            <field name="info">Nội soi</field>
+            <field name="type">tdcn</field>
+        </record>
+        <record model="sh.medical.imaging.group.type" id="imaging_group_9">
+            <field name="name">TDCN Khác</field>
+            <field name="info">TDCN Khác</field>
+            <field name="type">tdcn</field>
+        </record>
+
+<!--        loại CĐHA-->
+        <record model="sh.medical.imaging.test.type" id="imaging_test_xq01">
+            <field name="name">Chụp xquang sọ thẳng nghiêng</field>
+            <field name="default_code">XQ01</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_imaging"></field>
+            <field name="type">service</field>
+            <field name="perform_room" ref="shealth_all_in_one.sh_xray_room_knhn"></field>
+            <field name="group_type" ref="shealth_all_in_one.imaging_group_1"></field>
+        </record>
+
+        <record model="sh.medical.imaging.test.type" id="imaging_test_xq02">
+            <field name="name">Chụp xquang mặt thẳng nghiêng</field>
+            <field name="default_code">XQ02</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_imaging"></field>
+            <field name="type">service</field>
+            <field name="perform_room" ref="shealth_all_in_one.sh_xray_room_knhn"></field>
+            <field name="group_type" ref="shealth_all_in_one.imaging_group_1"></field>
+        </record>
+
+        <record model="sh.medical.imaging.test.type" id="imaging_test_xq03">
+            <field name="name">Chụp xquang mặt thấp hoặc mặt cao</field>
+            <field name="default_code">XQ03</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_imaging"></field>
+            <field name="type">service</field>
+            <field name="perform_room" ref="shealth_all_in_one.sh_xray_room_knhn"></field>
+            <field name="group_type" ref="shealth_all_in_one.imaging_group_1"></field>
+        </record>
+
+        <record model="sh.medical.imaging.test.type" id="imaging_test_xq04">
+            <field name="name">Chụp xquang hốc mắt thẳng nghiêng</field>
+            <field name="default_code">XQ04</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_imaging"></field>
+            <field name="type">service</field>
+            <field name="perform_room" ref="shealth_all_in_one.sh_xray_room_knhn"></field>
+            <field name="group_type" ref="shealth_all_in_one.imaging_group_1"></field>
+        </record>
+
+        <record model="sh.medical.imaging.test.type" id="imaging_test_xq05">
+            <field name="name">Chụp xquang hàm chếch một bên</field>
+            <field name="default_code">XQ05</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_imaging"></field>
+            <field name="type">service</field>
+            <field name="perform_room" ref="shealth_all_in_one.sh_xray_room_knhn"></field>
+            <field name="group_type" ref="shealth_all_in_one.imaging_group_1"></field>
+        </record>
+
+        <record model="sh.medical.imaging.test.type" id="imaging_test_xq06">
+            <field name="name">Chụp xquang xương chính mũi nghiêng hoặc tiếp tuyến</field>
+            <field name="default_code">XQ06</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_imaging"></field>
+            <field name="type">service</field>
+            <field name="perform_room" ref="shealth_all_in_one.sh_xray_room_knhn"></field>
+            <field name="group_type" ref="shealth_all_in_one.imaging_group_1"></field>
+        </record>
+
+        <record model="sh.medical.imaging.test.type" id="imaging_test_xq07">
+            <field name="name">Chụp xquang ngực thẳng</field>
+            <field name="default_code">XQ07</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_imaging"></field>
+            <field name="type">service</field>
+            <field name="analysis">
+                <![CDATA[<ul style="color:#0070c0;"><li><p>Hai trường phổi sáng đều cân đối. Không thấy hình nốt, khối mờ khu trú.</p></li><li><p>Bóng tim không to.</p></li><li><p>Góc sườn hoành hai bên nhọn.</p></li><li><p>Không thấy tràn dịch, tràn khí màng phổi hai bên.</p></li><li><p>Không thấy tổn thương các xương lồng ngực.</p></li></ul>]]>
+            </field>
+            <field name="conclusion">Hiện tại không thấy bất thường trên phim chụp X Quang tim phổi thẳng</field>
+            <field name="perform_room" ref="shealth_all_in_one.sh_xray_room_knhn"></field>
+            <field name="group_type" ref="shealth_all_in_one.imaging_group_1"></field>
+        </record>
+
+        <record model="sh.medical.imaging.test.type" id="imaging_test_xq08">
+            <field name="name">Chụp xquang ngực nghiêng hoặc chếch mỗi bên</field>
+            <field name="default_code">XQ08</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_imaging"></field>
+            <field name="type">service</field>
+            <field name="perform_room" ref="shealth_all_in_one.sh_xray_room_knhn"></field>
+            <field name="group_type" ref="shealth_all_in_one.imaging_group_1"></field>
+        </record>
+
+        <record model="sh.medical.imaging.test.type" id="imaging_test_sa01">
+            <field name="name">Siêu âm ổ bụng</field>
+            <field name="default_code">SA01</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_imaging"></field>
+            <field name="type">service</field>
+            <field name="analysis">
+                <![CDATA[<div style="color:#0070c0;"><p><b style="color:#fc0303;">GAN:</b> Kích thước bình thường. Nhu mô gan đều, không có khối khu trú. Tĩnh mạch cửa không giãn, không có huyết khối.&nbsp;</p><p><b style="color:#fc0303;">ĐƯỜNG MẬT:</b> Trong và ngoài gan không giãn, không có sỏi.</p><p><b style="color:#fc0303;">TÚI MẬT:</b> Kích thước bình thường, thành mỏng, dịch mật trong không có sỏi.</p><p><b style="color:#fc0303;">TỤY:</b> Kích thước bình thường, nhu mô đều, ống tụy không giãn, xung quang tụy không có dịch</p><p><b style="color:#fc0303;">LÁCH:</b> Kích thước bình thường, nhu mô đồng nhất, tĩnh mạch lách không giãn.</p><p><b style="color:#fc0303;">THẬN PHẢI:</b> Kích thước bình thường. Nhu mô&nbsp; đều. Đài- bể thận không giãn, không có sỏi, ranh giới nhu mô và đài- bể thận rõ. Niệu quản không giãn.</p><p><b style="color:#fc0303;">THẬN TRÁI:</b> Kích thước bình thường. Nhu mô&nbsp; đều. Đài- bể thận không giãn, không có sỏi, ranh giới nhu mô và đài- bể thận rõ. Niệu quản không giãn.</p><p><b style="color:#fc0303;">BÀNG QUANG:</b> Thành mỏng, nước tiểu trong, không có sỏi.</p><p><b style="color:#fc0303;">TỬ CUNG:</b> Không to, phần phụ hai bên bình thường. <b>(NẾU LÀ NỮ)</b></p><p><b style="color:#fc0303;">DOUGLAS:</b> Không có dịch.</p></div>]]>
+            </field>
+            <field name="conclusion">Hình ảnh siêu âm ổ bụng hiện tại bình thường.</field>
+            <field name="perform_room" ref="shealth_all_in_one.sh_supersonic_room_knhn"></field>
+            <field name="group_type" ref="shealth_all_in_one.imaging_group_2"></field>
+        </record>
+
+        <record model="sh.medical.imaging.test.type" id="imaging_test_sa02">
+            <field name="name">Siêu âm ổ bụng ( gan mật, tụy, lách, thận, bàng quang, tiền liệt tuyến)</field>
+            <field name="default_code">SA02</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_imaging"></field>
+            <field name="type">service</field>
+            <field name="perform_room" ref="shealth_all_in_one.sh_supersonic_room_knhn"></field>
+            <field name="group_type" ref="shealth_all_in_one.imaging_group_2"></field>
+        </record>
+
+        <record model="sh.medical.imaging.test.type" id="imaging_test_sa03">
+            <field name="name">Siêu âm vú</field>
+            <field name="default_code">SA03</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_imaging"></field>
+            <field name="type">service</field>
+            <field name="perform_room" ref="shealth_all_in_one.sh_supersonic_room_knhn"></field>
+            <field name="group_type" ref="shealth_all_in_one.imaging_group_2"></field>
+        </record>
+
+        <record model="sh.medical.imaging.test.type" id="imaging_test_sa04">
+            <field name="name">Siêu âm tuyến vú hai bên</field>
+            <field name="default_code">SA04</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_imaging"></field>
+            <field name="type">service</field>
+            <field name="perform_room" ref="shealth_all_in_one.sh_supersonic_room_knhn"></field>
+            <field name="group_type" ref="shealth_all_in_one.imaging_group_2"></field>
+        </record>
+
+        <record model="sh.medical.imaging.test.type" id="imaging_test_sa05">
+            <field name="name">Siêu âm Doppler tuyến vú</field>
+            <field name="default_code">SA05</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_imaging"></field>
+            <field name="type">service</field>
+            <field name="perform_room" ref="shealth_all_in_one.sh_supersonic_room_knhn"></field>
+            <field name="group_type" ref="shealth_all_in_one.imaging_group_2"></field>
+        </record>
+
+        <record model="sh.medical.imaging.test.type" id="imaging_test_sa06">
+            <field name="name">Siêu âm đàn hồi mô vú</field>
+            <field name="default_code">SA06</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_imaging"></field>
+            <field name="type">service</field>
+            <field name="perform_room" ref="shealth_all_in_one.sh_supersonic_room_knhn"></field>
+            <field name="group_type" ref="shealth_all_in_one.imaging_group_2"></field>
+        </record>
+
+        <record model="sh.medical.imaging.test.type" id="imaging_test_dt01">
+            <field name="name">Điện tim</field>
+            <field name="default_code">DT</field>
+            <field name="list_price">0</field>
+            <field name="categ_id" ref="sh_imaging"></field>
+            <field name="type">service</field>
+            <field name="analysis">
+                <![CDATA[<ul style="color:#0070c0;"><li><p>Nhịp xoang tần số: ck/ph</p></li><li><p>Trục điện tim: Trung gian.</p></li><li><p>Khoảng PQ: Bình thường.</p></li><li><p>Phức độ QRS: Bình thường.</p></li><li><p>Sóng T: Bình thường.</p></li><li><p>Đoạn ST: Không chênh.</p></li></ul>]]>
+            </field>
+            <field name="conclusion">Điện tâm đồ hiện tại bình thường.</field>
+            <field name="group_type" ref="shealth_all_in_one.imaging_group_6"></field>
+            <field name="perform_room" ref="shealth_all_in_one.sh_supersonic_room_knhn"></field>
+        </record>
+
+    </data>
+</openerp>
+

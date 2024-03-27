@@ -1,0 +1,142 @@
+<?xml version="1.0" ?>
+    <odoo>
+        <data>
+
+            <!-- Rounding Management -->
+
+            <record id="view_sh_medical_instruction_filter" model="ir.ui.view">
+                <field name="name">Instruction</field>
+                <field name="model">sh.medical.patient.instruction</field>
+                <field name="type">search</field>
+                <field name="arch" type="xml">
+                    <search string="Search Instruction">
+                        <separator orientation="vertical"/>
+                            <field name="name" select="1"/>
+                            <field name="round_summary" select="1"/>
+                        <newline/>
+                        <group expand="0" string="Group By..." colspan="11" col="11">
+                            <filter name="group_patient" string="Patient" context="{'group_by':'patient'}"/>
+                            <filter name="group_physician" string="Physician" context="{'group_by':'doctor'}"/>
+                            <filter name="group_registration_codes" string="Registration Codes" context="{'group_by':'inpatient_id'}"/>
+                            <filter name="group_evolution" string="Evolution" context="{'group_by':'evolution'}"/>
+                        </group>
+                    </search>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_instruction_view">
+                <field name="name">Instruction</field>
+                <field name="model">sh.medical.patient.instruction</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                <form string="Instruction" duplicate="false" edit_expr="state not in ['Completed']" delete_expr="state not in ['Completed']">
+                    <header>
+                        <button confirm="Are you sure you want to complete evaluation?"  name="set_to_completed" attrs="{'invisible': ['|',('name','=','/'),('state','=','Completed')]}" string="Xác nhận" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_manager"/>
+                        <button invisible="1" name="print_patient_evaluation" states="Completed" string="Print Intructions Evaluation" type="object" class="btn-info" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_manager"/>
+                        <button confirm="Are you sure you want to re-open this instruction (Only Admin)?" name="set_to_draft" states="Completed" string="Draft Instruction (Admin)" type="object" class="btn-warning" groups="shealth_all_in_one.group_sh_medical_manager"/>
+                        <field name="state" widget="statusbar" statusbar_visible="Draft,Completed" statusbar_colors='{"Draft":"blue","Completed":"green"}'/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                           <label for="name" string="Name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" required="1"/>
+                            </h1>
+                            <label class="oe_edit_only" for="patient"/>
+                            <field name="patient" class="text-uppercase" attrs="{'readonly': [('patient','!=',False)]}" force_save="1"/>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="doctor" options="{'no_create': True,'no_open':'True}"/>
+                                <field name="evaluation_start_date"/>
+                            </group>
+                            <group>
+                                <field name="inpatient_id" string="Mã lưu bệnh nhân" readonly="1" force_save="1"/>
+                                <field name="evaluation_end_date" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Diễn biến">
+                                <group>
+                                    <field name="round_summary" string="Diễn biến"/>
+                                </group>
+                                <group>
+                                    <field name="evolution" required="1"/>
+                                </group>
+                                <group string="Thuốc chỉ định">
+                                    <field name="ins_medicaments" nolabel="1" context="{'view_only_name': True}" attrs="{'invisible':[('inpatient_id','=',False)]}">
+                                        <tree string="Thuốc" editable="bottom" default_order="medicament_type">
+                                            <field name="medicament_type" invisible="1"/>
+                                            <field name="medicine" required="1" options="{'no_create': True}" domain="[('medicament_type','=','Medicine')]" string="Thuốc"/>
+                                            <field name="qty"/>
+                                            <field name="uom_id" options="{'no_create': True,'no_open':True}" readonly="1" force_save="1"/>
+                                            <field name="location_id" required="1" invisible="1" />
+                                            <field name="notes"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+<!--                            <page string="Thuốc" attrs="{'invisible':[('inpatient_id','=',False)]}" >-->
+<!--                                <field name="ins_medicaments" nolabel="1" context="{'view_only_name': True}">>-->
+<!--                                    <tree string="Supplies" editable="bottom" default_order="medicament_type">-->
+<!--                                        <field name="medicament_type" invisible="1"/>-->
+<!--                                        <field name="medicine" required="1" options="{'no_create': True}" domain="[('medicament_type','=','Medicine')]" string="Thuốc"/>-->
+<!--                                        <field name="qty"/>-->
+<!--                                        <field name="uom_id" options="{'no_create': True,'no_open':True}" readonly="1" force_save="1"/>-->
+<!--                                        <field name="location_id" required="1" invisible="1" />-->
+<!--                                        <field name="notes"/>-->
+<!--                                    </tree>-->
+<!--                                </field>-->
+<!--                            </page>-->
+                        </notebook>
+                    </sheet>
+                </form>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_instruction_tree">
+                <field name="name">Instruction</field>
+                <field name="model">sh.medical.patient.instruction</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string='Instruction' decoration-info="state=='Draft'" decoration-success="state=='Completed'">
+                        <field name="name"/>
+                        <field name="patient" class="text-uppercase"/>
+                        <field name="doctor"/>
+                        <field name="inpatient_id" string="Mã lưu bệnh nhân"/>
+                        <field name="evolution"/>
+                        <field name="evaluation_start_date" string="Ngày"/>
+                        <field name="evaluation_end_date" invisible="1"/>
+                        <field name="state" invisible="1"/>
+                    </tree>
+                </field>
+            </record>
+
+            <record id="sh_medical_instruction_action_tree" model="ir.actions.act_window">
+                    <field name="name">Instruction</field>
+                    <field name="res_model">sh.medical.patient.instruction</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                    <field name="domain">[]</field>
+                    <field name="context">{}</field>
+                    <field name="view_id" eval="False"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to record a new instruction information.
+                      </p>
+                    </field>
+            </record>
+
+<!--            INHERIT INPATIENT VIEW-->
+<!--            <record model="ir.ui.view" id="sh_medical_instruction_inpatient_view">-->
+<!--                <field name="model">sh.medical.inpatient</field>-->
+<!--                <field name="type">form</field>-->
+<!--                <field name="inherit_id" ref="shealth_all_in_one.sh_medical_inpatient_view"/>-->
+<!--                <field name="arch" type="xml">-->
+<!--                    <xpath expr="//field[@name='discharge_plan']" position="after">-->
+<!--                        <field name="instructions" string="Y lệnh" context="{'default_patient':patient,'default_inpatient_id':id,'default_doctor':attending_physician}" attrs="{'invisible': [('id','=',False)]}" force_save="1"/>-->
+<!--                    </xpath>-->
+<!--                </field>-->
+<!--            </record>-->
+        </data>
+    </odoo>

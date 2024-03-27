@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_tree_training_schedule" model="ir.ui.view">
+            <field name="name">lịch đào tạo</field>
+            <field name="model">training.schedule</field>
+            <field name="arch" type="xml">
+                <tree decoration-danger="state=='4'"
+                       decoration-success="state=='2'"
+                       decoration-info="state=='3'"
+                       default_order="create_date desc" >
+                    <field name="employee" widget="many2many_tags"/>
+                    <field name="department_id"/>
+                    <field name="training"/>
+                    <field name="number"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="status"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_form_training_schedule" model="ir.ui.view">
+            <field name="name">lịch đào tạo</field>
+            <field name="model">training.schedule</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="set_to_new" type="object" string="Xác nhận" class="btn-info"
+                                confirm="Bạn có chắc muốn xác nhận?"
+                                attrs="{'invisible':[('state','not in', ['1', '3'])]}" groups="em_calendar.group_em_calendar_user"/>
+                        <button name="set_to_draft" type="object" string="Mở lại" class="btn-info"
+                                  attrs="{'invisible':[('state','!=','2')]}" groups="em_calendar.group_em_calendar_manager"/>
+                        <button name="set_to_cancel" type="object" string="Hủy" class="btn-danger"
+                                  attrs="{'invisible':[('state','!=','2')]}" groups="em_calendar.group_em_calendar_manager"/>
+                        <field name="state" widget="statusbar" statusbar_visible="1,2"/>
+                    </header>
+                    <sheet>
+                        <group  string="Đăng kí lịch đào tạo">
+                            <group>
+                                <field name="employee" required="True" widget="many2many_tags" options="{'no_create': True, 'no_open': True}" attrs="{'readonly':[('state','in',('2','4'))]}"/>
+                                <field name="department_id" required="True" options="{'no_create': True, 'no_open': True}" attrs="{'readonly':[('state','in',('2','4'))]}"/>
+                                <field name="status" required="True" attrs="{'readonly':[('state','in',('2','4'))]}"/>
+                                <field name="training" required="True" attrs="{'readonly':[('state','in',('2','4'))]}"/>
+                                <field name="note" attrs="{'readonly':[('state','in',('2','4'))]}"/>
+                            </group>
+                            <group>
+                                <field name="start_date" required="True" attrs="{'readonly':[('state','in',('2','4'))]}"/>
+                                <field name="end_date" required="True" attrs="{'readonly':[('state','in',('2','4'))]}"/>
+                                <field name="number" required="True" attrs="{'readonly':[('state','in',('2','4'))]}"/>
+                                <field name="partner_id" attrs="{'readonly':[('state','in',('2','4'))]}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="training_schedule_action" model="ir.actions.act_window">
+            <field name="name">Lịch đào tạo</field>
+            <field name="res_model">training.schedule</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="training_schedule_search" model="ir.ui.view">
+            <field name="name">em - schedule - Search</field>
+            <field name="model">training.schedule</field>
+            <field name="arch" type="xml">
+                <search string="Stage Search">
+                     <group>
+                        <filter string="Nhân viên" name="group_status" context="{'group_by': 'employee'}"/>
+                        <filter string="Trạng thái làm việc" name="group_status" context="{'group_by': 'status'}"/>
+                        <filter string="Trạng Thái" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Khoa/phòng" name="group_department" context="{'group_by': 'department_id'}"/>
+                        <filter string="Ngày" name="group_date" context="{'group_by': 'start_date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <menuitem id="menu_training_schedule"
+                  name="Lịch đào tạo"
+                  web_icon="em_calendar,static/description/icon.png"
+                  sequence="93"
+                  groups="base.group_user"/>
+
+        <menuitem action="training_schedule_action" parent="em_calendar.menu_training_schedule"
+                  id="em_schedule_list" sequence="1" groups="base.group_user"/>
+    </data>
+</odoo>

@@ -1,0 +1,254 @@
+<?xml version="1.0" ?>
+    <odoo>
+        <data>
+
+            <!-- Specialty Management -->
+            <record id="view_sh_medical_specialty" model="ir.ui.view">
+                <field name="name">Specialty</field>
+                <field name="model">sh.medical.specialty</field>
+                <field name="type">search</field>
+                <field name="arch" type="xml">
+                    <search string="Search Specialty">
+                        <separator orientation="vertical"/>
+                            <field name="name" select="1"/>
+                            <field name="patient" string="Patient" select="1"/>
+                            <field name="physician" string="physician" select="1"/>
+                        <newline/>
+                        <filter string="Not Done" name="filter_not_done" domain="[('state','!=','Done')]" context="{}"/>
+<!--                        <filter string="My institution" name="filter_my_institution" domain="[('institution.user_access','in', [uid])]" context="{}"/>-->
+<!--                        <filter string="My institution and Not Done" name="filter_not_done_and_my_institution" domain="[('state','!=','Done'),('institution.user_access','in', [uid])]" context="{}"/>-->
+                        <filter string="Ngày thực hiện" name="services_date" date="services_date"/>
+                        <newline/>
+                        <newline/>
+                        <group expand="0" string="Group By..." colspan="11" col="11">
+                            <filter name="group_services_date" string="Ngày thực hiện" context="{'group_by':'services_date'}"/>
+                            <filter name="group_patient" string="Patient" context="{'group_by':'patient'}"/>
+                            <filter name="group_physician" string="Physician" context="{'group_by':'physician'}"/>
+                            <filter name="group_states" string="States" context="{'group_by':'state'}"/>
+                        </group>
+                    </search>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_specialty_view">
+                <field name="name">Specialty</field>
+                <field name="model">sh.medical.specialty</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                <form string="Phiếu chuyên khoa" create="false" duplicate="false" edit_expr="state not in ['Done']"  delete="false">
+                    <header>
+                        <button confirm="Are you sure you want to confirm the specialty detail?" name="action_specialty_confirm" states="Draft" string="Confirm service specialty" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_manager"/>
+                        <button confirm="Are you sure you want to start specialty?" name="action_specialty_start" states="Confirmed" string="Start service specialty" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_manager"/>
+                        <button confirm="Are you sure you want to end specialty?" name="action_specialty_end" states="In Progress" string="End service  specialty" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_manager"/>
+                        <button confirm="Are you sure you want to set specialty record in Draft state (Only Admin)?" name="action_specialty_set_to_draft" states="In Progress" string="Set To Draft" type="object" class="btn-warning" groups="shealth_all_in_one.group_sh_medical_manager"/>
+<!--                        <button confirm="Are you sure you want to cancel the specialty?" name="action_specialty_cancel" states="Draft,Confirmed" string="Cancel specialty" type="object" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_manager"/>-->
+<!--                        <button confirm="Are you sure you want to set specialty record in Draft state?" name="action_specialty_set_to_draft" states="Cancelled" string="Set To Draft" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_manager"/>-->
+                        <button confirm="Are you sure you want to set in progress this specialty (Only Admin)?" name="action_specialty_start" states="Done" string="Set In progress" type="object" class="btn-warning" groups="shealth_all_in_one.group_sh_medical_manager"/>
+                        <field name="state" widget="statusbar" statusbar_visible="Draft,Confirmed,In Progress,Done" statusbar_colors='{"Draft":"blue","Confirmed":"red","In Progress":"red","Done":"green"}'/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                           <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="patient" class="text-uppercase" attrs="{'readonly':['|',('state','in',['Done']),('patient','!=',False)]}" force_save="1"/>
+                                <field name="computed_age" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="walkin"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+<!--                                <field name="services_date" attrs="{'invisible':[('state','in',['Draft','Confirmed','Cancelled'])]}"/>-->
+                                <field name="physician" options="{'no_create': True,'no_open':True}" required="1" attrs="{'readonly': [('state','!=','Draft')]}"/>
+                                <field name="institution" options="{'no_create': True,'no_open':True}" attrs="{'readonly':['|',('state','in',['Done']),('institution','!=',False)]}" force_save="1"/>
+                                <field name="department" domain="[('institution','=',institution)]" options="{'no_create': True,'no_open':True}" force_save="1" attrs="{'readonly': [('state','!=','Draft')]}"/>
+                                <field name="perform_room" required="1" domain="[('department','=',department),('state','=','Free')]" options="{'no_create': True,'no_open':True}"/>
+                                <field name="services_domain" invisible="1"/>
+                                <field name="services" string="Dịch vụ thực hiện" required="1" force_save="1" widget="many2many_tags" options="{'no_create': True}" domain="[('id','in',services_domain),('is_surgeries','=',True)]"/>
+                            </group>
+                            <group>
+                                <field name="date_requested" attrs="{'readonly': [('state','in',['Done'])]}"/>
+                                <field name="services_date" attrs="{'invisible':[('state','in',['Draft','Cancelled'])], 'readonly': [('state','=','Done')]}"/>
+                                <field name="services_end_date" attrs="{'invisible':[('state','in',['Draft','Cancelled'])], 'readonly': [('state','=','Done')]}"/>
+                                <field name="services_length" widget="float_time" attrs="{'invisible':[('state','in',['Draft','Confirmed','Cancelled','In Progress'])]}"/>
+                                <field name="pathology" required="1" widget="many2many_tags"  attrs="{'readonly':['|',('state','in',['Done'])]}" options="{'no_open': True}"/>
+                                <field name="pathology_icd9" required="0" attrs="{'readonly':['|',('state','in',['Done'])]}" options="{'no_create': True,'no_open':True}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Thành viên tham gia">
+                                <field name="specialty_team">
+                                    <tree string="Team Members" editable="bottom">
+<!--                                        <field name="team_member" on_change="onchange_team_member(team_member)"/>-->
+                                        <field name="service_performance" domain="[('id','in',parent.services_domain),('is_surgeries','=',False)]" options="{'no_create': True}"/>
+                                        <field name="doctor_member" widget="many2many_tags" options="{'no_create': True}"/>
+                                        <field name="physician_member" widget="many2many_tags" options="{'no_create': True}"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Supplies &amp; Medicines" attrs="{'invisible': [('state','=','Draft')]}">
+<!--                                <group>-->
+<!--                                    <field name="services_domain" invisible="1"/>-->
+<!--                                    <field name="services" attrs="{'readonly': [('state','!=','Draft')]}"  widget="many2many_tags" options="{'no_create': True}" domain="[('id','in',services_domain),('is_surgeries','=',False)]"/>-->
+<!--                                </group>-->
+                                <group invisible="1">
+                                  <field name="other_bom" widget="many2many_tags" domain="[('service_id','in',services)]" options="{'no_create': True}" attrs="{'readonly': [('state','in',['Draft','Done'])]}" force_save="1"/>
+                                </group>
+                                <div class="sh-box-control-print">
+                                    <button name="reset_all_supply" confirm="Bạn có chắc chắn muốn reset toàn bộ Thuốc/VTTH đã kê bên dưới?" string="Xóa tất cả VTTH" type="object" class="btn-warning fa fa-trash mr-5 oe_edit_only" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse"/>
+                                    <button name="%(shealth_all_in_one.action_select_multi_supply_wizard)d" type="action" class="btn-info fa fa-plus oe_edit_only" context="{'default_notes':'Specialty','default_model_binding':'sh.medical.specialty.supply','default_room_use': perform_room}" string="Chọn nhiều Thuốc/VTTH"/>
+                                </div>
+                                <group string="Supplies">
+                                    <field name="supplies" nolabel="1" context="{'view_only_name': True}" attrs="{'readonly': [('state','in',['Draft','Done'])]}" force_save="1">
+                                        <tree string="Supplies" editable="bottom" limit="200" decoration-danger="parent.state in ['Confirmed','In Progress'] and qty_used > qty_avail">
+                                            <field name="sequence" widget="handle"/>
+                                            <field name="medicament_type" />
+                                            <field name="supply" options="{'no_create': True,'no_open': True}" attrs="{'readonly': [('qty','>',0)]}" force_save="1"/>
+                                            <field name="qty_avail" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.state', 'in', ['Done'])]}" groups="shealth_all_in_one.group_sh_medical_manager"/>
+                                            <field name="qty" readonly="1" force_save="1" invisible="1"/>
+                                            <field name="qty_used"/>
+                                            <field name="uom_id" readonly="1" force_save="1" options="{'no_create': True,'no_open': True}" required="1"/>
+                                            <field name="location_id" invisible="1" required="1" options="{'no_create': True,'no_open': True}" context="{'view_only_name': True}" domain="[('name','ilike','Tủ')]"/>
+                                            <field name="notes" invisible="1"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+                            <page string="Information">
+                                <group string="Extra Info">
+                                    <field name="info" nolabel="1"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter" style="display:none;">
+<!--                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>-->
+<!--                        <field name="activity_ids" widget="mail_activity"/>-->
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                    </form>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_specialty_tree">
+                <field name="name">Specialty</field>
+                <field name="model">sh.medical.specialty</field>
+                <field name="type">tree</field>
+                    <field name="arch" type="xml">
+                        <tree class="sh_has_icon" string='Specialty' create="false" decoration-info="state=='Draft'" decoration-success="state=='Done'" decoration-danger="state=='In Progress'" decoration-warning="state=='Confirmed'" default_order="services_date desc">
+                            <field name="services_date"/>
+                            <field name="walkin"/>
+                            <field name="name"/>
+                            <field name="patient" class="text-uppercase"/>
+                            <field name="services" widget="many2many_tags"/>
+                            <field name="perform_room"/>
+                            <button attrs="{'invisible': [('state','in',['Done'])]}" groups="shealth_all_in_one.group_sh_medical_physician_odontology,shealth_all_in_one.group_sh_medical_physician_spa,shealth_all_in_one.group_sh_medical_nurse" name="view_detail_specialty" type="object" icon="fa-pencil-square-o" title="Chi tiết"/>
+                            <field name="institution" invisible="1"/>
+                            <field name="department" invisible="1"/>
+                            <field name="physician"/>
+                            <field name="state"/>
+                        </tree>
+                    </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_specialty_supply_tree">
+                <field name="name">VTTH trong phiếu Chuyên khoa</field>
+                <field name="model">sh.medical.specialty.supply</field>
+                <field name="type">tree</field>
+                    <field name="arch" type="xml">
+                        <tree string="Supplies" editable="bottom" limit="200" decoration-danger="parent.state in ['Confirmed','In Progress'] and qty_used > qty_avail">
+                            <field name="sequence" widget="handle"/>
+                            <field name="medicament_type"/>
+                            <field name="supply" options="{'no_create': True,'no_open': True}" attrs="{'readonly': [('qty','>',0)]}" force_save="1"/>
+                            <field name="qty_avail" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.state', 'in', ['Done'])]}" groups="shealth_all_in_one.group_sh_medical_manager"/>
+                            <field name="qty" readonly="1" force_save="1" invisible="1"/>
+                            <field name="qty_used"/>
+                            <field name="uom_id" readonly="1" force_save="1" options="{'no_create': True,'no_open': True}" required="1"/>
+                            <field name="location_id" invisible="1" required="1" options="{'no_create': True,'no_open': True}" context="{'view_only_name': True}" domain="[('name','ilike','Tủ')]"/>
+                            <field name="notes" invisible="1"/>
+                        </tree>
+                    </field>
+            </record>
+
+            <record id="sh_medical_specialty_action_tree" model="ir.actions.act_window">
+                    <field name="name">Spa and Laser</field>
+                    <field name="res_model">sh.medical.specialty</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                    <field name="domain" eval="[('department','=',ref('shealth_all_in_one.sh_dalieu_dep_knhn'))]"/>
+                    <field name="context">{}</field>
+                    <field name="view_id" eval="False"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to add a new surgery.
+                      </p><p>
+                        shealth specialty screen will allow you to record complete details of all the surgeries;
+                      </p>
+                    </field>
+            </record>
+
+            <record id="sh_medical_specialty_rhm_action_tree" model="ir.actions.act_window">
+                    <field name="name">Odontology</field>
+                    <field name="res_model">sh.medical.specialty</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                    <field name="domain" eval="[('department','=',ref('shealth_all_in_one.sh_rhm_dep_knhn'))]"/>
+                    <field name="context">{}</field>
+                    <field name="view_id" eval="False"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to add a new specialty.
+                      </p><p>
+                        shealth surgery screen will allow you to record complete details of all the surgeries;
+                      </p>
+                    </field>
+            </record>
+
+            <record id="action_specialty_department_view" model="ir.actions.act_window">
+                    <field name="name">Specialty Test</field>
+                    <field name="res_model">sh.medical.specialty</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,kanban,form</field>
+                    <field name="domain">[('department','=',active_id)]</field>
+                    <field name="context">{'search_default_group_patient': True,'search_default_group_walkin': True,
+                        'default_department': active_id}</field>
+                    <field name="view_id" eval="False"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to add a new patient for walkins.
+                      </p>
+                    </field>
+            </record>
+
+<!--            <record id="sh_medical_healthcenters_dep_ward_specialty_kanban_view" model="ir.ui.view">-->
+<!--                <field name="name">Departments</field>-->
+<!--                <field name="model">sh.medical.health.center.ward</field>-->
+<!--                <field name="inherit_id" ref="sh_medical_healthcenters_ward_kanban_view"/>-->
+<!--                <field name="arch" type="xml">-->
+<!--                    <xpath  expr="//templates//t//div[hasclass('sh_medical_details')]//ul" position="after">-->
+<!--                        <div class="mt-4 o_kanban_primary_left">-->
+<!--                            <button t-if="record.type.raw_value == 'Specialty'" class="btn btn-primary" name="%(action_specialty_department_view)d" type="action">-->
+<!--                                <field string="Specialty not Done" name="count_specialty_not_done" widget="statinfo"/>-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </xpath>-->
+<!--                </field>-->
+<!--            </record>-->
+
+            <menuitem name="Spa and Laser" action="sh_medical_specialty_action_tree" groups="shealth_all_in_one.group_sh_medical_physician_spa,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_manager" parent="sh_medical_root_specialty_menu"  id="sh_medical_specialty_list" sequence="2"/>
+            <record id="sh_medical_specialty_list" model="ir.ui.menu">
+				<field name="web_icon_class">fa fa-user-md</field>
+			</record>
+            <menuitem name="Odontology" action="sh_medical_specialty_rhm_action_tree" groups="shealth_all_in_one.group_sh_medical_physician_odontology,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_manager" parent="sh_medical_root_specialty_menu"  id="sh_medical_specialty_rhm_list" sequence="3"/>
+            <record id="sh_medical_specialty_rhm_list" model="ir.ui.menu">
+				<field name="web_icon_class">fa fa-user-md</field>
+			</record>
+
+        </data>
+    </odoo>

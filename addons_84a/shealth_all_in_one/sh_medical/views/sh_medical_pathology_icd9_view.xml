@@ -1,0 +1,70 @@
+<?xml version="1.0" ?>
+<odoo>
+        <data>
+            <record model="ir.ui.view" id="sh_medical_pathology_icd9_view">
+                <field name="name">Disease icd9</field>
+                <field name="model">sh.medical.pathology.icd9</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                    <form string="Pathology Info">
+                        <sheet>
+                            <div class="oe_left" style="width: 500px;">
+                                <div class="oe_title" style="width: 390px;">
+                                    <label class="oe_edit_only" for="name" string="Tên ICD-9"/>
+                                    <h1><field name="name" class="oe_inline"/></h1>
+                                </div>
+                            </div>
+                            <group>
+                                <group>
+                                    <field name="code"/>
+                                </group>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_pathology_icd9_tree">
+                <field name="name">Disease List icd9</field>
+                <field name="model">sh.medical.pathology.icd9</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string='Pathology'>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </tree>
+                </field>
+            </record>
+
+            <record id="view_sh_medical_pathology_icd9_filter" model="ir.ui.view">
+                <field name="name">sh.medical.pathology.select</field>
+                <field name="model">sh.medical.pathology.icd9</field>
+                <field name="type">search</field>
+                <field name="arch" type="xml">
+                    <search string="Search Diseases">
+                        <separator orientation="vertical"/>
+                        <field name="code" select="1"/>
+                        <field name="name" select="1"/>
+                    </search>
+                </field>
+            </record>
+
+            <record id="action_sh_medical_pathology_icd9_tree" model="ir.actions.act_window">
+                <field name="name">Mã icd9</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">sh.medical.pathology.icd9</field>
+                <field name="view_type">form</field>
+                <field name="view_id" ref="sh_medical_pathology_icd9_tree"/>
+                <field name="search_view_id" ref="view_sh_medical_pathology_icd9_filter"/>
+                <field name="help" type="html">
+                  <p class="o_view_nocontent_smiling_face">
+                        Click to add a new disease information.
+                  </p><p>
+                    Here is a list of all the diseases generated through the module
+                  </p>
+                </field>
+            </record>
+
+            <menuitem action="action_sh_medical_pathology_icd9_tree" id="sh_medical_conf_pathology_icd9_tree" parent="sh_medical_hospital_menu" sequence="8"/>
+        </data>
+</odoo>

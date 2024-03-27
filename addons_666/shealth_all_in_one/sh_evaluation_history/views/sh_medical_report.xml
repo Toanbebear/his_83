@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            string="Patient Evaluation History"
+            id="action_report_patient_evaluation_history"
+            model="sh.medical.evaluation"
+            report_type="qweb-pdf"
+            name="shealth_all_in_one.report_patient_evaluation_history"
+            file="shealth_all_in_one.report_patient_evaluation_history"
+        />
+
+    </data>
+</odoo>

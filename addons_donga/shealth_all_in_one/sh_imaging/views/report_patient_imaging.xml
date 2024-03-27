@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--    INHERIT external_layout_standard ẨN HEADER VÀ FOOTER-->
+<template id="his_external_layout_standard" inherit_id="web.external_layout_standard">
+    <xpath expr="//div[@class='header']" position="replace">
+        <div class="header" style="display:none;">
+            <div class="row">
+                <div class="col-3 mb4">
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 45px;" alt="Logo"/>
+                </div>
+                <div class="col-9 text-right" style="margin-top:22px;" t-field="company.report_header" name="moto"/>
+            </div>
+            <div t-if="company.logo or company.report_header" class="row zero_min_height">
+                <div class="col-12">
+                    <div style="border-bottom: 1px solid black;"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6" name="company_address">
+                    <div t-field="company.partner_id"
+                        t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
+                    />
+                </div>
+            </div>
+        </div>
+    </xpath>
+    <xpath expr="//div[@class='footer o_standard_footer']" position="replace">
+        <div class="footer o_standard_footer" style="display:none;">
+            <div class="text-center" style="border-top: 1px solid black;">
+                <ul class="list-inline mb4">
+                    <li t-if="company.phone" class="list-inline-item">Phone: <span t-field="company.phone"/></li>
+                    <li t-if="company.email" class="list-inline-item">Email: <span t-field="company.email"/></li>
+                    <li t-if="company.website" class="list-inline-item">Web: <span t-field="company.website"/></li>
+                    <li t-if="company.vat" class="list-inline-item"><t t-esc="company.country_id.vat_label or 'Tax ID'"/>: <span t-field="company.vat"/></li>
+                </ul>
+
+                <div name="financial_infos">
+                    <span t-field="company.report_footer"/>
+                </div>
+
+                <div t-if="report_type == 'pdf'" class="text-muted">
+                    Page: <span class="page"/> / <span class="topage"/>
+                </div>
+            </div>
+        </div>
+    </xpath>
+</template>
+
+<!--<template id="assets_common" name="shealth_all_in_one" inherit_id="web.report_assets_common">-->
+<!--    <xpath expr="." position="inside">-->
+<!--        <link rel='stylesheet' href='/web/static/lib/bootstrap/css/bootstrap.css'/>-->
+<!--    </xpath>-->
+<!--</template>-->
+<template id="report_sh_medical_patient_imaging_sieuam_document">
+<!--    <t t-call="web.external_layout">-->
+<!--        <div class="page" style="font-family:Times New Roman;font-size:20px;">-->
+            <div class="oe_structure"/>
+            <div class="row mt32 mb32">
+                <div class="col-4" style="font-size:18px;">
+                    <div class="m-0" style="text-transform: uppercase;">Sở y tế</div>
+                    <div class="m-0" t-field="list_sa[0].institution.name" style="text-transform: uppercase;"/>
+                </div>
+                <div class="col-5 text-center">
+                    <div style="font-size: 21px;"><b>KẾT QUẢ CHẨN ĐOÁN HÌNH ẢNH</b></div>
+                    <div><b>Số phiếu:</b> <span class="m-0" t-field="list_sa[0].walkin.name"/></div>
+                </div>
+                <div class="col-3 text-center">
+                    <strong style="font-size:16px;margin-left:35px;">Mã BN: <span t-field="list_sa[0].patient.identification_code"/></strong>
+                    <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', list_sa[0].patient.identification_code, 230, 30)"/>
+                </div>
+            </div>
+
+            <div t-if="list_sa[0].patient" class="col-12 bm-2">
+                <div style="width:68%;display:inline-block">
+                    <span>- Họ tên người bệnh:</span>
+                    <b style="text-transform: uppercase;" class="m-0 mr-5" t-field="list_sa[0].patient.name"/>
+                </div>
+                <div style="width:28%;display:inline-block">
+                    <span>Tuổi:</span>
+                    <span class="m-0 mr-5" t-field="list_sa[0].patient.age"/>
+                    <span class="m-0" t-field="list_sa[0].patient.sex"/>
+                </div>
+            </div>
+            <div t-if="list_sa[0].patient" class="col-12 bm-2">
+                <span>- Địa chỉ:</span>
+                <span class="m-0" t-field="list_sa[0].patient.street"/>,
+                <span class="m-0" t-field="list_sa[0].patient.state_id.name"/>,
+                <span class="m-0" t-field="list_sa[0].patient.country_id.name"/>
+            </div>
+            <div t-if="list_sa[0].patient" class="col-12 bm-2">
+                <span class="ml-0">- Đối tượng: Dịch vụ</span>
+            </div>
+            <div t-if="list_sa[0].requestor" class="col-12 bm-2">
+                <span>- Khoa phòng:</span>
+                <span class="m-0" t-field="list_sa[0].walkin.service_room"/>
+<!--                <span class="ml-5">- Bác sĩ chỉ định:</span>-->
+<!--                <span class="m-0" t-field="list_sa[0].requestor.name"/>-->
+            </div>
+            <div t-if="list_sa[0].walkin.pathology" class="col-12 bm-2">
+                <span>- Chuẩn đoán:</span>
+                <span class="m-0" t-field="list_sa[0].walkin.pathology.code"/> - <span class="m-0" t-field="list_sa[0].walkin.pathology.name"/>
+            </div>
+
+        <table class="table table-condensed border border-dark" t-if="list_sa[0].date_done">
+            <tr class="bm-2 py-2 text-center">
+                <td class="border border-dark"><strong>DỊCH VỤ</strong></td>
+                <td class="border border-dark"><strong>KẾT LUẬN</strong></td>
+                <td class="border border-dark"><strong>GHI CHÚ</strong></td>
+            </tr>
+            <t t-foreach="list_sa" t-as="item_sa">
+                <tr class="bm-2">
+                    <td class="px-4 border border-dark">
+                        <t t-if="item_sa.test_type">
+                            <div class="m-0" style="font-size: 20px;" t-field="item_sa.test_type.name"/>
+                        </t>
+                    </td>
+                    <td class="px-4 border border-dark">
+                        <t t-if="item_sa.conclusion">
+                            <div class="m-0" style="font-size: 20px;text-transform:uppercase;" t-field="item_sa.conclusion"/>
+                        </t>
+                    </td>
+                    <td class="px-4 border border-dark"></td>
+                </tr>
+            </t>
+        </table>
+        <div class="row mt32 mb32" t-if="list_sa[0].date_done">
+            <div class="col-7" style="font-size: 20px;">
+                Kết luận:<br/>
+                <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', list_sa[0].patient.identification_code, 100, 100)"/>
+            </div>
+            <div class="col-5 text-center">
+                <p style="font-size:16px;"><i t-esc="context_timestamp(list_sa[0].date_done).strftime('Ngày %d tháng %m năm %Y')"/></p>
+                <strong style="font-size: 20px;" t-field="list_sa[0].perform_room"/>
+                <div style="height:80px;"/>
+                Họ tên: BS. <span class="m-0" style="font-size: 20px;" t-field="list_sa[0].pathologist.name"/>
+            </div>
+        </div>
+
+        <div class="oe_structure"/>
+        <div style="page-break-after: always;"/>
+<!--        </div>-->
+<!--    </t>-->
+</template>
+
+<template id="report_sh_medical_patient_imaging_document">
+    <t t-call="web.external_layout">
+<!--        Phiếu KQ siêu âm tất cả các loại -->
+            <div class="page" style="font-family:Times New Roman;font-size:20px;">
+                <div class="oe_structure"/>
+                <t t-set="list_img" t-value="list_lt.filtered(lambda i: i.group_type.name != 'Siêu âm')"/>
+                <t t-foreach="list_img" t-as="o">
+                <div class="row mt32 mb32">
+                    <div class="col-3">
+                        <img t-if="o.institution.image" t-att-src="image_data_uri(o.institution.image)" width="300" border="1"/>
+                    </div>
+                    <div class="col-6 text-center">
+                        <div class="m-0" t-field="o.institution.name" style="text-transform: uppercase;font-weight: bold;font-size: 20px;"/>
+                        <div><span class="m-0" t-field="o.institution.street"/></div>
+                        <div>Hotline: <span class="m-0" t-field="o.institution.phone"/></div>
+                        <div style="font-weight: bold;text-decoration: underline;font-size:18px;">Website: <span class="m-0" t-field="o.institution.website"/></div>
+                    </div>
+                    <div class="col-3 text-center">
+                        <strong style="font-size:16px;margin-left:35px;">Mã BN: <span t-field="o.patient.identification_code"/></strong>
+                        <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.patient.identification_code, 230, 30)"/>
+                    </div>
+                </div>
+
+                <div class="row mt32 mb32 text-center">
+                    <div class="col-12">
+                        <div style="text-transform: uppercase;font-size: 30px;"><b>PHIẾU KẾT QUẢ <span class="m-0" t-field="o.group_type.name"/></b></div>
+                        <i><span class="m-0" t-field="o.department.name"/></i>,
+                        <i><span class="m-0" t-field="o.perform_room.name"/></i>
+                    </div>
+                </div>
+
+<!--                        <div class="row mt32 mb32">-->
+<!--                            <div class="col-5" style="font-size:17px;">-->
+<!--                                <div class="m-0" style="text-transform: uppercase;">Sở y tế</div>-->
+<!--                                <div class="m-0" t-field="o.institution.name" style="text-transform: uppercase;"/>-->
+<!--        &lt;!&ndash;                        <div><span class="m-0" t-field="o.institution.street"/></div>&ndash;&gt;-->
+<!--        &lt;!&ndash;                        <div class="m-0" t-if="o.institution.phone">Hotline: <span t-field="o.institution.phone"/></div>&ndash;&gt;-->
+<!--                            </div>-->
+<!--                            <div class="col-4 text-center">-->
+<!--                                <div style="font-size: 28px;"><b>PHIẾU KẾT QUẢ <span style="text-transform: uppercase;" class="m-0" t-field="o.group_type.name"/></b></div>-->
+<!--                                <div><b>Phiếu khám:</b> <span class="m-0" t-field="o.walkin.name"/></div>-->
+<!--        &lt;!&ndash;                        <div>&ndash;&gt;-->
+<!--        &lt;!&ndash;                            <i><span class="m-0" t-field="o.department.name"/></i>,&ndash;&gt;-->
+<!--        &lt;!&ndash;                            <i><span class="m-0" t-field="o.perform_room.name"/></i>&ndash;&gt;-->
+<!--        &lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--                            </div>-->
+<!--                            <div class="col-3 text-center">-->
+<!--                                <strong style="font-size:16px;margin-left:35px;">Mã BN: <span t-field="o.patient.identification_code"/></strong>-->
+<!--                                <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.patient.identification_code, 230, 30)"/>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+
+                    <div t-if="o.patient" class="col-12 bm-2">
+                        <div style="width:58%;display:inline-block">
+                            <span>- Họ tên người bệnh:</span>
+                            <b style="text-transform: uppercase;" class="m-0 mr-5" t-field="o.patient.name"/>
+                        </div>
+                        <div style="width:38%;display:inline-block">
+                            <span>Tuổi:</span>
+                            <span class="m-0 mr-5" t-field="o.patient.age"/>
+                            <span class="m-0" t-field="o.patient.sex"/>
+                        </div>
+                    </div>
+                    <div t-if="o.patient" class="col-12 bm-2">
+                        <span>- Địa chỉ:</span>
+                        <span class="m-0" t-field="o.patient.street"/>,
+                        <span class="m-0" t-field="o.patient.state_id.name"/>,
+                        <span class="m-0" t-field="o.patient.country_id.name"/>
+                    </div>
+                    <div t-if="o.requestor" class="col-12 bm-2">
+                        <div style="width:58%;display:inline-block">
+                            <span>- Khoa phòng:</span>
+                            <span class="m-0" t-field="o.walkin.service_room"/>
+                        </div>
+                        <div style="width:38%;display:inline-block">
+                            <span class="">- Bác sĩ chỉ định:</span>
+                            <span class="m-0" t-field="o.requestor.name"/>
+                        </div>
+                    </div>
+                    <div t-if="o.walkin.pathology" class="col-12 bm-2">
+                        <span>- Chuẩn đoán:</span>
+                        <span class="m-0" t-field="o.walkin.pathology.code"/> - <span class="m-0" t-field="o.walkin.pathology.name"/>
+                    </div>
+                    <div t-if="o.test_type" class="col-12 bm-2">
+                        <span>- Yêu cầu:</span>
+                        <i><strong class="m-0" t-field="o.test_type.name"/></i>
+                    </div>
+
+                <table class="table table-condensed border border-dark" t-if="o.date_done">
+                    <tr class="bm-2 py-2 text-center">
+                        <td colspan="2" class="border border-dark"><strong>MÔ TẢ:</strong></td>
+                    </tr>
+                    <tr class="bm-2">
+                        <td colspan="2" class="px-4 border border-dark">
+                            <t t-if="o.analysis">
+                                <div class="m-0" style="font-size: 20px;" t-field="o.analysis"/>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr class="bm-2">
+                        <td style="font-size:23px;width: 50%;" class="border border-dark">
+                            <div>
+                                <strong><u>Kết luận:</u></strong>
+                                <u t-field="o.conclusion"/>
+                            </div>
+                        </td>
+                        <td rowspan="2" class="border border-dark">
+                            <div style="text-align:center;" t-if="o.image1">
+                                <img t-if="o.image1" t-att-src="image_data_uri(o.image1)" height="290" border="1" style="max-width:450px"/>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="bm-2">
+                        <td class="border border-dark">
+                            <div class="text-center">
+                                <p class="m-0" t-esc="context_timestamp(o.date_done).strftime('%H:%M %d/%m/%Y')"/>
+                                <strong style="text-transform: uppercase;font-size: 22px;" t-field="o.perform_room"/>
+                                <div style="height:80px;"></div>
+                                <p class="m-0" style="font-size: 22px;">
+                                    Họ tên: BS. <span t-field="o.pathologist.name"/>
+                                </p>
+                                <strong style="font-family:Arial;font-size:14px;"><i>(Chú ý: Khi khám nhớ mang theo film chụp cũ)</i></strong>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="oe_structure"/>
+                <div style="page-break-after: always;"/>
+            </t>
+            <t t-set="list_sa" t-value="list_lt.filtered(lambda i: i.group_type.name == 'Siêu âm')"/>
+            <t t-if="list_sa">
+                <t t-call="shealth_all_in_one.report_sh_medical_patient_imaging_sieuam_document"/>
+            </t>
+        </div>
+    </t>
+</template>
+<template id="report_sh_medical_patient_imaging">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="list_lt">
+            <t t-call="shealth_all_in_one.report_sh_medical_patient_imaging_document" t-lang="list_lt.patient.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+
+</odoo>

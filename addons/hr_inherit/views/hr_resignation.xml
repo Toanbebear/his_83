@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="employee_resignation_tree" model="ir.ui.view">
+            <field name="name">hr.resignation.tree</field>
+            <field name="model">hr.resignation</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <tree string="Yêu cầu từ chức">
+                    <field name="employee_id"/>
+                    <field name="job"/>
+                    <field name="department_id"/>
+                    <field name="joined_date"/>
+                    <field name="expected_revealing_date"/>
+                    <field name="resign_confirm_date"/>
+                    <field name="type_reason" invisible="1"/>
+                    <field name="check_resignation" invisible="1"/>
+                    <field name="state" invisible="1"/>
+                    <button name="print_decision" class="btn-primary" type="object" string="In quyết định"
+                            attrs="{'invisible': [('state', '!=', 'approved')]}"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="sci_hr_resignation_view_search" model="ir.ui.view">
+            <field name="name">sci_hr_resignation_view_search</field>
+            <field name="model">hr.resignation</field>
+            <field name="arch" type="xml">
+                <search string="Recruitment Analysis">
+                    <field name="employee_id"/>
+                    <field name="job"/>
+                    <field name="department_id"/>
+                    <separator/>
+                    <filter string="Ngày nghỉ việc" name="resign_date" date="expected_revealing_date" default_period="this_year"/>
+                    <group expand="1" string="Group By">
+                       <filter string="Chức vụ" name='group_job' context="{'group_by':'job'}"/>
+                       <filter string="Phòng ban" name="group_department" context="{'group_by':'department_id'}" />
+<!--                       <filter string="Thương hiệu" name="group_brand" context="{'group_by':'brand'}"/>-->
+                       <filter string="Ngày nghỉ việc" name="group_date" context="{'group_by':'expected_revealing_date:month'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="employee_resignation_form" model="ir.ui.view">
+            <field name="name">hr.resignation.form</field>
+            <field name="model">hr.resignation</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <form string="Yêu cầu từ chức">
+                    <header>
+                        <button string="Xác nhận" type="object" name="confirm_resignation" states='draft'
+                                class="oe_highlight"/>
+                        <button string="Hủy" type="object" name="cancel_resignation" states='draft'/>
+                        <button name="print_decision" class="btn-primary" type="object" string="In quyết định"
+                                attrs="{'invisible': [('state', '!=', 'approved')]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,approved,cancel"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        </div>
+                        <group>
+                            <group>
+                                <field name="employee_id" options="{'no_create': True}"/>
+                                <field name="job"/>
+                                <field name="department_id"/>
+                                <field name="joined_date" force_save="True"/>
+                            </group>
+                            <group>
+                                <field name="revealing_date" required="1"/>
+                                <field name="expected_revealing_date"/>
+                                <field name="resign_confirm_date" readonly="1" force_save="1"/>
+                                <field name="check_resignation" invisible="1"/>
+                                <field name="type_reason" invisible="1"/>
+                                <field name="reason" required="1"/>
+                            </group>
+                        </group>
+<!--                        <field name="reason"/>-->
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="view_employee_resignation">
+            <field name="name">Yêu cầu từ chức</field>
+            <field name="res_model">hr.resignation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state', '=', 'draft')]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Mẫu đơn xin nghỉ việc của nhân viên
+                </p>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="view_approved_resignation">
+            <field name="name">Đơn nghỉ việc/từ chức được chấp thuận</field>
+            <field name="res_model">hr.resignation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state', '=', 'approved')]</field>
+            <field name="view_mode">tree,form,pivot,graph</field>
+            <field name="context">{'search_default_resign_date': 1}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Đơn nghỉ việc/từ chức đã được chấp thuận</p>
+            </field>
+        </record>
+
+        <menuitem id="employee_resignation" name="Từ chức/Nghỉ việc"
+              groups="base.group_user"
+               parent="hr.menu_hr_root"
+              sequence="5"/>
+
+         <menuitem id="employee_resignation_request" parent="employee_resignation" name="Yêu cầu từ chức/Nghỉ việc"
+                  action="view_employee_resignation" groups="base.group_user" sequence="4"/>
+        <menuitem id="employee_resignation_approved" parent="employee_resignation" name="Danh sách nghỉ việc"
+                  action="view_approved_resignation" groups="base.group_user" sequence="5"/>
+    </data>
+</odoo>

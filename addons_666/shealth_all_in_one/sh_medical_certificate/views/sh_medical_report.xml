@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            string="Medical Certificate"
+            id="action_report_sh_medical_patient_medical_cert"
+            model="sh.medical.patient.medical.cert"
+            report_type="qweb-pdf"
+            name="shealth_all_in_one.report_patient_medical_cert"
+            file="shealth_all_in_one.report_patient_medical_cert"
+        />
+
+    </data>
+</odoo>

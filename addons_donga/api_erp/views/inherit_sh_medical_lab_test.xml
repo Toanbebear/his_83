@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="inherit_sh_medical_lab_test_add_button_get_data_erp" model="ir.ui.view">
+        <field name="model">sh.medical.lab.test</field>
+        <field name="inherit_id" ref="shealth_all_in_one.sh_medical_lab_test_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+<!--                <button name="open_form_get_lab_test_erp" type="object" string="Lấy dữ liệu erp"/>-->
+                <button name="open_form_get_lab_test_erp" type="object" string="Lấy dữ liệu erp" attrs="{'invisible':[('state','=','Completed')]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_sh_medical_lab_test_erp_tree">
+        <field name="name">view_sh_medical_lab_test_erp_tree</field>
+        <field name="model">sh.medical.lab.test.erp</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="lab_test_83"/>
+                <field name="walkin_name"/>
+                <field name="lab_test_name"/>
+                <field name="sync"/>
+                <button name="sync_erp" string="Đồng bộ" type="object" class="btn-primary"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="sh_medical_lab_test_erp_action" model="ir.actions.act_window">
+        <field name="name">Danh sách phiếu xét nghiệm ERP</field>
+        <field name="res_model">sh.medical.lab.test.erp</field>
+        <field name="view_mode">tree</field>
+        <field name="view_type">tree</field>
+    </record>
+</odoo>

@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+<odoo>
+        <data>
+            <record model="ir.ui.view" id="sh_medical_service_specialty_view">
+                <field name="name">Chuyên khoa dịch vụ</field>
+                <field name="model">sh.medical.service.specialty</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                    <form >
+                        <sheet>
+                            <group>
+                                    <field name="name" required="True"/>
+                                    <field name="code"/>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_service_specialty_tree">
+                <field name="name">Chuyên khoa dịch vụ</field>
+                <field name="model">sh.medical.service.specialty</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </tree>
+                </field>
+            </record>
+
+
+            <record id="action_sh_medical_service_specialty" model="ir.actions.act_window">
+                <field name="name">Chuyên khoa dịch vụ</field>
+                <field name="res_model">sh.medical.service.specialty</field>
+                <field name="view_mode">tree,form</field>
+            </record>
+
+            <menuitem action="action_sh_medical_service_specialty" id="sh_medical_service_specialty" parent="shealth_all_in_one.sh_medical_hospital_menu" sequence="11"/>
+
+        </data>
+</odoo>

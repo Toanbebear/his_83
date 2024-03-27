@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="form_hr_inherit" model="ir.ui.view">
+            <field name="name">HR Employee: Thêm ngày làm việc và thâm niên</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <!--            <field name="priority" eval="8"/>-->
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='hr_settings']/group[1]" position="after">
+                    <group name="joining_and_resign">
+                        <group name="group1">
+                            <field name="joining_date"/>
+                            <field name="work_duration"/>
+                        </group>
+                        <group name="group2">
+                            <field name="resign_date"/>
+                            <field name="reason_resign"/>
+                        </group>
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='identification_id']" position="after">
+                    <field name="id_issue_date"/>
+                    <field name="id_issue_place"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

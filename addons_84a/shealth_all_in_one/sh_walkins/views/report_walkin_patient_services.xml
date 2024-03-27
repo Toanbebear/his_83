@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--    PHIEU CHI DINH DỊCH VỤ - TAT CA 1 PHIEU-->
+<template id="report_sh_medical_assign_patient_services_document">
+    <t t-call="web.external_layout">
+        <t t-set="o" t-value="docs[0].with_context({'lang':docs[0].patient.partner_id.lang})"/>
+        <div class="page" style="font-family:Times New Roman;font-size:20px;">
+            <div class="oe_structure"/>
+            <div class="row mt32 mb32">
+                <div class="col-4" style="font-size:17px;">
+<!--                    <div class="m-0" t-field="o.institution.company_name" style="text-transform: uppercase;font-weight:bold;"/>-->
+<!--                    <div class="m-0" style="text-transform: uppercase;font-weight:bold;">Sở Y tế</div>-->
+                    <div class="m-0" t-field="o.institution.name" style="text-transform: uppercase;font-weight:bold;"/>
+                    <div><span class="m-0" t-field="o.institution.street"/></div>
+<!--                    <div class="m-5" t-if="o.institution.phone">Hotline: <span t-field="o.institution.phone"/></div>-->
+                </div>
+                <div class="col-5 text-center">
+                    <div style="font-size: 26px;"><b>PHIẾU CHỈ ĐỊNH DỊCH VỤ</b></div>
+                    <div>Số phiếu: <strong t-field="o.name"/></div>
+                </div>
+                <div class="col-3 text-center">
+                    <strong style="font-size:16px;margin-left:35px;">Mã BN: <span t-field="o.patient.identification_code"/></strong>
+                    <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.patient.identification_code, 230, 30)"/>
+                </div>
+            </div>
+
+                <t t-if="o.patient">
+                  <div class="col-12">
+                    <span>- Mã bệnh nhân:</span>
+                    <span class="" t-field="o.patient.identification_code"/>
+                  </div>
+                  <div class="col-12">
+                    <span>- Họ tên người bệnh:</span>
+                    <b style="text-transform: uppercase;" class="mr-5" t-field="o.patient.name"/>
+                    <span>Tuổi:</span>
+                    <span class="mr-5" t-field="o.patient.age"/>
+                    <span t-field="o.patient.sex"/>
+                  </div>
+                  <div class="col-12">
+                      <span>- Địa chỉ:</span>
+                      <span t-field="o.patient.street"/>,
+                      <span t-field="o.patient.state_id.name"/>,
+                      <span t-field="o.patient.country_id.name"/>
+                  </div>
+                </t>
+                <div t-if="o.pathology" class="col-12">
+                    <span>- Chuẩn đoán:</span>
+                    <span t-field="o.pathology.code"/> - <span class="" t-field="o.pathology.name"/>
+                </div>
+
+
+            <table class="table border border-dark text-center">
+                <tr>
+                    <th rowspan="2" class="border border-dark align-middle"><strong>Tên dịch vụ</strong></th>
+                    <th rowspan="2" class="border border-dark align-middle"><strong>Đơn vị tính</strong></th>
+                    <th rowspan="2" class="border border-dark align-middle"><strong>Số lượng</strong></th>
+                    <th rowspan="2" class="border border-dark align-middle"><strong>Đơn giá </strong>(đồng)</th>
+                    <th rowspan="2" class="border border-dark align-middle"><strong>Thành tiền</strong> (đồng)</th>
+                    <th colspan="2" class="border border-dark align-middle"><strong>Nguồn thanh toán</strong> (đồng)</th>
+                </tr>
+                <tr>
+                    <th class="border border-dark align-middle"><strong>Giảm giá</strong></th>
+                    <th class="border border-dark align-middle"><strong>Người bệnh</strong></th>
+                </tr>
+                <t t-set="total_price" t-value="0"/>
+                <t t-if="o.flag_surgery">
+                    <t t-set="surgery_list" t-value="o.surgeries_ids.sorted(key=lambda a:(a.operating_room))"/>
+                    <t t-foreach="surgery_list" t-as="sur">
+                        <tr t-if="sur.operating_room">
+                            <td colspan="7" class="border border-dark text-left align-middle">
+                                <strong style="text-transform:uppercase;" t-field="sur.operating_room.name"/>
+                            </td>
+                        </tr>
+                        <t t-set="i" t-value="0"/>
+                        <t t-foreach="sur.services" t-as="ser">
+                            <t t-set="i" t-value="i + 1"/>
+                            <tr t-if="ser">
+                                <td class="border border-dark text-left align-middle">
+                                    <div>
+                                        <t t-esc="i"/>. <span t-field="ser.name"/>
+                                    </div>
+                                </td>
+                                <td class="border border-dark align-middle">Lần</td>
+                                <td class="border border-dark align-middle">1</td>
+                                <td class="border border-dark align-middle"><div t-field="ser.list_price" t-options="{'widget': 'float', 'precision': 0}"/></td>
+                                <td class="border border-dark align-middle"><div t-field="ser.list_price" t-options="{'widget': 'float', 'precision': 0}"/></td>
+                                <td class="border border-dark align-middle">0</td>
+                                <td class="border border-dark align-middle"><div t-field="ser.list_price" t-options="{'widget': 'float', 'precision': 0}"/></td>
+                                <t t-set="total_price" t-value="total_price + ser.list_price"/>
+                            </tr>
+                        </t>
+                    </t>
+                </t>
+                <t t-else="">
+                    <t t-set="specialty_list" t-value="o.specialty_ids.sorted(key=lambda a:(a.perform_room))"/>
+                    <t t-foreach="specialty_list" t-as="spec">
+                        <tr t-if="spec.perform_room">
+                            <td colspan="7" class="border border-dark text-left align-middle">
+                                <strong style="text-transform:uppercase;" t-field="spec.perform_room.name"/>
+                            </td>
+                        </tr>
+                        <t t-set="i" t-value="0"/>
+                        <t t-foreach="spec.services" t-as="ser1">
+                            <t t-set="i" t-value="i + 1"/>
+                            <tr t-if="ser1">
+                                <td class="text-left align-middle">
+                                    <div>
+                                        <t t-esc="i"/>. <span t-field="ser1.name"/>
+                                    </div>
+                                </td>
+                                <td class="border border-dark align-middle">Lần</td>
+                                <td class="border border-dark align-middle">1</td>
+                                <td class="border border-dark align-middle"><div t-field="ser1.list_price" t-options="{'widget': 'float', 'precision': 0}"/></td>
+                                <td class="border border-dark align-middle"><div t-field="ser1.list_price" t-options="{'widget': 'float', 'precision': 0}"/></td>
+                                <td class="border border-dark align-middle">0</td>
+                                <td class="border border-dark align-middle"><div t-field="ser1.list_price" t-options="{'widget': 'float', 'precision': 0}"/></td>
+                                <t t-set="total_price" t-value="total_price + ser1.list_price"/>
+                            </tr>
+                        </t>
+                    </t>
+                </t>
+                <tr>
+                    <td colspan="4" class="border border-dark text-left align-middle"><strong>Tổng tiền</strong></td>
+                    <td class="border border-dark align-middle"><strong t-esc="total_price" t-options="{'widget': 'float', 'precision': 0}"/></td>
+                    <td class="border border-dark align-middle"><strong>0</strong></td>
+                    <td class="border border-dark align-middle"><strong t-esc="total_price" t-options="{'widget': 'float', 'precision': 0}"/></td>
+                </tr>
+            </table>
+
+            <div class="row">
+                <div class="col-7"/>
+                <div class="col-5 text-center">
+                    <div style="font-size:18px;"><i t-esc="o.date.strftime('Ngày %d tháng %m năm %Y')"/></div>
+                    <strong style="font-size: 22px;">BÁC SĨ CHỈ ĐỊNH</strong>
+                    <div style="height:120px;"/>
+                    <span>Họ tên: </span><span class="m-0" style="font-size: 21px;" t-field="o.doctor.name"/>
+                </div>
+            </div>
+            <div class="oe_structure"/>
+        </div>
+   </t>
+</template>
+
+<!--    PHIEU CHI DINH DICH VU - TAT CA 1 PHIEU-->
+<template id="report_sh_medical_assign_patient_services">
+    <t t-call="web.html_container">
+        <t t-if="docs">
+            <t t-call="shealth_all_in_one.report_sh_medical_assign_patient_services_document" t-lang="docs[0].patient.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+
+</odoo>

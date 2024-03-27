@@ -1,0 +1,657 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Evaluations -->
+
+        <record id="view_sh_medical_evaluation_filter" model="ir.ui.view">
+            <field name="name">Evaluation Search</field>
+            <field name="model">sh.medical.evaluation</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Search Evaluations">
+                    <separator orientation="vertical"/>
+                    <field name="name" select="1"/>
+                    <field name="patient" string="Patient" select="1"/>
+                    <field name="room" string="Phòng" select="1"/>
+                    <field name="services" string="Dịch vụ" select="1"/>
+                    <field name="doctor" string="Physician" select="1"/>
+                    <field name="chief_complaint" string="Chief Complaint" select="1"/>
+                    <field name="evaluation_services" string="Loại tái khám" select="1"/>
+                    <field name="info_diagnosis" string="Chẩn đoán" select="1"/>
+                    <field name="directions" string="Hướng điều trị tiếp theo" select="1"/>
+                    <field name="notes" string="Thông tin thêm" select="1"/>
+                    <newline/>
+                    <!--                    <filter string="Ngày thực hiện:Hôm nay" name="evaluation_start_date_today"-->
+                    <!--                            domain="[('evaluation_start_date', '&gt;', context_today().strftime('%Y-%m-%d 00:00:00')),('evaluation_start_date', '&lt;', context_today().strftime('%Y-%m-%d 23:23:59'))]"/>-->
+                    <filter string="Ngày thực hiện:Hôm nay" name="evaluation_start_date_today"
+                            domain="[('evaluation_start_date', '&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))),('evaluation_start_date', '&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
+                    <newline/>
+                    <group expand="0" string="Group By..." colspan="11" col="11">
+                        <filter string="Patient" name="group_patient" context="{'group_by':'patient'}"/>
+                        <filter string="Doctor" name="group_doctor" context="{'group_by':'doctor'}"/>
+                        <filter string="Ngày thực hiện" name="group_evaluation_start_date"
+                                context="{'group_by':'evaluation_start_date'}"/>
+                        <!--                            <filter string="Evaluation Type" name="evaluation_type" context="{'group_by':'evaluation_type'}"/>-->
+                        <filter string="Phòng" name="group_room" context="{'group_by':'room'}"/>
+                        <filter string="Đánh giá của KH" name="group_customer_reviews"
+                                context="{'group_by':'customer_reviews'}"/>
+                        <filter string="Trạng thái" name="group_state"
+                                context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sh_medical_evaluation_services_tree">
+            <field name="name">Loại tái khám</field>
+            <field name="model">sh.medical.evaluation.services</field>
+            <field name="arch" type="xml">
+                <tree string='Loại tái khám' editable="top">
+                    <field name="name"/>
+                    <field name="has_supply"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="sh_medical_evaluation_services_action" model="ir.actions.act_window">
+            <field name="name">Loại tái khám</field>
+            <field name="res_model">sh.medical.evaluation.services</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_id" eval="False"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Loại tái khám
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="sh_medical_evaluation_services_action" parent="sh_medical_hospital_menu"
+                  id="sh_medical_evaluation_services_list" sequence="6" groups="group_sh_medical_manager"/>
+
+        <record model="ir.ui.view" id="sh_medical_evaluation_view">
+            <field name="name">Phiếu tái khám</field>
+            <field name="model">sh.medical.evaluation</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form edit_expr="state not in ['Completed']">
+                    <header>
+                        <button confirm="Bạn có chắc muốn đánh dấu phiếu tái khám này là Đã hoàn thành?" name="set_to_completed"
+                                attrs="{'invisible': ['|',('name','=','/'),('state','=','Completed')]}"
+                                string="Đánh dấu đã hoàn thành" type="object" class="oe_highlight"
+                                context="{'ignore_expired': evaluation_start_date}"
+                                groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_manager"/>
+                        <button confirm="Bạn có chắc chắn muốn đánh dấu đánh giá là Không hoàn thành không?"
+                                name="set_to_inprogress" string="Mark as Inprogress" type="object"
+                                class="btn-warning" groups="shealth_all_in_one.group_sh_medical_manager"
+                                attrs="{'invisible':['|',('state', '=', ('InProgress'))]}"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_colors='{"InProgress":"red","Completed":"green"}'/>
+                    </header>
+                    <sheet>
+                        <div class="oe_left">
+                            <div class="oe_title">
+                                <label class="oe_edit_only" for="name" string="Evaluation #"/>
+                                <h1>
+                                    <field name="name" class="oe_inline" widget="copy_char"/>
+                                </h1>
+                            </div>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="patient" class="text-uppercase" readonly="1" force_save="1"/>
+                                <field name="service_related" invisible="1"/>
+                                <field name="services" required="1" force_save="1" widget="many2many_tags"
+                                       options="{'no_create': True,'no_open':True}"/>
+                                <field name="institution" options="{'no_create': True,'no_open':True}" force_save="1"
+                                       required="1" readonly="1"/>
+                                <field name="ward" options="{'no_create': True,'no_open':True}"
+                                       domain="[('type','not in',['Examination','Laboratory']), ('institution', '=', institution)]"
+                                       force_save="1"
+                                       required="1"/>
+                                <field name="room" options="{'no_create': True,'no_open':True}"
+                                       domain="[('department','=',ward)]" force_save="1" required="1"/>
+                                <field name="supply_domain" invisible="1"/>
+                                <!--                                <field name="check_current_company" invisible="1" readonly="1"/>-->
+                                <field name="department_type" invisible="1"/>
+                                <!--                                    <field name="appointment" domain="[('patient', '=', patient)]" options="{'no_create': True}"/>-->
+                            </group>
+                            <group>
+                                <field name="chief_complaint" string="Chẩn đoán"/>
+                                <field name="doctor" options="{'no_create': True}" string="Bác sĩ tái khám"
+                                       attrs="{'readonly':[('state','=','Completed')]}"
+                                       domain="[('is_pharmacist', '=', False),('speciality', 'not in', [%(shealth_all_in_one.33)d,%(shealth_all_in_one.5)d]),('department','in', ward)]"
+                                       force_save="1" required="0"/>
+                                <field name="evaluation_type" attrs="{'readonly':[('state','=','Completed')]}"
+                                       force_save="1" invisible="1"/>
+                                <field name="evaluation_services" attrs="{'readonly':[('state','=','Completed')]}"
+                                       force_save="1" widget="many2many_tags" required="1"
+                                       options="{'no_create': True,'no_open':True}"/>
+                                <field name="evaluation_start_date"/>
+                                <field name="evaluation_end_date"/>
+                                <field name="customer_reviews"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="next_appointment_date"
+                                       attrs="{'readonly':[('has_pc_next_appointment','=',True)]}"/>
+                                <button name="action_create_next_appointment_pc"
+                                        attrs="{'invisible': ['|',('has_pc_next_appointment','=',True),('next_appointment_date','=',False)]}"
+                                        string="Tạo phonecall TK" type="object"
+                                        class="btn-info mr-5 oe_read_only"/>
+                                <field name="has_pc_next_appointment" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="doctor_bh" options="{'no_create': True}" string="Bác sĩ chỉ định BH"
+                                       attrs="{'readonly':[('state','=','Completed')]}"
+                                       domain="[('is_pharmacist', '=', False),('speciality', 'not in', [%(shealth_all_in_one.33)d,%(shealth_all_in_one.5)d]),('department','in', ward)]"
+                                       force_save="1" required="0"/>
+                                <field name="warranty_appointment_date"
+                                       attrs="{'readonly':[('has_pc_warranty_appointment','=',True)]}"/>
+                                <button name="action_create_warranty_appointment_pc"
+                                        attrs="{'invisible': ['|',('has_pc_warranty_appointment','=',True),('warranty_appointment_date','=',False)]}"
+                                        string="Tạo phonecall BH" type="object"
+                                        class="btn-info mr-5 oe_read_only"/>
+                                <field name="has_pc_warranty_appointment" invisible="1"/>
+                            </group>
+                        </group>
+                        <group string="Evaluation Summary">
+                            <field name="notes_complaint" nolabel="1"/>
+                        </group>
+                        <notebook>
+                            <page string="Bác sĩ phẫu thuật"
+                                  attrs="{'invisible': [('department_type', '!=', 'Surgery')]}">
+                                <field name="surgery_history_ids" readonly="1" force_save="1" nolabel="1">
+                                    <tree editable="top">
+                                        <field name="name" required="1" invisible="1"/>
+                                        <field name="service_performances" required="1"/>
+                                        <field name="main_doctor" widget="many2many_tags"/>
+                                        <field name="sub_doctor" widget="many2many_tags"/>
+                                        <field name="surgery_date"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Khảo sát sau phẫu thuật"
+                                  attrs="{'invisible': [('department_type', '!=', 'Surgery')]}">
+                                <field name="surgery_history_survey_ids" nolabel="1"
+                                       context="{'default_sh_evaluation_surgery_id':id}">
+                                    <tree editable="bottom" class="tree_no_open">
+                                        <field name="name" required="1" invisible="1"/>
+                                        <field name="sh_evaluation_surgery_id" invisible="1"/>
+                                        <field name="service_performances" required="1"
+                                               options='{"no_open": True, "no_create": True}'/>
+                                        <field name="main_doctor" widget="many2many_tags"
+                                               options='{"no_open": True, "no_create": True}'/>
+                                        <field name="sub_doctor" widget="many2many_tags"
+                                               options='{"no_open": True, "no_create": True}'/>
+                                        <field name="surgery_date"/>
+                                        <field name="satisfaction_level" required="True"/>
+                                        <field name="doctor_attitude" required="True"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Dấu hiệu">
+                                <group string="Vital Signs">
+                                    <group>
+                                        <field name="temperature"/>
+                                        <field name="diastolic"/>
+                                        <field name="respiratory_rate"/>
+                                    </group>
+                                    <group>
+                                        <field name="systolic"/>
+                                        <field name="bpm"/>
+                                        <field name="osat"/>
+                                    </group>
+                                </group>
+
+                                <group string="Anthropometry">
+                                    <group>
+                                        <field name="weight" on_change="onchange_height_weight(height,weight)"/>
+                                        <field name="abdominal_circ"/>
+                                        <field name="bmi"/>
+                                    </group>
+                                    <group>
+                                        <field name="height" on_change="onchange_height_weight(height,weight)"/>
+                                        <field name="head_circumference"/>
+                                    </group>
+                                </group>
+                                <group invisible="1">
+                                    <group>
+                                        <field name="edema"/>
+                                        <field name="petechiae"/>
+                                        <field name="acropachy"/>
+                                        <field name="miosis"/>
+                                        <field name="cough"/>
+                                        <field name="arritmia"/>
+                                        <field name="heart_extra_sounds"/>
+                                        <field name="ascites"/>
+                                        <field name="bronchophony"/>
+                                    </group>
+                                    <group>
+                                        <field name="cyanosis"/>
+                                        <field name="hematoma"/>
+                                        <field name="nystagmus"/>
+                                        <field name="mydriasis"/>
+                                        <field name="palpebral_ptosis"/>
+                                        <field name="heart_murmurs"/>
+                                        <field name="jugular_engorgement"/>
+                                        <field name="lung_adventitious_sounds"/>
+                                    </group>
+                                </group>
+                                <group invisible="1">
+                                    <group>
+                                        <field name="increased_fremitus"/>
+                                        <field name="jaundice"/>
+                                        <field name="breast_lump"/>
+                                        <field name="nipple_inversion"/>
+                                        <field name="peau_dorange"/>
+                                        <field name="hypotonia"/>
+                                        <field name="masses"/>
+                                        <field name="goiter"/>
+                                        <field name="xerosis"/>
+                                    </group>
+                                    <group>
+                                        <field name="decreased_fremitus"/>
+                                        <field name="lynphadenitis"/>
+                                        <field name="breast_asymmetry"/>
+                                        <field name="nipple_discharge"/>
+                                        <field name="gynecomastia"/>
+                                        <field name="hypertonia"/>
+                                        <field name="pressure_ulcers"/>
+                                        <field name="alopecia"/>
+                                        <field name="erithema"/>
+                                    </group>
+                                </group>
+                                <group string="Nutrition" invisible="1">
+                                    <group>
+                                        <field name="malnutrition"/>
+                                    </group>
+                                    <group>
+                                        <field name="dehydration"/>
+                                    </group>
+                                </group>
+                                <group string="Glucose" invisible="1">
+                                    <group>
+                                        <field name="glycemia"/>
+                                    </group>
+                                    <group>
+                                        <field name="hba1c"/>
+                                    </group>
+                                </group>
+                                <group string="Lipids" invisible="1">
+                                    <group>
+                                        <field name="cholesterol_total"/>
+                                        <field name="ldl"/>
+                                    </group>
+                                    <group>
+                                        <field name="hdl"/>
+                                        <field name="tag"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Symptoms" invisible="1">
+                                <group string="Pain">
+                                    <group>
+                                        <field name="symptom_pain"/>
+                                        <field name="symptom_arthralgia"/>
+                                        <field name="symptom_abdominal_pain"/>
+                                        <field name="symptom_thoracic_pain"/>
+                                        <field name="symptom_pelvic_pain"/>
+                                        <field name="symptom_hoarseness"/>
+                                        <field name="symptom_sore_throat"/>
+                                        <field name="symptom_ear_discharge"/>
+                                        <field name="symptom_chest_pain_excercise"/>
+                                        <field name="symptom_astenia"/>
+                                        <field name="symptom_weight_change"/>
+                                        <field name="symptom_hemoptysis"/>
+                                        <field name="symptom_epistaxis"/>
+                                        <field name="symptom_rinorrhea"/>
+                                        <field name="symptom_vomiting"/>
+                                        <field name="symptom_polydipsia"/>
+                                        <field name="symptom_polyuria"/>
+                                        <field name="symptom_vesical_tenesmus"/>
+                                        <field name="symptom_dysuria"/>
+                                    </group>
+                                    <group>
+                                        <field name="symptom_pain_intensity"/>
+                                        <field name="symptom_myalgia"/>
+                                        <field name="symptom_cervical_pain"/>
+                                        <field name="symptom_lumbar_pain"/>
+                                        <field name="symptom_headache"/>
+                                        <field name="symptom_odynophagia"/>
+                                        <field name="symptom_otalgia"/>
+                                        <field name="symptom_chest_pain"/>
+                                        <field name="symptom_orthostatic_hypotension"/>
+                                        <field name="symptom_anorexia"/>
+                                        <field name="symptom_abdominal_distension"/>
+                                        <field name="symptom_hematemesis"/>
+                                        <field name="symptom_gingival_bleeding"/>
+                                        <field name="symptom_nausea"/>
+                                        <field name="symptom_dysphagia"/>
+                                        <field name="symptom_polyphagia"/>
+                                        <field name="symptom_nocturia"/>
+                                        <field name="symptom_pollakiuria"/>
+                                    </group>
+                                </group>
+                                <group string="Miscellaneous">
+                                    <group>
+                                        <field name="symptom_mood_swings"/>
+                                        <field name="symptom_pruritus"/>
+                                        <field name="symptom_disturb_sleep"/>
+                                        <field name="symptom_orthopnea"/>
+                                        <field name="symptom_paresthesia"/>
+                                        <field name="symptom_dizziness"/>
+                                        <field name="symptom_tinnitus"/>
+                                        <field name="symptom_eye_glasses"/>
+                                        <field name="symptom_diplopia"/>
+                                        <field name="symptom_dysmenorrhea"/>
+                                        <field name="symptom_metrorrhagia"/>
+                                        <field name="symptom_vaginal_discharge"/>
+                                        <field name="symptom_diarrhea"/>
+                                        <field name="symptom_rectal_tenesmus"/>
+                                        <field name="symptom_proctorrhagia"/>
+                                        <field name="symptom_sexual_dysfunction"/>
+                                    </group>
+                                    <group>
+                                        <field name="symptom_stress"/>
+                                        <field name="symptom_insomnia"/>
+                                        <field name="symptom_dyspnea"/>
+                                        <field name="symptom_amnesia"/>
+                                        <field name="symptom_paralysis"/>
+                                        <field name="symptom_vertigo"/>
+                                        <field name="symptom_syncope"/>
+                                        <field name="symptom_blurry_vision"/>
+                                        <field name="symptom_photophobia"/>
+                                        <field name="symptom_amenorrhea"/>
+                                        <field name="symptom_menorrhagia"/>
+                                        <field name="symptom_urethral_discharge"/>
+                                        <field name="symptom_constipation"/>
+                                        <field name="symptom_melena"/>
+                                        <field name="symptom_xerostomia"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Mental Status" invisible="1">
+                                <group string="Glasgow Coma Scale">
+                                    <group>
+                                        <field name="loc"/>
+                                        <field name="loc_verbal"
+                                               on_change="onchange_loc(loc_motor,loc_eyes,loc_verbal)"/>
+                                    </group>
+                                    <group>
+                                        <field name="loc_eyes" on_change="onchange_loc(loc_motor,loc_eyes,loc_verbal)"/>
+                                        <field name="loc_motor"
+                                               on_change="onchange_loc(loc_motor,loc_eyes,loc_verbal)"/>
+                                    </group>
+                                </group>
+                                <group string="Mental Assessment and Impairments">
+                                    <group>
+                                        <field name="mood"/>
+                                        <field name="orientation"/>
+                                        <field name="knowledge_current_events"/>
+                                        <field name="abstraction"/>
+                                        <field name="calculation_ability"/>
+                                        <field name="praxis"/>
+                                    </group>
+                                    <group>
+                                        <field name="violent"/>
+                                        <field name="memory"/>
+                                        <field name="judgment"/>
+                                        <field name="vocabulary"/>
+                                        <field name="object_recognition"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Chẩn đoán">
+                                <group>
+                                    <field name="indication" string="Mã bệnh ICD10" options="{'no_create': True}"/>
+                                </group>
+                                <group string="Information on Diagnosis">
+                                    <field name="info_diagnosis" nolabel="1"/>
+                                </group>
+                                <group string="Treatment Plan">
+                                    <field name="directions" nolabel="1"/>
+                                </group>
+                            </page>
+                            <page string="Vật tư tiêu hao" >
+                                <group>
+<!--                                    <group>-->
+<!--                                        <div class="sh-box-control-print">-->
+<!--                                            <button name="reset_all_supply"-->
+<!--                                                    confirm="Bạn có chắc chắn muốn reset toàn bộ Thuốc/VTTH đã kê bên dưới?"-->
+<!--                                                    string="Xóa tất cả VTTH" type="object"-->
+<!--                                                    class="btn-warning fa fa-trash mr-5 oe_edit_only"-->
+<!--                                                    groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse"/>-->
+<!--                                        </div>-->
+<!--                                    </group>-->
+                                    <group string="Lưu ý:">
+                                        <ul class="text-info">
+                                            <li>
+                                                <i><i class="text-warning">Màu vàng</i>: Vật tư/Thuốc <b>vượt quá định
+                                                    mức
+                                                </b> hoặc <b>không có trong BOM</b>.
+                                                </i>
+                                            </li>
+                                            <li>
+                                                <i><i class="text-danger">Màu đỏ</i>: Vật tư/Thuốc <b>hết toàn viện</b>.
+                                                </i>
+                                            </li>
+                                            <li>
+                                                <i><i class="fa fa-warning text-warning"/>: Vật tư/Thuốc <b>hết tại khoa
+                                                    phòng</b>.
+                                                </i>
+                                            </li>
+                                        </ul>
+                                    </group>
+                                </group>
+                                 <group string="Vật tư">
+                                    <field name="supplies" nolabel="1" context="{'view_only_name': True, 'ignore_expired': evaluation_start_date}"
+                                           attrs="{'readonly': [('state','in',['Inprogress'])]}" force_save="1">
+                                        <tree string="Supplies" editable="bottom" limit="200" class="tree_no_open"
+                                              decoration-danger="parent.state in ['In Progress'] and qty_used > qty_avail"
+                                              decoration-warning="qty_used > qty">
+                                            <field name="sequence" widget="handle"/>
+                                            <field name="medicament_type" string="Loại thuốc"/>
+                                            <field name="supply" domain="[('id', 'in', parent.supply_domain)]"
+                                                   options="{'no_create': True,'no_open': True}"
+                                                   attrs="{'readonly': [('qty','>',0)]}" force_save="1" string="Vật tư"/>
+                                            <field name="qty" readonly="1" force_save="1" optional="hide" invisible="1"/>
+                                            <field name="qty_avail" optional="hide" readonly="1" force_save="1"
+                                                   attrs="{'column_invisible':[('parent.state', 'in', ['Completed'])]}"
+                                                   groups="shealth_all_in_one.group_sh_medical_manager" invisible="1"/>
+                                            <field name="qty_in_loc" optional="hide" readonly="1" force_save="1" invisible="1"/>
+                                            <field name="is_warning_location" invisible="1" readonly="1"
+                                                   force_save="1"/>
+                                            <field name="qty_used" string="Số lượng sử dụng"/>
+                                            <field name="uom_id" readonly="1" force_save="1"
+                                                   options="{'no_create': True,'no_open': True}" required="1" string="Đơn vị tính"/>
+                                            <field name="services" required="1" domain="[('id', 'in', parent.services)]"
+                                                   widget="many2many_tags"
+                                                   options="{'no_create': True,'no_open':True}"/>
+                                            <field name="service_related" invisible="1"/>
+                                            <field name="location_id" readonly="1" force_save="1" optional="hide" invisible="1"
+                                                   required="1" options="{'no_create': True,'no_open': True}"
+                                                   context="{'view_only_name': True}" domain="[('name','ilike','Tủ')]"/>
+                                            <field name="notes" optional="hide" invisible="1"/>
+                                            <button readonly="True" icon="fa-warning text-warning"
+                                                    title="Tủ trực không đủ số lượng"
+                                                    attrs="{'invisible': ['|',('is_warning_location', '=', False),('parent.state','in',['Completed'])]}"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+                            <page string="Thành viên tham gia" id="team_member">
+                                <field name="evaluation_team" nolabel="1"
+                                       context="{'default_service_performances': services}">
+                                    <tree string="Team Members" editable="bottom" class="tree_no_open">
+                                        <field name="team_member" options="{'no_create': True}"/>
+                                        <field name="notes" optional="hide"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Thông tin thêm">
+                                <field name="notes" nolabel="1"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter" style="display:none;">
+                        <!--                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>-->
+                        <!--                        <field name="activity_ids" widget="mail_activity"/>-->
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sh_medical_evaluation_tree">
+            <field name="name">Phiếu tái khám</field>
+            <field name="model">sh.medical.evaluation</field>
+            <field name="arch" type="xml">
+                <tree string='Tái khám' decoration-danger="state=='InProgress'" decoration-success="state=='Completed'"
+                      default_order="evaluation_start_date desc" delete="false">
+                    <field name="name"/>
+                    <field name="patient" class="text-uppercase"/>
+                    <field name="services" readonly="1" force_save="1" options="{'no_open':True}"
+                           widget="many2many_tags" />
+                    <field name="doctor"/>
+                    <field name="evaluation_start_date"/>
+                    <field name="state"  invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="sh_medical_evaluation_action_tree" model="ir.actions.act_window">
+            <field name="name">Tái khám</field>
+            <field name="res_model">sh.medical.evaluation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_id" eval="False"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Click to add a new evaluation.
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="sh_medical_evaluation_action_tree" parent="sh_medical_menu" id="sh_medical_evaluation_list"
+                  sequence="9"
+                  groups="group_sh_medical_physician_surgery,group_sh_medical_physician_odontology,group_sh_medical_physician_spa,group_sh_medical_nurse"/>
+        <record id="sh_medical_evaluation_list" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-thermometer-three-quarters</field>
+        </record>
+
+        <!-- Inheriting Patient screen to display patient's evaluation -->
+        <record id="sh_medical_patient_evaluation_view" model="ir.ui.view">
+            <field name="name">Patient</field>
+            <field name="model">sh.medical.patient</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_patient_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Tái khám">
+                        <field name="evaluation_ids" widget="one2many_list" readonly="1"/>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <!--        button tái khám-->
+        <record model="ir.ui.view" id="sh_walkin_evaluations_view">
+            <field name="name">sh_walkin_evaluations_view</field>
+            <field name="model">sh.medical.appointment.register.walkin</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_register_for_walkin_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='set_to_scheduled']" position="before">
+                    <button confirm="Bạn có chắc muốn tạo phiếu tái khám bệnh nhân?" name="add_evaluations"
+                            type="object" states="Completed" class="btn-info"
+                            context="{'default_walkin': active_id,'default_patient':patient, 'default_institution':institution, 'default_services':service,'default_admission_reason_walkin': reason_check}"
+                            string="Tạo phiếu tái khám"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sh_medical_evaluation_walkin_view1" model="ir.ui.view">
+            <field name="name">Evaluations</field>
+            <field name="model">sh.medical.evaluation</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_evaluation_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='services']" position="attributes">
+                    <attribute name="domain">[('id','in',service_related)]</attribute>
+                </xpath>
+                <xpath expr="//field[@name='patient']" position="before">
+                    <!--                <field name="code_booking" options="{'no_create': True}" readonly="1" force_save="1"/>-->
+                </xpath>
+                <xpath expr="//field[@name='evaluation_team']/tree/field[@name='team_member']" position="before">
+                    <field name="service_performances" options="{'no_create': True}"
+                           domain="[('id','in',parent.services)]"
+                           required="1" widget="many2many_tags"/>
+                </xpath>
+                <xpath expr="//page[@id='team_member']" position="after">
+                    <page string="Đơn thuốc" attrs="{'invisible': [('name', '=', '/')]}">
+                        <field nolabel="1" name="prescription_ids" options="{'reload_on_button': true}"
+                               domain="[('evaluation', '=', active_id)]"
+                               context="{'view_only_name': True,'default_walkin': walkin,'default_evaluation': active_id, 'default_date': evaluation_start_date, 'default_date_out': evaluation_start_date, 'default_is_normal': True, 'default_patient': patient,'default_doctor': doctor,'default_services':services}">
+                            <tree string="Prescriptions" class="sh_has_icon tree_no_open" delete="false"
+                                  decoration-info="state=='Draft'"
+                                  decoration-danger="state=='Sent to Pharmacy'"
+                                  decoration-success="state=='Đã xuất thuốc'"
+                                  editable="bottom">
+                                <field name="id" invisible="1"/>
+                                <field name="walkin" force_save="1" optional="hide" readonly="1"/>
+                                <field name="evaluation" force_save="1" optional="show" readonly="1"/>
+                                <field name="name" force_save="1"/>
+                                <field name="date"/>
+                                <field name="patient" class="text-uppercase" optional="hide" readonly="1"
+                                       force_save="1"/>
+                                <field name="services" options="{'no_create': True,'no_open': True}"
+                                       widget="many2many_tags"
+                                       attrs="{'readonly': [('state','in',['Send to Pharmacy','Đã xuất thuốc'])]}"
+                                       domain="[('id', 'in', parent.services)]" force_save="1"/>
+                                <field name="doctor" options="{'no_create': True,'no_open': True}"/>
+                                <field name="pharmacy" invisible="1"/>
+                                <!--                            <field name="institution" domain="[('id', '=', parent.institution)]" options="{'no_create': True,'no_open': True}"/>-->
+                                <field name="state"/>
+                                <button name="view_detail_prescriptions" type="object" icon="fa-file-text-o"
+                                        title="Chi tiết"/>
+                                <button attrs="{'invisible': ['|',('state','!=','Draft'),('id','=',False)]}"
+                                        class="oe_edit_only"
+                                        name="unlink" type="object" icon="fa-trash-o" title="Xóa"
+                                        style="font-size: 20px;color:#000;"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <!--            <record id="sh_medical_prescription_patient_evaluation_view" model="ir.ui.view">-->
+        <!--                <field name="name">Đơn thuốc</field>-->
+        <!--                <field name="model">sh.medical.prescription</field>-->
+        <!--                <field name="inherit_id" ref="shealth_all_in_one.sh_medical_prescription_view"/>-->
+        <!--                <field name="arch" type="xml">-->
+        <!--                    <xpath expr="//field[@name='walkin']" position="after">-->
+        <!--                        <field name="evaluation" force_save="1"/>-->
+        <!--                    </xpath>-->
+        <!--                </field>-->
+        <!--            </record>-->
+
+        <!-- Inheriting Appointment screen to display patient's evaluation -->
+
+        <!--            <record id="sh_medical_appointment_evaluation_view" model="ir.ui.view">-->
+        <!--                <field name="name">Appointments</field>-->
+        <!--                <field name="model">sh.medical.appointment</field>-->
+        <!--                <field name="inherit_id" ref="shealth_all_in_one.sh_medical_appointment_view"/>-->
+        <!--                <field name="arch" type="xml">-->
+        <!--                    <notebook position="inside">-->
+        <!--                        <page string="Evaluations">-->
+        <!--                            <field name="evaluation_ids" widget="one2many_list" context="{'default_appointment': active_id}"/>-->
+        <!--                        </page>-->
+        <!--                    </notebook>-->
+        <!--                </field>-->
+        <!--            </record>-->
+
+    </data>
+</odoo>

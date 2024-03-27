@@ -1,0 +1,384 @@
+<?xml version="1.0" ?>
+    <odoo>
+        <data>
+
+            <record model="ir.ui.view" id="sh_medical_rounding_supply_tree">
+                <field name="name">VTTH trong phiếu CSHP</field>
+                <field name="model">sh.medical.patient.rounding.medicines</field>
+                <field name="type">tree</field>
+                    <field name="arch" type="xml">
+                        <tree editable="bottom" limit="200">
+                            <field name="sequence" widget="handle"/>
+                            <field name="medicament_type"/>
+                            <field name="medicine" required="1" options="{'no_create': True}"/>
+                            <field name="qty"/>
+                            <field name="uom_id" options="{'no_create': True,'no_open':True}" readonly="1" force_save="1"/>
+                            <field name="location_id" required="1" invisible="1" />
+                            <field name="notes"/>
+                        </tree>
+                    </field>
+            </record>
+
+            <!-- Rounding Management -->
+
+            <record id="view_sh_medical_rounding_filter" model="ir.ui.view">
+                <field name="name">Roundings</field>
+                <field name="model">sh.medical.patient.rounding</field>
+                <field name="type">search</field>
+                <field name="arch" type="xml">
+                    <search string="Search Roundings">
+                        <separator orientation="vertical"/>
+                            <field name="name" select="1"/>
+                            <field name="round_summary" select="1"/>
+                        <newline/>
+                        <group expand="0" string="Group By..." colspan="11" col="11">
+                            <filter name="group_patient" string="Patient" context="{'group_by':'patient'}"/>
+                            <filter name="group_physician" string="Physician" context="{'group_by':'doctor'}"/>
+                            <filter name="group_registration_codes" string="Registration Codes" context="{'group_by':'inpatient_id'}"/>
+                            <filter name="group_evolution" string="Evolution" context="{'group_by':'evolution'}"/>
+                        </group>
+                    </search>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_rounding_view">
+                <field name="name">Roundings</field>
+                <field name="model">sh.medical.patient.rounding</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                <form string="Roundings" duplicate="false" edit_expr="state not in ['Completed']" delete_expr="state not in ['Completed']">
+                    <header>
+                        <button confirm="Are you sure you want to complete evaluation?" name="set_to_completed" attrs="{'invisible': ['|',('name','=','/'),('state','=','Completed')]}" string="Xác nhận" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_manager"/>
+                        <button invisible="1" name="print_patient_evaluation" states="Completed" string="Print Rouding Evaluation" type="object" class="btn-info" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_manager,shealth_all_in_one.group_sh_medical_physician"/>
+                        <button confirm="Are you sure you want to re-open this rounding (Only Admin)?" name="set_to_draft" states="Completed" string="Draft Evaluation (Admin)" type="object" class="btn-warning" groups="shealth_all_in_one.group_sh_medical_manager"/>
+                        <field name="state" widget="statusbar" statusbar_visible="Draft,Completed" statusbar_colors='{"Draft":"red","Completed":"green"}'/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                           <label for="name" string="Name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" required="1"/>
+                            </h1>
+                            <label class="oe_edit_only" for="patient"/>
+                            <field name="patient" attrs="{'readonly': [('patient','!=',False)]}" class="text-uppercase" force_save="1"/>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="doctor" options="{'no_create': True,'no_open':True}"/>
+                                <field name="physician" options="{'no_create': True,'no_open':True}"/>
+                                <field name="evaluation_start_date"/>
+                                <field name="evaluation_end_date" groups="base.group_system"/>
+                                <field name="environmental_assessment" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="inpatient_id" string="Mã lưu bệnh nhân" readonly="1" force_save="1"/>
+                                <field name="evaluation_end_date" invisible="1"/>
+                                <field name="warning" invisible="1"/>
+                            </group>
+                        </group>
+<!--                        <group string="Seven P's">-->
+<!--                            <group>-->
+<!--                                <field name="pain"/>-->
+<!--                                <field name="potty"/>-->
+<!--                                <field name="proximity"/>-->
+<!--                                <field name="personal_needs"/>-->
+<!--                            </group>-->
+<!--                            <group>-->
+<!--                                <field name="pain_level"/>-->
+<!--                                <field name="position"/>-->
+<!--                                <field name="pump"/>-->
+<!--                            </group>-->
+<!--                        </group>-->
+                        <group string="Vital Signs">
+                            <group>
+                                <field name="temperature"/>
+                                <field name="bpm"/>
+                                <field name="respiratory_rate"/>
+                            </group>
+                            <group>
+                                <field name="systolic"/>
+                                <field name="diastolic"/>
+                                <field name="osat"/>
+                            </group>
+                            <group>
+                                <field name="evolution" required="1"/>
+                            </group>
+                        </group>
+<!--                        <group string="Other">-->
+<!--                            <group>-->
+<!--                                <field name="weight"/>-->
+<!--                                <field name="glycemia"/>-->
+<!--                                <field name="depression"/>-->
+<!--                            </group>-->
+<!--                            <group>-->
+<!--                                <field name="diuresis"/>-->
+<!--                                <field name="urinary_catheter"/>-->
+<!--                                <field name="evolution"/>-->
+<!--                            </group>-->
+<!--                        </group>-->
+                        <notebook>
+<!--                            <page string="Procedures">-->
+<!--                                <field name="procedures" nolabel="1">-->
+<!--                                    <form string="Procedures">-->
+<!--                                        <sheet>-->
+<!--                                            <group>-->
+<!--                                                <field name="procedures" string="Code" required="1"/>-->
+<!--                                            </group>-->
+<!--                                            <group>-->
+<!--                                                <field name="notes"/>-->
+<!--                                            </group>-->
+<!--                                        </sheet>-->
+<!--                                    </form>-->
+<!--                                    <tree string="Procedures">-->
+<!--                                        <field name="procedures" string="Code"/>-->
+<!--                                        <field name="notes"/>-->
+<!--                                    </tree>-->
+<!--                                </field>-->
+<!--                            </page>-->
+                            <page string="Round Summary">
+                                <group>
+                                    <field name="round_summary" string="Diễn biến"/>
+                                </group>
+                                <group>
+                                    <field name="execute" string="Thực hiện y lệnh"/>
+                                </group>
+                                <group string="Thuốc và VTTH">
+                                    <field name="medicaments" nolabel="1" context="{'view_only_name': True}" attrs="{'invisible':[('inpatient_id','=',False)]}">
+                                        <tree editable="bottom" limit="200" decoration-danger="parent.state in ['Draft'] and qty > qty_avail">
+                                            <field name="sequence" widget="handle"/>
+                                            <field name="medicament_type" string="Loại"/>
+                                            <field name="medicine" required="1" options="{'no_create': True}"/>
+                                            <field name="qty_avail" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.state', 'in', ['Completed'])]}" groups="shealth_all_in_one.group_sh_medical_manager"/>
+                                            <field name="qty"/>
+                                            <field name="uom_id" options="{'no_create': True,'no_open':True}" readonly="1" force_save="1"/>
+                                            <field name="location_id" required="1" />
+                                            <field name="notes"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+
+<!--                            <page string="Supplies" attrs="{'invisible':[('inpatient_id','=',False)]}" >-->
+<!--                                <field name="medicaments" nolabel="1" context="{'view_only_name': True}">>-->
+<!--                                    <tree string="Supplies" editable="bottom" default_order="medicament_type">-->
+<!--                                        <field name="medicament_type" invisible="1"/>-->
+<!--                                        <field name="medicine" required="1" options="{'no_create': True}" domain="[('medicament_type','=','Supplies')]" string="Vật tư"/>-->
+<!--                                        <field name="qty"/>-->
+<!--                                        <field name="uom_id" options="{'no_create': True,'no_open':True}" readonly="1" force_save="1"/>-->
+<!--                                        <field name="location_id" required="1" invisible="1" />-->
+<!--                                        <field name="notes"/>-->
+<!--                                    </tree>-->
+<!--                                </field>-->
+<!--                            </page>-->
+                        </notebook>
+                    </sheet>
+                </form>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_rounding_tree">
+                <field name="name">Roundings</field>
+                <field name="model">sh.medical.patient.rounding</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string='Roundings' decoration-info="state=='Draft'" decoration-success="state=='Completed'">
+                        <field name="name"/>
+                        <field name="patient" class="text-uppercase"/>
+                        <field name="doctor" string="Điều dưỡng viên"/>
+                        <field name="inpatient_id" string="Mã lưu bệnh nhân"/>
+                        <field name="evolution"/>
+                        <field name="evaluation_start_date" string="Ngày"/>
+                        <field name="evaluation_end_date" invisible="1"/>
+                        <field name="state" invisible="1"/>
+                    </tree>
+                </field>
+            </record>
+
+            <record id="sh_medical_rounding_action_tree" model="ir.actions.act_window">
+                    <field name="name">Roundings</field>
+                    <field name="res_model">sh.medical.patient.rounding</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                    <field name="domain">[]</field>
+                    <field name="context">{}</field>
+                    <field name="view_id" eval="False"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to record a new rounding information.
+                      </p>
+                    </field>
+            </record>
+
+<!--            <menuitem action="sh_medical_rounding_action_tree" id="sh_medical_rounding_list" parent="sh_medical_nursing_menu" sequence="5"/>-->
+
+            <!-- Ambulatory Care Management -->
+
+<!--            <record id="view_sh_medical_ambulatory_care_filter" model="ir.ui.view">-->
+<!--                <field name="name">Ambulatory Care</field>-->
+<!--                <field name="model">sh.medical.patient.ambulatory</field>-->
+<!--                <field name="type">search</field>-->
+<!--                <field name="arch" type="xml">-->
+<!--                    <search string="Search Cares">-->
+<!--                        <separator orientation="vertical"/>-->
+<!--                            <field name="name" select="1"/>-->
+<!--                            <field name="session_notes" select="1"/>-->
+<!--                        <newline/>-->
+<!--                        <group expand="0" string="Group By..." colspan="11" col="11">-->
+<!--                            <filter name="group_patient" string="Patient" context="{'group_by':'patient'}"/>-->
+<!--                            <filter name="group_physician" string="Physician" context="{'group_by':'doctor'}"/>-->
+<!--                            <filter name="group_evaluation" string="Evaluations" context="{'group_by':'evaluation_id'}"/>-->
+<!--                            <filter name="group_evolution" string="Evolution" context="{'group_by':'evolution'}"/>-->
+<!--                        </group>-->
+<!--                    </search>-->
+<!--                </field>-->
+<!--            </record>-->
+
+<!--            <record model="ir.ui.view" id="sh_medical_ambulatory_care_view">-->
+<!--                <field name="name">Ambulatory Cares</field>-->
+<!--                <field name="model">sh.medical.patient.ambulatory</field>-->
+<!--                <field name="type">form</field>-->
+<!--                <field name="arch" type="xml">-->
+<!--                <form string="Ambulatory Cares">-->
+<!--                    <header>-->
+<!--                        <button confirm="Are you sure you want to complete evaluation?" name="set_to_completed" states="Draft" string="Complete Evaluation" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_manager"/>-->
+<!--                        <field name="state" widget="statusbar" statusbar_visible="Draft,Completed" statusbar_colors='{"Draft":"blue","Completed":"grey"}'/>-->
+<!--                    </header>-->
+<!--                    <sheet>-->
+<!--                        <div class="oe_title">-->
+<!--                           <label for="name" string="Name" class="oe_edit_only"/>-->
+<!--                            <h1>-->
+<!--                                <field name="name" required="1"/>-->
+<!--                            </h1>-->
+<!--                            <label class="oe_edit_only" for="patient"/>-->
+<!--                            <field name="patient"/>-->
+<!--                        </div>-->
+<!--                        <group>-->
+<!--                            <group>-->
+<!--                                <field name="doctor" options="{'no_create': True}"/>-->
+<!--                                <field name="evaluation_start_date"/>-->
+<!--                                <field name="base_condition"/>-->
+<!--                            </group>-->
+<!--                            <group>-->
+<!--                                <field name="evaluation_id"/>-->
+<!--                                <field name="evaluation_end_date"/>-->
+<!--                                <field name="ordering_doctor"/>-->
+<!--                            </group>-->
+<!--                        </group>-->
+<!--                        <group string="Vital Signs">-->
+<!--                            <group>-->
+<!--                                <field name="temperature"/>-->
+<!--                                <field name="bpm"/>-->
+<!--                                <field name="respiratory_rate"/>-->
+<!--                            </group>-->
+<!--                            <group>-->
+<!--                                <field name="systolic"/>-->
+<!--                                <field name="diastolic"/>-->
+<!--                                <field name="osat"/>-->
+<!--                            </group>-->
+<!--                        </group>-->
+<!--                        <group string="Misc">-->
+<!--                            <group>-->
+<!--                                <field name="glycemia"/>-->
+<!--                            </group>-->
+<!--                            <group>-->
+<!--                                <field name="evolution"/>-->
+<!--                            </group>-->
+<!--                        </group>-->
+<!--                        <notebook>-->
+<!--                            <page string="Procedures">-->
+<!--                                <field name="procedures" nolabel="1">-->
+<!--                                    <form string="Procedures">-->
+<!--                                        <sheet>-->
+<!--                                            <group>-->
+<!--                                                <field name="procedures" string="Code" required="1"/>-->
+<!--                                            </group>-->
+<!--                                            <group>-->
+<!--                                                <field name="notes"/>-->
+<!--                                            </group>-->
+<!--                                        </sheet>-->
+<!--                                    </form>-->
+<!--                                    <tree string="Procedures">-->
+<!--                                        <field name="procedures" string="Code"/>-->
+<!--                                        <field name="notes"/>-->
+<!--                                    </tree>-->
+<!--                                </field>-->
+<!--                            </page>-->
+<!--                            <page string="Medicaments">-->
+<!--                                <field name="medicaments" nolabel="1">-->
+<!--                                    <form string="Medicines">-->
+<!--                                        <sheet>-->
+<!--                                            <group>-->
+<!--                                                <group>-->
+<!--                                                    <field name="medicine" required="1"/>-->
+<!--                                                </group>-->
+<!--                                                <group>-->
+<!--                                                    <field name="qty" required="1"/>-->
+<!--                                                    <field name="notes"/>-->
+<!--                                                </group>-->
+<!--                                            </group>-->
+<!--                                        </sheet>-->
+<!--                                    </form>-->
+<!--                                    <tree string="Medicines">-->
+<!--                                        <field name="medicine"/>-->
+<!--                                        <field name="qty"/>-->
+<!--                                        <field name="notes"/>-->
+<!--                                    </tree>-->
+<!--                                </field>-->
+<!--                            </page>-->
+<!--                            <page string="Session Notes">-->
+<!--                                <field name="session_notes" nolabel="1"/>-->
+<!--                            </page>-->
+<!--                        </notebook>-->
+<!--                    </sheet>-->
+<!--                </form>-->
+<!--                </field>-->
+<!--            </record>-->
+
+<!--            <record model="ir.ui.view" id="sh_medical_ambulatory_care_tree">-->
+<!--                <field name="name">Roundings</field>-->
+<!--                <field name="model">sh.medical.patient.ambulatory</field>-->
+<!--                <field name="type">tree</field>-->
+<!--                <field name="arch" type="xml">-->
+<!--                    <tree string='Ambulatory Cares' decoration-muted="state=='Completed'">-->
+<!--                        <field name="name"/>-->
+<!--                        <field name="patient"/>-->
+<!--                        <field name="doctor"/>-->
+<!--                        <field name="evaluation_id"/>-->
+<!--                        <field name="evolution"/>-->
+<!--                        <field name="evaluation_start_date"/>-->
+<!--                        <field name="evaluation_end_date"/>-->
+<!--                        <field name="state"/>-->
+<!--                    </tree>-->
+<!--                </field>-->
+<!--            </record>-->
+
+<!--            <record id="sh_medical_ambulatory_care_action_tree" model="ir.actions.act_window">-->
+<!--                    <field name="name">Ambulatory Cares</field>-->
+<!--                    <field name="res_model">sh.medical.patient.ambulatory</field>-->
+<!--                    <field name="view_type">form</field>-->
+<!--                    <field name="view_mode">tree,form</field>-->
+<!--                    <field name="domain">[]</field>-->
+<!--                    <field name="context">{}</field>-->
+<!--                    <field name="view_id" eval="False"/>-->
+<!--                    <field name="help" type="html">-->
+<!--                      <p class="o_view_nocontent_smiling_face">-->
+<!--                        Click to record a new ambulatory care information.-->
+<!--                      </p>-->
+<!--                    </field>-->
+<!--            </record>-->
+
+<!--            <menuitem action="sh_medical_ambulatory_care_action_tree" id="sh_medical_ambulatory_list" parent="sh_medical_nursing_menu" sequence="10"/>-->
+
+<!--            INHERIT INPATIENT VIEW-->
+            <record model="ir.ui.view" id="sh_medical_rounding_inpatient_view">
+                <field name="model">sh.medical.inpatient</field>
+                <field name="type">form</field>
+                <field name="inherit_id" ref="shealth_all_in_one.sh_medical_inpatient_view"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//field[@name='nursing_plan']" position="after">
+                        <field name="roundings" string="Chi tiết chăm sóc" context="{'default_patient':patient,'default_evaluation_start_date':admission_date,'default_evaluation_end_date':admission_date,'default_inpatient_id':id,'services_done':services,'room':room}" attrs="{'invisible': [('id','=',False)]}" force_save="1"/>
+                    </xpath>
+                </field>
+            </record>
+        </data>
+    </odoo>

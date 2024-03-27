@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="payment_institution_form_inherit">
+            <field name="name">kế toàn theo cơ sở y tế</field>
+            <field name="model">sh.medical.health.center</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_healthcenters_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Thông tin thanh toán">
+                        <group>
+                            <group>
+                                <field name="user_payment" options="{'no_create':True,'no_quick_create':True}"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

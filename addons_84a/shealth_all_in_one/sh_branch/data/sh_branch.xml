@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record model="sh.branch" id="branch_kangnam">
+            <field name="name">Branch Kangnam</field>
+            <field name="code">KN</field>
+            <field name="note">Branch Kangnam</field>
+        </record>
+
+        <record model="sh.branch" id="branch_donga">
+            <field name="name">Branch Dong A</field>
+            <field name="code">DA</field>
+            <field name="note">Branch Dong A</field>
+        </record>
+
+        <record model="sh.branch" id="branch_paris">
+            <field name="name">Branch Paris</field>
+            <field name="code">DA</field>
+            <field name="note">Branch Paris</field>
+        </record>
+
+        <record model="sh.branch" id="branch_hongha">
+            <field name="name">Branch Hong Ha</field>
+            <field name="code">HH</field>
+            <field name="note">Branch Hong Ha</field>
+        </record>
+
+        <record model="sh.branch" id="branch_academy">
+            <field name="name">Branch Academy</field>
+            <field name="code">AC</field>
+            <field name="note">Branch Academy</field>
+        </record>
+    </data>
+</odoo>
+

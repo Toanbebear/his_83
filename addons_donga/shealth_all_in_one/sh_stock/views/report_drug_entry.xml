@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <report
+                string="Biên bản kiểm nhập thuốc"
+                id="action_report_drug_entry_shealth"
+                model="stock.picking"
+                report_type="qweb-pdf"
+                name="shealth_all_in_one.shealth_report_drug_entry"
+                file="shealth_all_in_one.shealth_report_drug_entry"
+                print_report_name="'Biên bản kiểm nhập thuốc - %s - %s' % (object.partner_id.name or '', object.name)"
+                paperformat="shealth_all_in_one.sh_paperformat_test_result"
+        />
+
+        <template id="shealth_report_drug_entry">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="shealth_all_in_one.shealth_report_drug_entry_document" t-lang="o.partner_id.lang"/>
+            </t>
+        </template>
+
+        <template id="shealth_report_drug_entry_document">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
+                    <div class="page" style="font-family:Times New Roman;font-size:20px;">
+                        <div class="oe_structure"/>
+                        <div class="row mt32 mb32">
+                            <div class="col-12 text-center">
+                                <div style="font-size: 29px;">
+                                    <b>BIÊN BẢN KIỂM NHẬP THUỐC</b>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <span>Tiến hành lúc:</span>
+                            <span t-esc="((o.sci_date_done) + (datetime.timedelta(hours=7))).strftime('%H giờ %M phút, Ngày %d tháng %m năm %Y')"/>
+                        </div>
+                        <div>
+                            <div>
+                                <span>Thành phần:</span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">1.Bà <t t-esc="env.ref('__export__.giamdoc_bbkn').name"/></div>
+                                <div class="col-4"><span>   Giám đốc</span></div>
+                                <div class="col-4"><span>Chủ tịch hội đồng kiểm nhập</span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">2.Bà <t t-esc="env.ref('__export__.trgkd_bbkn').name"/></div>
+                                <div class="col-4"><span>Trưởng khoa Dược </span></div>
+                                <div class="col-4"><span>Ủy viên</span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">3.Ông <t t-esc="env.ref('__export__.tk_bbkn').name"/></div>
+                                <div class="col-4"><span>Thủ kho </span></div>
+                                <div class="col-4"><span>Ủy viên</span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">4.Ông <t t-esc="env.ref('__export__.ktd_bbkn').name"/></div>
+                                <div class="col-4"><span>Kế toán Dược </span></div>
+                                <div class="col-4"><span>Ủy viên</span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">5.Bà <t t-esc="env.ref('__export__.tptckt_bbkn').name"/></div>
+                                <div class="col-4"><span>Trưởng phòng TCKT </span></div>
+                                <div class="col-4"><span>Ủy viên</span></div>
+                            </div>
+                            <div>
+                                <span>Cùng tiến hành kiểm thuốc nhập kho với số lượng cụ thể như sau:</span>
+                            </div>
+                        </div>
+                        <table class="table table-condensed mt48">
+                            <thead>
+                                <tr>
+                                    <th class="text-center border border-dark">
+                                        <strong>Số TT</strong>
+                                    </th>
+                                    <th class="text-center border border-dark">
+                                        <strong>Số Hóa đơn</strong>
+                                    </th>
+                                    <th class="text-center border border-dark">
+                                        <strong>Tên thuốc/ Vật tư</strong>
+                                    </th>
+                                    <th class="text-center border border-dark">
+                                        <strong>Đơn vị</strong>
+                                    </th>
+                                    <th class="text-center border border-dark">
+                                        <strong>Số lô</strong>
+                                    </th>
+                                    <th class="text-center border border-dark">
+                                        <strong>Nước sản xuất</strong>
+                                    </th>
+                                    <th class="text-center border border-dark">
+                                        <strong>Hạn dùng</strong>
+                                    </th>
+                                    <th class="text-center border border-dark">
+                                        <strong>Đơn giá</strong>
+                                    </th>
+                                    <th class="text-center border border-dark">
+                                        <strong>Số lượng</strong>
+                                    </th>
+                                    <th class="text-center border border-dark">
+                                        <strong>Thành tiền</strong>
+                                    </th>
+                                    <th class="text-center border border-dark">
+                                        <strong>Ghi chú</strong>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td class="text-center border border-dark">1</td>
+                                    <td class="text-center border border-dark">2</td>
+                                    <td class="text-center border border-dark">3</td>
+                                    <td class="text-center border border-dark">4</td>
+                                    <td class="text-center border border-dark">5</td>
+                                    <td class="text-center border border-dark">6</td>
+                                    <td class="text-center border border-dark">7</td>
+                                    <td class="text-center border border-dark">8</td>
+                                    <td class="text-center border border-dark">9</td>
+                                    <td class="text-center border border-dark">10</td>
+                                    <td class="text-center border border-dark">11</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="lines" t-value="o.move_line_ids.filtered(lambda x: x.qty_done)"/>
+                                <t t-set="i" t-value="0"/>
+                                <t t-set="total" t-value="0"/>
+                                <tr t-foreach="lines" t-as="move">
+                                    <t t-set="i" t-value="i + 1"/>
+                                    <t t-set="price" t-value="move.move_id.purchase_line_id.price_unit"/>
+                                    <t t-set="qty" t-value="move.move_id.purchase_line_id.qty_received"/>
+                                    <t t-set="result" t-value="price * qty"/>
+                                    <t t-set="total" t-value="total + int(result)"/>
+                                    <td class="text-center border border-dark">
+                                        <t t-esc="i"/>
+                                    </td>
+                                    <td class="text-center border border-dark">
+                                        <t t-esc="o.origin"/>
+                                    </td>
+                                    <td class="text-center border border-dark">
+                                        <span t-field="move.product_id.name"/>
+                                    </td>
+                                    <td class="text-center border border-dark">
+                                        <span t-field="move.move_id.purchase_line_id.product_uom.name"/>
+                                    </td>
+                                    <td class="text-center border border-dark">
+                                        <span t-field="move.lot_id.name"/>
+                                    </td>
+                                    <td class="text-center border border-dark">
+                                        <span t-esc="request.env['sh.medical.medicines'].search([('product_id', '=', move.product_id.id)],limit=1).origin.name"/>
+                                    </td>
+                                    <td class="text-center border border-dark">
+                                        <t t-if="move.lot_id.removal_date">
+                                            <span t-esc="move.lot_id.removal_date.strftime('%d/%m/%Y')"/>
+                                        </t>
+                                        <t t-else=""></t>
+                                    </td>
+                                    <td class="text-center border border-dark">
+                                        <span t-esc="'{0:,.0f}'.format(int(move.move_id.purchase_line_id.price_unit))"/>
+                                    </td>
+                                    <td class="text-center border border-dark">
+                                        <span t-field="move.move_id.purchase_line_id.qty_received"/>
+                                    </td>
+                                    <td class="text-center border border-dark">
+                                        <span t-esc="'{0:,.0f}'.format(result)"/>
+                                    </td>
+                                    <td class="text-center border border-dark"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="mt16 mb16">
+                            <strong>Tổng cộng:</strong>
+                            <t t-esc="'{0:,.0f}'.format(total)"/>
+                            <br/>
+                            <strong>Cộng khoản:</strong>
+                            <t t-esc="i"/>
+                            <br/>
+                            <strong>
+                                 <span>Biên bản kết thúc lúc </span><t t-esc="((o.sci_date_done) + (datetime.timedelta(hours=7,minutes=30))).strftime('%H giờ %M phút')"/><span> cùng ngày</span>
+                            </strong>
+                        </div>
+                        <div class="row mt32 mb32">
+                            <div class="col-3">
+                                <strong>TRƯỞNG KHOA DƯỢC</strong>
+                            </div>
+                            <div class="col-2">
+                                <strong>TRƯỞNG PHÒNG TCKT</strong>
+                            </div>
+                            <div class="col-2">
+                                <strong>THỦ KHO</strong>
+                            </div>
+                            <div class="col-2">
+                                <strong>KẾ TOÁN</strong>
+                            </div>
+                            <div class="col-3">
+                                <strong>GIÁM ĐỐC</strong>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record model="sh.medical.team.role" id="sh_team_role_main_doctor">
+            <field name="name">BS mổ chính</field>
+            <field name="type">surgery</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_sub_doctor">
+            <field name="name">BS mổ phụ</field>
+            <field name="type">surgery</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_bs_hocviec">
+            <field name="name">BS học việc</field>
+            <field name="type">surgery</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_gayme">
+            <field name="name">Kỹ thuật viên gây mê</field>
+            <field name="type">surgery</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_dieuduong_trong">
+            <field name="name">Điều dưỡng vòng trong</field>
+            <field name="type">surgery</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_dieuduong_ngoai">
+            <field name="name">Điều dưỡng vòng ngoài</field>
+            <field name="type">surgery</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_dieuduong_dontiep">
+            <field name="name">Điều dưỡng đón tiếp</field>
+            <field name="type">surgery</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_dieuduong_vattu">
+            <field name="name">Điều dưỡng vật tư</field>
+            <field name="type">surgery</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_dieuduong_hotro_bacsi_taikham">
+            <field name="name">Điều dưỡng hỗ trợ bác sĩ tái khám</field>
+            <field name="type">surgery</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_doctor_dalieu">
+            <field name="name">Bác sĩ Da liễu</field>
+            <field name="type">spa</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_doctor_ktv_thdl">
+            <field name="name">KTV Thực hiện độc lập</field>
+            <field name="type">spa</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_doctor_ktv_pbs">
+            <field name="name">KTV Phụ Bác Sĩ</field>
+            <field name="type">spa</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_doctor_spa">
+            <field name="name">Bác sĩ spa</field>
+            <field name="type">spa</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_kythuatvien_spa">
+            <field name="name">Kỹ thuật viên Spa</field>
+            <field name="type">spa</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_doctor_laser">
+            <field name="name">Bác sĩ laser</field>
+            <field name="type">laser</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_kythuatvien_laser">
+            <field name="name">Kỹ thuật viên laser</field>
+            <field name="type">laser</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_doctor_nha">
+            <field name="name">Bác sĩ Nha khoa</field>
+            <field name="type">odontology</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_trothu_nha">
+            <field name="name">Trợ thủ Nha</field>
+            <field name="type">odontology</field>
+        </record>
+             <record model="sh.medical.team.role" id="sh_team_role_doctor_hoichan">
+            <field name="name">BS Hội chẩn</field>
+            <field name="type">surgery</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_dieu_duong_hut_dich_rut_ong">
+            <field name="name">Điều dưỡng hút dịch/rút ống</field>
+            <field name="type">surgery</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_doctor_gayme">
+            <field name="name">Bác sĩ gây mê</field>
+            <field name="type">surgery</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_doctor_thuchanh">
+            <field name="name">Bác sĩ thực hành</field>
+            <field name="type">surgery</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_doctor_taikham_phauthuat">
+            <field name="name">Bác sĩ tái khám Phẫu thuật</field>
+            <field name="type">surgery</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_dieuduong_catchi">
+            <field name="name">Điều dưỡng cắt chỉ</field>
+            <field name="type">surgery</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_dieuduong_hauphau">
+            <field name="name">Điều dưỡng hậu phẫu</field>
+            <field name="type">surgery</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_dieuduong_thaybang">
+            <field name="name">Điều dưỡng thay băng</field>
+            <field name="type">surgery</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_dieuduong_thaybang_catchi">
+            <field name="name">Điều dưỡng thay băng, cắt chỉ</field>
+            <field name="type">surgery</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_dieuduong_tiemthuoc">
+            <field name="name">Điều dưỡng tiêm thuốc</field>
+            <field name="type">surgery</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_dieuduong_truyen_khangsinh">
+            <field name="name">Điều dưỡng truyền kháng sinh</field>
+            <field name="type">surgery</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_doctor_taikham_spa">
+            <field name="name">Bác sĩ tái khám Spa</field>
+            <field name="type">spa</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_doctor_chiu_trach_nhiem_spa">
+            <field name="name">Bác sĩ chịu trách nhiệm Spa</field>
+            <field name="type">spa</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_doctor_taikham_laser">
+            <field name="name">Bác sĩ tái khám Laser</field>
+            <field name="type">laser</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_doctor_chiu_trach_nhiem_laser">
+            <field name="name">Bác sĩ chịu trách nhiệm Laser</field>
+            <field name="type">laser</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_canbo_hotro_nha">
+            <field name="name">Cán bộ hỗ trợ</field>
+            <field name="type">odontology</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_doctor_chiu_trach_nhiem_nha">
+            <field name="name">Bác sĩ chịu trách nhiệm Nha</field>
+            <field name="type">odontology</field>
+        </record>
+        <record model="sh.medical.team.role" id="sh_team_role_canbo_hotro_nha">
+            <field name="name">Cán bộ hỗ trợ</field>
+            <field name="type">odontology</field>
+        </record>
+    </data>
+</odoo>

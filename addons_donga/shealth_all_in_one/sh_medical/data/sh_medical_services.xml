@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+<!--        SERVICES-->
+
+        <record model="sh.medical.health.center.service" id="sh_product_service_kb01">
+                <field name="default_code">KB01</field>
+                <field name="name">Tư vấn dịch vụ</field>
+                <field name="list_price">0</field>
+                <field name="is_surgeries">False</field>
+                <field name="institution" eval="[(6,0,[ref('shealth_all_in_one.sh_medicines_health_center_kangnam_hn')])]"/>
+                <field name="service_department" eval="[(6,0,[ref('shealth_all_in_one.sh_kb_dep_knhn')])]"/>
+<!--                <field name="service_room" eval="[(6,0,[ref('shealth_all_in_one.sh_kb_dalieu_room_knhn'), ref('shealth_all_in_one.sh_kb_pttt_room_knhn'), ref('shealth_all_in_one.sh_kb_rhm_room_knhn')])]"/>-->
+<!--                <field name="exam_room" eval="[(6,0,[ref('shealth_all_in_one.sh_kb_dalieu_room_knhn'), ref('shealth_all_in_one.sh_kb_pttt_room_knhn'), ref('shealth_all_in_one.sh_kb_rhm_room_knhn')])]"/>-->
+                <field name="categ_id" ref="shealth_all_in_one.sh_services"/>
+        </record>
+    </data>
+</openerp>

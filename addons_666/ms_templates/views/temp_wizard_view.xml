@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="report_wizard" model="ir.ui.view">
+        <field name="name">Report Wizard</field>
+        <field name="model">temp.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Embedded Webpage" version="7.0" edit="false" create="false">
+                <field name="framed_page_rendered" widget="html" readonly="1"/>
+            </form>
+        </field>
+    </record>
+
+</odoo>

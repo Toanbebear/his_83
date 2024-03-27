@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="tool_update_account_payment_form">
+            <field name="name">tool.update.account.payment</field>
+            <field name="model">tool.update.account.payment</field>
+            <field name="arch" type="xml">
+                <form string="Cập nhật phiếu thu">
+                    <group>
+                        <group>
+                            <field name="payment_id"  required="1" options="{'no_create':True,'no_open':True}" readonly="True"/>
+                            <field name="payment_walkin"  required="1" options="{'no_create':True,'no_open':True}" readonly="True"/>
+                            <field name="payment_patient"  required="1" options="{'no_create':True,'no_open':True}" readonly="True"/>
+                            <field name="currency_id"  required="1" readonly="True"/>
+                            <field name="payment_amount"  required="1" />
+                            <field name="payment_text_total"  required="1" readonly="True" force_save="True"/>
+                        </group>
+                        <group>
+                            <field name="journal_id"  required="1" options="{'no_create':True,'no_open':True}"/>
+                            <field name="payment_date"  required="1" />
+                            <field name="payment_note"  required="1" />
+                            <field name="payment_user"  required="1" options="{'no_create':True,'no_open':True}"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="update_payment" type="object" string="Lưu" class="oe_highlight"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="tool_update_account_payment_act">
+            <field name="name">Cập nhật phiếu thu</field>
+            <field name="res_model">tool.update.account.payment</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="tool_update_account_payment_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+         <record id="cron_source_ctv_contract" model="ir.cron">
+            <field name="name">Cập nhật trạng thái hợp đồng CTV</field>
+            <field name="model_id" ref="model_source_ctv_contract"/>
+            <field name="state">code</field>
+            <field name="code">model.update_source_ctv_contract()</field>
+            <field name="active" eval="True"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="nextcall" eval="(DateTime.now().replace(hour=18, minute=0)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="numbercall">-1</field>
+        </record>
+
+        <record id="cron_get_commission" model="ir.cron">
+            <field name="name">Lấy doanh số hoa hồng cho CTV</field>
+            <field name="model_id" ref="model_source_ctv"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_get_commission()</field>
+            <field name="active" eval="True"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="nextcall" eval="(DateTime.now().replace(hour=18, minute=0)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="numbercall">-1</field>
+        </record>
+
+        <record id="cron_calculate_ctv_rank" model="ir.cron">
+            <field name="name">Phân hạng cộng tác viên</field>
+            <field name="model_id" ref="model_source_ctv"/>
+            <field name="state">code</field>
+            <field name="code">model.tinh_toan_hang_ctv()</field>
+            <field name="active" eval="True"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="nextcall" eval="(DateTime.now().replace(hour=19, minute=0)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="numbercall">-1</field>
+        </record>
+    </data>
+</odoo>
